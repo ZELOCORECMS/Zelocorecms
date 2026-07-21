@@ -51,7 +51,18 @@ Homestead.yaml
 # DOT-FOLDER GLOBAL EXCLUSION
 # ----------------------------------------------------------------------------
 # Ignore all hidden folders by default
-/.*/
+/.agents
+/.amp
+/.claude
+/.codex
+/.cursor
+/.factory
+/.grok
+/.junie
+/.kiro
+/.pi
+/.vscode
+/.zed
 
 # ----------------------------------------------------------------------------
 # EXPLICIT INCLUSIONS (Crucial folders we force Git to track)
