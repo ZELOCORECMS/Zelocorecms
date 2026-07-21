@@ -33,20 +33,10 @@ yarn.log
 # 4. OS & IDE Junk
 .DS_Store
 Thumbs.db
-/.idea
-/.vscode
-/.cursor/
-/.nova
-/.zed
-/.codex
 _ide_helper.php
 _ide_helper_models.php
-.phpstorm.meta.php
-.phpactor.json
 
 # 5. Testing & Profiling
-/.phpunit.cache
-.phpunit.result.cache
 /phpunit.xml
 /coverage/
 
@@ -58,7 +48,16 @@ Homestead.yaml
 *.log
 
 # ----------------------------------------------------------------------------
-# EXPLICIT INCLUSIONS (Items we force Git to track)
+# DOT-FOLDER GLOBAL EXCLUSION
 # ----------------------------------------------------------------------------
-# Track the CMS planning folder
+# Ignore all hidden folders by default
+.*/
+
+# ----------------------------------------------------------------------------
+# EXPLICIT INCLUSIONS (Crucial folders we force Git to track)
+# ----------------------------------------------------------------------------
+# 1. Project config
+!.github/
+
+# 2. CMS Planning
 !/.cmsplan/
