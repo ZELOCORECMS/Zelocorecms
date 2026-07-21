@@ -69,12 +69,12 @@ class ZeloCmsServiceProvider extends ServiceProvider
             ], 'zelocms-config');
 
             // Register Artisan commands
-            $this->commands([
-                \App\Console\Commands\ZeloCmsInstall::class,
-                \App\Console\Commands\ZeloCmsPluginInstall::class,
-                \App\Console\Commands\ZeloCmsMigrateWordPress::class,
-                \App\Console\Commands\ZeloCmsInfo::class,
-            ]);
+            // $this->commands([
+            //     \App\Console\Commands\ZeloCmsInstall::class,
+            //     \App\Console\Commands\ZeloCmsPluginInstall::class,
+            //     \App\Console\Commands\ZeloCmsMigrateWordPress::class,
+            //     \App\Console\Commands\ZeloCmsInfo::class,
+            // ]);
         }
     }
 
