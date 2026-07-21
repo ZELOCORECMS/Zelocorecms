@@ -51,7 +51,7 @@ Homestead.yaml
 # DOT-FOLDER GLOBAL EXCLUSION
 # ----------------------------------------------------------------------------
 # Ignore all hidden folders by default
-.*/
+.*
 
 # ----------------------------------------------------------------------------
 # EXPLICIT INCLUSIONS (Crucial folders we force Git to track)
