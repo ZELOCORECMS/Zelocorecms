@@ -4,17 +4,21 @@
 
 # 1. Environment & Secrets
 .env
+.env.*            # ignore all env variants
+!.env.example     # but keep the example in repo
 .env.backup
 .env.production
 .env.testing
 /auth.json
 *.key
+*.pem
+*.secret
 
 # 2. Dependencies
 /vendor/
 /node_modules/
-npm-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-error.log*
 yarn.log
 
 # 3. Laravel Framework & Storage
@@ -30,27 +34,37 @@ yarn.log
 *.sqlite
 *.sqlite-journal
 
-# 4. OS & IDE Junk
+# 4. IDE / Editor / OS
 .DS_Store
 Thumbs.db
 _ide_helper.php
 _ide_helper_models.php
+/.idea/
+/*.iml
+.vscode/
+*.sublime-workspace
+*.sublime-project
 
-# 5. Testing & Profiling
-/phpunit.xml
+# 5. Testing & Coverage
+phpunit.xml.local
+.phpunit.result.cache
 /coverage/
 
-# 6. Vagrant / Homestead
+# 6. Vagrant / Homestead / Virtualization
 Homestead.json
 Homestead.yaml
+/.vagrant/
 
 # 7. Logs & Temp
 *.log
+*.cache
+tmp/
+temp/
 
 # ----------------------------------------------------------------------------
-# DOT-FOLDER GLOBAL EXCLUSION
+# AI / Assistant / Dot-folder global exclusion
 # ----------------------------------------------------------------------------
-# Ignore all hidden folders by default
+# Ignore common assistant/tooling dot-folders
 /.agents
 /.amp
 /.claude
@@ -67,8 +81,5 @@ Homestead.yaml
 # ----------------------------------------------------------------------------
 # EXPLICIT INCLUSIONS (Crucial folders we force Git to track)
 # ----------------------------------------------------------------------------
-# 1. Project config
 !.github/
-
-# 2. CMS Planning
 !/.cmsplan/
