@@ -1,126 +1,130 @@
 <?php
 
+/**
+ * ZELOCORECMS — A Modern Open Source CMS
+ *
+ * Copyright (C) 2026 ZELOCORECMS Contributors
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ */
+
 return [
 
-    /*
-    |--------------------------------------------------------------------------
-    | Application Name
-    |--------------------------------------------------------------------------
-    |
-    | This value is the name of your application, which will be used when the
-    | framework needs to place the application's name in a notification or
-    | other UI elements where an application name needs to be displayed.
-    |
-    */
-
-    'name' => env('APP_NAME', 'Laravel'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Environment
-    |--------------------------------------------------------------------------
-    |
-    | This value determines the "environment" your application is currently
-    | running in. This may determine how you prefer to configure various
-    | services the application utilizes. Set this in your ".env" file.
-    |
-    */
-
+    'name' => env('APP_NAME', 'ZELOCORECMS'),
     'env' => env('APP_ENV', 'production'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Debug Mode
-    |--------------------------------------------------------------------------
-    |
-    | When your application is in debug mode, detailed error messages with
-    | stack traces will be shown on every error that occurs within your
-    | application. If disabled, a simple generic error page is shown.
-    |
-    */
-
     'debug' => (bool) env('APP_DEBUG', false),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application URL
-    |--------------------------------------------------------------------------
-    |
-    | This URL is used by the console to properly generate URLs when using
-    | the Artisan command line tool. You should set this to the root of
-    | the application so that it's available within Artisan commands.
-    |
-    */
-
     'url' => env('APP_URL', 'http://localhost'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Timezone
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the default timezone for your application, which
-    | will be used by the PHP date and date-time functions. The timezone
-    | is set to "UTC" by default as it is suitable for most use cases.
-    |
-    */
-
-    'timezone' => 'UTC',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Locale Configuration
-    |--------------------------------------------------------------------------
-    |
-    | The application locale determines the default locale that will be used
-    | by Laravel's translation / localization methods. This option can be
-    | set to any locale for which you plan to have translation strings.
-    |
-    */
-
+    'timezone' => env('APP_TIMEZONE', 'UTC'),
     'locale' => env('APP_LOCALE', 'en'),
-
     'fallback_locale' => env('APP_FALLBACK_LOCALE', 'en'),
-
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Encryption Key
-    |--------------------------------------------------------------------------
-    |
-    | This key is utilized by Laravel's encryption services and should be set
-    | to a random, 32 character string to ensure that all encrypted values
-    | are secure. You should do this prior to deploying the application.
-    |
-    */
-
     'cipher' => 'AES-256-CBC',
-
     'key' => env('APP_KEY'),
-
     'previous_keys' => [
         ...array_filter(
-            explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
+            explode(',', env('APP_PREVIOUS_KEYS', ''))
         ),
     ],
+    'maintenance' => ['driver' => 'file'],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Maintenance Mode Driver
-    |--------------------------------------------------------------------------
-    |
-    | These configuration options determine the driver used to determine and
-    | manage Laravel's "maintenance mode" status. The "cache" driver will
-    | allow maintenance mode to be controlled across multiple machines.
-    |
-    | Supported drivers: "file", "cache"
-    |
-    */
+    // ─── ZELOCORECMS Specific Configuration ──────────────────────────────────
 
-    'maintenance' => [
-        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
-        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    'cms' => [
+        // CMS version
+        'version' => '1.0.0-alpha',
+        'codename' => 'ZeloCore',
+
+        // Admin panel path (change to obscure it)
+        'admin_path' => env('ZELOCMS_ADMIN_PATH', 'admin'),
+
+        // Allow user registration (disable for private installs)
+        'allow_registration' => env('ZELOCMS_ALLOW_REGISTRATION', false),
+
+        // Maximum workspaces per instance (0 = unlimited)
+        'max_workspaces' => env('ZELOCMS_MAX_WORKSPACES', 0),
+
+        // Plugin system configuration
+        'plugins' => [
+            'enabled' => env('ZELOCMS_PLUGINS_ENABLED', true),
+            'auto_update' => env('ZELOCMS_PLUGINS_AUTO_UPDATE', false),
+            'registry_url' => env('ZELOCMS_PLUGIN_REGISTRY', 'https://plugins.zelocorecms.com'),
+        ],
+
+        // AI configuration (ZeloAI)
+        'ai' => [
+            'enabled' => env('ZELOCMS_AI_ENABLED', false),
+            'provider' => env('ZELOCMS_AI_PROVIDER', 'openai'), // openai, anthropic, ollama
+            'model' => env('ZELOCMS_AI_MODEL', 'gpt-4o'),
+        ],
+
+        // Media processing
+        'media' => [
+            'max_upload_size' => env('ZELOCMS_MAX_UPLOAD_MB', 50) * 1024, // in KB
+            'allowed_image_types' => ['jpg', 'jpeg', 'png', 'gif', 'webp', 'svg', 'avif'],
+            'allowed_video_types' => ['mp4', 'webm', 'mov', 'avi'],
+            'allowed_document_types' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt', 'zip'],
+            'image_quality' => env('ZELOCMS_IMAGE_QUALITY', 85),
+            'generate_webp' => env('ZELOCMS_GENERATE_WEBP', true),
+            'thumbnail_sizes' => [
+                'thumbnail' => [150, 150],
+                'medium' => [300, 300],
+                'medium_large' => [768, 0],
+                'large' => [1024, 1024],
+            ],
+        ],
+
+        // API configuration
+        'api' => [
+            'version' => 'v1',
+            'rate_limit' => env('ZELOCMS_API_RATE_LIMIT', 1000), // per minute
+            'pagination_default' => 20,
+            'pagination_max' => 100,
+        ],
+
+        // Content defaults
+        'content' => [
+            'revisions_limit' => env('ZELOCMS_REVISIONS_LIMIT', 100), // 0 = unlimited
+            'auto_slug' => true,
+        ],
     ],
+
+    'providers' => [
+        Illuminate\Auth\AuthServiceProvider::class,
+        Illuminate\Broadcasting\BroadcastServiceProvider::class,
+        Illuminate\Bus\BusServiceProvider::class,
+        Illuminate\Cache\CacheServiceProvider::class,
+        Illuminate\Foundation\Providers\ConsoleSupportServiceProvider::class,
+        Illuminate\Cookie\CookieServiceProvider::class,
+        Illuminate\Database\DatabaseServiceProvider::class,
+        Illuminate\Encryption\EncryptionServiceProvider::class,
+        Illuminate\Filesystem\FilesystemServiceProvider::class,
+        Illuminate\Foundation\Providers\FoundationServiceProvider::class,
+        Illuminate\Hashing\HashServiceProvider::class,
+        Illuminate\Mail\MailServiceProvider::class,
+        Illuminate\Notifications\NotificationServiceProvider::class,
+        Illuminate\Pagination\PaginationServiceProvider::class,
+        Illuminate\Pipeline\PipelineServiceProvider::class,
+        Illuminate\Queue\QueueServiceProvider::class,
+        Illuminate\Redis\RedisServiceProvider::class,
+        Illuminate\Auth\Passwords\PasswordResetServiceProvider::class,
+        Illuminate\Session\SessionServiceProvider::class,
+        Illuminate\Translation\TranslationServiceProvider::class,
+        Illuminate\Validation\ValidationServiceProvider::class,
+        Illuminate\View\ViewServiceProvider::class,
+        // ZELOCORECMS providers
+        App\Providers\ZeloCmsServiceProvider::class,
+        App\Providers\HookServiceProvider::class,
+        App\Providers\PluginServiceProvider::class,
+    ],
+
+    'aliases' => Illuminate\Support\Facades\Facade::defaultAliases()->merge([
+        // ZELOCORECMS facades
+        'Hook' => App\Facades\Hook::class,
+        'Plugin' => App\Facades\Plugin::class,
+        'ZeloCMS' => App\Facades\ZeloCMS::class,
+    ])->toArray(),
 
 ];

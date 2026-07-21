@@ -1,32 +1,48 @@
 <?php
 
+declare(strict_types=1);
+
+/**
+ * @license GPL-2.0-or-later
+ */
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Database\Factories\UserFactory;
-use Illuminate\Database\Eloquent\Attributes\Fillable;
-use Illuminate\Database\Eloquent\Attributes\Hidden;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Laravel\Sanctum\HasApiTokens;
 
-#[Fillable(['name', 'email', 'password'])]
-#[Hidden(['password', 'remember_token'])]
 class User extends Authenticatable
 {
-    /** @use HasFactory<UserFactory> */
-    use HasFactory, Notifiable;
+    use HasApiTokens, HasUuids, Notifiable;
 
-    /**
-     * Get the attributes that should be cast.
-     *
-     * @return array<string, string>
-     */
-    protected function casts(): array
+    protected $table = 'zc_users';
+
+    protected $guarded = [];
+
+    protected $hidden = [
+        'password',
+        'remember_token',
+        'mfa_secret',
+    ];
+
+    protected $casts = [
+        'is_super_admin' => 'boolean',
+        'mfa_enabled' => 'boolean',
+        'mfa_secret' => 'encrypted',
+        'last_login_at' => 'datetime',
+    ];
+
+    public function workspaceMembers(): HasMany
     {
-        return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
-        ];
+        return $this->hasMany(WorkspaceMember::class);
+    }
+
+    public function workspaces(): BelongsToMany
+    {
+        return $this->belongsToMany(Workspace::class, 'zc_workspace_members', 'user_id', 'workspace_id');
     }
 }
