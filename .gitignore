@@ -5,7 +5,6 @@
 # 1. Environment & Secrets
 .env
 .env.*            # ignore all env variants
-!.env.example     # but keep the example in repo
 .env.backup
 .env.production
 .env.testing
@@ -64,22 +63,20 @@ temp/
 # ----------------------------------------------------------------------------
 # AI / Assistant / Dot-folder global exclusion
 # ----------------------------------------------------------------------------
-# Ignore common assistant/tooling dot-folders
 /.agents
 /.amp
 /.claude
-/.codex
+/.cmsplan
 /.cursor
+/.editorconfig
+/.env*
 /.factory
+/.gitattributes
+/.github
 /.grok
 /.junie
 /.kiro
+/.mcp.json
+/.npmrc
+/.phpunit.result.cache
 /.pi
-/.vscode
-/.zed
-
-# ----------------------------------------------------------------------------
-# EXPLICIT INCLUSIONS (Crucial folders we force Git to track)
-# ----------------------------------------------------------------------------
-!.github/
-!/.cmsplan/
