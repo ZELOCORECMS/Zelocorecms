@@ -13,6 +13,9 @@
           <li>
             <router-link to="/admin/content-types" class="block px-4 py-2 hover:bg-gray-800" active-class="bg-gray-800 text-blue-400">Content Types</router-link>
           </li>
+          <li>
+            <router-link to="/admin/themes" class="block px-4 py-2 hover:bg-gray-800" active-class="bg-gray-800 text-blue-400">Themes</router-link>
+          </li>
           <li class="px-4 py-2 text-xs font-semibold text-gray-500 uppercase mt-4">Content</li>
           <li>
             <router-link to="/admin/content/blog-post" class="block px-4 py-2 hover:bg-gray-800" active-class="bg-gray-800 text-blue-400">Blog Posts</router-link>

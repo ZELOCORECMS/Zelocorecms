@@ -21,6 +21,11 @@ const routes = [
                 component: () => import('../views/ContentTypeList.vue'),
             },
             {
+                path: 'themes',
+                name: 'ThemeList',
+                component: () => import('../views/ThemeList.vue'),
+            },
+            {
                 path: 'content/:type',
                 name: 'ContentList',
                 component: () => import('../views/ContentList.vue'),

@@ -12,6 +12,7 @@ use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\MediaController;
 use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PluginController;
+use App\Http\Controllers\Api\ThemeController;
 use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Controllers\Api\WebhookController;
 use App\Http\Controllers\Api\AuditController;
@@ -130,6 +131,13 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::delete('/{slug}', [PluginController::class, 'destroy'])->name('destroy');
                 Route::get('/{slug}/settings', [PluginController::class, 'settings'])->name('settings');
                 Route::patch('/{slug}/settings', [PluginController::class, 'updateSettings'])->name('settings.update');
+            });
+
+            // Themes
+            Route::prefix('themes')->name('themes.')->group(function () {
+                Route::get('/', [ThemeController::class, 'index'])->name('index');
+                Route::post('/install', [ThemeController::class, 'install'])->name('install');
+                Route::post('/{themeSlug}/activate', [ThemeController::class, 'activate'])->name('activate');
             });
 
             // Webhooks

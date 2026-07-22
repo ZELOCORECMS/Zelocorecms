@@ -13,6 +13,7 @@ namespace App\Providers;
 use App\Services\Hooks\HookRegistry;
 use App\Services\Plugin\PluginSandbox;
 use App\Services\Plugin\PluginManager;
+use App\Services\Theme\ThemeManager;
 use App\Services\Content\ContentTypeService;
 use App\Services\Content\ContentItemService;
 use App\Services\Media\MediaService;
@@ -34,6 +35,7 @@ class ZeloCmsServiceProvider extends ServiceProvider
         $this->app->singleton(ContentItemService::class);
         $this->app->singleton(MediaService::class);
         $this->app->singleton(JwtService::class);
+        $this->app->singleton(ThemeManager::class, fn() => new ThemeManager());
 
         // Plugin Manager depends on HookRegistry and PluginSandbox
         $this->app->singleton(
@@ -55,6 +57,14 @@ class ZeloCmsServiceProvider extends ServiceProvider
     {
         // Fix default string length for older MySQL versions
         Schema::defaultStringLength(191);
+
+        // Boot theme
+        try {
+            // We'll boot it for the global scope if not handling a specific workspace yet
+            $this->app->make(ThemeManager::class)->bootTheme();
+        } catch (\Exception $e) {
+            // Ignore during setup/migrations
+        }
 
         // Load ZELOCORECMS routes
         $this->loadRoutes();
