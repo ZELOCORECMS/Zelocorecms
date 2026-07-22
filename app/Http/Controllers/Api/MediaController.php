@@ -22,7 +22,7 @@ class MediaController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/media
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $workspaceSlug): JsonResponse
     {
         $media = Media::where('workspace_id', $request->workspace_id)
             ->orderBy('created_at', 'desc')
@@ -43,7 +43,7 @@ class MediaController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/media/upload
      */
-    public function upload(Request $request): JsonResponse
+    public function upload(Request $request, string $workspaceSlug): JsonResponse
     {
         $request->validate([
             'file' => ['required', 'file', 'max:' . (config('zelocms.media.max_upload_size') / 1024)],
@@ -75,7 +75,7 @@ class MediaController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/media/{id}
      */
-    public function show(Request $request, string $id): JsonResponse
+    public function show(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $media = Media::where('workspace_id', $request->workspace_id)->findOrFail($id);
         return response()->json(['success' => true, 'data' => $media]);
@@ -84,7 +84,7 @@ class MediaController extends Controller
     /**
      * PATCH /api/v1/workspaces/{slug}/media/{id}
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $media = Media::where('workspace_id', $request->workspace_id)->findOrFail($id);
 
@@ -101,7 +101,7 @@ class MediaController extends Controller
     /**
      * DELETE /api/v1/workspaces/{slug}/media/{id}
      */
-    public function destroy(Request $request, string $id): JsonResponse
+    public function destroy(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $media = Media::where('workspace_id', $request->workspace_id)->findOrFail($id);
 

@@ -1,0 +1,12 @@
+{
+    "name": "ZeloCMS SEO",
+    "slug": "zelocms-seo",
+    "version": "1.0.0",
+    "description": "Official SEO module. Adds SEO fields to content and modifies API responses.",
+    "author": "ZeloCore Team",
+    "declared_permissions": [
+        "content:read",
+        "content:write",
+        "admin:menu"
+    ]
+}

@@ -16,6 +16,8 @@ class WorkspaceMember extends Model
 {
     use HasUuids;
 
+    public const UPDATED_AT = null;
+
     protected $table = 'zc_workspace_members';
 
     protected $guarded = [];

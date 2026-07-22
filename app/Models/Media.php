@@ -17,6 +17,8 @@ class Media extends Model
 {
     use HasUuids;
 
+    public const UPDATED_AT = null;
+
     protected $table = 'zc_media';
 
     protected $guarded = [];

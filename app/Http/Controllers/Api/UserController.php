@@ -22,7 +22,7 @@ class UserController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/users
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $workspaceSlug): JsonResponse
     {
         $workspaceId = $request->workspace_id;
 
@@ -44,7 +44,7 @@ class UserController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/users/{id}
      */
-    public function show(Request $request, string $id): JsonResponse
+    public function show(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $workspaceId = $request->workspace_id;
 
@@ -66,7 +66,7 @@ class UserController extends Controller
     /**
      * PATCH /api/v1/workspaces/{slug}/users/{id}
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $workspaceId = $request->workspace_id;
 
@@ -88,7 +88,7 @@ class UserController extends Controller
     /**
      * DELETE /api/v1/workspaces/{slug}/users/{id}
      */
-    public function destroy(Request $request, string $id): JsonResponse
+    public function destroy(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $workspaceId = $request->workspace_id;
 
@@ -101,13 +101,13 @@ class UserController extends Controller
 
     // ─── Roles ──────────────────────────────────────────────────────────────
 
-    public function indexRoles(Request $request): JsonResponse
+    public function indexRoles(Request $request, string $workspaceSlug): JsonResponse
     {
         $roles = Role::where('workspace_id', $request->workspace_id)->get();
         return response()->json(['success' => true, 'data' => $roles]);
     }
 
-    public function storeRole(Request $request): JsonResponse
+    public function storeRole(Request $request, string $workspaceSlug): JsonResponse
     {
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:100'],
@@ -124,7 +124,7 @@ class UserController extends Controller
         return response()->json(['success' => true, 'data' => $role], 201);
     }
 
-    public function updateRole(Request $request, string $id): JsonResponse
+    public function updateRole(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $role = Role::where('workspace_id', $request->workspace_id)->findOrFail($id);
 
@@ -142,7 +142,7 @@ class UserController extends Controller
         return response()->json(['success' => true, 'data' => $role]);
     }
 
-    public function destroyRole(Request $request, string $id): JsonResponse
+    public function destroyRole(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $role = Role::where('workspace_id', $request->workspace_id)->findOrFail($id);
 

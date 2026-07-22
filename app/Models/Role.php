@@ -15,6 +15,8 @@ class Role extends Model
 {
     use HasUuids;
 
+    public const UPDATED_AT = null;
+
     protected $table = 'zc_roles';
 
     protected $guarded = [];

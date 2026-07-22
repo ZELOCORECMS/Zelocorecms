@@ -21,7 +21,7 @@ class WebhookController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/webhooks
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $workspaceSlug): JsonResponse
     {
         $webhooks = Webhook::where('workspace_id', $request->workspace_id)->get();
         return response()->json(['success' => true, 'data' => $webhooks]);
@@ -30,7 +30,7 @@ class WebhookController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/webhooks
      */
-    public function store(Request $request): JsonResponse
+    public function store(Request $request, string $workspaceSlug): JsonResponse
     {
         $validated = $request->validate([
             'name'      => ['required', 'string', 'max:255'],
@@ -55,7 +55,7 @@ class WebhookController extends Controller
     /**
      * PATCH /api/v1/workspaces/{slug}/webhooks/{id}
      */
-    public function update(Request $request, string $id): JsonResponse
+    public function update(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $webhook = Webhook::where('workspace_id', $request->workspace_id)->findOrFail($id);
 
@@ -75,7 +75,7 @@ class WebhookController extends Controller
     /**
      * DELETE /api/v1/workspaces/{slug}/webhooks/{id}
      */
-    public function destroy(Request $request, string $id): JsonResponse
+    public function destroy(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $webhook = Webhook::where('workspace_id', $request->workspace_id)->findOrFail($id);
         $webhook->delete();
@@ -86,7 +86,7 @@ class WebhookController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/webhooks/{id}/test
      */
-    public function test(Request $request, string $id): JsonResponse
+    public function test(Request $request, string $workspaceSlug, string $id): JsonResponse
     {
         $webhook = Webhook::where('workspace_id', $request->workspace_id)->findOrFail($id);
         

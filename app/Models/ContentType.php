@@ -17,6 +17,8 @@ class ContentType extends Model
 {
     use HasUuids;
 
+    public const UPDATED_AT = null;
+
     protected $table = 'zc_content_types';
 
     protected $guarded = [];

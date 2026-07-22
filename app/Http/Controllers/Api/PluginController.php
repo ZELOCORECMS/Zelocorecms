@@ -25,7 +25,7 @@ class PluginController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/plugins
      */
-    public function index(Request $request): JsonResponse
+    public function index(Request $request, string $workspaceSlug): JsonResponse
     {
         $plugins = Plugin::where('workspace_id', $request->workspace_id)
             ->orWhereNull('workspace_id') // Network-wide plugins
@@ -37,7 +37,7 @@ class PluginController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/plugins/install
      */
-    public function install(Request $request): JsonResponse
+    public function install(Request $request, string $workspaceSlug): JsonResponse
     {
         // Placeholder for plugin upload/install logic
         return response()->json(['success' => false, 'message' => 'Not implemented.'], 501);
@@ -46,7 +46,7 @@ class PluginController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/plugins/{slug}/activate
      */
-    public function activate(Request $request, string $slug): JsonResponse
+    public function activate(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $plugin = Plugin::where('slug', $slug)
             ->where(function ($q) use ($request) {
@@ -62,7 +62,7 @@ class PluginController extends Controller
     /**
      * POST /api/v1/workspaces/{slug}/plugins/{slug}/deactivate
      */
-    public function deactivate(Request $request, string $slug): JsonResponse
+    public function deactivate(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $plugin = Plugin::where('slug', $slug)
             ->where(function ($q) use ($request) {
@@ -78,7 +78,7 @@ class PluginController extends Controller
     /**
      * DELETE /api/v1/workspaces/{slug}/plugins/{slug}
      */
-    public function destroy(Request $request, string $slug): JsonResponse
+    public function destroy(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         // Placeholder for plugin uninstall logic
         return response()->json(['success' => false, 'message' => 'Not implemented.'], 501);
@@ -87,7 +87,7 @@ class PluginController extends Controller
     /**
      * GET /api/v1/workspaces/{slug}/plugins/{slug}/settings
      */
-    public function settings(Request $request, string $slug): JsonResponse
+    public function settings(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $plugin = Plugin::where('slug', $slug)
             ->where('workspace_id', $request->workspace_id)
@@ -99,7 +99,7 @@ class PluginController extends Controller
     /**
      * PATCH /api/v1/workspaces/{slug}/plugins/{slug}/settings
      */
-    public function updateSettings(Request $request, string $slug): JsonResponse
+    public function updateSettings(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $plugin = Plugin::where('slug', $slug)
             ->where('workspace_id', $request->workspace_id)

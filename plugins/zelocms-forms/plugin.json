@@ -1,0 +1,13 @@
+{
+    "name": "ZeloCMS Forms",
+    "slug": "zelocms-forms",
+    "version": "1.0.0",
+    "description": "Form builder and submissions manager.",
+    "author": "ZeloCore Team",
+    "declared_permissions": [
+        "content:read",
+        "content:write",
+        "admin:menu",
+        "email:send"
+    ]
+}

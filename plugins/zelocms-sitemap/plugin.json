@@ -1,0 +1,11 @@
+{
+    "name": "ZeloCMS Sitemap",
+    "slug": "zelocms-sitemap",
+    "version": "1.0.0",
+    "description": "Automatically generates XML sitemaps.",
+    "author": "ZeloCore Team",
+    "declared_permissions": [
+        "content:read",
+        "settings:read"
+    ]
+}

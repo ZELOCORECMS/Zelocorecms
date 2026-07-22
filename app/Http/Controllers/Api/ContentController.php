@@ -63,7 +63,7 @@ class ContentController extends Controller
     /**
      * GET /api/v1/content-types/{slug}
      */
-    public function showType(Request $request, string $slug): JsonResponse
+    public function showType(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
@@ -77,7 +77,7 @@ class ContentController extends Controller
     /**
      * PATCH /api/v1/content-types/{slug}
      */
-    public function updateType(Request $request, string $slug): JsonResponse
+    public function updateType(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
@@ -96,7 +96,7 @@ class ContentController extends Controller
     /**
      * DELETE /api/v1/content-types/{slug}
      */
-    public function destroyType(Request $request, string $slug): JsonResponse
+    public function destroyType(Request $request, string $workspaceSlug, string $slug): JsonResponse
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
@@ -127,7 +127,7 @@ class ContentController extends Controller
      * GET /api/v1/content/{type}
      * List content items (paginated + filtered).
      */
-    public function index(Request $request, string $type): JsonResponse
+    public function index(Request $request, string $workspaceSlug, string $type): JsonResponse
     {
         $workspaceId = $request->workspace_id;
         $contentType = $this->typeService->findBySlug($workspaceId, $type);
@@ -155,7 +155,7 @@ class ContentController extends Controller
      * POST /api/v1/content/{type}
      * Create a new content item.
      */
-    public function store(Request $request, string $type): JsonResponse
+    public function store(Request $request, string $workspaceSlug, string $type): JsonResponse
     {
         $workspaceId = $request->workspace_id;
 
@@ -183,7 +183,7 @@ class ContentController extends Controller
      * GET /api/v1/content/{type}/{id}
      * Get a single content item by ID or slug.
      */
-    public function show(Request $request, string $type, string $id): JsonResponse
+    public function show(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -198,7 +198,7 @@ class ContentController extends Controller
      * PATCH /api/v1/content/{type}/{id}
      * Update a content item.
      */
-    public function update(Request $request, string $type, string $id): JsonResponse
+    public function update(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -218,7 +218,7 @@ class ContentController extends Controller
      * DELETE /api/v1/content/{type}/{id}
      * Delete a content item.
      */
-    public function destroy(Request $request, string $type, string $id): JsonResponse
+    public function destroy(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -235,7 +235,7 @@ class ContentController extends Controller
      * POST /api/v1/content/{type}/{id}/publish
      * Publish a draft item.
      */
-    public function publish(Request $request, string $type, string $id): JsonResponse
+    public function publish(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -252,7 +252,7 @@ class ContentController extends Controller
      * POST /api/v1/content/{type}/{id}/unpublish
      * Move published item back to draft.
      */
-    public function unpublish(Request $request, string $type, string $id): JsonResponse
+    public function unpublish(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -269,7 +269,7 @@ class ContentController extends Controller
      * GET /api/v1/content/{type}/{id}/versions
      * Get version history.
      */
-    public function versions(Request $request, string $type, string $id): JsonResponse
+    public function versions(Request $request, string $workspaceSlug, string $type, string $id): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
@@ -286,7 +286,7 @@ class ContentController extends Controller
      * POST /api/v1/content/{type}/{id}/restore/{version}
      * Restore a specific version.
      */
-    public function restoreVersion(Request $request, string $type, string $id, int $version): JsonResponse
+    public function restoreVersion(Request $request, string $workspaceSlug, string $type, string $id, int $version): JsonResponse
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
