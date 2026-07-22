@@ -5,19 +5,25 @@
 @section('content')
 <section class="container">
     <div class="prose">
-        <h1>About ZeloCoreCMS</h1>
-        <p>ZeloCoreCMS was built out of a frustration with legacy monolithic platforms. We realized that modern digital teams need absolute freedom over their frontend stack, while content creators need an intuitive, reliable backend.</p>
+        <h1>Our Vision & Mission</h1>
+        <p style="font-size: 1.25rem; font-style: italic; color: var(--primary-color);">"A world where building and managing digital content is a joy — for developers, editors, and enterprises alike — with no compromises, no lock-in, and no limits."</p>
         
-        <h2>Our Mission</h2>
-        <p>To empower developers and content teams to build exceptional digital experiences without compromising on speed, security, or usability.</p>
+        <h2>The Mission</h2>
+        <p>To build the most powerful, secure, and developer-friendly open-source CMS in the world — one that competes with every platform simultaneously, gives data ownership back to users, and makes the web a better, faster, safer place.</p>
         
-        <h2>The Architecture</h2>
-        <p>We chose PHP and Laravel as our foundation because of its battle-tested stability and rich ecosystem. However, we reimagined the CMS architecture:</p>
-        <ul>
-            <li><strong>Headless by Default:</strong> No assumed frontend framework. Consume via REST APIs.</li>
-            <li><strong>Plugin Sandboxing:</strong> Unique tier-based isolation so plugins can't break your core.</li>
-            <li><strong>Theme Engine:</strong> Although headless, we provide a robust Blade-powered theme engine for quick landing pages.</li>
-        </ul>
+        <h2>Our Core Values</h2>
+        
+        <h3>🔓 Radical Openness</h3>
+        <p>Everything we build is open-source, first. No bait-and-switch. No "community edition" stripped of features. The full product is always free to self-host.</p>
+        
+        <h3>🔒 Security Without Compromise</h3>
+        <p>Security is not a plugin. It is not an afterthought. ZELOCORECMS is the only CMS where security is a first-class architectural design principle — baked into every layer.</p>
+        
+        <h3>⚡ Performance as a Feature</h3>
+        <p>Every millisecond matters. We treat performance the same way we treat security — not as a metric to optimize, but as a core design constraint.</p>
+        
+        <h3>🤝 Community Over Company</h3>
+        <p>The community owns ZELOCORECMS. Decisions are made transparently, roadmaps are public, and every contributor is a co-author of the project.</p>
     </div>
 </section>
 @endsection

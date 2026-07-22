@@ -13,6 +13,14 @@ Route::get('/about', function () {
     return view('theme::about');
 });
 
+Route::get('/investors', function () {
+    return view('theme::investors');
+});
+
+Route::get('/features', function () {
+    return view('theme::features');
+});
+
 Route::get('/docs', function () {
     return view('theme::docs');
 });

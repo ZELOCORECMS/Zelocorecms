@@ -13,6 +13,7 @@
             <a href="/" class="brand">ZeloCoreCMS</a>
             <nav class="nav-links">
                 <a href="/">Home</a>
+                <a href="/features">Features</a>
                 <a href="/about">About</a>
                 <a href="/docs">Documentation</a>
                 <a href="/contact">Contact</a>
@@ -34,6 +35,7 @@
             <div>
                 <h4 style="margin-bottom: 1rem;">Resources</h4>
                 <ul style="list-style: none; color: #94a3b8; display: flex; flex-direction: column; gap: 0.5rem;">
+                    <li><a href="/features">Features</a></li>
                     <li><a href="/docs">Documentation</a></li>
                     <li><a href="/api-reference">API Reference</a></li>
                     <li><a href="/plugins">Plugins</a></li>
@@ -43,6 +45,7 @@
                 <h4 style="margin-bottom: 1rem;">Company</h4>
                 <ul style="list-style: none; color: #94a3b8; display: flex; flex-direction: column; gap: 0.5rem;">
                     <li><a href="/about">About Us</a></li>
+                    <li><a href="/investors">Investors</a></li>
                     <li><a href="/contact">Contact</a></li>
                 </ul>
             </div>
