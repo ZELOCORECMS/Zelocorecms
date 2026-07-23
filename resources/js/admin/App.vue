@@ -1,9 +1,10 @@
 <template>
-  <div class="admin-layout min-h-screen bg-gray-50 text-gray-900">
-    <router-view />
-  </div>
+  <!-- WP admin-ui: Root app — router-view renders either Login or DashboardLayout (Page) -->
+  <router-view />
 </template>
 
 <script setup>
-// Root component
+// Root component — layout selection is handled by the router.
+// DashboardLayout.vue = @wordpress/admin-ui Page component.
+// Login.vue = standalone login (outside Page layout).
 </script>

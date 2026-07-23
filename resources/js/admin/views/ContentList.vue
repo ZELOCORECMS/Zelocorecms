@@ -1,35 +1,107 @@
 <template>
-  <div class="p-8">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-gray-800 capitalize">{{ route.params.type }}</h1>
-      <Button label="New Item" icon="pi pi-plus" />
+  <!--
+    WP admin-ui: Content List page
+    AdminBreadcrumbs last item = <h1> (dynamic content type name)
+  -->
+  <div class="wp-admin-page-header">
+    <AdminBreadcrumbs
+      :items="[
+        { label: 'Dashboard', to: '/admin' },
+        { label: contentTypeLabel },
+      ]"
+    />
+    <div class="wp-admin-page-header__actions">
+      <router-link
+        :to="`/admin/content/${route.params.type}/create`"
+        id="btn-new-content-item"
+        class="wp-admin-btn wp-admin-btn--primary"
+      >
+        <i class="pi pi-plus" aria-hidden="true"></i>
+        Add New
+      </router-link>
     </div>
-    
-    <div class="card bg-white p-6 rounded shadow-sm border border-gray-100">
-      <DataTable :value="items" dataKey="id">
-        <Column field="data.title" header="Title"></Column>
-        <Column field="status" header="Status"></Column>
-        <Column header="Actions">
-          <template #body="slotProps">
-            <Button icon="pi pi-pencil" text rounded />
-            <Button icon="pi pi-trash" text rounded severity="danger" />
-          </template>
-        </Column>
-      </DataTable>
+  </div>
+
+  <div style="padding: 12px 0;">
+
+    <div class="wp-admin-card">
+      <table class="wp-admin-table" :aria-label="`${contentTypeLabel} list`">
+        <thead>
+          <tr>
+            <th scope="col">Title</th>
+            <th scope="col">Status</th>
+            <th scope="col">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr v-if="items.length === 0">
+            <td colspan="3" style="text-align:center; color: var(--wp-admin-text-muted); padding: 24px 10px;">
+              No items found.
+              <router-link :to="`/admin/content/${route.params.type}/create`" class="wp-admin-breadcrumbs__link">
+                Create your first one.
+              </router-link>
+            </td>
+          </tr>
+          <tr v-for="item in items" :key="item.id">
+            <td>
+              <router-link
+                :to="`/admin/content/${route.params.type}/${item.id}`"
+                class="wp-admin-breadcrumbs__link"
+                style="font-weight:600;"
+              >
+                {{ item.data?.title || '(Untitled)' }}
+              </router-link>
+            </td>
+            <td>
+              <span
+                class="wp-admin-badge"
+                :class="item.status === 'published' ? 'wp-admin-badge--published' : 'wp-admin-badge--draft'"
+              >
+                {{ item.status }}
+              </span>
+            </td>
+            <td>
+              <div class="wp-admin-table__row-actions">
+                <router-link
+                  :to="`/admin/content/${route.params.type}/${item.id}`"
+                  class="wp-admin-btn wp-admin-btn--secondary"
+                  title="Edit"
+                >
+                  <i class="pi pi-pencil" aria-hidden="true"></i>
+                  Edit
+                </router-link>
+                <button
+                  class="wp-admin-btn wp-admin-btn--link"
+                  style="color: #dc3232;"
+                  title="Delete"
+                  aria-label="Delete item"
+                >
+                  <i class="pi pi-trash" aria-hidden="true"></i>
+                  Delete
+                </button>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
+
   </div>
 </template>
 
 <script setup>
-import { ref, watch, onMounted } from 'vue';
+import { ref, computed, watch, onMounted } from 'vue';
 import { useRoute } from 'vue-router';
-import DataTable from 'primevue/datatable';
-import Column from 'primevue/column';
-import Button from 'primevue/button';
+import AdminBreadcrumbs from '../components/AdminBreadcrumbs.vue';
 import axios from 'axios';
 
 const route = useRoute();
 const items = ref([]);
+
+const contentTypeLabel = computed(() => {
+    const type = route.params.type ?? '';
+    return type.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+});
 
 const loadItems = async () => {
     try {

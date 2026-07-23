@@ -22,3 +22,15 @@ app.use(PrimeVue, {
 });
 
 app.mount('#admin-app');
+
+// Remove PrimeVue license banner as soon as it appears in the DOM
+const removeLicenseBanner = () => {
+    const el = document.getElementById('p-license-host');
+    if (el) { el.remove(); return; }
+    const observer = new MutationObserver(() => {
+        const banner = document.getElementById('p-license-host');
+        if (banner) { banner.remove(); observer.disconnect(); }
+    });
+    observer.observe(document.body, { childList: true });
+};
+removeLicenseBanner();
