@@ -66,7 +66,6 @@ temp/
 /.agents
 /.amp
 /.claude
-/.cmsplan
 /.cursor
 /.editorconfig
 /.env*
