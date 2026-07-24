@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace App\Services\Theme;
 
 use App\Models\Option;
-use Illuminate\Support\Facades\View;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class ThemeManager
 {
@@ -29,13 +29,13 @@ class ThemeManager
             // DB might not be ready, fallback to default
             $activeTheme = 'default-theme';
         }
-        
-        if (!$this->themeExists($activeTheme)) {
+
+        if (! $this->themeExists($activeTheme)) {
             $activeTheme = 'default-theme';
         }
 
-        $themeViewPath = $this->getThemePath($activeTheme) . '/views';
-        
+        $themeViewPath = $this->getThemePath($activeTheme).'/views';
+
         if (File::exists($themeViewPath)) {
             // Add theme views to the view finder
             View::prependLocation($themeViewPath);
@@ -50,7 +50,7 @@ class ThemeManager
     public function getActiveThemeSlug(?string $workspaceId = null): string
     {
         $query = Option::where('option_key', 'theme.active');
-        
+
         if ($workspaceId) {
             $query->where('workspace_id', $workspaceId);
         } else {
@@ -68,17 +68,17 @@ class ThemeManager
      */
     public function setActiveTheme(string $themeSlug, ?string $workspaceId = null): void
     {
-        if (!$this->themeExists($themeSlug)) {
+        if (! $this->themeExists($themeSlug)) {
             throw new \InvalidArgumentException("Theme [{$themeSlug}] does not exist.");
         }
 
         Option::updateOrCreate(
             [
                 'option_key' => 'theme.active',
-                'workspace_id' => $workspaceId
+                'workspace_id' => $workspaceId,
             ],
             [
-                'option_value' => $themeSlug
+                'option_value' => $themeSlug,
             ]
         );
     }
@@ -89,15 +89,15 @@ class ThemeManager
     public function getInstalledThemes(): array
     {
         $themes = [];
-        
-        if (!File::exists($this->themesPath)) {
+
+        if (! File::exists($this->themesPath)) {
             return $themes;
         }
 
         $directories = File::directories($this->themesPath);
 
         foreach ($directories as $dir) {
-            $jsonPath = $dir . '/theme.json';
+            $jsonPath = $dir.'/theme.json';
             if (File::exists($jsonPath)) {
                 $data = json_decode(File::get($jsonPath), true);
                 if ($data) {
@@ -115,7 +115,8 @@ class ThemeManager
      */
     public function themeExists(string $slug): bool
     {
-        $jsonPath = $this->getThemePath($slug) . '/theme.json';
+        $jsonPath = $this->getThemePath($slug).'/theme.json';
+
         return File::exists($jsonPath);
     }
 
@@ -124,6 +125,6 @@ class ThemeManager
      */
     public function getThemePath(string $slug): string
     {
-        return $this->themesPath . '/' . $slug;
+        return $this->themesPath.'/'.$slug;
     }
 }

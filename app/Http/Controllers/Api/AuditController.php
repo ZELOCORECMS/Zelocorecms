@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Audit Controller
  * Read-only access to audit logs.
@@ -29,11 +30,11 @@ class AuditController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $logs->items(),
-            'meta'    => [
-                'total'     => $logs->total(),
-                'page'      => $logs->currentPage(),
-                'per_page'  => $logs->perPage(),
+            'data' => $logs->items(),
+            'meta' => [
+                'total' => $logs->total(),
+                'page' => $logs->currentPage(),
+                'per_page' => $logs->perPage(),
                 'last_page' => $logs->lastPage(),
             ],
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Content Controller
  * REST API for content types and content items.
@@ -11,8 +12,6 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\ContentItem;
-use App\Models\ContentType;
 use App\Services\Content\ContentItemService;
 use App\Services\Content\ContentTypeService;
 use Illuminate\Http\JsonResponse;
@@ -46,14 +45,15 @@ class ContentController extends Controller
     public function storeType(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'name'     => ['required', 'string', 'max:255'],
-            'slug'     => ['nullable', 'string', 'max:100', 'regex:/^[a-z][a-z0-9_-]*$/'],
-            'schema'   => ['required', 'array'],
+            'name' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:100', 'regex:/^[a-z][a-z0-9_-]*$/'],
+            'schema' => ['required', 'array'],
             'settings' => ['nullable', 'array'],
         ]);
 
         try {
             $type = $this->typeService->create($request->workspace_id, $validated);
+
             return $this->success(['data' => $type], 201);
         } catch (\InvalidArgumentException $e) {
             return $this->error($e->getMessage(), 422);
@@ -67,7 +67,7 @@ class ContentController extends Controller
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
-        if (!$type) {
+        if (! $type) {
             return $this->error("Content type [{$slug}] not found.", 404);
         }
 
@@ -81,12 +81,13 @@ class ContentController extends Controller
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
-        if (!$type) {
+        if (! $type) {
             return $this->error("Content type [{$slug}] not found.", 404);
         }
 
         try {
             $updated = $this->typeService->update($type, $request->all());
+
             return $this->success(['data' => $updated]);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), 422);
@@ -100,12 +101,13 @@ class ContentController extends Controller
     {
         $type = $this->typeService->findBySlug($request->workspace_id, $slug);
 
-        if (!$type) {
+        if (! $type) {
             return $this->error("Content type [{$slug}] not found.", 404);
         }
 
         try {
             $this->typeService->delete($type);
+
             return $this->success(['message' => "Content type [{$slug}] deleted."]);
         } catch (\RuntimeException $e) {
             return $this->error($e->getMessage(), 403);
@@ -132,7 +134,7 @@ class ContentController extends Controller
         $workspaceId = $request->workspace_id;
         $contentType = $this->typeService->findBySlug($workspaceId, $type);
 
-        if (!$contentType) {
+        if (! $contentType) {
             return $this->error("Content type [{$type}] not found.", 404);
         }
 
@@ -140,13 +142,13 @@ class ContentController extends Controller
 
         return response()->json([
             'success' => true,
-            'data'    => $result->items(),
-            'meta'    => [
-                'total'        => $result->total(),
-                'page'         => $result->currentPage(),
-                'per_page'     => $result->perPage(),
-                'total_pages'  => $result->lastPage(),
-                'has_more'     => $result->hasMorePages(),
+            'data' => $result->items(),
+            'meta' => [
+                'total' => $result->total(),
+                'page' => $result->currentPage(),
+                'per_page' => $result->perPage(),
+                'total_pages' => $result->lastPage(),
+                'has_more' => $result->hasMorePages(),
             ],
         ]);
     }
@@ -161,7 +163,7 @@ class ContentController extends Controller
 
         $contentType = $this->typeService->findBySlug($workspaceId, $type);
 
-        if (!$contentType) {
+        if (! $contentType) {
             return $this->error("Content type [{$type}] not found.", 404);
         }
 
@@ -187,8 +189,8 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         return $this->success(['data' => $item]);
@@ -202,12 +204,13 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         try {
             $updated = $this->itemService->update($item, $request->all(), $request->user()?->id);
+
             return $this->success(['data' => $updated]);
         } catch (\InvalidArgumentException $e) {
             return $this->error($e->getMessage(), 422);
@@ -222,8 +225,8 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         $this->itemService->delete($item);
@@ -239,8 +242,8 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         $published = $this->itemService->publish($item, $request->user()?->id);
@@ -256,8 +259,8 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         $unpublished = $this->itemService->unpublish($item, $request->user()?->id);
@@ -273,8 +276,8 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         $versions = $this->itemService->getVersions($item);
@@ -290,12 +293,13 @@ class ContentController extends Controller
     {
         $item = $this->itemService->findOne($request->workspace_id, $type, $id);
 
-        if (!$item) {
-            return $this->error("Content item not found.", 404);
+        if (! $item) {
+            return $this->error('Content item not found.', 404);
         }
 
         try {
             $restored = $this->itemService->restoreVersion($item, $version, $request->user()?->id);
+
             return $this->success(['data' => $restored]);
         } catch (\Exception $e) {
             return $this->error($e->getMessage(), 422);

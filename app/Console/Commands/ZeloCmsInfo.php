@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Services\Plugin\PluginSandbox;
 use Illuminate\Console\Attributes\Description;
 use Illuminate\Console\Attributes\Signature;
 use Illuminate\Console\Command;
@@ -17,11 +18,11 @@ class ZeloCmsInfo extends Command
     {
         $this->info('ZeloCoreCMS CLI Tool');
         $this->line('====================');
-        $this->line('CMS Version: ' . config('app.cms.version', '1.0.0'));
-        $this->line('PHP Version: ' . PHP_VERSION);
-        $this->line('Laravel Version: ' . app()->version());
-        $this->line('Plugin Sandbox Tier: ' . app(\App\Services\Plugin\PluginSandbox::class)->getTierDescription());
-        
+        $this->line('CMS Version: '.config('app.cms.version', '1.0.0'));
+        $this->line('PHP Version: '.PHP_VERSION);
+        $this->line('Laravel Version: '.app()->version());
+        $this->line('Plugin Sandbox Tier: '.app(PluginSandbox::class)->getTierDescription());
+
         return self::SUCCESS;
     }
 }

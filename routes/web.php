@@ -1,9 +1,9 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
 use App\Services\Theme\ThemeManager;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('theme::index');
@@ -29,7 +29,7 @@ Route::get('/contact', function () {
     return view('theme::contact');
 });
 
-Route::post('/contact', function (\Illuminate\Http\Request $request) {
+Route::post('/contact', function (Request $request) {
     // Basic mock of form processing
     return back()->with('success', 'Thanks for contacting us! We will get back to you shortly.');
 });
@@ -37,9 +37,9 @@ Route::post('/contact', function (\Illuminate\Http\Request $request) {
 Route::get('/theme-assets/{path}', function ($path) {
     $themeManager = app(ThemeManager::class);
     $activeTheme = $themeManager->getActiveThemeSlug();
-    $fullPath = $themeManager->getThemePath($activeTheme) . '/public/' . $path;
+    $fullPath = $themeManager->getThemePath($activeTheme).'/public/'.$path;
 
-    if (!File::exists($fullPath)) {
+    if (! File::exists($fullPath)) {
         abort(404);
     }
 

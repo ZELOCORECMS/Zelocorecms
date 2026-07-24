@@ -36,7 +36,7 @@ class AuthTest extends TestCase
                     'workspace',
                     'access_token',
                     'token_type',
-                ]
+                ],
             ]);
 
         $this->assertDatabaseHas('zc_users', [
@@ -44,7 +44,7 @@ class AuthTest extends TestCase
             'first_name' => 'John',
             'last_name' => 'Doe',
         ]);
-        
+
         $this->assertDatabaseHas('zc_workspaces', [
             'name' => "John's Workspace",
         ]);
@@ -70,7 +70,7 @@ class AuthTest extends TestCase
                     'access_token',
                     'token_type',
                     'expires_at',
-                ]
+                ],
             ]);
     }
 
@@ -95,7 +95,7 @@ class AuthTest extends TestCase
         $token = $user->createToken('test-token')->plainTextToken;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->postJson('/api/auth/logout');
 
         $response->assertStatus(200);
@@ -110,7 +110,7 @@ class AuthTest extends TestCase
         $token = $user->createToken('test-token')->plainTextToken;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->getJson('/api/auth/me');
 
         $response->assertStatus(200)
@@ -119,7 +119,7 @@ class AuthTest extends TestCase
                 'data' => [
                     'user',
                     'workspaces',
-                ]
+                ],
             ]);
     }
 }

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Content Type Service
  * Manages content type definitions (like WordPress custom post types, but typed).
@@ -20,28 +21,28 @@ class ContentTypeService
 {
     // Built-in field types supported by ZELOCORECMS
     public const FIELD_TYPES = [
-        'text'          => ['label' => 'Short Text', 'icon' => 'text'],
-        'textarea'      => ['label' => 'Long Text', 'icon' => 'align-left'],
-        'richtext'      => ['label' => 'Rich Text (Editor)', 'icon' => 'file-text'],
-        'number'        => ['label' => 'Number', 'icon' => 'hash'],
-        'decimal'       => ['label' => 'Decimal', 'icon' => 'hash'],
-        'boolean'       => ['label' => 'Boolean (True/False)', 'icon' => 'toggle-left'],
-        'date'          => ['label' => 'Date', 'icon' => 'calendar'],
-        'datetime'      => ['label' => 'Date & Time', 'icon' => 'clock'],
-        'time'          => ['label' => 'Time', 'icon' => 'clock'],
-        'email'         => ['label' => 'Email', 'icon' => 'mail'],
-        'url'           => ['label' => 'URL', 'icon' => 'link'],
-        'slug'          => ['label' => 'Slug (URL-friendly)', 'icon' => 'link-2'],
-        'color'         => ['label' => 'Color', 'icon' => 'droplet'],
-        'select'        => ['label' => 'Dropdown Select', 'icon' => 'chevron-down'],
-        'multiselect'   => ['label' => 'Multi-select', 'icon' => 'check-square'],
-        'tags'          => ['label' => 'Tags', 'icon' => 'tag'],
-        'media'         => ['label' => 'Media (image/file)', 'icon' => 'image'],
-        'relation'      => ['label' => 'Relation to another type', 'icon' => 'git-merge'],
-        'json'          => ['label' => 'JSON (custom data)', 'icon' => 'code'],
-        'blocks'        => ['label' => 'Dynamic Zone (blocks)', 'icon' => 'layers'],
-        'repeater'      => ['label' => 'Repeater group', 'icon' => 'list'],
-        'coordinates'   => ['label' => 'Geographic Coordinates', 'icon' => 'map-pin'],
+        'text' => ['label' => 'Short Text', 'icon' => 'text'],
+        'textarea' => ['label' => 'Long Text', 'icon' => 'align-left'],
+        'richtext' => ['label' => 'Rich Text (Editor)', 'icon' => 'file-text'],
+        'number' => ['label' => 'Number', 'icon' => 'hash'],
+        'decimal' => ['label' => 'Decimal', 'icon' => 'hash'],
+        'boolean' => ['label' => 'Boolean (True/False)', 'icon' => 'toggle-left'],
+        'date' => ['label' => 'Date', 'icon' => 'calendar'],
+        'datetime' => ['label' => 'Date & Time', 'icon' => 'clock'],
+        'time' => ['label' => 'Time', 'icon' => 'clock'],
+        'email' => ['label' => 'Email', 'icon' => 'mail'],
+        'url' => ['label' => 'URL', 'icon' => 'link'],
+        'slug' => ['label' => 'Slug (URL-friendly)', 'icon' => 'link-2'],
+        'color' => ['label' => 'Color', 'icon' => 'droplet'],
+        'select' => ['label' => 'Dropdown Select', 'icon' => 'chevron-down'],
+        'multiselect' => ['label' => 'Multi-select', 'icon' => 'check-square'],
+        'tags' => ['label' => 'Tags', 'icon' => 'tag'],
+        'media' => ['label' => 'Media (image/file)', 'icon' => 'image'],
+        'relation' => ['label' => 'Relation to another type', 'icon' => 'git-merge'],
+        'json' => ['label' => 'JSON (custom data)', 'icon' => 'code'],
+        'blocks' => ['label' => 'Dynamic Zone (blocks)', 'icon' => 'layers'],
+        'repeater' => ['label' => 'Repeater group', 'icon' => 'list'],
+        'coordinates' => ['label' => 'Geographic Coordinates', 'icon' => 'map-pin'],
     ];
 
     public function __construct(
@@ -83,11 +84,11 @@ class ContentTypeService
 
         $contentType = ContentType::create([
             'workspace_id' => $workspaceId,
-            'slug'         => Str::slug($data['slug'] ?? $data['name']),
-            'name'         => $data['name'],
-            'schema'       => $schema,
-            'settings'     => $data['settings'] ?? null,
-            'is_system'    => false,
+            'slug' => Str::slug($data['slug'] ?? $data['name']),
+            'name' => $data['name'],
+            'schema' => $schema,
+            'settings' => $data['settings'] ?? null,
+            'is_system' => false,
         ]);
 
         $this->hooks->doAction('contentType.afterCreate', $contentType);
@@ -161,7 +162,7 @@ class ContentTypeService
                 throw new \InvalidArgumentException('Each field must have a name.');
             }
 
-            if (!preg_match('/^[a-z][a-z0-9_]*$/', $field['name'])) {
+            if (! preg_match('/^[a-z][a-z0-9_]*$/', $field['name'])) {
                 throw new \InvalidArgumentException(
                     "Field name [{$field['name']}] must be lowercase alphanumeric with underscores."
                 );
@@ -174,10 +175,10 @@ class ContentTypeService
             // Allow plugins to register custom field types
             $allowedTypes = $this->hooks->applyFilters('content.allowedFieldTypes', $validTypes);
 
-            if (!in_array($field['type'], $allowedTypes, true)) {
+            if (! in_array($field['type'], $allowedTypes, true)) {
                 throw new \InvalidArgumentException(
-                    "Field [{$field['name']}] has unknown type [{$field['type']}]. " .
-                    "Valid types: " . implode(', ', $allowedTypes)
+                    "Field [{$field['name']}] has unknown type [{$field['type']}]. ".
+                    'Valid types: '.implode(', ', $allowedTypes)
                 );
             }
 
@@ -205,15 +206,15 @@ class ContentTypeService
         // Check if slug field already exists
         $hasSlug = collect($schema)->contains('name', 'slug');
 
-        if (!$hasSlug) {
+        if (! $hasSlug) {
             // Prepend a slug field
             array_unshift($schema, [
-                'name'       => 'slug',
-                'type'       => 'slug',
-                'label'      => 'URL Slug',
-                'required'   => false,
-                'is_system'  => true,
-                'help'       => 'Auto-generated from the first text field if left empty.',
+                'name' => 'slug',
+                'type' => 'slug',
+                'label' => 'URL Slug',
+                'required' => false,
+                'is_system' => true,
+                'help' => 'Auto-generated from the first text field if left empty.',
             ]);
         }
 
@@ -266,11 +267,11 @@ class ContentTypeService
 
         ContentType::create([
             'workspace_id' => $workspaceId,
-            'slug'         => $slug,
-            'name'         => $name,
-            'schema'       => $this->injectSystemFields($schema),
-            'settings'     => null,
-            'is_system'    => true,
+            'slug' => $slug,
+            'name' => $name,
+            'schema' => $this->injectSystemFields($schema),
+            'settings' => null,
+            'is_system' => true,
         ]);
     }
 }

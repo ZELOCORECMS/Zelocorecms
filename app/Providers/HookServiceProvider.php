@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Hook Service Provider
  * Registers built-in hook definitions and loads plugin hooks.
@@ -75,7 +76,7 @@ class HookServiceProvider extends ServiceProvider
         // ─── Media Hooks ──────────────────────────────────────────────────
 
         // media.beforeUpload — Before file is processed
-        // Action: (array $file) 
+        // Action: (array $file)
 
         // media.afterUpload — After file is uploaded and processed
         // Action: (Media $media)
@@ -129,6 +130,7 @@ class HookServiceProvider extends ServiceProvider
         // Built-in filter: Add ZeloCMS info to all API responses
         $hooks->addFilter('api.response.meta', function (array $meta): array {
             $meta['zelocms_version'] = config('app.cms.version', '1.0.0');
+
             return $meta;
         }, 1);
 

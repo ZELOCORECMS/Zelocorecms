@@ -64,6 +64,10 @@
               v-if="theme.is_active"
               class="wp-admin-btn wp-admin-btn--secondary"
             >Customize</button>
+            <button
+              class="wp-admin-btn wp-admin-btn--secondary"
+              @click="updateTheme(theme.slug)"
+            >Update</button>
           </div>
         </div>
 
@@ -103,7 +107,7 @@ const workspaceSlug = 'default';
 
 const loadThemes = async () => {
     try {
-        const res = await axios.get(`/api/v1/workspaces/${workspaceSlug}/themes`);
+        const res = await axios.get(`/api/workspaces/${workspaceSlug}/themes`);
         themes.value = res.data.data;
     } catch (e) {
         console.error('Failed to load themes:', e);
@@ -112,10 +116,21 @@ const loadThemes = async () => {
 
 const activateTheme = async (slug) => {
     try {
-        await axios.post(`/api/v1/workspaces/${workspaceSlug}/themes/${slug}/activate`);
+        await axios.post(`/api/workspaces/${workspaceSlug}/themes/${slug}/activate`);
         loadThemes();
     } catch (e) {
         console.error('Failed to activate theme:', e);
+    }
+};
+
+const updateTheme = async (slug) => {
+    try {
+        await axios.post(`/api/workspaces/${workspaceSlug}/themes/${slug}/update`);
+        alert('Theme updated successfully.');
+        loadThemes();
+    } catch (e) {
+        console.error('Failed to update theme:', e);
+        alert('Failed to update theme.');
     }
 };
 

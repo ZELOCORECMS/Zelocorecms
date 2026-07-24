@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Workspace Controller
  * Manages workspaces and workspace members.
@@ -48,7 +49,7 @@ class WorkspaceController extends Controller
             'plan' => ['nullable', 'in:free,starter,pro,business,enterprise'],
         ]);
 
-        $slug = $validated['slug'] ?? Str::slug($validated['name']) . '-' . Str::random(6);
+        $slug = $validated['slug'] ?? Str::slug($validated['name']).'-'.Str::random(6);
 
         $workspace = Workspace::create([
             'slug' => $slug,
@@ -59,8 +60,8 @@ class WorkspaceController extends Controller
         // Add user as member (assuming they want to be admin if they created it)
         WorkspaceMember::create([
             'workspace_id' => $workspace->id,
-            'user_id'      => $request->user()->id,
-            'joined_at'    => now(),
+            'user_id' => $request->user()->id,
+            'joined_at' => now(),
         ]);
 
         return response()->json(['success' => true, 'data' => $workspace], 201);
@@ -72,6 +73,7 @@ class WorkspaceController extends Controller
     public function show(Request $request, string $slug): JsonResponse
     {
         $workspace = Workspace::where('slug', $slug)->firstOrFail();
+
         return response()->json(['success' => true, 'data' => $workspace]);
     }
 
@@ -132,7 +134,7 @@ class WorkspaceController extends Controller
     public function removeMember(Request $request, string $slug, string $userId): JsonResponse
     {
         $workspace = Workspace::where('slug', $slug)->firstOrFail();
-        
+
         WorkspaceMember::where('workspace_id', $workspace->id)
             ->where('user_id', $userId)
             ->delete();

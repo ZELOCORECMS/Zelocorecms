@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — API Routes
  *
@@ -7,16 +8,17 @@
  * @license GPL-2.0-or-later
  */
 
+use App\Http\Controllers\Api\AuditController;
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\ContentController;
 use App\Http\Controllers\Api\MediaController;
-use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\PluginController;
 use App\Http\Controllers\Api\ThemeController;
-use App\Http\Controllers\Api\WorkspaceController;
+use App\Http\Controllers\Api\UserController;
 use App\Http\Controllers\Api\WebhookController;
-use App\Http\Controllers\Api\AuditController;
+use App\Http\Controllers\Api\WorkspaceController;
 use App\Http\Middleware\WorkspaceMiddleware;
+use App\Services\Plugin\PluginSandbox;
 use Illuminate\Support\Facades\Route;
 
 // ─── Public Routes (No Authentication Required) ──────────────────────────────
@@ -138,6 +140,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::get('/', [ThemeController::class, 'index'])->name('index');
                 Route::post('/install', [ThemeController::class, 'install'])->name('install');
                 Route::post('/{themeSlug}/activate', [ThemeController::class, 'activate'])->name('activate');
+                Route::post('/{themeSlug}/update', [ThemeController::class, 'update'])->name('update');
             });
 
             // Webhooks
@@ -158,11 +161,11 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::middleware('can:super-admin')
         ->prefix('admin')
         ->group(function () {
-            Route::get('/system-info', fn() => response()->json([
+            Route::get('/system-info', fn () => response()->json([
                 'cms_version' => config('app.cms.version'),
                 'php_version' => PHP_VERSION,
                 'laravel_version' => app()->version(),
-                'plugin_sandbox_tier' => app(\App\Services\Plugin\PluginSandbox::class)->getTierDescription(),
+                'plugin_sandbox_tier' => app(PluginSandbox::class)->getTierDescription(),
             ]));
         });
 });

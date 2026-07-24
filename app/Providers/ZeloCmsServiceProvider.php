@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Main CMS Service Provider
  * Bootstraps the ZELOCORECMS core services into Laravel.
@@ -10,16 +11,17 @@ declare(strict_types=1);
 
 namespace App\Providers;
 
-use App\Services\Hooks\HookRegistry;
-use App\Services\Plugin\PluginSandbox;
-use App\Services\Plugin\PluginManager;
-use App\Services\Theme\ThemeManager;
-use App\Services\Content\ContentTypeService;
-use App\Services\Content\ContentItemService;
-use App\Services\Media\MediaService;
+use App\Console\Commands\ZeloCmsInfo;
 use App\Services\Auth\JwtService;
-use Illuminate\Support\ServiceProvider;
+use App\Services\Content\ContentItemService;
+use App\Services\Content\ContentTypeService;
+use App\Services\Hooks\HookRegistry;
+use App\Services\Media\MediaService;
+use App\Services\Plugin\PluginManager;
+use App\Services\Plugin\PluginSandbox;
+use App\Services\Theme\ThemeManager;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class ZeloCmsServiceProvider extends ServiceProvider
 {
@@ -29,25 +31,25 @@ class ZeloCmsServiceProvider extends ServiceProvider
     public function register(): void
     {
         // Core CMS services
-        $this->app->singleton(HookRegistry::class, fn() => new HookRegistry());
-        $this->app->singleton(PluginSandbox::class, fn() => new PluginSandbox());
+        $this->app->singleton(HookRegistry::class, fn () => new HookRegistry);
+        $this->app->singleton(PluginSandbox::class, fn () => new PluginSandbox);
         $this->app->singleton(ContentTypeService::class);
         $this->app->singleton(ContentItemService::class);
         $this->app->singleton(MediaService::class);
         $this->app->singleton(JwtService::class);
-        $this->app->singleton(ThemeManager::class, fn() => new ThemeManager());
+        $this->app->singleton(ThemeManager::class, fn () => new ThemeManager);
 
         // Plugin Manager depends on HookRegistry and PluginSandbox
         $this->app->singleton(
             PluginManager::class,
-            fn($app) => new PluginManager(
+            fn ($app) => new PluginManager(
                 hooks: $app->make(HookRegistry::class),
                 sandbox: $app->make(PluginSandbox::class),
             )
         );
 
         // Merge ZELOCORECMS config
-        $this->mergeConfigFrom(__DIR__ . '/../../config/zelocms.php', 'zelocms');
+        $this->mergeConfigFrom(__DIR__.'/../../config/zelocms.php', 'zelocms');
     }
 
     /**
@@ -75,12 +77,12 @@ class ZeloCmsServiceProvider extends ServiceProvider
         // Publish config files
         if ($this->app->runningInConsole()) {
             $this->publishes([
-                __DIR__ . '/../../config/zelocms.php' => config_path('zelocms.php'),
+                __DIR__.'/../../config/zelocms.php' => config_path('zelocms.php'),
             ], 'zelocms-config');
 
             // Register Artisan commands
             $this->commands([
-                \App\Console\Commands\ZeloCmsInfo::class,
+                ZeloCmsInfo::class,
             ]);
         }
     }
@@ -89,7 +91,7 @@ class ZeloCmsServiceProvider extends ServiceProvider
     {
         // API routes
         $this->app->make('router')->group([
-            'prefix'     => 'api/v1',
+            'prefix' => 'api/v1',
             'middleware' => ['api'],
         ], function () {
             require base_path('routes/api.php');
@@ -97,7 +99,7 @@ class ZeloCmsServiceProvider extends ServiceProvider
 
         // Admin routes (SPA — serves Vue.js admin)
         $this->app->make('router')->group([
-            'prefix'     => config('app.cms.admin_path', 'admin'),
+            'prefix' => config('app.cms.admin_path', 'admin'),
             'middleware' => ['web'],
         ], function () {
             require base_path('routes/admin.php');

@@ -1,38 +1,35 @@
 @extends('theme::layouts.main')
 
-@section('title', 'Contact | ZeloCoreCMS')
+@section('title', 'Contact - ZeloCoreCMS')
 
 @section('content')
-<section class="container">
-    <div class="prose" style="max-width: 600px;">
-        <h1 style="text-align: center;">Contact Us</h1>
-        <p style="text-align: center;">Have a question about ZeloCoreCMS or want to inquire about enterprise features? Drop us a line.</p>
+<div class="page-content">
+    <h2>Contact Us</h2>
+    
+    @if(session('success'))
+        <div class="alert alert-success" style="background:#d4edda; color:#155724; padding:15px; border-radius:4px; margin-bottom:20px;">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    <form action="/contact" method="POST" style="max-width:500px;">
+        @csrf
+        <div style="margin-bottom:15px;">
+            <label for="name" style="display:block; margin-bottom:5px;">Name</label>
+            <input type="text" id="name" name="name" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+        </div>
         
-        @if(session('success'))
-            <div style="background-color: #dcfce7; color: #166534; padding: 1rem; border-radius: 8px; margin-top: 1rem; text-align: center;">
-                {{ session('success') }}
-            </div>
-        @endif
+        <div style="margin-bottom:15px;">
+            <label for="email" style="display:block; margin-bottom:5px;">Email</label>
+            <input type="email" id="email" name="email" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;">
+        </div>
         
-        <form action="/contact" method="POST" style="margin-top: 2rem;">
-            @csrf
-            <div class="form-group">
-                <label class="form-label" for="name">Your Name</label>
-                <input class="form-input" type="text" id="name" name="name" required placeholder="John Doe">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="email">Email Address</label>
-                <input class="form-input" type="email" id="email" name="email" required placeholder="john@example.com">
-            </div>
-            
-            <div class="form-group">
-                <label class="form-label" for="message">Message</label>
-                <textarea class="form-input" id="message" name="message" rows="5" required placeholder="How can we help?"></textarea>
-            </div>
-            
-            <button type="submit" class="btn-primary" style="width: 100%;">Send Message</button>
-        </form>
-    </div>
-</section>
+        <div style="margin-bottom:15px;">
+            <label for="message" style="display:block; margin-bottom:5px;">Message</label>
+            <textarea id="message" name="message" rows="5" required style="width:100%; padding:8px; border:1px solid #ccc; border-radius:4px;"></textarea>
+        </div>
+        
+        <button type="submit" style="background:#007cba; color:#fff; padding:10px 20px; border:none; border-radius:4px; cursor:pointer;">Send Message</button>
+    </form>
+</div>
 @endsection

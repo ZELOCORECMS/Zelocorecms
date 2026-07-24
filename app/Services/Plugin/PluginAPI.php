@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Plugin API
  * The restricted API exposed to plugins. Plugins CANNOT access the database,
@@ -11,6 +12,10 @@ declare(strict_types=1);
 
 namespace App\Services\Plugin;
 
+use App\Jobs\SendPluginEmail;
+use App\Models\ContentItem;
+use App\Models\Media;
+use App\Models\Option;
 use App\Services\Hooks\HookRegistry;
 use Illuminate\Support\Facades\Log;
 
@@ -37,6 +42,7 @@ class PluginAPI
     public function addFilter(string $hook, callable $callback, int $priority = 10): mixed
     {
         $this->hooks->addFilter($hook, $callback, $priority);
+
         return null;
     }
 
@@ -51,9 +57,9 @@ class PluginAPI
     {
         $this->requirePermission('content:read');
 
-        return \App\Models\ContentItem::where('content_type_slug', $type)
-            ->when(!empty($query['status']), fn($q) => $q->where('status', $query['status']))
-            ->when(!empty($query['limit']), fn($q) => $q->limit($query['limit']))
+        return ContentItem::where('content_type_slug', $type)
+            ->when(! empty($query['status']), fn ($q) => $q->where('status', $query['status']))
+            ->when(! empty($query['limit']), fn ($q) => $q->limit($query['limit']))
             ->get()
             ->toArray();
     }
@@ -62,10 +68,10 @@ class PluginAPI
     {
         $this->requirePermission('content:write');
 
-        $item = \App\Models\ContentItem::create([
+        $item = ContentItem::create([
             'content_type_slug' => $type,
-            'data'              => $data,
-            'status'            => 'draft',
+            'data' => $data,
+            'status' => 'draft',
             'created_by_plugin' => $this->pluginSlug,
         ]);
 
@@ -78,7 +84,7 @@ class PluginAPI
     {
         $this->requirePermission('settings:read');
 
-        return \App\Models\Option::where('option_key', "plugin.{$this->pluginSlug}.{$key}")
+        return Option::where('option_key', "plugin.{$this->pluginSlug}.{$key}")
             ->value('option_value') ?? $default;
     }
 
@@ -86,7 +92,7 @@ class PluginAPI
     {
         $this->requirePermission('settings:read'); // write implies read
 
-        \App\Models\Option::updateOrCreate(
+        Option::updateOrCreate(
             ['option_key' => "plugin.{$this->pluginSlug}.{$key}"],
             ['option_value' => is_array($value) ? json_encode($value) : (string) $value]
         );
@@ -98,9 +104,9 @@ class PluginAPI
     {
         $this->requirePermission('media:read');
 
-        return \App\Models\Media::when(
-            !empty($query['mime_type']),
-            fn($q) => $q->where('mime_type', 'like', $query['mime_type'] . '%')
+        return Media::when(
+            ! empty($query['mime_type']),
+            fn ($q) => $q->where('mime_type', 'like', $query['mime_type'].'%')
         )->limit($query['limit'] ?? 20)->get()->toArray();
     }
 
@@ -112,13 +118,13 @@ class PluginAPI
 
         // Store admin menu items for the admin UI to render
         $existing = json_decode(
-            \App\Models\Option::where('option_key', 'admin.plugin_menus')->value('option_value') ?? '[]',
+            Option::where('option_key', 'admin.plugin_menus')->value('option_value') ?? '[]',
             true
         );
 
         $existing[] = array_merge($menuItem, ['plugin' => $this->pluginSlug]);
 
-        \App\Models\Option::updateOrCreate(
+        Option::updateOrCreate(
             ['option_key' => 'admin.plugin_menus'],
             ['option_value' => json_encode($existing)]
         );
@@ -131,9 +137,9 @@ class PluginAPI
         $this->requirePermission('email:send');
 
         // Queue the email for safety (no blocking)
-        dispatch(new \App\Jobs\SendPluginEmail(
+        dispatch(new SendPluginEmail(
             to: $to,
-            subject: "[{$this->pluginSlug}] " . $subject,
+            subject: "[{$this->pluginSlug}] ".$subject,
             body: $body,
             pluginSlug: $this->pluginSlug
         ));
@@ -145,21 +151,21 @@ class PluginAPI
     {
         $levels = ['debug', 'info', 'warning', 'error'];
 
-        if (!in_array($level, $levels)) {
+        if (! in_array($level, $levels)) {
             $level = 'info';
         }
 
-        Log::$level("[Plugin:{$this->pluginSlug}] " . $message, $context);
+        Log::$level("[Plugin:{$this->pluginSlug}] ".$message, $context);
     }
 
     // ─── Permission Check Helper ───────────────────────────────────────────
 
     private function requirePermission(string $permission): void
     {
-        if (!in_array($permission, $this->permissions, true)) {
+        if (! in_array($permission, $this->permissions, true)) {
             throw new \RuntimeException(
-                "Plugin [{$this->pluginSlug}] does not have permission: [{$permission}]. " .
-                "Add it to your plugin.json declared_permissions array."
+                "Plugin [{$this->pluginSlug}] does not have permission: [{$permission}]. ".
+                'Add it to your plugin.json declared_permissions array.'
             );
         }
     }

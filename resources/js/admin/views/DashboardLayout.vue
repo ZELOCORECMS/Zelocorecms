@@ -183,6 +183,12 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-file"></i></span>
               <span class="wp-admin-sidebar__menu-text">Posts</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/content/blog-post" class="wp-admin-sidebar__submenu-link">All Posts</router-link></li>
+              <li><router-link to="/admin/content/blog-post/new" class="wp-admin-sidebar__submenu-link">Add New</router-link></li>
+              <li><router-link to="/admin/content/categories" class="wp-admin-sidebar__submenu-link">Categories</router-link></li>
+              <li><router-link to="/admin/content/tags" class="wp-admin-sidebar__submenu-link">Tags</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -194,6 +200,10 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-images"></i></span>
               <span class="wp-admin-sidebar__menu-text">Media</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/media" class="wp-admin-sidebar__submenu-link">Library</router-link></li>
+              <li><router-link to="/admin/media/new" class="wp-admin-sidebar__submenu-link">Add New</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -205,6 +215,10 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-copy"></i></span>
               <span class="wp-admin-sidebar__menu-text">Pages</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/pages" class="wp-admin-sidebar__submenu-link">All Pages</router-link></li>
+              <li><router-link to="/admin/pages/new" class="wp-admin-sidebar__submenu-link">Add New</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -244,6 +258,13 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-palette"></i></span>
               <span class="wp-admin-sidebar__menu-text">Appearance</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/themes" class="wp-admin-sidebar__submenu-link">Themes</router-link></li>
+              <li><router-link to="/admin/customize" class="wp-admin-sidebar__submenu-link">Customize</router-link></li>
+              <li><router-link to="/admin/widgets" class="wp-admin-sidebar__submenu-link">Widgets</router-link></li>
+              <li><router-link to="/admin/menus" class="wp-admin-sidebar__submenu-link">Menus</router-link></li>
+              <li><router-link to="/admin/theme-editor" class="wp-admin-sidebar__submenu-link">Theme File Editor</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -255,6 +276,11 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-box"></i></span>
               <span class="wp-admin-sidebar__menu-text">Plugins</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/plugins" class="wp-admin-sidebar__submenu-link">Installed Plugins</router-link></li>
+              <li><router-link to="/admin/plugins/new" class="wp-admin-sidebar__submenu-link">Add New</router-link></li>
+              <li><router-link to="/admin/plugin-editor" class="wp-admin-sidebar__submenu-link">Plugin File Editor</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -266,6 +292,11 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-users"></i></span>
               <span class="wp-admin-sidebar__menu-text">Users</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/users" class="wp-admin-sidebar__submenu-link">All Users</router-link></li>
+              <li><router-link to="/admin/users/new" class="wp-admin-sidebar__submenu-link">Add New</router-link></li>
+              <li><router-link to="/admin/profile" class="wp-admin-sidebar__submenu-link">Profile</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -277,6 +308,14 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-wrench"></i></span>
               <span class="wp-admin-sidebar__menu-text">Tools</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/tools" class="wp-admin-sidebar__submenu-link">Available Tools</router-link></li>
+              <li><router-link to="/admin/tools/import" class="wp-admin-sidebar__submenu-link">Import</router-link></li>
+              <li><router-link to="/admin/tools/export" class="wp-admin-sidebar__submenu-link">Export</router-link></li>
+              <li><router-link to="/admin/tools/site-health" class="wp-admin-sidebar__submenu-link">Site Health</router-link></li>
+              <li><router-link to="/admin/tools/export-personal-data" class="wp-admin-sidebar__submenu-link">Export Personal Data</router-link></li>
+              <li><router-link to="/admin/tools/erase-personal-data" class="wp-admin-sidebar__submenu-link">Erase Personal Data</router-link></li>
+            </ul>
           </li>
           <li class="wp-admin-sidebar__menu-item" role="listitem">
             <router-link
@@ -288,6 +327,15 @@
               <span class="wp-admin-sidebar__menu-icon" aria-hidden="true"><i class="pi pi-cog"></i></span>
               <span class="wp-admin-sidebar__menu-text">Settings</span>
             </router-link>
+            <ul class="wp-admin-sidebar__submenu">
+              <li><router-link to="/admin/settings" class="wp-admin-sidebar__submenu-link">General</router-link></li>
+              <li><router-link to="/admin/settings/writing" class="wp-admin-sidebar__submenu-link">Writing</router-link></li>
+              <li><router-link to="/admin/settings/reading" class="wp-admin-sidebar__submenu-link">Reading</router-link></li>
+              <li><router-link to="/admin/settings/discussion" class="wp-admin-sidebar__submenu-link">Discussion</router-link></li>
+              <li><router-link to="/admin/settings/media" class="wp-admin-sidebar__submenu-link">Media</router-link></li>
+              <li><router-link to="/admin/settings/permalinks" class="wp-admin-sidebar__submenu-link">Permalinks</router-link></li>
+              <li><router-link to="/admin/settings/privacy" class="wp-admin-sidebar__submenu-link">Privacy</router-link></li>
+            </ul>
           </li>
         </ul>
 

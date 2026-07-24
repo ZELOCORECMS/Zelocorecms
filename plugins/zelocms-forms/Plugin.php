@@ -1,29 +1,30 @@
 <?php
 
 declare(strict_types=1);
+use App\Services\Plugin\PluginAPI;
 
 /**
  * ZeloCMS Forms Plugin
  */
 
-/** @var \App\Services\Plugin\PluginAPI $zeloCMS */
+/** @var PluginAPI $zeloCMS */
 
 // Register admin menu
-$zeloCMS->addAction('plugin.activate', function() use ($zeloCMS) {
+$zeloCMS->addAction('plugin.activate', function () use ($zeloCMS) {
     if ($zeloCMS->hasPermission('admin:menu')) {
         $zeloCMS->registerAdminMenu([
             'label' => 'Forms',
             'icon' => 'pi pi-envelope',
-            'route' => '/admin/forms'
+            'route' => '/admin/forms',
         ]);
     }
 });
 
 // Hook into content creation to intercept form submissions (assuming content type 'form_submission')
-$zeloCMS->addAction('content.afterCreate', function($item) use ($zeloCMS) {
+$zeloCMS->addAction('content.afterCreate', function ($item) use ($zeloCMS) {
     if ($item->content_type_slug === 'form_submission') {
         $zeloCMS->log('info', 'New form submission received.', ['id' => $item->id]);
-        
+
         // Notify admin
         if ($zeloCMS->hasPermission('email:send')) {
             $zeloCMS->sendEmail(

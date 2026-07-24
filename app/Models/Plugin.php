@@ -8,9 +8,9 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 
 class Plugin extends Model
 {
@@ -29,12 +29,12 @@ class Plugin extends Model
 
     public function getDirectory(): string
     {
-        return base_path('plugins/' . $this->slug);
+        return base_path('plugins/'.$this->slug);
     }
 
     public function getEntrypoint(): string
     {
-        return $this->getDirectory() . '/Plugin.php';
+        return $this->getDirectory().'/Plugin.php';
     }
 
     public function scopeActive(Builder $query): Builder

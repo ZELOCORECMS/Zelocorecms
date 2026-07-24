@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Plugin Service Provider
  * Loads and activates all enabled plugins.
@@ -11,8 +12,9 @@ declare(strict_types=1);
 namespace App\Providers;
 
 use App\Services\Plugin\PluginManager;
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\ServiceProvider;
 
 class PluginServiceProvider extends ServiceProvider
 {
@@ -21,7 +23,7 @@ class PluginServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Only load plugins if table exists (after migrations have run)
-        if (!Schema::hasTable('zc_plugins')) {
+        if (! Schema::hasTable('zc_plugins')) {
             return;
         }
 
@@ -31,8 +33,8 @@ class PluginServiceProvider extends ServiceProvider
             $manager->bootAllActive();
         } catch (\Throwable $e) {
             // Log but don't crash the app if a plugin fails to load
-            \Illuminate\Support\Facades\Log::error(
-                'ZELOCMS: Plugin boot failed: ' . $e->getMessage(),
+            Log::error(
+                'ZELOCMS: Plugin boot failed: '.$e->getMessage(),
                 ['exception' => $e]
             );
         }

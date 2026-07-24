@@ -8,8 +8,8 @@ declare(strict_types=1);
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\Storage;
 
@@ -40,7 +40,8 @@ class Media extends Model
     public function getThumbnailUrl(string $size): string
     {
         $pathInfo = pathinfo($this->storage_path);
-        $thumbPath = $pathInfo['dirname'] . '/' . $pathInfo['filename'] . '_' . $size . '.' . $pathInfo['extension'];
+        $thumbPath = $pathInfo['dirname'].'/'.$pathInfo['filename'].'_'.$size.'.'.$pathInfo['extension'];
+
         return Storage::disk($this->disk)->url($thumbPath);
     }
 }

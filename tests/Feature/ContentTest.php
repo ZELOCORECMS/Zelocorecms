@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\Role;
 use App\Models\User;
 use App\Models\Workspace;
 use App\Models\WorkspaceMember;
@@ -30,7 +29,7 @@ class ContentTest extends TestCase
         $token = $user->createToken('test-token')->plainTextToken;
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->postJson('/api/workspaces/test-workspace/content-types', [
             'name' => 'Blog Post',
             'slug' => 'blog-post',
@@ -53,7 +52,7 @@ class ContentTest extends TestCase
                     'schema',
                 ],
             ]);
-            
+
         $this->assertDatabaseHas('zc_content_types', [
             'slug' => 'blog-post',
         ]);
@@ -77,7 +76,7 @@ class ContentTest extends TestCase
 
         // First create a content type
         $typeResponse = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->postJson('/api/workspaces/test-workspace-2/content-types', [
             'name' => 'Blog Post',
             'slug' => 'blog-post',
@@ -89,10 +88,10 @@ class ContentTest extends TestCase
                 ],
             ],
         ]);
-        
+
         // Then create a content item
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->postJson('/api/workspaces/test-workspace-2/content/blog-post', [
             'title' => 'My First Post',
             'slug' => 'my-first-post',

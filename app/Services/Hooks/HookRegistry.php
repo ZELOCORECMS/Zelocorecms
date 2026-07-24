@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Hook System
  *
@@ -50,10 +51,10 @@ class HookRegistry
     /**
      * Register an action callback (WordPress-compatible: add_action).
      *
-     * @param string   $hook      The action hook name
-     * @param callable $callback  The callback to register
-     * @param int      $priority  Execution order (lower = earlier, default: 10)
-     * @param int      $acceptedArgs Number of arguments the callback accepts
+     * @param  string  $hook  The action hook name
+     * @param  callable  $callback  The callback to register
+     * @param  int  $priority  Execution order (lower = earlier, default: 10)
+     * @param  int  $acceptedArgs  Number of arguments the callback accepts
      */
     public function addAction(
         string $hook,
@@ -62,20 +63,20 @@ class HookRegistry
         int $acceptedArgs = 1
     ): void {
         $this->actions[$hook][$priority][] = [
-            'callback'      => $callback,
-            'acceptedArgs'  => $acceptedArgs,
+            'callback' => $callback,
+            'acceptedArgs' => $acceptedArgs,
         ];
     }
 
     /**
      * Fire a registered action (WordPress-compatible: do_action).
      *
-     * @param string $hook  The action hook name
-     * @param mixed  ...$args Arguments to pass to callbacks
+     * @param  string  $hook  The action hook name
+     * @param  mixed  ...$args  Arguments to pass to callbacks
      */
     public function doAction(string $hook, mixed ...$args): void
     {
-        if (!isset($this->actions[$hook])) {
+        if (! isset($this->actions[$hook])) {
             return;
         }
 
@@ -91,9 +92,9 @@ class HookRegistry
                     $passedArgs = array_slice($args, 0, $callback['acceptedArgs']);
                     ($callback['callback'])(...$passedArgs);
                 } catch (\Throwable $e) {
-                    Log::error("ZELOCMS Hook Error [{$hook}]: " . $e->getMessage(), [
-                        'hook'      => $hook,
-                        'priority'  => $priority,
+                    Log::error("ZELOCMS Hook Error [{$hook}]: ".$e->getMessage(), [
+                        'hook' => $hook,
+                        'priority' => $priority,
                         'exception' => $e,
                     ]);
                 }
@@ -104,7 +105,7 @@ class HookRegistry
 
         // Track statistics
         $this->stats[$hook] = [
-            'count'      => ($this->stats[$hook]['count'] ?? 0) + 1,
+            'count' => ($this->stats[$hook]['count'] ?? 0) + 1,
             'total_time' => ($this->stats[$hook]['total_time'] ?? 0) + (microtime(true) - $startTime),
         ];
     }
@@ -112,10 +113,10 @@ class HookRegistry
     /**
      * Register a filter callback (WordPress-compatible: add_filter).
      *
-     * @param string   $hook      The filter hook name
-     * @param callable $callback  The callback to register
-     * @param int      $priority  Execution order (lower = earlier, default: 10)
-     * @param int      $acceptedArgs Number of arguments the callback accepts
+     * @param  string  $hook  The filter hook name
+     * @param  callable  $callback  The callback to register
+     * @param  int  $priority  Execution order (lower = earlier, default: 10)
+     * @param  int  $acceptedArgs  Number of arguments the callback accepts
      */
     public function addFilter(
         string $hook,
@@ -124,22 +125,22 @@ class HookRegistry
         int $acceptedArgs = 1
     ): void {
         $this->filters[$hook][$priority][] = [
-            'callback'      => $callback,
-            'acceptedArgs'  => $acceptedArgs,
+            'callback' => $callback,
+            'acceptedArgs' => $acceptedArgs,
         ];
     }
 
     /**
      * Apply registered filters to a value (WordPress-compatible: apply_filters).
      *
-     * @param string $hook   The filter hook name
-     * @param mixed  $value  The value to filter
-     * @param mixed  ...$args Additional arguments
+     * @param  string  $hook  The filter hook name
+     * @param  mixed  $value  The value to filter
+     * @param  mixed  ...$args  Additional arguments
      * @return mixed The filtered value
      */
     public function applyFilters(string $hook, mixed $value, mixed ...$args): mixed
     {
-        if (!isset($this->filters[$hook])) {
+        if (! isset($this->filters[$hook])) {
             return $value;
         }
 
@@ -159,9 +160,9 @@ class HookRegistry
                     // Update value with filter result (if not null, to allow null return)
                     $value = $result;
                 } catch (\Throwable $e) {
-                    Log::error("ZELOCMS Filter Error [{$hook}]: " . $e->getMessage(), [
-                        'hook'      => $hook,
-                        'priority'  => $priority,
+                    Log::error("ZELOCMS Filter Error [{$hook}]: ".$e->getMessage(), [
+                        'hook' => $hook,
+                        'priority' => $priority,
                         'exception' => $e,
                     ]);
                     // On error, keep previous value (don't break the filter chain)
@@ -173,7 +174,7 @@ class HookRegistry
 
         // Track statistics
         $this->stats[$hook] = [
-            'count'      => ($this->stats[$hook]['count'] ?? 0) + 1,
+            'count' => ($this->stats[$hook]['count'] ?? 0) + 1,
             'total_time' => ($this->stats[$hook]['total_time'] ?? 0) + (microtime(true) - $startTime),
         ];
 
@@ -183,9 +184,9 @@ class HookRegistry
     /**
      * Remove a registered action callback.
      *
-     * @param string   $hook     The action hook name
-     * @param callable $callback The callback to remove
-     * @param int      $priority The priority it was registered with
+     * @param  string  $hook  The action hook name
+     * @param  callable  $callback  The callback to remove
+     * @param  int  $priority  The priority it was registered with
      */
     public function removeAction(string $hook, callable $callback, int $priority = 10): bool
     {
@@ -195,9 +196,9 @@ class HookRegistry
     /**
      * Remove a registered filter callback.
      *
-     * @param string   $hook     The filter hook name
-     * @param callable $callback The callback to remove
-     * @param int      $priority The priority it was registered with
+     * @param  string  $hook  The filter hook name
+     * @param  callable  $callback  The callback to remove
+     * @param  int  $priority  The priority it was registered with
      */
     public function removeFilter(string $hook, callable $callback, int $priority = 10): bool
     {
@@ -272,7 +273,7 @@ class HookRegistry
 
     private function removeCallback(array &$registry, string $hook, callable $callback, int $priority): bool
     {
-        if (!isset($registry[$hook][$priority])) {
+        if (! isset($registry[$hook][$priority])) {
             return false;
         }
 
@@ -310,7 +311,7 @@ class HookRegistry
 
     private function hasCallback(array $registry, string $hook, callable|false $callback): bool
     {
-        if (!isset($registry[$hook])) {
+        if (! isset($registry[$hook])) {
             return false;
         }
 
@@ -340,6 +341,7 @@ class HookRegistry
         if (is_array($a) && is_array($b)) {
             return $a[0] === $b[0] && $a[1] === $b[1];
         }
+
         return false;
     }
 }

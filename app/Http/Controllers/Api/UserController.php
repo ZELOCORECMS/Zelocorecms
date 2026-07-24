@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — User Controller
  * Manages users and roles within a workspace.
@@ -12,7 +13,6 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
-use App\Models\User;
 use App\Models\WorkspaceMember;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -29,7 +29,7 @@ class UserController extends Controller
         $members = WorkspaceMember::where('workspace_id', $workspaceId)
             ->with(['user', 'role'])
             ->get()
-            ->map(fn($m) => [
+            ->map(fn ($m) => [
                 'id' => $m->user->id,
                 'email' => $m->user->email,
                 'first_name' => $m->user->first_name,
@@ -104,6 +104,7 @@ class UserController extends Controller
     public function indexRoles(Request $request, string $workspaceSlug): JsonResponse
     {
         $roles = Role::where('workspace_id', $request->workspace_id)->get();
+
         return response()->json(['success' => true, 'data' => $roles]);
     }
 

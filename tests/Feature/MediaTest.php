@@ -4,6 +4,7 @@ namespace Tests\Feature;
 
 use App\Models\User;
 use App\Models\Workspace;
+use App\Models\WorkspaceMember;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
@@ -24,8 +25,8 @@ class MediaTest extends TestCase
             'slug' => 'test-workspace',
             'plan' => 'free',
         ]);
-        
-        \App\Models\WorkspaceMember::create([
+
+        WorkspaceMember::create([
             'workspace_id' => $workspace->id,
             'user_id' => $user->id,
             'joined_at' => now(),
@@ -35,7 +36,7 @@ class MediaTest extends TestCase
         $file = UploadedFile::fake()->create('test.jpg', 100, 'image/jpeg');
 
         $response = $this->withHeaders([
-            'Authorization' => 'Bearer ' . $token,
+            'Authorization' => 'Bearer '.$token,
         ])->postJson('/api/workspaces/test-workspace/media/upload', [
             'file' => $file,
         ]);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Workspace Middleware
  * Resolves workspace from route slug and injects it into the request.
@@ -22,7 +23,7 @@ class WorkspaceMiddleware
     {
         $slug = $request->route('workspaceSlug');
 
-        if (!$slug) {
+        if (! $slug) {
             return response()->json([
                 'success' => false,
                 'message' => 'Workspace slug is required.',
@@ -31,7 +32,7 @@ class WorkspaceMiddleware
 
         $workspace = Workspace::where('slug', $slug)->first();
 
-        if (!$workspace) {
+        if (! $workspace) {
             return response()->json([
                 'success' => false,
                 'message' => "Workspace [{$slug}] not found.",
@@ -44,6 +45,7 @@ class WorkspaceMiddleware
         if ($user && $user->is_super_admin) {
             $request->merge(['workspace_id' => $workspace->id]);
             $request->attributes->set('workspace', $workspace);
+
             return $next($request);
         }
 
@@ -53,7 +55,7 @@ class WorkspaceMiddleware
             ->with('role')
             ->first();
 
-        if (!$membership) {
+        if (! $membership) {
             return response()->json([
                 'success' => false,
                 'message' => 'You do not have access to this workspace.',
@@ -62,7 +64,7 @@ class WorkspaceMiddleware
 
         // Inject workspace context into request
         $request->merge([
-            'workspace_id'   => $workspace->id,
+            'workspace_id' => $workspace->id,
             'workspace_role' => $membership->role,
         ]);
         $request->attributes->set('workspace', $workspace);

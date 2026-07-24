@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Plugin Controller
  * Manages plugin installation, activation, and configuration.

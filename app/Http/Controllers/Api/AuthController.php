@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Authentication Controller
  * Handles registration, login, logout, and token refresh.
@@ -11,17 +12,16 @@ declare(strict_types=1);
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Models\Role;
 use App\Models\User;
 use App\Models\Workspace;
 use App\Models\WorkspaceMember;
-use App\Models\Role;
 use App\Services\Hooks\HookRegistry;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -35,23 +35,23 @@ class AuthController extends Controller
      */
     public function register(Request $request): JsonResponse
     {
-        if (!config('app.cms.allow_registration', false)) {
+        if (! config('app.cms.allow_registration', false)) {
             return $this->error('User registration is disabled on this installation.', 403);
         }
 
         $validated = $request->validate([
-            'email'      => ['required', 'email', 'max:255', 'unique:zc_users,email'],
-            'password'   => ['required', 'string', 'min:12', 'confirmed'],
+            'email' => ['required', 'email', 'max:255', 'unique:zc_users,email'],
+            'password' => ['required', 'string', 'min:12', 'confirmed'],
             'first_name' => ['nullable', 'string', 'max:100'],
-            'last_name'  => ['nullable', 'string', 'max:100'],
+            'last_name' => ['nullable', 'string', 'max:100'],
         ]);
 
         $user = User::create([
-            'email'         => strtolower($validated['email']),
+            'email' => strtolower($validated['email']),
             'password_hash' => Hash::make($validated['password']),
-            'first_name'    => $validated['first_name'] ?? null,
-            'last_name'     => $validated['last_name'] ?? null,
-            'provider'      => 'local',
+            'first_name' => $validated['first_name'] ?? null,
+            'last_name' => $validated['last_name'] ?? null,
+            'provider' => 'local',
         ]);
 
         // Auto-create personal workspace
@@ -66,10 +66,10 @@ class AuthController extends Controller
         )->plainTextToken;
 
         return $this->success([
-            'user'         => $this->formatUser($user),
-            'workspace'    => $workspace->only(['id', 'slug', 'name']),
+            'user' => $this->formatUser($user),
+            'workspace' => $workspace->only(['id', 'slug', 'name']),
             'access_token' => $token,
-            'token_type'   => 'Bearer',
+            'token_type' => 'Bearer',
         ], 201);
     }
 
@@ -80,7 +80,7 @@ class AuthController extends Controller
     public function login(Request $request): JsonResponse
     {
         $validated = $request->validate([
-            'email'    => ['required', 'email'],
+            'email' => ['required', 'email'],
             'password' => ['required', 'string'],
         ]);
 
@@ -102,7 +102,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $email)->first();
 
-        if (!$user || !Hash::check($validated['password'], $user->password_hash)) {
+        if (! $user || ! Hash::check($validated['password'], $user->password_hash)) {
             RateLimiter::hit($rateLimitKey, 900); // 15 min decay
 
             return $this->error('The provided credentials are incorrect.', 401);
@@ -118,18 +118,18 @@ class AuthController extends Controller
         if ($user->mfa_enabled) {
             if (empty($request->mfa_code)) {
                 return $this->success([
-                    'requires_mfa'  => true,
-                    'mfa_token'     => encrypt($user->id . '|' . now()->addMinutes(5)->timestamp),
+                    'requires_mfa' => true,
+                    'mfa_token' => encrypt($user->id.'|'.now()->addMinutes(5)->timestamp),
                 ], 200);
             }
 
-            if (!$this->verifyMfaCode($user, $request->mfa_code)) {
+            if (! $this->verifyMfaCode($user, $request->mfa_code)) {
                 return $this->error('Invalid MFA code.', 401);
             }
         }
 
         // Revoke old tokens if remember is false
-        if (!$request->boolean('remember')) {
+        if (! $request->boolean('remember')) {
             $user->tokens()->delete();
         }
 
@@ -142,10 +142,10 @@ class AuthController extends Controller
         $this->hooks->doAction('auth.login', $user, 'local');
 
         return $this->success([
-            'user'         => $this->formatUser($user),
+            'user' => $this->formatUser($user),
             'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'expires_at'   => $expiry->toISOString(),
+            'token_type' => 'Bearer',
+            'expires_at' => $expiry->toISOString(),
         ]);
     }
 
@@ -174,19 +174,19 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return $this->error('Unauthenticated.', 401);
         }
 
         return $this->success([
-            'user'       => $this->formatUser($user),
+            'user' => $this->formatUser($user),
             'workspaces' => $user->workspaceMembers()
                 ->with('workspace', 'role')
                 ->get()
-                ->map(fn($m) => [
-                    'workspace'   => $m->workspace->only(['id', 'slug', 'name', 'plan']),
-                    'role'        => $m->role?->only(['id', 'name', 'permissions']),
-                    'joined_at'   => $m->joined_at,
+                ->map(fn ($m) => [
+                    'workspace' => $m->workspace->only(['id', 'slug', 'name', 'plan']),
+                    'role' => $m->role?->only(['id', 'name', 'permissions']),
+                    'joined_at' => $m->joined_at,
                 ]),
         ]);
     }
@@ -199,7 +199,7 @@ class AuthController extends Controller
     {
         $user = $request->user();
 
-        if (!$user) {
+        if (! $user) {
             return $this->error('Unauthenticated.', 401);
         }
 
@@ -209,8 +209,8 @@ class AuthController extends Controller
 
         return $this->success([
             'access_token' => $token,
-            'token_type'   => 'Bearer',
-            'expires_at'   => now()->addHours(8)->toISOString(),
+            'token_type' => 'Bearer',
+            'expires_at' => now()->addHours(8)->toISOString(),
         ]);
     }
 
@@ -238,28 +238,28 @@ class AuthController extends Controller
 
     private function createPersonalWorkspace(User $user): Workspace
     {
-        $slug = Str::slug($user->first_name ?? 'workspace') . '-' . Str::random(6);
+        $slug = Str::slug($user->first_name ?? 'workspace').'-'.Str::random(6);
 
         $workspace = Workspace::create([
             'slug' => $slug,
-            'name' => ($user->first_name ? $user->first_name . "'s " : '') . 'Workspace',
+            'name' => ($user->first_name ? $user->first_name."'s " : '').'Workspace',
             'plan' => 'free',
         ]);
 
         // Create admin role
         $adminRole = Role::create([
             'workspace_id' => $workspace->id,
-            'name'         => 'Administrator',
-            'permissions'  => ['*'], // Wildcard = all permissions
-            'is_system'    => true,
+            'name' => 'Administrator',
+            'permissions' => ['*'], // Wildcard = all permissions
+            'is_system' => true,
         ]);
 
         // Add user as workspace admin
         WorkspaceMember::create([
             'workspace_id' => $workspace->id,
-            'user_id'      => $user->id,
-            'role_id'      => $adminRole->id,
-            'joined_at'    => now(),
+            'user_id' => $user->id,
+            'role_id' => $adminRole->id,
+            'joined_at' => now(),
         ]);
 
         return $workspace;
@@ -267,7 +267,7 @@ class AuthController extends Controller
 
     private function verifyMfaCode(User $user, string $code): bool
     {
-        if (!$user->mfa_secret) {
+        if (! $user->mfa_secret) {
             return false;
         }
 
@@ -291,8 +291,8 @@ class AuthController extends Controller
 
     private function calculateTotp(string $secret, int $timeSlice): string
     {
-        $key = base64_decode(strtr($secret, '-_', '+/') . str_repeat('=', 3 - (3 + strlen($secret)) % 4));
-        $time = pack('N*', 0) . pack('N*', $timeSlice);
+        $key = base64_decode(strtr($secret, '-_', '+/').str_repeat('=', 3 - (3 + strlen($secret)) % 4));
+        $time = pack('N*', 0).pack('N*', $timeSlice);
         $hmac = hash_hmac('sha1', $time, $key, true);
         $offset = ord($hmac[strlen($hmac) - 1]) & 0x0F;
         $code = (
@@ -308,14 +308,14 @@ class AuthController extends Controller
     private function formatUser(User $user): array
     {
         return [
-            'id'             => $user->id,
-            'email'          => $user->email,
-            'first_name'     => $user->first_name,
-            'last_name'      => $user->last_name,
-            'avatar_url'     => $user->avatar_url,
+            'id' => $user->id,
+            'email' => $user->email,
+            'first_name' => $user->first_name,
+            'last_name' => $user->last_name,
+            'avatar_url' => $user->avatar_url,
             'is_super_admin' => $user->is_super_admin,
-            'mfa_enabled'    => $user->mfa_enabled,
-            'created_at'     => $user->created_at,
+            'mfa_enabled' => $user->mfa_enabled,
+            'created_at' => $user->created_at,
         ];
     }
 

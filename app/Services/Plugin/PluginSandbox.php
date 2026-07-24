@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Plugin Security Sandbox
  * Three-Tier Adaptive Plugin Isolation System
@@ -16,8 +17,8 @@ namespace App\Services\Plugin;
 
 use App\Models\Plugin;
 use Illuminate\Support\Facades\Log;
-use RuntimeException;
 use InvalidArgumentException;
+use RuntimeException;
 
 class PluginSandbox
 {
@@ -92,17 +93,20 @@ class PluginSandbox
         // Check for Docker availability (Tier 3)
         if ($this->isDockerAvailable()) {
             Log::info('ZELOCMS Plugin Sandbox: Using Tier 3 (Docker container isolation)');
+
             return 3;
         }
 
         // Check for PHP-FPM with pool support (Tier 2)
         if ($this->isFpmPoolAvailable()) {
             Log::info('ZELOCMS Plugin Sandbox: Using Tier 2 (PHP-FPM pool isolation)');
+
             return 2;
         }
 
         // Default: Tier 1 PHP-level sandbox (works everywhere)
         Log::info('ZELOCMS Plugin Sandbox: Using Tier 1 (PHP-level isolation)');
+
         return 1;
     }
 
@@ -110,8 +114,9 @@ class PluginSandbox
      * Load and execute a plugin within the security sandbox.
      * Automatically uses the highest available security tier.
      *
-     * @param Plugin $plugin The plugin model to load
-     * @param PluginAPI $api The restricted API to expose to the plugin
+     * @param  Plugin  $plugin  The plugin model to load
+     * @param  PluginAPI  $api  The restricted API to expose to the plugin
+     *
      * @throws RuntimeException If plugin fails security checks
      */
     public function loadPlugin(Plugin $plugin, PluginAPI $api): void
@@ -148,7 +153,7 @@ class PluginSandbox
         $pluginDir = $plugin->getDirectory();
         $entrypoint = $plugin->getEntrypoint();
 
-        if (!file_exists($entrypoint)) {
+        if (! file_exists($entrypoint)) {
             throw new RuntimeException(
                 "Plugin [{$plugin->slug}] entrypoint not found: {$entrypoint}"
             );
@@ -157,14 +162,14 @@ class PluginSandbox
         // Apply open_basedir restriction to plugin directory only
         // (Secondary layer — primary is the PluginAPI gatekeeper)
         $originalOpenBasedir = ini_get('open_basedir');
-        $tempDir = sys_get_temp_dir() . '/zelocms-plugins/' . $plugin->slug;
+        $tempDir = sys_get_temp_dir().'/zelocms-plugins/'.$plugin->slug;
 
-        if (!is_dir($tempDir)) {
+        if (! is_dir($tempDir)) {
             @mkdir($tempDir, 0700, true);
         }
 
         // Restrict filesystem access to plugin dir + its own temp dir
-        @ini_set('open_basedir', $pluginDir . PATH_SEPARATOR . $tempDir);
+        @ini_set('open_basedir', $pluginDir.PATH_SEPARATOR.$tempDir);
 
         try {
             // Load plugin in isolated closure scope
@@ -180,9 +185,9 @@ class PluginSandbox
             $isolatedLoader($api, $entrypoint);
 
         } catch (\Throwable $e) {
-            Log::error("ZELOCMS Plugin Error [{$plugin->slug}]: " . $e->getMessage(), [
-                'plugin'    => $plugin->slug,
-                'tier'      => 1,
+            Log::error("ZELOCMS Plugin Error [{$plugin->slug}]: ".$e->getMessage(), [
+                'plugin' => $plugin->slug,
+                'tier' => 1,
                 'exception' => $e,
             ]);
 
@@ -190,7 +195,7 @@ class PluginSandbox
             $plugin->update(['status' => 'error', 'last_error' => $e->getMessage()]);
 
             throw new RuntimeException(
-                "Plugin [{$plugin->slug}] failed to load: " . $e->getMessage(),
+                "Plugin [{$plugin->slug}] failed to load: ".$e->getMessage(),
                 0,
                 $e
             );
@@ -226,10 +231,11 @@ class PluginSandbox
 
         $fpmSocket = "/var/run/php/zelocms-plugin-{$plugin->slug}.sock";
 
-        if (!file_exists($fpmSocket)) {
+        if (! file_exists($fpmSocket)) {
             // FPM pool not running — fall back to Tier 1
             Log::warning("ZELOCMS: FPM pool socket not found for [{$plugin->slug}], falling back to Tier 1");
             $this->loadInPhpSandbox($plugin, $api);
+
             return;
         }
 
@@ -275,7 +281,7 @@ class PluginSandbox
      */
     private function verifyIntegrity(Plugin $plugin): void
     {
-        if (!$plugin->signature_hash) {
+        if (! $plugin->signature_hash) {
             // Skip for locally installed plugins (development mode)
             if (app()->environment('local', 'development')) {
                 return;
@@ -288,19 +294,19 @@ class PluginSandbox
         $pluginDir = $plugin->getDirectory();
         $computedHash = $this->computePluginHash($pluginDir);
 
-        if (!hash_equals($plugin->signature_hash, $computedHash)) {
+        if (! hash_equals($plugin->signature_hash, $computedHash)) {
             // CRITICAL: Plugin files have been tampered with
             $plugin->update(['status' => 'error']);
 
             Log::critical("ZELOCMS SECURITY: Plugin integrity check FAILED for [{$plugin->slug}]", [
                 'expected' => $plugin->signature_hash,
                 'computed' => $computedHash,
-                'plugin'   => $plugin->slug,
+                'plugin' => $plugin->slug,
             ]);
 
             throw new RuntimeException(
-                "SECURITY: Plugin [{$plugin->slug}] integrity check failed. " .
-                "Plugin may have been tampered with. Plugin has been disabled."
+                "SECURITY: Plugin [{$plugin->slug}] integrity check failed. ".
+                'Plugin may have been tampered with. Plugin has been disabled.'
             );
         }
     }
@@ -326,7 +332,7 @@ class PluginSandbox
         ]);
 
         foreach ($declared as $permission) {
-            if (!in_array($permission, $allowed, true)) {
+            if (! in_array($permission, $allowed, true)) {
                 throw new InvalidArgumentException(
                     "Plugin [{$plugin->slug}] declares unknown permission: [{$permission}]"
                 );
@@ -334,7 +340,7 @@ class PluginSandbox
         }
 
         // Network access requires explicit admin approval
-        if (in_array('network:external', $declared, true) && !$plugin->network_approved) {
+        if (in_array('network:external', $declared, true) && ! $plugin->network_approved) {
             throw new RuntimeException(
                 "Plugin [{$plugin->slug}] requires network access but admin has not approved it."
             );
@@ -353,7 +359,7 @@ class PluginSandbox
 
         foreach ($iterator as $file) {
             if ($file->isFile()) {
-                $relativePath = str_replace($pluginDir . '/', '', $file->getPathname());
+                $relativePath = str_replace($pluginDir.'/', '', $file->getPathname());
                 $files[$relativePath] = hash_file('sha256', $file->getPathname());
             }
         }
@@ -370,11 +376,11 @@ class PluginSandbox
     private function generateScopedToken(Plugin $plugin, PluginAPI $api): string
     {
         $payload = [
-            'plugin_id'   => $plugin->id,
+            'plugin_id' => $plugin->id,
             'plugin_slug' => $plugin->slug,
             'permissions' => $plugin->declared_permissions ?? [],
-            'expires_at'  => time() + 300, // 5 minute token
-            'nonce'       => bin2hex(random_bytes(16)),
+            'expires_at' => time() + 300, // 5 minute token
+            'nonce' => bin2hex(random_bytes(16)),
         ];
 
         return encrypt(json_encode($payload));
@@ -384,7 +390,7 @@ class PluginSandbox
 
     private function isDockerAvailable(): bool
     {
-        if (!config('zelocms.plugins.docker_isolation', false)) {
+        if (! config('zelocms.plugins.docker_isolation', false)) {
             return false;
         }
 
@@ -396,23 +402,25 @@ class PluginSandbox
 
         // Check if Docker daemon is running
         $status = shell_exec('docker info 2>/dev/null | grep "Server Version" 2>/dev/null');
-        return !empty(trim((string) $status));
+
+        return ! empty(trim((string) $status));
     }
 
     private function isFpmPoolAvailable(): bool
     {
-        if (!config('zelocms.plugins.fpm_isolation', false)) {
+        if (! config('zelocms.plugins.fpm_isolation', false)) {
             return false;
         }
 
         // Check if we can create PHP-FPM pool configs
-        $poolDir = '/etc/php/' . PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION . '/fpm/pool.d/';
+        $poolDir = '/etc/php/'.PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION.'/fpm/pool.d/';
+
         return is_dir($poolDir) && is_writable($poolDir);
     }
 
     private function ensureFpmPoolExists(Plugin $plugin): void
     {
-        $phpVersion = PHP_MAJOR_VERSION . '.' . PHP_MINOR_VERSION;
+        $phpVersion = PHP_MAJOR_VERSION.'.'.PHP_MINOR_VERSION;
         $poolConfig = "/etc/php/{$phpVersion}/fpm/pool.d/zelocms-{$plugin->slug}.conf";
 
         if (file_exists($poolConfig)) {
@@ -423,13 +431,13 @@ class PluginSandbox
         file_put_contents($poolConfig, $config);
 
         // Reload PHP-FPM
-        shell_exec('systemctl reload php' . $phpVersion . '-fpm 2>/dev/null');
+        shell_exec('systemctl reload php'.$phpVersion.'-fpm 2>/dev/null');
     }
 
     private function generateFpmPoolConfig(Plugin $plugin, string $phpVersion): string
     {
         $slug = $plugin->slug;
-        $user = "zelocms_plugin_" . str_replace('-', '_', $slug);
+        $user = 'zelocms_plugin_'.str_replace('-', '_', $slug);
         $pluginDir = $plugin->getDirectory();
 
         return <<<CONF
@@ -457,7 +465,7 @@ class PluginSandbox
     private function startPluginContainer(Plugin $plugin, string $containerName): void
     {
         $pluginDir = $plugin->getDirectory();
-        $apiUrl = config('app.url') . '/plugin-api/v1';
+        $apiUrl = config('app.url').'/plugin-api/v1';
 
         $command = implode(' ', [
             'docker run -d',
@@ -474,7 +482,7 @@ class PluginSandbox
             '--memory=64m',
             '--cpus=0.25',
             'zelocms/plugin-runtime:latest',
-            '2>/dev/null'
+            '2>/dev/null',
         ]);
 
         shell_exec($command);
@@ -496,7 +504,7 @@ class PluginSandbox
         $command = "docker exec {$containerName} php /app/index.php 2>&1";
         $output = shell_exec($command);
 
-        Log::debug("ZELOCMS Plugin Container [{$plugin->slug}] output: " . (string) $output);
+        Log::debug("ZELOCMS Plugin Container [{$plugin->slug}] output: ".(string) $output);
     }
 
     private function executeViaFastCgi(Plugin $plugin, string $socket, string $token): void

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * ZELOCORECMS — Content Item Service
  * Manages content CRUD with validation, versioning, and hook integration.
@@ -15,6 +16,7 @@ use App\Models\ContentType;
 use App\Models\ContentVersion;
 use App\Services\Hooks\HookRegistry;
 use Illuminate\Contracts\Pagination\LengthAwarePaginator;
+use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Str;
 
 class ContentItemService
@@ -36,7 +38,7 @@ class ContentItemService
             ->where('content_type_slug', $typeSlug);
 
         // Filter by status
-        if (!empty($query['status'])) {
+        if (! empty($query['status'])) {
             $q->where('status', $query['status']);
         } else {
             // Default: exclude trash
@@ -44,11 +46,11 @@ class ContentItemService
         }
 
         // Full-text search
-        if (!empty($query['search'])) {
+        if (! empty($query['search'])) {
             $search = $query['search'];
             $q->where(function ($q) use ($search) {
                 $q->whereRaw('JSON_SEARCH(data, "one", ?) IS NOT NULL', ["%{$search}%"])
-                  ->orWhere('slug', 'like', "%{$search}%");
+                    ->orWhere('slug', 'like', "%{$search}%");
             });
         }
 
@@ -90,7 +92,7 @@ class ContentItemService
     ): ContentItem {
         $contentType = $this->typeService->findBySlug($workspaceId, $typeSlug);
 
-        if (!$contentType) {
+        if (! $contentType) {
             throw new \InvalidArgumentException("Content type [{$typeSlug}] not found.");
         }
 
@@ -108,18 +110,18 @@ class ContentItemService
         $status = $data['status'] ?? 'draft';
 
         $item = ContentItem::create([
-            'workspace_id'       => $workspaceId,
-            'content_type_id'    => $contentType->id,
-            'content_type_slug'  => $typeSlug,
-            'slug'               => $validated['slug'] ?? null,
-            'status'             => $status,
-            'data'               => $validated,
-            'meta'               => $data['meta'] ?? null,
-            'version'            => 1,
-            'published_at'       => $status === 'published' ? now() : null,
-            'scheduled_at'       => $status === 'scheduled' ? ($data['scheduled_at'] ?? null) : null,
-            'created_by'         => $userId,
-            'updated_by'         => $userId,
+            'workspace_id' => $workspaceId,
+            'content_type_id' => $contentType->id,
+            'content_type_slug' => $typeSlug,
+            'slug' => $validated['slug'] ?? null,
+            'status' => $status,
+            'data' => $validated,
+            'meta' => $data['meta'] ?? null,
+            'version' => 1,
+            'published_at' => $status === 'published' ? now() : null,
+            'scheduled_at' => $status === 'scheduled' ? ($data['scheduled_at'] ?? null) : null,
+            'created_by' => $userId,
+            'updated_by' => $userId,
         ]);
 
         // Save initial version
@@ -151,11 +153,11 @@ class ContentItemService
         $newVersion = $item->version + 1;
 
         $item->update([
-            'data'       => $validated,
-            'meta'       => $data['meta'] ?? $item->meta,
-            'slug'       => $data['slug'] ?? $item->slug,
-            'status'     => $data['status'] ?? $item->status,
-            'version'    => $newVersion,
+            'data' => $validated,
+            'meta' => $data['meta'] ?? $item->meta,
+            'slug' => $data['slug'] ?? $item->slug,
+            'status' => $data['status'] ?? $item->status,
+            'version' => $newVersion,
             'updated_by' => $userId,
         ]);
 
@@ -181,10 +183,10 @@ class ContentItemService
         $data = $this->hooks->applyFilters('content.beforePublish', $item->data, $item->content_type_slug);
 
         $item->update([
-            'status'       => 'published',
+            'status' => 'published',
             'published_at' => $item->published_at ?? now(),
-            'data'         => $data,
-            'updated_by'   => $userId,
+            'data' => $data,
+            'updated_by' => $userId,
         ]);
 
         $this->hooks->doAction('content.afterPublish', $item);
@@ -199,6 +201,7 @@ class ContentItemService
     {
         $item->update(['status' => 'draft', 'updated_by' => $userId]);
         $this->hooks->doAction('content.afterUnpublish', $item);
+
         return $item->fresh();
     }
 
@@ -209,6 +212,7 @@ class ContentItemService
     {
         $item->update(['status' => 'trash', 'updated_by' => $userId]);
         $this->hooks->doAction('content.afterTrash', $item);
+
         return $item->fresh();
     }
 
@@ -244,7 +248,7 @@ class ContentItemService
     /**
      * Get version history for a content item.
      */
-    public function getVersions(ContentItem $item): \Illuminate\Database\Eloquent\Collection
+    public function getVersions(ContentItem $item): Collection
     {
         return ContentVersion::where('content_item_id', $item->id)
             ->orderBy('version', 'desc')
@@ -268,8 +272,9 @@ class ContentItemService
             $value = $data[$name] ?? null;
 
             // Check required fields
-            if (!empty($field['required']) && ($value === null || $value === '')) {
+            if (! empty($field['required']) && ($value === null || $value === '')) {
                 $errors[] = "Field [{$name}] is required.";
+
                 continue;
             }
 
@@ -277,7 +282,7 @@ class ContentItemService
             $validated[$name] = $this->coerceFieldValue($value, $field);
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             throw new \InvalidArgumentException(implode(' ', $errors));
         }
 
@@ -294,30 +299,18 @@ class ContentItemService
         }
 
         return match ($field['type']) {
-            'text', 'textarea', 'email', 'url', 'color', 'slug'
-                => is_string($value) ? trim(strip_tags($value)) : null,
-            'richtext'
-                => is_string($value) ? $value : null, // Sanitized at output time
-            'number'
-                => is_numeric($value) ? (int) $value : null,
-            'decimal'
-                => is_numeric($value) ? (float) $value : null,
-            'boolean'
-                => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
-            'date'
-                => is_string($value) ? date('Y-m-d', strtotime($value)) : null,
-            'datetime'
-                => is_string($value) ? date('Y-m-d H:i:s', strtotime($value)) : null,
-            'select'
-                => in_array($value, $field['options'] ?? [], true) ? $value : null,
-            'multiselect', 'tags'
-                => is_array($value) ? array_values(array_filter($value, 'is_string')) : [],
-            'json', 'blocks', 'repeater', 'coordinates'
-                => is_array($value) ? $value : (is_string($value) ? json_decode($value, true) : null),
-            'media', 'relation'
-                => is_string($value) ? $value : null, // UUID reference
-            default
-                => $value,
+            'text', 'textarea', 'email', 'url', 'color', 'slug' => is_string($value) ? trim(strip_tags($value)) : null,
+            'richtext' => is_string($value) ? $value : null, // Sanitized at output time
+            'number' => is_numeric($value) ? (int) $value : null,
+            'decimal' => is_numeric($value) ? (float) $value : null,
+            'boolean' => filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE),
+            'date' => is_string($value) ? date('Y-m-d', strtotime($value)) : null,
+            'datetime' => is_string($value) ? date('Y-m-d H:i:s', strtotime($value)) : null,
+            'select' => in_array($value, $field['options'] ?? [], true) ? $value : null,
+            'multiselect', 'tags' => is_array($value) ? array_values(array_filter($value, 'is_string')) : [],
+            'json', 'blocks', 'repeater', 'coordinates' => is_array($value) ? $value : (is_string($value) ? json_decode($value, true) : null),
+            'media', 'relation' => is_string($value) ? $value : null, // UUID reference
+            default => $value,
         };
     }
 
@@ -331,13 +324,13 @@ class ContentItemService
 
         $baseText = null;
         foreach ($titleFields as $field) {
-            if (!empty($data[$field])) {
+            if (! empty($data[$field])) {
                 $baseText = $data[$field];
                 break;
             }
         }
 
-        if (!$baseText) {
+        if (! $baseText) {
             $baseText = Str::random(8);
         }
 
@@ -352,7 +345,7 @@ class ContentItemService
                 ->where('slug', $slug)
                 ->exists()
         ) {
-            $slug = $baseSlug . '-' . $counter;
+            $slug = $baseSlug.'-'.$counter;
             $counter++;
         }
 
@@ -381,10 +374,10 @@ class ContentItemService
 
         ContentVersion::create([
             'content_item_id' => $item->id,
-            'version'         => $item->version,
-            'data'            => $item->data,
-            'meta'            => $item->meta,
-            'created_by'      => $userId,
+            'version' => $item->version,
+            'data' => $item->data,
+            'meta' => $item->meta,
+            'created_by' => $userId,
         ]);
     }
 }

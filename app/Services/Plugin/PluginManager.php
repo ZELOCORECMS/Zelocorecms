@@ -26,10 +26,10 @@ class PluginManager
                     $plugin->declared_permissions ?? [],
                     $this->hooks
                 );
-                
+
                 $this->sandbox->loadPlugin($plugin, $api);
             } catch (\Exception $e) {
-                Log::error("Failed to load plugin [{$plugin->slug}]: " . $e->getMessage());
+                Log::error("Failed to load plugin [{$plugin->slug}]: ".$e->getMessage());
             }
         }
     }

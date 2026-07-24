@@ -1,13 +1,14 @@
 <?php
 
 declare(strict_types=1);
+use App\Services\Plugin\PluginAPI;
 
 /**
  * ZeloCMS SEO Plugin
  * Modifies content types to add SEO fields.
  */
 
-/** @var \App\Services\Plugin\PluginAPI $zeloCMS */
+/** @var PluginAPI $zeloCMS */
 
 // Add SEO fields to all content types
 $zeloCMS->addFilter('content.schema', function (array $schema, string $contentTypeSlug) {
@@ -16,14 +17,15 @@ $zeloCMS->addFilter('content.schema', function (array $schema, string $contentTy
         'name' => 'seo_title',
         'type' => 'text',
         'label' => 'SEO Title',
-        'group' => 'SEO'
+        'group' => 'SEO',
     ];
     $schema[] = [
         'name' => 'seo_description',
         'type' => 'text',
         'label' => 'Meta Description',
-        'group' => 'SEO'
+        'group' => 'SEO',
     ];
+
     return $schema;
 });
 
@@ -31,22 +33,23 @@ $zeloCMS->addFilter('content.schema', function (array $schema, string $contentTy
 $zeloCMS->addFilter('api.response.content', function (array $response, string $contentTypeSlug) {
     if (isset($response['data']) && isset($response['data']['data'])) {
         $contentData = $response['data']['data'];
-        
+
         $response['seo'] = [
             'title' => $contentData['seo_title'] ?? $contentData['title'] ?? '',
             'description' => $contentData['seo_description'] ?? '',
         ];
     }
+
     return $response;
 });
 
 // Register admin menu
-$zeloCMS->addAction('plugin.activate', function() use ($zeloCMS) {
+$zeloCMS->addAction('plugin.activate', function () use ($zeloCMS) {
     if ($zeloCMS->hasPermission('admin:menu')) {
         $zeloCMS->registerAdminMenu([
             'label' => 'SEO Settings',
             'icon' => 'pi pi-search',
-            'route' => '/admin/settings/seo'
+            'route' => '/admin/settings/seo',
         ]);
     }
 });
