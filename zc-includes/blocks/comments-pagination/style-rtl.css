@@ -1,0 +1,22 @@
+.zc-block-comments-pagination > .zc-block-comments-pagination-next,
+.zc-block-comments-pagination > .zc-block-comments-pagination-previous,
+.zc-block-comments-pagination > .zc-block-comments-pagination-numbers {
+  font-size: inherit;
+}
+.zc-block-comments-pagination .zc-block-comments-pagination-previous-arrow {
+  margin-left: 1ch;
+  display: inline-block;
+}
+.zc-block-comments-pagination .zc-block-comments-pagination-previous-arrow:not(.is-arrow-chevron) {
+  transform: scaleX(-1);;
+}
+.zc-block-comments-pagination .zc-block-comments-pagination-next-arrow {
+  margin-right: 1ch;
+  display: inline-block;
+}
+.zc-block-comments-pagination .zc-block-comments-pagination-next-arrow:not(.is-arrow-chevron) {
+  transform: scaleX(-1);;
+}
+.zc-block-comments-pagination.aligncenter {
+  justify-content: center;
+}

@@ -1,0 +1,177 @@
+/**
+ * Colors
+ */
+/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Typography
+ */
+/**
+ * Grid System.
+ * https://make.zelocorecms.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-zelocorecms/
+ */
+/**
+ * Radius scale.
+ */
+/**
+ * Elevation scale.
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Mobile specific styles
+ */
+/**
+ * Editor styles.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
+.zc-block-table {
+  overflow-x: auto;
+}
+.zc-block-table table {
+  border-collapse: collapse;
+  width: 100%;
+}
+.zc-block-table thead {
+  border-bottom: 3px solid;
+}
+.zc-block-table tfoot {
+  border-top: 3px solid;
+}
+.zc-block-table td,
+.zc-block-table th {
+  border: 1px solid;
+  padding: 0.5em;
+}
+.zc-block-table .has-fixed-layout {
+  table-layout: fixed;
+  width: 100%;
+}
+.zc-block-table .has-fixed-layout td,
+.zc-block-table .has-fixed-layout th {
+  word-break: break-word;
+}
+.zc-block-table.alignleft, .zc-block-table.aligncenter, .zc-block-table.alignright {
+  display: table;
+  width: auto;
+}
+.zc-block-table.alignleft td,
+.zc-block-table.alignleft th, .zc-block-table.aligncenter td,
+.zc-block-table.aligncenter th, .zc-block-table.alignright td,
+.zc-block-table.alignright th {
+  word-break: break-word;
+}
+.zc-block-table .has-subtle-light-gray-background-color {
+  background-color: #f3f4f5;
+}
+.zc-block-table .has-subtle-pale-green-background-color {
+  background-color: #e9fbe5;
+}
+.zc-block-table .has-subtle-pale-blue-background-color {
+  background-color: #e7f5fe;
+}
+.zc-block-table .has-subtle-pale-pink-background-color {
+  background-color: #fcf0ef;
+}
+.zc-block-table.is-style-stripes {
+  border-spacing: 0;
+  border-collapse: inherit;
+  background-color: transparent;
+}
+.zc-block-table.is-style-stripes tbody tr:nth-child(odd) {
+  background-color: #f0f0f0;
+}
+.zc-block-table.is-style-stripes.has-subtle-light-gray-background-color tbody tr:nth-child(odd) {
+  background-color: #f3f4f5;
+}
+.zc-block-table.is-style-stripes.has-subtle-pale-green-background-color tbody tr:nth-child(odd) {
+  background-color: #e9fbe5;
+}
+.zc-block-table.is-style-stripes.has-subtle-pale-blue-background-color tbody tr:nth-child(odd) {
+  background-color: #e7f5fe;
+}
+.zc-block-table.is-style-stripes.has-subtle-pale-pink-background-color tbody tr:nth-child(odd) {
+  background-color: #fcf0ef;
+}
+.zc-block-table.is-style-stripes th,
+.zc-block-table.is-style-stripes td {
+  border-color: transparent;
+}
+.zc-block-table.is-style-stripes {
+  border-bottom: 1px solid #f0f0f0;
+}
+.zc-block-table .has-border-color > *,
+.zc-block-table .has-border-color tr,
+.zc-block-table .has-border-color th,
+.zc-block-table .has-border-color td {
+  border-color: inherit;
+}
+.zc-block-table table[style*=border-top-color] > *,
+.zc-block-table table[style*=border-top-color] tr:first-child {
+  border-top-color: inherit;
+}
+.zc-block-table table[style*=border-top-color] > * th,
+.zc-block-table table[style*=border-top-color] > * td,
+.zc-block-table table[style*=border-top-color] tr:first-child th,
+.zc-block-table table[style*=border-top-color] tr:first-child td {
+  border-top-color: inherit;
+}
+.zc-block-table table[style*=border-top-color] tr:not(:first-child) {
+  border-top-color: currentColor;
+}
+.zc-block-table table[style*=border-right-color] > *,
+.zc-block-table table[style*=border-right-color] tr,
+.zc-block-table table[style*=border-right-color] th,
+.zc-block-table table[style*=border-right-color] td:last-child {
+  border-left-color: inherit;
+}
+.zc-block-table table[style*=border-bottom-color] > *,
+.zc-block-table table[style*=border-bottom-color] tr:last-child {
+  border-bottom-color: inherit;
+}
+.zc-block-table table[style*=border-bottom-color] > * th,
+.zc-block-table table[style*=border-bottom-color] > * td,
+.zc-block-table table[style*=border-bottom-color] tr:last-child th,
+.zc-block-table table[style*=border-bottom-color] tr:last-child td {
+  border-bottom-color: inherit;
+}
+.zc-block-table table[style*=border-bottom-color] tr:not(:last-child) {
+  border-bottom-color: currentColor;
+}
+.zc-block-table table[style*=border-left-color] > *,
+.zc-block-table table[style*=border-left-color] tr,
+.zc-block-table table[style*=border-left-color] th,
+.zc-block-table table[style*=border-left-color] td:first-child {
+  border-right-color: inherit;
+}
+.zc-block-table table[style*=border-style] > *,
+.zc-block-table table[style*=border-style] tr,
+.zc-block-table table[style*=border-style] th,
+.zc-block-table table[style*=border-style] td {
+  border-style: inherit;
+}
+.zc-block-table table[style*=border-width] > *,
+.zc-block-table table[style*=border-width] tr,
+.zc-block-table table[style*=border-width] th,
+.zc-block-table table[style*=border-width] td {
+  border-width: inherit;
+  border-style: inherit;
+}

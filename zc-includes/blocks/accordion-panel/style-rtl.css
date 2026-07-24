@@ -1,0 +1,4 @@
+.zc-block-accordion-panel[inert], .zc-block-accordion-panel[aria-hidden=true] {
+  display: none;
+  margin-block-start: 0;
+}

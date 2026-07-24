@@ -1,0 +1,7 @@
+.zc-block-details {
+  box-sizing: border-box;
+}
+
+.zc-block-details summary {
+  cursor: pointer;
+}

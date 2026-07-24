@@ -1,0 +1,13 @@
+.zc-block-rss li a > div {
+  display: inline;
+}
+
+.zc-block-rss__placeholder-form .zc-block-rss__placeholder-input {
+  flex: 1 1 auto;
+}
+
+.zc-block-rss .zc-block-rss {
+  all: inherit;
+  margin: 0;
+  padding: 0;
+}

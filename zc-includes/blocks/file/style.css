@@ -1,0 +1,39 @@
+/**
+ * Colors
+ */
+.zc-block-file {
+  box-sizing: border-box;
+}
+.zc-block-file:not(.zc-element-button) {
+  font-size: 0.8em;
+}
+.zc-block-file.aligncenter {
+  text-align: center;
+}
+.zc-block-file.alignright {
+  /*rtl:ignore*/
+  text-align: right;
+}
+.zc-block-file * + .zc-block-file__button {
+  margin-left: 0.75em;
+}
+
+:where(.zc-block-file) {
+  margin-bottom: 1.5em;
+}
+
+.zc-block-file__embed {
+  margin-bottom: 1em;
+}
+
+:where(.zc-block-file__button) {
+  border-radius: 2em;
+  padding: 0.5em 1em;
+  display: inline-block;
+}
+:where(.zc-block-file__button):where(a):hover, :where(.zc-block-file__button):where(a):visited, :where(.zc-block-file__button):where(a):focus, :where(.zc-block-file__button):where(a):active {
+  box-shadow: none;
+  color: #fff;
+  opacity: 0.85;
+  text-decoration: none;
+}

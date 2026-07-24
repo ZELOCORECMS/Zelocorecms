@@ -1,0 +1,10 @@
+.zc-block-columns :where(.zc-block) {
+  max-width: none;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+html :where(.zc-block-column) {
+  margin-top: 0;
+  margin-bottom: 0;
+}

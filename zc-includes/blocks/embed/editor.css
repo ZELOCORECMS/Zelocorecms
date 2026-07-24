@@ -1,0 +1,41 @@
+/**
+ * Breakpoints & Media Queries
+ */
+.zc-block-embed {
+  margin-left: 0;
+  margin-right: 0;
+  clear: both;
+}
+.zc-block-embed.is-loading {
+  display: flex;
+  justify-content: center;
+}
+.zc-block-embed .zc-block-embed__placeholder-input {
+  flex: 1 1 auto;
+}
+.zc-block-embed .components-placeholder__error {
+  word-break: break-word;
+}
+
+.zc-block-post-content .zc-block-embed__learn-more a {
+  color: var(--zc-admin-theme-color);
+}
+
+.block-library-embed__interactive-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  opacity: 0;
+}
+
+.zc-block[data-align=left] > .zc-block-embed,
+.zc-block[data-align=right] > .zc-block-embed {
+  max-width: 360px;
+  width: 100%;
+}
+.zc-block[data-align=left] > .zc-block-embed .zc-block-embed__wrapper,
+.zc-block[data-align=right] > .zc-block-embed .zc-block-embed__wrapper {
+  min-width: 280px;
+}

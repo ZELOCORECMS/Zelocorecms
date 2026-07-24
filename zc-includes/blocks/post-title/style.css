@@ -1,0 +1,14 @@
+.zc-block-post-title {
+  word-break: break-word;
+  box-sizing: border-box;
+}
+.zc-block-post-title :where(a) {
+  display: inline-block;
+  font-family: inherit;
+  font-size: inherit;
+  font-style: inherit;
+  font-weight: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-decoration: inherit;
+}

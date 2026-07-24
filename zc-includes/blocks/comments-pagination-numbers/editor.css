@@ -1,0 +1,10 @@
+.zc-block-comments-pagination-numbers a {
+  text-decoration: underline;
+}
+.zc-block-comments-pagination-numbers .page-numbers {
+  margin-right: 2px;
+}
+.zc-block-comments-pagination-numbers .page-numbers:last-child {
+  /*rtl:ignore*/
+  margin-right: 0;
+}

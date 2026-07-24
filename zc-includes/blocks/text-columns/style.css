@@ -1,0 +1,25 @@
+.zc-block-text-columns {
+  display: flex;
+}
+.zc-block-text-columns.aligncenter {
+  display: flex;
+}
+.zc-block-text-columns .zc-block-column {
+  margin: 0 1em;
+  padding: 0;
+}
+.zc-block-text-columns .zc-block-column:first-child {
+  margin-left: 0;
+}
+.zc-block-text-columns .zc-block-column:last-child {
+  margin-right: 0;
+}
+.zc-block-text-columns.columns-2 .zc-block-column {
+  width: 50%;
+}
+.zc-block-text-columns.columns-3 .zc-block-column {
+  width: 33.3333333333%;
+}
+.zc-block-text-columns.columns-4 .zc-block-column {
+  width: 25%;
+}

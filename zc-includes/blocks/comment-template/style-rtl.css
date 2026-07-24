@@ -1,0 +1,27 @@
+.zc-block-comment-template {
+  box-sizing: border-box;
+  margin-bottom: 0;
+  max-width: 100%;
+  list-style: none;
+  padding: 0;
+}
+.zc-block-comment-template li {
+  clear: both;
+}
+.zc-block-comment-template ol {
+  margin-bottom: 0;
+  max-width: 100%;
+  list-style: none;
+  padding-right: 2rem;
+}
+.zc-block-comment-template.alignleft {
+  float: right;
+}
+.zc-block-comment-template.aligncenter {
+  margin-right: auto;
+  margin-left: auto;
+  width: fit-content;
+}
+.zc-block-comment-template.alignright {
+  float: left;
+}

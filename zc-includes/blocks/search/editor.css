@@ -1,0 +1,16 @@
+.zc-block[data-align=center] .zc-block-search .zc-block-search__inside-wrapper {
+  margin: auto;
+}
+
+.zc-block-search :where(.zc-block-search__button) {
+  height: auto;
+  border-radius: initial;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.zc-block-search__inspector-controls .components-base-control {
+  margin-bottom: 0;
+}

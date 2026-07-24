@@ -1,0 +1,16 @@
+.zc-block-latest-posts > li {
+  overflow: hidden;
+}
+
+.zc-block-latest-posts li a > div {
+  display: inline;
+}
+
+:root :where(.zc-block-latest-posts) {
+  padding-left: 2.5em;
+}
+
+:root :where(.zc-block-latest-posts.is-grid),
+:root :where(.zc-block-latest-posts__list) {
+  padding-left: 0;
+}

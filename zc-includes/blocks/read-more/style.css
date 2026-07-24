@@ -1,0 +1,10 @@
+.zc-block-read-more {
+  display: block;
+  width: fit-content;
+}
+.zc-block-read-more:where(:not([style*=text-decoration])) {
+  text-decoration: none;
+}
+.zc-block-read-more:where(:not([style*=text-decoration])):focus, .zc-block-read-more:where(:not([style*=text-decoration])):active {
+  text-decoration: none;
+}

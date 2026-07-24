@@ -1,0 +1,10 @@
+.zc-block-avatar {
+  box-sizing: border-box;
+  line-height: 0;
+}
+.zc-block-avatar img {
+  box-sizing: border-box;
+}
+.zc-block-avatar.aligncenter {
+  text-align: center;
+}

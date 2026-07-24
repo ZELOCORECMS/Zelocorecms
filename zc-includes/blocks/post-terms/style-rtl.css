@@ -1,0 +1,6 @@
+.zc-block-post-terms {
+  box-sizing: border-box;
+}
+.zc-block-post-terms .zc-block-post-terms__separator {
+  white-space: pre-wrap;
+}

@@ -1,0 +1,208 @@
+/**
+ * Typography
+ */
+/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Typography
+ */
+/**
+ * Grid System.
+ * https://make.zelocorecms.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-zelocorecms/
+ */
+/**
+ * Radius scale.
+ */
+/**
+ * Elevation scale.
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Mobile specific styles
+ */
+/**
+ * Editor styles.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
+/**
+ * Breakpoints & Media Queries
+ */
+/**
+*  Converts a hex value into the rgb equivalent.
+*
+* @param {string} hex - the hexadecimal value to convert
+* @return {string} comma separated rgb values
+*/
+/**
+ * Long content fade mixin
+ *
+ * Creates a fading overlay to signify that the content is longer
+ * than the space allows.
+ */
+/**
+ * Breakpoint mixins
+ */
+/**
+ * Focus styles.
+ */
+/**
+ * Applies editor left position to the selector passed as argument
+ */
+/**
+ * Styles that are reused verbatim in a few places
+ */
+/**
+ * Allows users to opt-out of animations via OS-level preferences.
+ */
+/**
+ * Reset default styles for JavaScript UI based pages.
+ * This is a ZC-admin agnostic reset
+ */
+/**
+ * Reset the WP Admin page styles for Gutenberg-like pages.
+ */
+/**
+ * Creates a checkerboard pattern background to indicate transparency.
+ * @param {String} $size - The size of the squares in the checkerboard pattern. Default is 12px.
+ */
+body.admin-color-light {
+  --zc-admin-theme-color: #0085ba;
+  --zc-admin-theme-color--rgb: 0, 133, 186;
+  --zc-admin-theme-color-darker-10: rgb(0, 114.7661290323, 160.5);
+  --zc-admin-theme-color-darker-10--rgb: 0, 114.7661290323, 160.5;
+  --zc-admin-theme-color-darker-20: rgb(0, 96.5322580645, 135);
+  --zc-admin-theme-color-darker-20--rgb: 0, 96.5322580645, 135;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-light {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-modern {
+  --zc-admin-theme-color: #3858e9;
+  --zc-admin-theme-color--rgb: 56, 88, 233;
+  --zc-admin-theme-color-darker-10: rgb(33.0384615385, 68.7307692308, 230.4615384615);
+  --zc-admin-theme-color-darker-10--rgb: 33.0384615385, 68.7307692308, 230.4615384615;
+  --zc-admin-theme-color-darker-20: rgb(23.6923076923, 58.1538461538, 214.3076923077);
+  --zc-admin-theme-color-darker-20--rgb: 23.6923076923, 58.1538461538, 214.3076923077;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-modern {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-blue {
+  --zc-admin-theme-color: #096484;
+  --zc-admin-theme-color--rgb: 9, 100, 132;
+  --zc-admin-theme-color-darker-10: rgb(7.3723404255, 81.914893617, 108.1276595745);
+  --zc-admin-theme-color-darker-10--rgb: 7.3723404255, 81.914893617, 108.1276595745;
+  --zc-admin-theme-color-darker-20: rgb(5.7446808511, 63.829787234, 84.2553191489);
+  --zc-admin-theme-color-darker-20--rgb: 5.7446808511, 63.829787234, 84.2553191489;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-blue {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-coffee {
+  --zc-admin-theme-color: #46403c;
+  --zc-admin-theme-color--rgb: 70, 64, 60;
+  --zc-admin-theme-color-darker-10: rgb(56.2692307692, 51.4461538462, 48.2307692308);
+  --zc-admin-theme-color-darker-10--rgb: 56.2692307692, 51.4461538462, 48.2307692308;
+  --zc-admin-theme-color-darker-20: rgb(42.5384615385, 38.8923076923, 36.4615384615);
+  --zc-admin-theme-color-darker-20--rgb: 42.5384615385, 38.8923076923, 36.4615384615;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-coffee {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-ectoplasm {
+  --zc-admin-theme-color: #523f6d;
+  --zc-admin-theme-color--rgb: 82, 63, 109;
+  --zc-admin-theme-color-darker-10: rgb(69.8430232558, 53.6598837209, 92.8401162791);
+  --zc-admin-theme-color-darker-10--rgb: 69.8430232558, 53.6598837209, 92.8401162791;
+  --zc-admin-theme-color-darker-20: rgb(57.6860465116, 44.3197674419, 76.6802325581);
+  --zc-admin-theme-color-darker-20--rgb: 57.6860465116, 44.3197674419, 76.6802325581;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-ectoplasm {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-midnight {
+  --zc-admin-theme-color: #e14d43;
+  --zc-admin-theme-color--rgb: 225, 77, 67;
+  --zc-admin-theme-color-darker-10: rgb(221.4908256881, 56.1788990826, 45.0091743119);
+  --zc-admin-theme-color-darker-10--rgb: 221.4908256881, 56.1788990826, 45.0091743119;
+  --zc-admin-theme-color-darker-20: rgb(207.8348623853, 44.2201834862, 33.1651376147);
+  --zc-admin-theme-color-darker-20--rgb: 207.8348623853, 44.2201834862, 33.1651376147;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-midnight {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-ocean {
+  --zc-admin-theme-color: #627c83;
+  --zc-admin-theme-color--rgb: 98, 124, 131;
+  --zc-admin-theme-color-darker-10: rgb(87.0873362445, 110.192139738, 116.4126637555);
+  --zc-admin-theme-color-darker-10--rgb: 87.0873362445, 110.192139738, 116.4126637555;
+  --zc-admin-theme-color-darker-20: rgb(76.1746724891, 96.384279476, 101.8253275109);
+  --zc-admin-theme-color-darker-20--rgb: 76.1746724891, 96.384279476, 101.8253275109;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-ocean {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}
+
+body.admin-color-sunrise {
+  --zc-admin-theme-color: #dd823b;
+  --zc-admin-theme-color--rgb: 221, 130, 59;
+  --zc-admin-theme-color-darker-10: rgb(216.8782608696, 116.1847826087, 37.6217391304);
+  --zc-admin-theme-color-darker-10--rgb: 216.8782608696, 116.1847826087, 37.6217391304;
+  --zc-admin-theme-color-darker-20: rgb(195.147826087, 104.5434782609, 33.852173913);
+  --zc-admin-theme-color-darker-20--rgb: 195.147826087, 104.5434782609, 33.852173913;
+  --zc-admin-border-width-focus: 2px;
+}
+@media (min-resolution: 192dpi) {
+  body.admin-color-sunrise {
+    --zc-admin-border-width-focus: 1.5px;
+  }
+}

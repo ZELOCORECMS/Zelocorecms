@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('zc-data', 'zc-i18n'), 'version' => 'f3475bc77a30dcc5b38d');

@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'zc-components', 'zc-data', 'zc-element', 'zc-i18n', 'zc-keyboard-shortcuts', 'zc-primitives', 'zc-private-apis'), 'module_dependencies' => array(array('id' => '@zelocorecms/abilities', 'import' => 'static')), 'version' => '13556bc597bbf2a8d620');

@@ -1,0 +1,1 @@
+.zc-block-breadcrumbs{box-sizing:border-box}.zc-block-breadcrumbs ol{flex-wrap:wrap;list-style:none}.zc-block-breadcrumbs li,.zc-block-breadcrumbs ol{align-items:center;display:flex;margin:0;padding:0}.zc-block-breadcrumbs li:not(:last-child):after{content:var(--separator,"/");margin:0 .5em;opacity:.7}.zc-block-breadcrumbs span{color:inherit}

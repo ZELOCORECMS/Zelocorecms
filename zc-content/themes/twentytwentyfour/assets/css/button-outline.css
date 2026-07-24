@@ -1,0 +1,6 @@
+.zc-block-button.is-style-outline
+	> .zc-block-button__link:not(.has-text-color, .has-background):hover {
+	background-color: var(--zc--preset--color--contrast-2, var(--zc--preset--color--contrast, transparent));
+	color: var(--zc--preset--color--base);
+	border-color: var(--zc--preset--color--contrast-2, var(--zc--preset--color--contrast, currentColor));
+}

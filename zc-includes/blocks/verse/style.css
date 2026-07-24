@@ -1,0 +1,11 @@
+pre.zc-block-verse {
+  box-sizing: border-box;
+  overflow: auto;
+  white-space: pre-wrap;
+  min-width: 1em;
+  word-break: break-word;
+}
+
+:where(pre.zc-block-verse) {
+  font-family: inherit;
+}

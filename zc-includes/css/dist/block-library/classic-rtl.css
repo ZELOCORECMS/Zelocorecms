@@ -1,0 +1,41 @@
+/**
+ * Colors
+ */
+.zc-block-button__link {
+  color: #fff;
+  background-color: #32373c;
+  border-radius: 9999px;
+  box-shadow: none;
+  text-decoration: none;
+  padding: calc(0.667em + 2px) calc(1.333em + 2px);
+  font-size: 1.125em;
+}
+
+.zc-block-file__button {
+  background: #32373c;
+  color: #fff;
+}
+
+.zc-block-accordion-heading {
+  margin: 0;
+}
+
+.zc-block-accordion-heading__toggle {
+  background-color: inherit !important;
+  color: inherit !important;
+}
+.zc-block-accordion-heading__toggle:not(:focus-visible) {
+  outline: none;
+}
+.zc-block-accordion-heading__toggle:hover, .zc-block-accordion-heading__toggle:focus {
+  text-decoration: none;
+  background-color: inherit !important;
+  box-shadow: none;
+  color: inherit;
+  border: none;
+  padding: var(--zc--preset--spacing--20, 1em) 0;
+}
+.zc-block-accordion-heading__toggle:focus-visible {
+  outline-offset: 0;
+  outline: auto;
+}

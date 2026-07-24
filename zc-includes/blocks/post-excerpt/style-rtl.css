@@ -1,0 +1,19 @@
+:where(.zc-block-post-excerpt) {
+  box-sizing: border-box;
+  margin-top: var(--zc--style--block-gap);
+  margin-bottom: var(--zc--style--block-gap);
+}
+
+.zc-block-post-excerpt__excerpt {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.zc-block-post-excerpt__more-text {
+  margin-top: var(--zc--style--block-gap);
+  margin-bottom: 0;
+}
+
+.zc-block-post-excerpt__more-link {
+  display: inline-block;
+}

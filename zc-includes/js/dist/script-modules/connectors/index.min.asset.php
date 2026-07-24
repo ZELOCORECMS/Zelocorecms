@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('react-jsx-runtime', 'zc-components', 'zc-data', 'zc-element', 'zc-i18n', 'zc-private-apis'), 'version' => '274797868955a828dfdc');

@@ -1,0 +1,69 @@
+/**
+ * Colors
+ */
+.zc-block-post-featured-image {
+  margin-left: 0;
+  margin-right: 0;
+}
+.zc-block-post-featured-image a {
+  display: block;
+  height: 100%;
+}
+.zc-block-post-featured-image :where(img) {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  vertical-align: bottom;
+  box-sizing: border-box;
+}
+.zc-block-post-featured-image.alignwide img, .zc-block-post-featured-image.alignfull img {
+  width: 100%;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim {
+  position: absolute;
+  inset: 0;
+  background-color: #000;
+}
+.zc-block-post-featured-image {
+  position: relative;
+}
+
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-gradient {
+  background-color: transparent;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-0 {
+  opacity: 0;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-10 {
+  opacity: 0.1;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-20 {
+  opacity: 0.2;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-30 {
+  opacity: 0.3;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-40 {
+  opacity: 0.4;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-50 {
+  opacity: 0.5;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-60 {
+  opacity: 0.6;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-70 {
+  opacity: 0.7;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-80 {
+  opacity: 0.8;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-90 {
+  opacity: 0.9;
+}
+.zc-block-post-featured-image .zc-block-post-featured-image__overlay.has-background-dim-100 {
+  opacity: 1;
+}
+.zc-block-post-featured-image:where(.alignleft, .alignright) {
+  width: 100%;
+}

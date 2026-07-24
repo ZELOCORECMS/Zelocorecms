@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@zelocorecms/a11y', 'import' => 'dynamic'), array('id' => '@zelocorecms/interactivity', 'import' => 'static')), 'version' => '71aa17bac91628a0f874');

@@ -1,0 +1,38 @@
+/**
+ * Colors
+ */
+.zc-block-calendar {
+  text-align: center;
+}
+.zc-block-calendar th,
+.zc-block-calendar td {
+  padding: 0.25em;
+  border: 1px solid;
+}
+.zc-block-calendar th {
+  font-weight: 400;
+}
+.zc-block-calendar caption {
+  background-color: inherit;
+}
+.zc-block-calendar table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.zc-block-calendar table.has-background th {
+  background-color: inherit;
+}
+.zc-block-calendar table.has-text-color th {
+  color: inherit;
+}
+.zc-block-calendar :where(table:not(.has-text-color)) {
+  color: #40464d;
+}
+.zc-block-calendar :where(table:not(.has-text-color)) th,
+.zc-block-calendar :where(table:not(.has-text-color)) td {
+  border-color: #ddd;
+}
+
+:where(.zc-block-calendar table:not(.has-background) th) {
+  background: #ddd;
+}

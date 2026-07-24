@@ -1,0 +1,23 @@
+.zc-block-separator.has-css-opacity {
+  opacity: 0.4;
+}
+
+.zc-block-separator {
+  border: none;
+  border-bottom: 2px solid currentColor;
+  margin-right: auto;
+  margin-left: auto;
+}
+.zc-block-separator.has-alpha-channel-opacity {
+  opacity: initial;
+}
+.zc-block-separator:not(.is-style-wide):not(.is-style-dots) {
+  width: 100px;
+}
+.zc-block-separator.has-background:not(.is-style-dots) {
+  border-bottom: none;
+  height: 1px;
+}
+.zc-block-separator.has-background:not(.is-style-wide):not(.is-style-dots) {
+  height: 2px;
+}

@@ -1,0 +1,10 @@
+:where(.zc-block-term-description) {
+  box-sizing: border-box;
+  margin-top: var(--zc--style--block-gap);
+  margin-bottom: var(--zc--style--block-gap);
+}
+
+.zc-block-term-description p {
+  margin-top: 0;
+  margin-bottom: 0;
+}

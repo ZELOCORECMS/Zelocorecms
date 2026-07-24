@@ -1,0 +1,110 @@
+/**
+ * SCSS Variables.
+ *
+ * Please use variables from this sheet to ensure consistency across the UI.
+ * Don't add to this sheet unless you're pretty sure the value will be reused in many places.
+ * For example, don't add rules to this sheet that affect block visuals. It's purely for UI.
+ */
+/**
+ * Colors
+ */
+/**
+ * Fonts & basic variables.
+ */
+/**
+ * Typography
+ */
+/**
+ * Grid System.
+ * https://make.zelocorecms.org/design/2019/10/31/proposal-a-consistent-spacing-system-for-zelocorecms/
+ */
+/**
+ * Radius scale.
+ */
+/**
+ * Elevation scale.
+ */
+/**
+ * Dimensions.
+ */
+/**
+ * Mobile specific styles
+ */
+/**
+ * Editor styles.
+ */
+/**
+ * Block & Editor UI.
+ */
+/**
+ * Block paddings.
+ */
+/**
+ * React Native specific.
+ * These variables do not appear to be used anywhere else.
+ */
+.zc-block-pullquote {
+  text-align: center;
+  overflow-wrap: break-word;
+  box-sizing: border-box;
+  margin: 0 0 1em 0;
+  padding: 4em 0;
+}
+.zc-block-pullquote p,
+.zc-block-pullquote blockquote {
+  color: inherit;
+}
+.zc-block-pullquote blockquote {
+  margin: 0;
+}
+.zc-block-pullquote p {
+  margin-top: 0;
+}
+.zc-block-pullquote p:last-child {
+  margin-bottom: 0;
+}
+.zc-block-pullquote.alignleft, .zc-block-pullquote.alignright {
+  max-width: 420px;
+}
+.zc-block-pullquote cite,
+.zc-block-pullquote footer {
+  position: relative;
+}
+.zc-block-pullquote .has-text-color a {
+  color: inherit;
+}
+
+.zc-block-pullquote.has-text-align-left blockquote {
+  text-align: right;
+}
+
+.zc-block-pullquote.has-text-align-right blockquote {
+  text-align: left;
+}
+
+.zc-block-pullquote.has-text-align-center blockquote {
+  text-align: center;
+}
+
+.zc-block-pullquote.is-style-solid-color {
+  border: none;
+}
+.zc-block-pullquote.is-style-solid-color blockquote {
+  margin-right: auto;
+  margin-left: auto;
+  max-width: 60%;
+}
+.zc-block-pullquote.is-style-solid-color blockquote p {
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 2em;
+}
+.zc-block-pullquote.is-style-solid-color blockquote cite {
+  text-transform: none;
+  font-style: normal;
+}
+
+.zc-block-pullquote :where(cite) {
+  color: inherit;
+  display: block;
+}

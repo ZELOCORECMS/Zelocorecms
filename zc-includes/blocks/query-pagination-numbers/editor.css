@@ -1,0 +1,10 @@
+.zc-block-query-pagination-numbers a {
+  text-decoration: underline;
+}
+.zc-block-query-pagination-numbers .page-numbers {
+  margin-right: 2px;
+}
+.zc-block-query-pagination-numbers .page-numbers:last-child {
+  /*rtl:ignore*/
+  margin-right: 0;
+}

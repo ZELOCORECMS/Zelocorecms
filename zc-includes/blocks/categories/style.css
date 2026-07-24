@@ -1,0 +1,21 @@
+.zc-block-categories {
+  box-sizing: border-box;
+}
+.zc-block-categories.alignleft {
+  /*rtl:ignore*/
+  margin-right: 2em;
+}
+.zc-block-categories.alignright {
+  /*rtl:ignore*/
+  margin-left: 2em;
+}
+.zc-block-categories {
+  /* Only apply the text align on dropdowns, not lists. */
+}
+.zc-block-categories.zc-block-categories-dropdown.aligncenter {
+  text-align: center;
+}
+.zc-block-categories .zc-block-categories__label:not(.screen-reader-text) {
+  width: 100%;
+  display: block;
+}

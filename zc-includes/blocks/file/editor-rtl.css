@@ -1,0 +1,41 @@
+.zc-block[data-align=left] > .zc-block-file, .zc-block[data-align=right] > .zc-block-file {
+  height: auto;
+}
+.zc-block[data-align=center] > .zc-block-file {
+  text-align: center;
+}
+.zc-block-file {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0;
+}
+.zc-block-file .components-resizable-box__container {
+  margin-bottom: 1em;
+}
+.zc-block-file .zc-block-file__preview {
+  margin-bottom: 1em;
+  width: 100%;
+  height: 100%;
+}
+.zc-block-file .zc-block-file__preview-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+.zc-block-file .zc-block-file__content-wrapper {
+  flex-grow: 1;
+}
+.zc-block-file a {
+  min-width: 1em;
+}
+.zc-block-file a:not(.zc-block-file__button) {
+  display: inline-block;
+}
+.zc-block-file .zc-block-file__button-richtext-wrapper {
+  display: inline-block;
+  margin-right: 0.75em;
+}

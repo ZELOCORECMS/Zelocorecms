@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('zc-api-fetch', 'zc-url'), 'module_dependencies' => array(array('id' => '@zelocorecms/abilities', 'import' => 'static')), 'version' => '012760fd849397dd0031');

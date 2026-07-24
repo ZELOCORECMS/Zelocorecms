@@ -1,0 +1,25 @@
+.zc-block-post-author {
+  display: flex;
+  flex-wrap: wrap;
+  box-sizing: border-box;
+}
+.zc-block-post-author__byline {
+  width: 100%;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 0.5em;
+}
+.zc-block-post-author__avatar {
+  margin-right: 1em;
+}
+.zc-block-post-author__bio {
+  margin-bottom: 0.7em;
+  font-size: 0.7em;
+}
+.zc-block-post-author__content {
+  flex-grow: 1;
+  flex-basis: 0;
+}
+.zc-block-post-author__name {
+  margin: 0;
+}

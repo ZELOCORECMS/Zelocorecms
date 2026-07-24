@@ -1,0 +1,7 @@
+.zc-block-group {
+  box-sizing: border-box;
+}
+
+:where(.zc-block-group.zc-block-group-is-layout-constrained) {
+  position: relative;
+}

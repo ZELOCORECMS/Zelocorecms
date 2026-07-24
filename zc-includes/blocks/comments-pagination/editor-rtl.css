@@ -1,0 +1,13 @@
+.zc-block[data-align=center] > .zc-block-comments-pagination {
+  justify-content: center;
+}
+
+:where(.editor-styles-wrapper) .zc-block-comments-pagination {
+  max-width: 100%;
+}
+
+.zc-block-comments-pagination > .zc-block-comments-pagination-next,
+.zc-block-comments-pagination > .zc-block-comments-pagination-previous,
+.zc-block-comments-pagination > .zc-block-comments-pagination-numbers {
+  font-size: inherit;
+}

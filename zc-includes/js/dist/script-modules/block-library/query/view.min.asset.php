@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array(), 'module_dependencies' => array(array('id' => '@zelocorecms/interactivity', 'import' => 'static'), array('id' => '@zelocorecms/interactivity-router', 'import' => 'dynamic')), 'version' => '7a4ec5bfb61a7137cf4b');

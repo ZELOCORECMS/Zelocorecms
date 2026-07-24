@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('react-jsx-runtime', 'zc-data', 'zc-element', 'zc-primitives'), 'module_dependencies' => array(array('id' => '@zelocorecms/boot', 'import' => 'static')), 'version' => 'e57f44d1a9f69e75d2d9');

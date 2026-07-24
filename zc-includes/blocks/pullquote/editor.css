@@ -1,0 +1,11 @@
+.zc-block-pullquote.is-style-solid-color blockquote p {
+  font-size: 32px;
+}
+.zc-block-pullquote.is-style-solid-color .zc-block-pullquote__citation {
+  text-transform: none;
+  font-style: normal;
+}
+
+.zc-block-pullquote__citation {
+  color: inherit;
+}

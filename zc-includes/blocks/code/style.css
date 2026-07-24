@@ -1,0 +1,13 @@
+.zc-block-code {
+  box-sizing: border-box;
+}
+.zc-block-code code {
+  display: block;
+  font-family: inherit;
+  overflow-wrap: break-word;
+  white-space: pre-wrap;
+  /*!rtl:begin:ignore*/
+  direction: ltr;
+  text-align: initial;
+  /*!rtl:end:ignore*/
+}

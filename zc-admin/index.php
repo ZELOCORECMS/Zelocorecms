@@ -1,0 +1,250 @@
+<?php
+/**
+ * Dashboard Administration Screen
+ *
+ * @package ZelocoreCMS
+ * @subpackage Administration
+ */
+
+/** Load ZelocoreCMS Bootstrap */
+require_once __DIR__ . '/admin.php';
+
+/** Load ZelocoreCMS dashboard API */
+require_once ABSPATH . 'zc-admin/includes/dashboard.php';
+
+zc_dashboard_setup();
+
+zc_enqueue_script( 'dashboard' );
+
+if ( current_user_can( 'install_plugins' ) ) {
+	zc_enqueue_script( 'plugin-install' );
+	zc_enqueue_script( 'updates' );
+}
+if ( current_user_can( 'upload_files' ) ) {
+	zc_enqueue_script( 'media-upload' );
+}
+add_thickbox();
+
+if ( zc_is_mobile() ) {
+	zc_enqueue_script( 'jquery-touch-punch' );
+}
+
+// Used in the HTML title tag.
+$title       = __( 'Dashboard' );
+$parent_file = 'index.php';
+
+$help  = '<p>' . __( 'Welcome to your ZelocoreCMS Dashboard!' ) . '</p>';
+$help .= '<p>' . __( 'The Dashboard is the first place you will come to every time you log into your site. It is where you will find all your ZelocoreCMS tools. If you need help, just click the &#8220;Help&#8221; tab above the screen title.' ) . '</p>';
+
+$screen = get_current_screen();
+
+$screen->add_help_tab(
+	array(
+		'id'      => 'overview',
+		'title'   => __( 'Overview' ),
+		'content' => $help,
+	)
+);
+
+// Help tabs.
+
+$help  = '<p>' . __( 'The left-hand navigation menu provides links to all of the ZelocoreCMS administration screens, with submenu items displayed on hover. You can minimize this menu to a narrow icon strip by clicking on the Collapse Menu arrow at the bottom.' ) . '</p>';
+$help .= '<p>' . __( 'Links in the Toolbar at the top of the screen connect your dashboard and the front end of your site, and provide access to your profile and helpful ZelocoreCMS information.' ) . '</p>';
+
+$screen->add_help_tab(
+	array(
+		'id'      => 'help-navigation',
+		'title'   => __( 'Navigation' ),
+		'content' => $help,
+	)
+);
+
+$help  = '<p>' . __( 'You can use the following controls to arrange your Dashboard screen to suit your workflow. This is true on most other administration screens as well.' ) . '</p>';
+$help .= '<p>' . __( '<strong>Screen Options</strong> &mdash; Use the Screen Options tab to choose which Dashboard boxes to show.' ) . '</p>';
+$help .= '<p>' . __( '<strong>Drag and Drop</strong> &mdash; To rearrange the boxes, drag and drop by clicking on the title bar of the selected box and releasing when you see a gray dotted-line rectangle appear in the location you want to place the box.' ) . '</p>';
+$help .= '<p>' . __( '<strong>Box Controls</strong> &mdash; Click the title bar of the box to expand or collapse it. Some boxes added by plugins may have configurable content, and will show a &#8220;Configure&#8221; link in the title bar if you hover over it.' ) . '</p>';
+
+$screen->add_help_tab(
+	array(
+		'id'      => 'help-layout',
+		'title'   => __( 'Layout' ),
+		'content' => $help,
+	)
+);
+
+$help = '<p>' . __( 'The boxes on your Dashboard screen are:' ) . '</p>';
+
+if ( current_user_can( 'edit_theme_options' ) ) {
+	$help .= '<p>' . __( '<strong>Welcome</strong> &mdash; Shows links for some of the most common tasks when setting up a new site.' ) . '</p>';
+}
+
+if ( current_user_can( 'view_site_health_checks' ) ) {
+	$help .= '<p>' . __( '<strong>Site Health Status</strong> &mdash; Informs you of any potential issues that should be addressed to improve the performance or security of your website.' ) . '</p>';
+}
+
+if ( current_user_can( 'edit_posts' ) ) {
+	$help .= '<p>' . __( '<strong>At a Glance</strong> &mdash; Displays a summary of the content on your site and identifies which theme and version of ZelocoreCMS you are using.' ) . '</p>';
+}
+
+$help .= '<p>' . __( '<strong>Activity</strong> &mdash; Shows the upcoming scheduled posts, recently published posts, and the most recent comments on your posts and allows you to moderate them.' ) . '</p>';
+
+if ( is_blog_admin() && current_user_can( 'edit_posts' ) ) {
+	$help .= '<p>' . __( "<strong>Quick Draft</strong> &mdash; Allows you to create a new post and save it as a draft. Also displays links to the 3 most recent draft posts you've started." ) . '</p>';
+}
+
+$help .= '<p>' . sprintf(
+	/* translators: %s: ZelocoreCMS Planet URL. */
+	__( '<strong>ZelocoreCMS Events and News</strong> &mdash; Upcoming events near you as well as the latest news from the official ZelocoreCMS project and the <a href="%s">ZelocoreCMS Planet</a>.' ),
+	__( 'https://planet.zelocorecms.org/' )
+) . '</p>';
+
+$screen->add_help_tab(
+	array(
+		'id'      => 'help-content',
+		'title'   => __( 'Content' ),
+		'content' => $help,
+	)
+);
+
+unset( $help );
+
+$zc_version = get_bloginfo( 'version', 'display' );
+/* translators: %s: ZelocoreCMS version. */
+$zc_version_text = sprintf( __( 'Version %s' ), $zc_version );
+$is_dev_version  = preg_match( '/alpha|beta|RC/', $zc_version );
+
+if ( ! $is_dev_version ) {
+	$version_url = sprintf(
+		/* translators: %s: ZelocoreCMS version. */
+		esc_url( __( 'https://zelocorecms.org/documentation/zelocorecms-version/version-%s/' ) ),
+		sanitize_title( $zc_version )
+	);
+
+	$zc_version_text = sprintf(
+		'<a href="%1$s">%2$s</a>',
+		$version_url,
+		$zc_version_text
+	);
+}
+
+$screen->set_help_sidebar(
+	'<p><strong>' . __( 'For more information:' ) . '</strong></p>' .
+	'<p>' . __( '<a href="https://zelocorecms.org/documentation/article/dashboard-screen/">Documentation on Dashboard</a>' ) . '</p>' .
+	'<p>' . __( '<a href="https://zelocorecms.org/support/forums/">Support forums</a>' ) . '</p>' .
+	'<p>' . $zc_version_text . '</p>'
+);
+
+require_once ABSPATH . 'zc-admin/admin-header.php';
+?>
+
+<div class="wrap zc-premium-dashboard">
+	<style>
+		/* ZelocoreCMS Premium Dashboard Aesthetics */
+		body.zc-admin {
+			background: #f4f7f6;
+			font-family: 'Inter', 'Outfit', sans-serif;
+		}
+		.zc-premium-dashboard h1 {
+			font-size: 2.5em;
+			font-weight: 800;
+			background: linear-gradient(135deg, #2c3e50, #3498db);
+			-webkit-background-clip: text;
+			-webkit-text-fill-color: transparent;
+			margin-bottom: 30px;
+		}
+		.zc-premium-dashboard #dashboard-widgets .postbox {
+			border: none;
+			border-radius: 16px;
+			background: rgba(255, 255, 255, 0.7);
+			backdrop-filter: blur(12px);
+			-webkit-backdrop-filter: blur(12px);
+			box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+			overflow: hidden;
+			transition: transform 0.3s ease, box-shadow 0.3s ease;
+		}
+		.zc-premium-dashboard #dashboard-widgets .postbox:hover {
+			transform: translateY(-4px);
+			box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+		}
+		.zc-premium-dashboard #dashboard-widgets .postbox-header {
+			border-bottom: 1px solid rgba(0,0,0,0.05);
+			background: transparent;
+		}
+		.zc-premium-dashboard #dashboard-widgets .postbox-header h2 {
+			font-size: 1.1em;
+			font-weight: 600;
+			color: #2c3e50;
+		}
+	</style>
+	<h1><?php echo esc_html( $title ); ?></h1>
+
+	<?php
+	if ( ! empty( $_GET['admin_email_remind_later'] ) ) :
+		/** This filter is documented in zc-login.php */
+		$remind_interval = (int) apply_filters( 'admin_email_remind_interval', 3 * DAY_IN_SECONDS );
+		$postponed_time  = get_option( 'admin_email_lifespan' );
+
+		/*
+		 * Calculate how many seconds it's been since the reminder was postponed.
+		 * This allows us to not show it if the query arg is set, but visited due to caches, bookmarks or similar.
+		 */
+		$time_passed = time() - ( $postponed_time - $remind_interval );
+
+		// Only show the dashboard notice if it's been less than a minute since the message was postponed.
+		if ( $time_passed < MINUTE_IN_SECONDS ) :
+			$message = sprintf(
+				/* translators: %s: Human-readable time interval. */
+				__( 'The admin email verification page will reappear after %s.' ),
+				human_time_diff( time() + $remind_interval )
+			);
+			zc_admin_notice(
+				$message,
+				array(
+					'type'        => 'success',
+					'dismissible' => true,
+				)
+			);
+		endif;
+	endif;
+	?>
+
+<?php
+if ( has_action( 'welcome_panel' ) && current_user_can( 'edit_theme_options' ) ) :
+	$classes = 'welcome-panel';
+
+	$option = (int) get_user_meta( get_current_user_id(), 'show_welcome_panel', true );
+	// 0 = hide, 1 = toggled to show or single site creator, 2 = multisite site owner.
+	$hide = ( 0 === $option || ( 2 === $option && zc_get_current_user()->user_email !== get_option( 'admin_email' ) ) );
+	if ( $hide ) {
+		$classes .= ' hidden';
+	}
+	?>
+
+	<div id="welcome-panel" class="<?php echo esc_attr( $classes ); ?>">
+		<?php zc_nonce_field( 'welcome-panel-nonce', 'welcomepanelnonce', false ); ?>
+		<a class="welcome-panel-close" href="<?php echo esc_url( admin_url( '?welcome=0' ) ); ?>" aria-label="<?php esc_attr_e( 'Dismiss the welcome panel' ); ?>"><?php _e( 'Dismiss' ); ?></a>
+		<?php
+		/**
+		 * Fires when adding content to the welcome panel on the admin dashboard.
+		 *
+		 * To remove the default welcome panel, use remove_action():
+		 *
+		 *     remove_action( 'welcome_panel', 'zc_welcome_panel' );
+		 *
+		 * @since 3.5.0
+		 */
+		do_action( 'welcome_panel' );
+		?>
+	</div>
+<?php endif; ?>
+
+	<div id="dashboard-widgets-wrap">
+	<?php zc_dashboard(); ?>
+	</div><!-- dashboard-widgets-wrap -->
+
+</div><!-- wrap -->
+
+<?php
+zc_print_community_events_templates();
+
+require_once ABSPATH . 'zc-admin/admin-footer.php';

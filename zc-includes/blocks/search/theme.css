@@ -1,0 +1,8 @@
+.zc-block-search .zc-block-search__label {
+  font-weight: bold;
+}
+
+.zc-block-search__button {
+  border: 1px solid #ccc;
+  padding: 0.375em 0.625em;
+}

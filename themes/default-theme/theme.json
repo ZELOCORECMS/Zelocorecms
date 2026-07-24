@@ -1,8 +1,0 @@
-{
-    "name": "ZeloCore Default Theme",
-    "slug": "default-theme",
-    "version": "1.0.0",
-    "author": "ZeloCore Team",
-    "description": "The default clean and modern theme for ZeloCoreCMS.",
-    "update_url": "https://api.zelocorecms.test/themes/default-theme/update"
-}

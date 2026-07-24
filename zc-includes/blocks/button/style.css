@@ -1,0 +1,85 @@
+.zc-block-button__link {
+  cursor: pointer;
+  display: inline-block;
+  text-align: center;
+  word-break: break-word;
+  box-sizing: border-box;
+  height: 100%;
+  align-content: center;
+}
+.zc-block-button__link.aligncenter {
+  text-align: center;
+}
+.zc-block-button__link.alignright {
+  /*rtl:ignore*/
+  text-align: right;
+}
+
+:where(.zc-block-button__link) {
+  box-shadow: none;
+  text-decoration: none;
+  border-radius: 9999px;
+  padding: calc(0.667em + 2px) calc(1.333em + 2px);
+}
+
+.zc-block-button[style*=text-decoration] .zc-block-button__link {
+  text-decoration: inherit;
+}
+
+.zc-block-buttons > .zc-block-button.has-custom-width {
+  max-width: none;
+}
+.zc-block-buttons > .zc-block-button.has-custom-width .zc-block-button__link {
+  width: 100%;
+}
+.zc-block-buttons > .zc-block-button.has-custom-font-size .zc-block-button__link {
+  font-size: inherit;
+}
+.zc-block-buttons > .zc-block-button.zc-block-button__width-25 {
+  width: calc(25% - var(--zc--style--block-gap, 0.5em) * 0.75);
+}
+.zc-block-buttons > .zc-block-button.zc-block-button__width-50 {
+  width: calc(50% - var(--zc--style--block-gap, 0.5em) * 0.5);
+}
+.zc-block-buttons > .zc-block-button.zc-block-button__width-75 {
+  width: calc(75% - var(--zc--style--block-gap, 0.5em) * 0.25);
+}
+.zc-block-buttons > .zc-block-button.zc-block-button__width-100 {
+  width: 100%;
+  flex-basis: 100%;
+}
+
+.zc-block-buttons.is-vertical > .zc-block-button.zc-block-button__width-25 {
+  width: 25%;
+}
+.zc-block-buttons.is-vertical > .zc-block-button.zc-block-button__width-50 {
+  width: 50%;
+}
+.zc-block-buttons.is-vertical > .zc-block-button.zc-block-button__width-75 {
+  width: 75%;
+}
+
+.zc-block-button.is-style-squared,
+.zc-block-button__link.zc-block-button.is-style-squared {
+  border-radius: 0;
+}
+
+.zc-block-button.no-border-radius,
+.zc-block-button__link.no-border-radius {
+  border-radius: 0 !important;
+}
+
+:root :where(.zc-block-button.is-style-outline > .zc-block-button__link),
+:root :where(.zc-block-button .zc-block-button__link.is-style-outline) {
+  border: 2px solid currentColor;
+  padding: 0.667em 1.333em;
+}
+:root :where(.zc-block-button.is-style-outline > .zc-block-button__link:not(.has-text-color)),
+:root :where(.zc-block-button .zc-block-button__link.is-style-outline:not(.has-text-color)) {
+  color: currentColor;
+}
+:root :where(.zc-block-button.is-style-outline > .zc-block-button__link:not(.has-background)),
+:root :where(.zc-block-button .zc-block-button__link.is-style-outline:not(.has-background)) {
+  background-color: transparent;
+  background-image: none;
+}

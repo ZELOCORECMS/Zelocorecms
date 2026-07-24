@@ -1,0 +1,15 @@
+.zc-block-categories ul {
+  padding-right: 2.5em;
+}
+.zc-block-categories ul ul {
+  margin-top: 6px;
+}
+
+/* Center alignment for classic themes. */
+[data-align=center] .zc-block-categories {
+  text-align: center;
+}
+
+.zc-block-categories__indentation {
+  padding-right: 16px;
+}

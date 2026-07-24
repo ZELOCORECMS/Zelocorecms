@@ -1,0 +1,1 @@
+<?php return array('dependencies' => array('react', 'react-dom', 'react-jsx-runtime', 'zc-private-apis'), 'version' => 'c5843b6c5e84b352f43b');
