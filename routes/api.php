@@ -141,6 +141,7 @@ Route::middleware('auth:sanctum')->group(function () {
                 Route::post('/install', [ThemeController::class, 'install'])->name('install');
                 Route::post('/{themeSlug}/activate', [ThemeController::class, 'activate'])->name('activate');
                 Route::post('/{themeSlug}/update', [ThemeController::class, 'update'])->name('update');
+                Route::delete('/{themeSlug}', [ThemeController::class, 'destroy'])->name('destroy');
             });
 
             // Webhooks

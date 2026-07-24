@@ -29,8 +29,25 @@ class ThemeController extends Controller
 
     public function install(Request $request, string $workspaceSlug): JsonResponse
     {
-        // Mock install process
-        return response()->json(['success' => false, 'message' => 'Theme upload/install not yet implemented.'], 501);
+        $request->validate([
+            'theme' => 'required|file|mimes:zip|max:51200', // max 50MB
+        ]);
+
+        try {
+            $themeData = $this->themeManager->installTheme($request->file('theme'));
+
+            return response()->json([
+                'success' => true,
+                'message' => "Theme {$themeData['name']} installed successfully.",
+                'data' => $themeData,
+            ]);
+        } catch (\InvalidArgumentException $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
+        } catch (\RuntimeException $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 422);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => 'An unexpected error occurred during installation.'], 500);
+        }
     }
 
     public function activate(Request $request, string $workspaceSlug, string $themeSlug): JsonResponse
@@ -56,6 +73,16 @@ class ThemeController extends Controller
             return response()->json(['success' => false, 'message' => 'No updates available or update failed.'], 400);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Update failed: ' . $e->getMessage()], 500);
+        }
+    }
+
+    public function destroy(Request $request, string $workspaceSlug, string $themeSlug): JsonResponse
+    {
+        try {
+            $this->themeManager->deleteTheme($themeSlug);
+            return response()->json(['success' => true, 'message' => "Theme {$themeSlug} deleted successfully."]);
+        } catch (\Exception $e) {
+            return response()->json(['success' => false, 'message' => $e->getMessage()], 400);
         }
     }
 }

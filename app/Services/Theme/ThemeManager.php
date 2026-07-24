@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace App\Services\Theme;
 
 use App\Models\Option;
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use ZipArchive;
 
 class ThemeManager
 {
@@ -126,5 +128,92 @@ class ThemeManager
     public function getThemePath(string $slug): string
     {
         return $this->themesPath.'/'.$slug;
+    }
+
+    /**
+     * Install a new theme from an uploaded zip file.
+     */
+    public function installTheme(UploadedFile $file): array
+    {
+        if ($file->getClientOriginalExtension() !== 'zip' && $file->getMimeType() !== 'application/zip') {
+            throw new \InvalidArgumentException('Uploaded file must be a zip archive.');
+        }
+
+        $zip = new ZipArchive();
+        if ($zip->open($file->getRealPath()) !== true) {
+            throw new \RuntimeException('Failed to open zip archive.');
+        }
+
+        $themeJson = null;
+        $slug = null;
+        $rootDirInZip = null;
+
+        for ($i = 0; $i < $zip->numFiles; $i++) {
+            $stat = $zip->statIndex($i);
+            if (str_ends_with($stat['name'], 'theme.json')) {
+                $parts = explode('/', $stat['name']);
+                if (count($parts) === 2) {
+                    $rootDirInZip = $parts[0];
+                    $themeJsonStr = $zip->getFromIndex($i);
+                    $themeJson = json_decode($themeJsonStr, true);
+                    break;
+                } elseif (count($parts) === 1) {
+                    $rootDirInZip = '';
+                    $themeJsonStr = $zip->getFromIndex($i);
+                    $themeJson = json_decode($themeJsonStr, true);
+                    break;
+                }
+            }
+        }
+
+        if (! $themeJson || ! isset($themeJson['slug'])) {
+            $zip->close();
+            throw new \RuntimeException('Invalid theme format: missing or invalid theme.json in root directory of zip.');
+        }
+
+        $slug = $themeJson['slug'];
+
+        if ($this->themeExists($slug)) {
+            $zip->close();
+            throw new \RuntimeException("Theme [{$slug}] is already installed.");
+        }
+
+        $tempExtractPath = storage_path('app/temp-theme-extract-' . uniqid());
+        File::makeDirectory($tempExtractPath, 0755, true);
+        
+        $zip->extractTo($tempExtractPath);
+        $zip->close();
+
+        $finalDestination = $this->themesPath . '/' . $slug;
+        if ($rootDirInZip !== '') {
+            File::moveDirectory($tempExtractPath . '/' . $rootDirInZip, $finalDestination);
+        } else {
+            File::moveDirectory($tempExtractPath, $finalDestination);
+        }
+
+        File::deleteDirectory($tempExtractPath);
+
+        return $themeJson;
+    }
+
+    /**
+     * Delete an installed theme.
+     */
+    public function deleteTheme(string $slug): void
+    {
+        if ($slug === 'default-theme') {
+            throw new \RuntimeException("Cannot delete the default theme.");
+        }
+
+        if (! $this->themeExists($slug)) {
+            throw new \InvalidArgumentException("Theme [{$slug}] does not exist.");
+        }
+
+        $isActive = Option::where('option_key', 'theme.active')->where('option_value', $slug)->exists();
+        if ($isActive) {
+            throw new \RuntimeException("Cannot delete the active theme.");
+        }
+
+        File::deleteDirectory($this->getThemePath($slug));
     }
 }
