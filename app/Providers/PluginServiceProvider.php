@@ -30,7 +30,7 @@ class PluginServiceProvider extends ServiceProvider
         try {
             /** @var PluginManager $manager */
             $manager = $this->app->make(PluginManager::class);
-            $manager->bootAllActive();
+            $manager->loadActivePlugins();
         } catch (\Throwable $e) {
             // Log but don't crash the app if a plugin fails to load
             Log::error(

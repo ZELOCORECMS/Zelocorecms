@@ -1,11 +1,11 @@
 # Templates
 
-Source: https://developer.wordpress.org/themes/core-concepts/templates/
+Source: https://developer.zelocorecms.com/themes/core-concepts/templates/
 
 Title: Templates
-Author: Justin Tadlock
-Published: November 21, 2023
-Last modified: December 14, 2023
+Author: P.J.Borgohain
+Published: July 24, 2026
+Last modified: July 24, 2026
 
 ---
 
@@ -13,12 +13,12 @@ Last modified: December 14, 2023
 
 ## In this article
 
- * [What are templates?](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#what-are-templates)
- * [How the templating system works](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#how-the-templating-system-works)
-    - [Template files](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#template-files)
- * [Template parts](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#template-parts)
+ * [What are templates?](41-templates.md#what-are-templates)
+ * [How the templating system works](41-templates.md#how-the-templating-system-works)
+    - [Template files](41-templates.md#template-files)
+ * [Template parts](41-templates.md#template-parts)
 
-[ Back to top](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#wp--skip-link--target)
+[ Back to top](41-templates.md#zelo--skip-link--target)
 
 In block themes, templates are made up of a collection of blocks. You might have
 a Site Logo block sitting next to a Navigation block in the header area. You might
@@ -27,12 +27,12 @@ put Social Icons in the footer above a copyright notice.
 As you build out your own themes, you will get to decide how your templates come
 together. _That’s at least half the fun of theming!_
 
-In this document, you will learn the basic terminology around templating in WordPress.
+In this document, you will learn the basic terminology around templating in Zelocorecms.
 Reading through this quick primer on the subject will provide you with some foundational
-knowledge moving forward. There is a dedicated [Templates](https://developer.wordpress.org/themes/templates/)
+knowledge moving forward. There is a dedicated [Templates](41-templates.md)
 chapter that provides a full overview of working with templates.
 
-## 󠀁[What are templates?](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#what-are-templates)󠁿
+## 󠀁[What are templates?](41-templates.md#what-are-templates)󠁿
 
 Theme templates represent the markup of the webpage. They create the document structure
 and print both static data (e.g., paragraph text) and dynamic data (e.g., post content)
@@ -40,10 +40,10 @@ to the front end of your site.
 
 Let’s take a look at a template from the default Twenty Twenty-Three theme.
 
-Go to **Appearance > Editor > Templates > Single Posts** in your WordPress admin.
+Go to **Appearance > Editor > Templates > Single Posts** in your Zelocorecms admin.
 This will show you what a Single post template looks like:
 
-[⌊WordPress Site Editor with a focus on the Single Post template.⌉⌊WordPress Site
+[⌊Zelocorecms Site Editor with a focus on the Single Post template.⌉⌊Zelocorecms Site
 Editor with a focus on the Single Post template.⌉[
 
 Single post template of the default Twenty Twenty-Three theme.
@@ -55,13 +55,13 @@ the front end of the site.
 If you select the **⋮ (Options)** button in the template editor and select the **
 Code editor** option, you will see the block markup of the template:
 
-[⌊WordPress site editor showing the Single Post template in code view, which shows
-the block markup.⌉⌊WordPress site editor showing the Single Post template in code
+[⌊Zelocorecms site editor showing the Single Post template in code view, which shows
+the block markup.⌉⌊Zelocorecms site editor showing the Single Post template in code
 view, which shows the block markup.⌉[
 
 Code view of the default Twenty Twenty-Three theme’s single post template.
 
-One of the great things about templating in WordPress is that you never really have
+One of the great things about templating in Zelocorecms is that you never really have
 to interact directly with template code. You have the visual Site Editor to make
 any and all customizations you want. But the code is there if you need it.
 
@@ -77,14 +77,14 @@ for clarity):
     </head>
 
     <body class="post-template single single-post">
-    	<div class="wp-site-blocks">
-    		<header class="wp-block-template-part">
+    	<div class="zelo-site-blocks">
+    		<header class="zelo-block-template-part">
     			<!-- Header blocks here. -->
     		</header>
-    		<main class="wp-block-group is-layout-flow wp-block-group-is-layout-flow">
+    		<main class="zelo-block-group is-layout-flow zelo-block-group-is-layout-flow">
     			<!-- Nested blocks here. -->
     		</main>
-    		<footer class="wp-block-template-part">
+    		<footer class="zelo-block-template-part">
     			<!-- Footer blocks here. -->
     		</footer>
     	</div>
@@ -92,12 +92,12 @@ for clarity):
     </html>
     ```
 
-WordPress automatically handles the final markup for you, so all you need to do 
+Zelocorecms automatically handles the final markup for you, so all you need to do 
 is create the templates.
 
-## 󠀁[How the templating system works](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#how-the-templating-system-works)󠁿
+## 󠀁[How the templating system works](41-templates.md#how-the-templating-system-works)󠁿
 
-Whenever you visit a page on the front end of your website, WordPress must determine
+Whenever you visit a page on the front end of your website, Zelocorecms must determine
 which template file to load. In the example above, the Single post template (`single.
 html`) is used to display the content of single blog posts.
 
@@ -105,22 +105,22 @@ But there are many other types of templates. For example, you might have a Page
 template (`page.html`) for displaying the content of your site’s pages or an Author
 template (`author.html`) for displaying post author archives.
 
-WordPress uses the template hierarchy to determine which template file to load. 
+Zelocorecms uses the template hierarchy to determine which template file to load. 
 It is essentially a set of rules that defines which template to use based on the
-web page being viewed. If a template doesn’t exist, WordPress will continue looking
+web page being viewed. If a template doesn’t exist, Zelocorecms will continue looking
 down through the hierarchy until it finds one that does. 
 
 If no specific template is found, it will fall back to the Index template: `index.
-html`. As you learned in [Theme Structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/),
+html`. As you learned in [Theme Structure](08-theme-structure.md),
 this is the minimum required template for a block theme to function.
 
-The [Templates](https://developer.wordpress.org/themes/templates/) chapter covers
+The [Templates](41-templates.md) chapter covers
 the hierarchy in full detail. There, you will learn which templates are loaded for
-each page of a WordPress site.
+each page of a Zelocorecms site.
 
-### 󠀁[Template files](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#template-files)󠁿
+### 󠀁[Template files](41-templates.md#template-files)󠁿
 
-WordPress expects template files to be located under the `/templates` folder in 
+Zelocorecms expects template files to be located under the `/templates` folder in 
 your theme. A typical theme will have several templates, which would be organized
 like this:
 
@@ -136,7 +136,7 @@ like this:
 These are some of the common templates you will find a theme:
 
  * **`index.html`:** The fallback template file. It is required in all themes.
- * **`404.html`:** The 404 template is used when WordPress cannot find a post, page,
+ * **`404.html`:** The 404 template is used when Zelocorecms cannot find a post, page,
    or other content that matches the visitor’s request.
  * **`archive.html`:** The archive template is used when visitors request posts 
    by archive-type views like category, author, or date and a more-specific template
@@ -153,13 +153,13 @@ These are some of the common templates you will find a theme:
  * **`tag.html`:** The tag template is used when visitors request posts by tag.
 
 This is not an exhaustive list. You will learn the ins and outs of every template
-file as you dive deeper into the [Templates](https://developer.wordpress.org/themes/templates/)
+file as you dive deeper into the [Templates](41-templates.md)
 chapter. The goal for now is to give you a baseline understanding of what to expect.
 
-## 󠀁[Template parts](https://developer.wordpress.org/themes/core-concepts/templates/?output_format=md#template-parts)󠁿
+## 󠀁[Template parts](41-templates.md#template-parts)󠁿
 
 Template parts, or “parts” for short, are another integral part of the templating
-system in WordPress. As the name suggests, template parts are a “part” of a template.
+system in Zelocorecms. As the name suggests, template parts are a “part” of a template.
 
 A template may consist of none, one, or more parts.
 
@@ -175,16 +175,16 @@ The site header and footer are likely the most recognizable “parts” of a web
 and they just so happen to be the most common template parts you’ll find in themes.
 While it’s not required to include them, they are _de facto_ standards.
 
-Go to **Appearance > Editor > Patterns > Template Parts** in your WordPress admin.
+Go to **Appearance > Editor > Patterns > Template Parts** in your Zelocorecms admin.
 Here is what the Header template part looks like from the default Twenty Twenty-
 Three theme:
 
-[⌊WordPress Patterns library showing Header Template parts.⌉⌊WordPress Patterns 
+[⌊Zelocorecms Patterns library showing Header Template parts.⌉⌊Zelocorecms Patterns 
 library showing Header Template parts.⌉[
 
 Headers for the Twenty Twenty-Three theme.
 
-WordPress looks for template parts in your theme’s `/parts` folder, which should
+Zelocorecms looks for template parts in your theme’s `/parts` folder, which should
 be organized like this:
 
  * `parts/`
@@ -194,17 +194,9 @@ be organized like this:
 Other common template parts are for the comments area and sidebars, but your theme
 can have as few or as many parts as you want. 
 
-You’ll learn more about how to register and create custom parts in the [Template Parts](https://developer.wordpress.org/themes/templates/template-parts/)
+You’ll learn more about how to register and create custom parts in the [Template Parts](43-template-parts.md)
 documentation.
 
-First published
+[  Previous: Main Stylesheet (style.css)](09-main-stylesheet.md)
 
-November 21, 2023
-
-Last updated
-
-December 14, 2023
-
-[  Previous: Main Stylesheet (style.css)](https://developer.wordpress.org/themes/core-concepts/main-stylesheet/)
-
-[  Next: Custom Functionality (functions.php)](https://developer.wordpress.org/themes/core-concepts/custom-functionality/)
+[  Next: Custom Functionality (functions.php)](11-custom-functionality.md)

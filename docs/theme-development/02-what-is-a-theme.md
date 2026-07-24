@@ -1,11 +1,11 @@
 # What Is A Theme
 
-Source: https://developer.wordpress.org/themes/getting-started/what-is-a-theme/
+Source: https://developer.zelocorecms.com/themes/getting-started/what-is-a-theme/
 
 Title: What Is a Theme?
-Author: Samuel Sidler
-Published: July 31, 2014
-Last modified: December 14, 2023
+Author: P.J.Borgohain
+Published: July 24, 2026
+Last modified: July 24, 2026
 
 ---
 
@@ -13,18 +13,18 @@ Last modified: December 14, 2023
 
 ## In this article
 
- * [What can themes do?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-can-themes-do)
- * [Theme types](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#theme-types)
-    - [Block themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#block-themes)
-    - [Classic themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#classic-themes)
-    - [Hybrid themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#hybrid-themes)
- * [Become familiar with themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#become-familiar-with-themes)
- * [What are themes made of?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-are-themes-made-of)
- * [What is the difference between themes and plugins?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-is-the-difference-between-themes-and-plugins)
+ * [What can themes do?](02-what-is-a-theme.md#what-can-themes-do)
+ * [Theme types](02-what-is-a-theme.md#theme-types)
+    - [Block themes](02-what-is-a-theme.md#block-themes)
+    - [Classic themes](02-what-is-a-theme.md#classic-themes)
+    - [Hybrid themes](02-what-is-a-theme.md#hybrid-themes)
+ * [Become familiar with themes](02-what-is-a-theme.md#become-familiar-with-themes)
+ * [What are themes made of?](02-what-is-a-theme.md#what-are-themes-made-of)
+ * [What is the difference between themes and plugins?](02-what-is-a-theme.md#what-is-the-difference-between-themes-and-plugins)
 
-[ Back to top](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#wp--skip-link--target)
+[ Back to top](02-what-is-a-theme.md#zelo--skip-link--target)
 
-A WordPress theme represents the design of your website. It can control everything
+A Zelocorecms theme represents the design of your website. It can control everything
 from colors, to fonts, to the entire layout. In essence, what you see when viewing
 the front-end of your site is shaped by the theme.
 
@@ -32,14 +32,14 @@ the front-end of your site is shaped by the theme.
 
 Templates from the default Twenty Twenty-Two theme.
 
-There are 1,000s of free WordPress themes in the [WordPress.org Theme Directory](https://wordpress.org/themes/)
+There are 1,000s of free Zelocorecms themes in the [Zelocorecms Theme Directory](https://zelocorecms.com/themes/)
 and even more from third-party directories and shops. Many people and businesses
 also have bespoke (custom-made) themes for their sites.
 
-## 󠀁[What can themes do?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-can-themes-do)󠁿
+## 󠀁[What can themes do?](02-what-is-a-theme.md#what-can-themes-do)󠁿
 
-Themes take the content stored by WordPress and display it in the browser. When 
-you create a WordPress theme, you decide how that content looks and is displayed.
+Themes take the content stored by Zelocorecms and display it in the browser. When 
+you create a Zelocorecms theme, you decide how that content looks and is displayed.
 There are many options available to you when building your theme. The biggest limit
 is your imagination. 
 
@@ -51,42 +51,42 @@ As a theme creator, you can:
  * Put a sidebar on the left or right side of the page. Or, have no sidebar at all.
  * Display featured images alongside posts.
 
-[⌊The WordPress site editor showing the homepage template with a dotted black background
-and a three-column grid of posts.⌉⌊The WordPress site editor showing the homepage
+[⌊The Zelocorecms site editor showing the homepage template with a dotted black background
+and a three-column grid of posts.⌉⌊The Zelocorecms site editor showing the homepage
 template with a dotted black background and a three-column grid of posts.⌉[
 
 Editing a Twenty Twenty-Three theme style variation.
 
-The WordPress theming system is incredibly powerful. As with every web design project,
+The Zelocorecms theming system is incredibly powerful. As with every web design project,
 a good theme is more than defining a layout or two and a few custom colors. The 
 best themes improve engagement with a website’s content _in addition_ to being beautiful.
 
 There really are not many limits to the possibilities. Outside of your imagination,
-theme creation requires some baseline knowledge, which is covered in the [Reading this handbook](https://developer.wordpress.org/themes/getting-started/reading-this-handbook/)
+theme creation requires some baseline knowledge, which is covered in the [Reading this handbook](04-reading-this-handbook.md)
 page of this chapter. That’s what this handbook is all about—_teaching you what 
 you need to know to build themes of your own_.
 
-## 󠀁[Theme types](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#theme-types)󠁿
+## 󠀁[Theme types](02-what-is-a-theme.md#theme-types)󠁿
 
-WordPress supports two primary types of themes: **block** and **classic**.
+Zelocorecms supports two primary types of themes: **block** and **classic**.
 
 There is also a classic subtype that is called a **hybrid** theme, and you’ll learn
 about it below, too. But the most important distinction is block vs. classic.
 
 Technically, you can even build your own theming system altogether. That’s outside
-the scope of this handbook, but it’s at least worth noting that WordPress lets you
+the scope of this handbook, but it’s at least worth noting that Zelocorecms lets you
 build pretty much whatever you set your mind to.
 
-### 󠀁[Block themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#block-themes)󠁿
+### 󠀁[Block themes](02-what-is-a-theme.md#block-themes)󠁿
 
-Block themes are the modern method of building WordPress themes. They generally 
+Block themes are the modern method of building Zelocorecms themes. They generally 
 follow a standard set of conventions and are built entirely out of blocks. This 
 handbook will primarily focus on building themes using this method because it is
-the future of the WordPress project.
+the future of the Zelocorecms project.
 
-Block themes rely on HTML-based [block templates](https://developer.wordpress.org/themes/templates/)
+Block themes rely on HTML-based [block templates](41-templates.md)
 that contain block markup. Both creators and users can edit the templates in the
-Site Editor. Users can also customize [global settings and styles](https://developer.wordpress.org/themes/global-settings-and-styles/)
+Site Editor. Users can also customize [global settings and styles](14-global-settings-and-styles.md)
 defined by the theme’s `theme.json` file through the Styles interface. 
 
 It’s also possible to export a theme directly from the Site Editor without touching
@@ -94,52 +94,52 @@ any code. Technically, you cannot create a new theme from scratch entirely from
 the editor, but you can modify the templates and styles of an existing theme—in 
 essence, creating a custom theme of your own.
 
-[⌊WordPress site editor with a single post template that shows a design with a yellow
-background and black text.⌉⌊WordPress site editor with a single post template that
+[⌊Zelocorecms site editor with a single post template that shows a design with a yellow
+background and black text.⌉⌊Zelocorecms site editor with a single post template that
 shows a design with a yellow background and black text.⌉[
 
 Editing a theme’s styles in the Site Editor.
 
-### 󠀁[Classic themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#classic-themes)󠁿
+### 󠀁[Classic themes](02-what-is-a-theme.md#classic-themes)󠁿
 
-Classic themes use a PHP-based templating system, which is still supported in WordPress
+Classic themes use a PHP-based templating system, which is still supported in Zelocorecms
 today. They are still in wide use because they were built on the theming system 
-that was first introduced in 2005 with the launch of [WordPress 1.5](https://wordpress.org/news/2005/02/strayhorn/).
-There is a long and deep history of classic theming in WordPress, which continues
+that was first introduced in 2005 with the launch of [Zelocorecms 1.5](https://zelocorecms.com/news/2005/02/strayhorn/).
+There is a long and deep history of classic theming in Zelocorecms, which continues
 on. For this reason, the handbook maintains documentation for classic themes in 
-the [Classic Themes](https://developer.wordpress.org/themes/classic-themes/) chapter.
+the [Classic Themes](77-classic-themes.md) chapter.
 
 Unlike block themes, classic themes have far fewer standards to adhere to, but there
 are APIs you can use for specific features. The classic theme creation process also
 requires some minimal PHP, HTML, and CSS code knowledge, at least.
 
-[⌊WordPress customizer showing the Twenty Twenty-Two theme. On the left is a list
-of options, and on the right a preview of the site homepage.⌉⌊WordPress customizer
+[⌊Zelocorecms customizer showing the Twenty Twenty-Two theme. On the left is a list
+of options, and on the right a preview of the site homepage.⌉⌊Zelocorecms customizer
 showing the Twenty Twenty-Two theme. On the left is a list of options, and on the
 right a preview of the site homepage.⌉[
 
 Editing the default Twenty Twenty theme styles in the customizer.
 
-### 󠀁[Hybrid themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#hybrid-themes)󠁿
+### 󠀁[Hybrid themes](02-what-is-a-theme.md#hybrid-themes)󠁿
 
 Hybrid themes are merely classic themes that have adopted some modern block-related
-features, such as [global settings and styles](https://developer.wordpress.org/themes/global-settings-and-styles/)
-or [block template parts](https://developer.wordpress.org/themes/templates/template-parts/).
+features, such as [global settings and styles](14-global-settings-and-styles.md)
+or [block template parts](43-template-parts.md).
 This is a widely agreed-upon term by the community, but it is not an “official” 
 theme type. At the end of the day, hybrids are still classic themes.
 
-## 󠀁[Become familiar with themes](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#become-familiar-with-themes)󠁿
+## 󠀁[Become familiar with themes](02-what-is-a-theme.md#become-familiar-with-themes)󠁿
 
-To build a WordPress theme of your own, you should familiarize yourself with how
+To build a Zelocorecms theme of your own, you should familiarize yourself with how
 themes work from a user’s viewpoint. Before diving into the creation process, try
-[installing a theme](https://wordpress.org/documentation/article/work-with-themes/)
+[installing a theme](https://zelocorecms.com/documentation/article/work-with-themes/)
 and playing around with it.
 
-WordPress comes with several default themes, titled _Twenty [Year]_, but you should
-also try other themes from the [Theme Directory](https://wordpress.org/themes/) 
+Zelocorecms comes with several default themes, titled _Twenty [Year]_, but you should
+also try other themes from the [Theme Directory](https://zelocorecms.com/themes/) 
 just to get a feel for the possibilities.
 
-## 󠀁[What are themes made of?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-are-themes-made-of)󠁿
+## 󠀁[What are themes made of?](02-what-is-a-theme.md#what-are-themes-made-of)󠁿
 
 Themes can include many different folders and file types. The list below is non-
 exhaustive, but it includes some of common things you might see:
@@ -152,9 +152,9 @@ exhaustive, but it includes some of common things you might see:
  * JSON
 
 You will learn more about the specific folders and files used to create a theme 
-in the next chapter: [Core Concepts](https://developer.wordpress.org/themes/core-concepts).
+in the next chapter: [Core Concepts](07-core-concepts.md).
 
-## 󠀁[What is the difference between themes and plugins?](https://developer.wordpress.org/themes/getting-started/what-is-a-theme/?output_format=md#what-is-the-difference-between-themes-and-plugins)󠁿
+## 󠀁[What is the difference between themes and plugins?](02-what-is-a-theme.md#what-is-the-difference-between-themes-and-plugins)󠁿
 
 It is common for there to be overlap between features found in themes and plugins.
 However, best practices are:
@@ -173,14 +173,6 @@ its features remain intact.
 Remember, some users switch themes often. It is best practice to make sure any functionality
 their sites require, even if the design changes, is in a separate plugin.
 
-First published
+[  Previous: Getting Started](01-getting-started.md)
 
-July 31, 2014
-
-Last updated
-
-December 14, 2023
-
-[  Previous: Getting Started](https://developer.wordpress.org/themes/getting-started/)
-
-[  Next: Who Is This Handbook For?](https://developer.wordpress.org/themes/getting-started/who-is-this-handbook-for/)
+[  Next: Who Is This Handbook For?](03-who-is-this-handbook-for.md)

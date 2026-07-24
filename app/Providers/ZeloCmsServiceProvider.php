@@ -20,6 +20,7 @@ use App\Services\Media\MediaService;
 use App\Services\Plugin\PluginManager;
 use App\Services\Plugin\PluginSandbox;
 use App\Services\Theme\ThemeManager;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
 
@@ -65,7 +66,7 @@ class ZeloCmsServiceProvider extends ServiceProvider
             // We'll boot it for the global scope if not handling a specific workspace yet
             $this->app->make(ThemeManager::class)->bootTheme();
         } catch (\Exception $e) {
-            // Ignore during setup/migrations
+            Log::error('ZeloCmsServiceProvider bootTheme failed: '.$e->getMessage()."\n".$e->getTraceAsString());
         }
 
         // Load ZELOCORECMS routes
@@ -89,14 +90,6 @@ class ZeloCmsServiceProvider extends ServiceProvider
 
     private function loadRoutes(): void
     {
-        // API routes
-        $this->app->make('router')->group([
-            'prefix' => 'api/v1',
-            'middleware' => ['api'],
-        ], function () {
-            require base_path('routes/api.php');
-        });
-
         // Admin routes (SPA — serves Vue.js admin)
         $this->app->make('router')->group([
             'prefix' => config('app.cms.admin_path', 'admin'),

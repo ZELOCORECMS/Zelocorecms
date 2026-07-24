@@ -37,14 +37,19 @@ Route::post('/contact', function (Request $request) {
 Route::get('/theme-assets/{path}', function ($path) {
     $themeManager = app(ThemeManager::class);
     $activeTheme = $themeManager->getActiveThemeSlug();
-    $fullPath = $themeManager->getThemePath($activeTheme).'/public/'.$path;
+    $themePublic = realpath($themeManager->getThemePath($activeTheme).'/public');
 
-    if (! File::exists($fullPath)) {
+    if (! $themePublic) {
+        abort(404);
+    }
+
+    $fullPath = realpath($themePublic.'/'.$path);
+
+    if (! $fullPath || ! str_starts_with($fullPath, $themePublic)) {
         abort(404);
     }
 
     $mimeType = File::mimeType($fullPath);
-    // Overrides for css/js since File::mimeType can fail for them sometimes
     if (str_ends_with($path, '.css')) {
         $mimeType = 'text/css';
     } elseif (str_ends_with($path, '.js')) {
@@ -52,8 +57,8 @@ Route::get('/theme-assets/{path}', function ($path) {
     }
 
     return response()->file($fullPath, ['Content-Type' => $mimeType]);
-})->where('path', '.*');
+})->where('path', '.+');
 
-Route::get('/admin/{any?}', function () {
+Route::get('/admin/{any}', function () {
     return view('admin');
 })->where('any', '.*');

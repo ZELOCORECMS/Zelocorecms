@@ -13,7 +13,9 @@ class ThemeController extends Controller
     public function __construct(
         private readonly ThemeManager $themeManager,
         private readonly ThemeUpdater $themeUpdater
-    ) {}
+    ) {
+        $this->middleware('can:super-admin');
+    }
 
     public function index(Request $request, string $workspaceSlug): JsonResponse
     {
@@ -24,7 +26,10 @@ class ThemeController extends Controller
             $theme['is_active'] = ($theme['slug'] === $activeSlug);
         }
 
-        return response()->json(['success' => true, 'data' => $themes]);
+        return response()->json([
+            'success' => true,
+            'data' => $themes,
+        ]);
     }
 
     public function install(Request $request, string $workspaceSlug): JsonResponse
@@ -65,14 +70,14 @@ class ThemeController extends Controller
     {
         try {
             $success = $this->themeUpdater->updateTheme($themeSlug);
-            
+
             if ($success) {
                 return response()->json(['success' => true, 'message' => "Theme {$themeSlug} updated successfully."]);
             }
-            
+
             return response()->json(['success' => false, 'message' => 'No updates available or update failed.'], 400);
         } catch (\Exception $e) {
-            return response()->json(['success' => false, 'message' => 'Update failed: ' . $e->getMessage()], 500);
+            return response()->json(['success' => false, 'message' => 'Update failed: '.$e->getMessage()], 500);
         }
     }
 
@@ -80,6 +85,7 @@ class ThemeController extends Controller
     {
         try {
             $this->themeManager->deleteTheme($themeSlug);
+
             return response()->json(['success' => true, 'message' => "Theme {$themeSlug} deleted successfully."]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => $e->getMessage()], 400);

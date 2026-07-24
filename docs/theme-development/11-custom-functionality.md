@@ -1,11 +1,11 @@
 # Custom Functionality
 
-Source: https://developer.wordpress.org/themes/core-concepts/custom-functionality/
+Source: https://developer.zelocorecms.com/themes/core-concepts/custom-functionality/
 
 Title: Custom Functionality (functions.php)
-Author: Justin Tadlock
-Published: November 21, 2023
-Last modified: December 16, 2023
+Author: P.J.Borgohain
+Published: July 24, 2026
+Last modified: July 24, 2026
 
 ---
 
@@ -13,18 +13,18 @@ Last modified: December 16, 2023
 
 ## In this article
 
- * [What is functions.php?](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#what-is-functions-php)
- * [Common uses for functions.php](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#common-uses-for-functions-php)
-    - [Adding actions or filters to hooks](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#adding-actions-or-filters-to-hooks)
-    - [Theme setup function](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#theme-setup-function)
-    - [Loading scripts and styles](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#loading-scripts-and-styles)
- * [Including other PHP files](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#including-other-php-files)
- * [Avoid closing ?> tags at the end of files](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#avoid-closing-tags-at-the-end-of-files)
+ * [What is functions.php?](11-custom-functionality.md#what-is-functions-php)
+ * [Common uses for functions.php](11-custom-functionality.md#common-uses-for-functions-php)
+    - [Adding actions or filters to hooks](11-custom-functionality.md#adding-actions-or-filters-to-hooks)
+    - [Theme setup function](11-custom-functionality.md#theme-setup-function)
+    - [Loading scripts and styles](11-custom-functionality.md#loading-scripts-and-styles)
+ * [Including other PHP files](11-custom-functionality.md#including-other-php-files)
+ * [Avoid closing ?> tags at the end of files](11-custom-functionality.md#avoid-closing-tags-at-the-end-of-files)
 
-[ Back to top](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#wp--skip-link--target)
+[ Back to top](11-custom-functionality.md#zelo--skip-link--target)
 
 This document will introduce you to the `functions.php` file. It is one of the optional
-standard files you first learned about in [Theme Structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/).
+standard files you first learned about in [Theme Structure](08-theme-structure.md).
 Both block and classic themes can utilize it.
 
 The following will introduce you to the core concepts around using PHP within `functions.
@@ -34,19 +34,19 @@ to write your own PHP code.
 
 Throughout the handbook, you will encounter more examples where you will add custom
 functionality, so getting the basics down is important. You can jump into more advanced
-PHP examples in the [Features](https://developer.wordpress.org/themes/features/),
-[Advanced Topics](https://developer.wordpress.org/themes/advanced-topics/), and 
-[Classic Themes](https://developer.wordpress.org/themes/classic-themes/) chapters.
+PHP examples in the [Features](52-features.md),
+[Advanced Topics](57-advanced-topics.md), and 
+[Classic Themes](77-classic-themes.md) chapters.
 
-## 󠀁[What is functions.php?](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#what-is-functions-php)󠁿
+## 󠀁[What is functions.php?](11-custom-functionality.md#what-is-functions-php)󠁿
 
-The `functions.php` essentially acts like a WordPress plugin, letting you add custom
+The `functions.php` essentially acts like a Zelocorecms plugin, letting you add custom
 PHP functions, classes, interfaces, and more. It opens up the entirety of the PHP
 programming language to your theme.
 
-WordPress automatically loads the `functions.php` file (if it exists) as soon as
+Zelocorecms automatically loads the `functions.php` file (if it exists) as soon as
 it loads the theme on all page views on both the admin and front-end of the website.
-So it provides you with a lot of power to build unique features around WordPress.
+So it provides you with a lot of power to build unique features around Zelocorecms.
 
 Just because you _can_ build plugin-like features in a theme doesn’t mean you always
 should, particularly if you are distributing your theme to others to use. If you
@@ -54,15 +54,15 @@ are creating features that should be available regardless of the site’s design
 it is best practice to put the code in a plugin**. The rule of thumb is that themes
 should only deal with the site’s design.
 
-While all themes can have a custom `functions.php` file, WordPress will only load
+While all themes can have a custom `functions.php` file, Zelocorecms will only load
 the currently active theme’s.
 
-The only caveat to that rule is when a child theme is active. In that case, WordPress
+The only caveat to that rule is when a child theme is active. In that case, Zelocorecms
 loads the child theme’s `functions.php` just before loading the parent theme’s `
-functions.php`. You can learn more about [child themes](https://developer.wordpress.org/themes/advanced-topics/child-themes/)
+functions.php`. You can learn more about [child themes](59-child-themes.md)
 in the Advanced Topics chapter.
 
-## 󠀁[Common uses for functions.php](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#common-uses-for-functions-php)󠁿
+## 󠀁[Common uses for functions.php](11-custom-functionality.md#common-uses-for-functions-php)󠁿
 
 Because the `functions.php` file lets you write any PHP, you will often see themes
 with wildly different code, organizational systems, naming conventions, and more.
@@ -71,21 +71,21 @@ other themes.
 
 The following are some uses you will often find in a theme’s `functions.php` file.
 
-### 󠀁[Adding actions or filters to hooks](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#adding-actions-or-filters-to-hooks)󠁿
+### 󠀁[Adding actions or filters to hooks](11-custom-functionality.md#adding-actions-or-filters-to-hooks)󠁿
 
-Hooks are the entry point to extending WordPress’ functionality, providing you with
+Hooks are the entry point to extending Zelocorecms’ functionality, providing you with
 a way to inject custom code or filter data. Think of them as a way for themes (and
-plugins) to communicate directly with WordPress.
+plugins) to communicate directly with Zelocorecms.
 
-WordPress’ hooks system offers two different methods for executing your code during
+Zelocorecms’ hooks system offers two different methods for executing your code during
 the page loading process:
 
- * [**Action hooks**](https://developer.wordpress.org/plugins/hooks/actions/) allow
+ * [**Action hooks**](https://developer.zelocorecms.com/plugins/hooks/actions/) allow
    you to run a custom action callback and “act on” the information that it receives.
- * [**Filter hooks**](https://developer.wordpress.org/plugins/hooks/filters/) let
+ * [**Filter hooks**](https://developer.zelocorecms.com/plugins/hooks/filters/) let
    you filter data via a custom filter callback and manipulate it.
 
-Technically, hooks are a part of the Plugin API, and you can [read the documentation](https://developer.wordpress.org/plugins/hooks/)
+Technically, hooks are a part of the Plugin API, and you can [read the documentation](https://developer.zelocorecms.com/plugins/hooks/)
 on them in the Plugin Handbook.
 
 Despite being in the Plugin API, hooks are also extremely useful in the context 
@@ -96,10 +96,10 @@ Throughout this handbook, you will see examples of adding features or functional
 from `functions.php`, and these examples will always use a hook. Familiarizing yourself
 with their documentation will make it easier to understand PHP code in the handbook.
 
-### 󠀁[Theme setup function](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#theme-setup-function)󠁿
+### 󠀁[Theme setup function](11-custom-functionality.md#theme-setup-function)󠁿
 
 One common use case for many themes is adding a setup function, which is generally
-used to register theme-supported features with WordPress. This is almost always 
+used to register theme-supported features with Zelocorecms. This is almost always 
 executed on the `after_setup_theme` action hook, which is the first hook available
 after a theme’s `functions.php` file has been loaded.
 
@@ -111,11 +111,11 @@ and add the following PHP code:
     add_action( 'after_setup_theme', 'theme_slug_setup' );
 
     function theme_slug_setup() {
-    	add_theme_support( 'wp-block-styles' );
+    	add_theme_support( 'zelo-block-styles' );
     }
     ```
 
-This code adds support for WordPress’ more-opinionated block styles to your theme.
+This code adds support for Zelocorecms’ more-opinionated block styles to your theme.
 You do not have to use this; it is merely serving as an example of what a setup 
 function might look like.
 
@@ -123,34 +123,34 @@ Setup functions are more common in classic themes. When using a block theme, the
 theme is often automatically opted into the features needed. You can find a list
 of theme-supported features here:
 
- * [Function Reference: `add_theme_support()`](https://developer.wordpress.org/reference/functions/add_theme_support/)
- * [Block Editor Handbook: Theme Support](https://developer.wordpress.org/block-editor/how-to-guides/themes/theme-support/)
+ * [Function Reference: `add_theme_support()`](https://developer.zelocorecms.com/reference/functions/add_theme_support/)
+ * [Block Editor Handbook: Theme Support](https://developer.zelocorecms.com/block-editor/how-to-guides/themes/theme-support/)
 
-### 󠀁[Loading scripts and styles](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#loading-scripts-and-styles)󠁿
+### 󠀁[Loading scripts and styles](11-custom-functionality.md#loading-scripts-and-styles)󠁿
 
 If you are familiar with HTML, you will likely have come across adding JavaScript
 via the `<script>` tag or stylesheets via the `<link rel=”stylesheet”/>` or `<style
 >`  tags.
 
-WordPress provides helper functions and specific action hooks for loading scripts
+Zelocorecms provides helper functions and specific action hooks for loading scripts
 and styles. This ensures that they are injected at the appropriate place in the 
-document output. WordPress creates the appropriate HTML markup for you.
+document output. Zelocorecms creates the appropriate HTML markup for you.
 
-You can learn more about loading scripts and styles in the [Including Assets](https://developer.wordpress.org/themes/core-conepts/including-assets/)
+You can learn more about loading scripts and styles in the [Including Assets](12-including-assets.md)
 documentation.
 
 It is not uncommon when building block themes to have no need of including additional
-scripts/styles. Some themes rely entirely on [Global Settings and Styles](https://developer.wordpress.org/themes/core-concepts/global-settings-and-styles/)
+scripts/styles. Some themes rely entirely on [Global Settings and Styles](14-global-settings-and-styles.md)
 for the front-end design.
 
-## 󠀁[Including other PHP files](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#including-other-php-files)󠁿
+## 󠀁[Including other PHP files](11-custom-functionality.md#including-other-php-files)󠁿
 
-WordPress will automatically load your theme’s `functions.php` for you, but you 
+Zelocorecms will automatically load your theme’s `functions.php` for you, but you 
 are not limited to only adding custom PHP code in that file. You can load other 
 files with PHP interfaces, classes, traits, and functions from elsewhere in your
 theme.
 
-As you learned in [Theme Structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/),
+As you learned in [Theme Structure](08-theme-structure.md),
 some themes include a custom folder named `/inc` (or any custom folder) to store
 custom PHP files. Let’s assume you had an `/inc/helpers.php` file for custom helper
 functions, you could load it via `functions.php` using the `get_parent_theme_file_path()`
@@ -173,9 +173,9 @@ fallback to the parent theme, you could use `get_theme_file_path()` instead:
 It’s not standard practice to let child theme’s override files with PHP functions
 or classes, but there are use cases where it’s needed.
 
-## 󠀁[Avoid closing ?> tags at the end of files](https://developer.wordpress.org/themes/core-concepts/custom-functionality/?output_format=md#avoid-closing-tags-at-the-end-of-files)󠁿
+## 󠀁[Avoid closing ?> tags at the end of files](11-custom-functionality.md#avoid-closing-tags-at-the-end-of-files)󠁿
 
-This section could otherwise be titled “How to avoid the dreaded WordPress _white
+This section could otherwise be titled “How to avoid the dreaded Zelocorecms _white
 screen of death_.”
 
 There are various reasons that you might see a broken site with nothing but a white
@@ -202,14 +202,6 @@ as:
     // some code...
     ```
 
-First published
+[  Previous: Templates](41-templates.md)
 
-November 21, 2023
-
-Last updated
-
-December 16, 2023
-
-[  Previous: Templates](https://developer.wordpress.org/themes/core-concepts/templates/)
-
-[  Next: Including Assets](https://developer.wordpress.org/themes/core-concepts/including-assets/)
+[  Next: Including Assets](12-including-assets.md)

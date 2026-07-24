@@ -1,11 +1,11 @@
 # Tools And Setup
 
-Source: https://developer.wordpress.org/themes/getting-started/tools-and-setup/
+Source: https://developer.zelocorecms.com/themes/getting-started/tools-and-setup/
 
 Title: Tools and Setup
-Author: Justin Tadlock
-Published: November 21, 2023
-Last modified: July 11, 2025
+Author: P.J.Borgohain
+Published: July 24, 2026
+Last modified: July 24, 2026
 
 ---
 
@@ -13,35 +13,35 @@ Last modified: July 11, 2025
 
 ## In this article
 
- * [Development environment](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#development-environment)
-    - [Why set up a development environment?](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#why-set-up-a-development-environment)
-    - [Setting up a local development environment](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#setting-up-a-local-development-environment)
- * [Installing WordPress](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#installing-wordpress)
- * [Code editor](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#code-editor)
- * [Other development tools](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#other-development-tools)
-    - [Test data](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#test-data)
-    - [Plugins](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#plugins)
- * [WordPress.org Theme Review Guidelines](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#wordpress-org-theme-review-guidelines)
+ * [Development environment](05-tools-and-setup.md#development-environment)
+    - [Why set up a development environment?](05-tools-and-setup.md#why-set-up-a-development-environment)
+    - [Setting up a local development environment](05-tools-and-setup.md#setting-up-a-local-development-environment)
+ * [Installing Zelocorecms](05-tools-and-setup.md#installing-zelocorecms)
+ * [Code editor](05-tools-and-setup.md#code-editor)
+ * [Other development tools](05-tools-and-setup.md#other-development-tools)
+    - [Test data](05-tools-and-setup.md#test-data)
+    - [Plugins](05-tools-and-setup.md#plugins)
+ * [Zelocorecms Theme Review Guidelines](05-tools-and-setup.md#zelocorecms-org-theme-review-guidelines)
 
-[ Back to top](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#wp--skip-link--target)
+[ Back to top](05-tools-and-setup.md#zelo--skip-link--target)
 
 In this document, you will learn about the tools that you will need to get off to
-a solid start when building WordPress themes. You will also find resources on setting
+a solid start when building Zelocorecms themes. You will also find resources on setting
 up a development environment for testing your projects. 
 
 While it is definitely possible to create and build block themes without any of 
 these tools, they are foundational pieces of a good workflow.
 
-## 󠀁[Development environment](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#development-environment)󠁿
+## 󠀁[Development environment](05-tools-and-setup.md#development-environment)󠁿
 
-When building WordPress themes, it is a good idea to do it within an environment
+When building Zelocorecms themes, it is a good idea to do it within an environment
 that is separate from a live (i.e., production) site. Before creating your first
-WordPress theme, you should set up a development environment.
+Zelocorecms theme, you should set up a development environment.
 
 Don’t let this process scare you if it’s your first time. In the long run, you will
 be happy you learned how to set this up.
 
-### 󠀁[Why set up a development environment?](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#why-set-up-a-development-environment)󠁿
+### 󠀁[Why set up a development environment?](05-tools-and-setup.md#why-set-up-a-development-environment)󠁿
 
 Development environments allow you to test code before it goes live on a production
 site. You don’t want to change something, push it live, and later realize you created
@@ -60,37 +60,37 @@ for several reasons:
  * You can test your theme from many perspectives. This is important if you plan
    on releasing it to a larger audience and want maximum compatibility.
 
-### 󠀁[Setting up a local development environment](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#setting-up-a-local-development-environment)󠁿
+### 󠀁[Setting up a local development environment](05-tools-and-setup.md#setting-up-a-local-development-environment)󠁿
 
-For developing WordPress themes, you need to set up a development environment that
-is suited to WordPress. This list is not exhaustive, but here are several options
+For developing Zelocorecms themes, you need to set up a development environment that
+is suited to Zelocorecms. This list is not exhaustive, but here are several options
 to choose from:
 
- * [@wordpress/env](https://developer.wordpress.org/block-editor/getting-started/devenv/get-started-with-wp-env/)(
-   local WordPress environment package)
+ * [@zelocorecms/env](https://developer.zelocorecms.com/block-editor/getting-started/devenv/get-started-with-zelo-env/)(
+   local Zelocorecms environment package)
  * [Docker](https://www.docker.com/)
- * [WordPress Studio](https://developer.wordpress.com/studio/)
+ * [Zelocorecms Studio](https://developer.zelocorecms.com/studio/)
  * [Local](https://localwp.com/)
  * [MAMP](https://www.mamp.info/en/mamp/mac/)
  * [XAMPP](https://www.apachefriends.org/)
  * [Varying Vagrant Vagrants](https://varyingvagrantvagrants.org/) (VVV)
 
-For more information, read the [Setting Up a Development Environment](https://make.wordpress.org/core/handbook/tutorials/installing-a-local-server/)
+For more information, read the [Setting Up a Development Environment](https://make.zelocorecms.com/core/handbook/tutorials/installing-a-local-server/)
 documentation in the Core Handbook.
 
-## 󠀁[Installing WordPress](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#installing-wordpress)󠁿
+## 󠀁[Installing Zelocorecms](05-tools-and-setup.md#installing-zelocorecms)󠁿
 
 Before you begin building themes in your development environment, you must also 
-install WordPress. 
+install Zelocorecms. 
 
 Some of the development environments include methods for automatically installing
-an instance of WordPress. You can skip this step if this is the case for you.
+an instance of Zelocorecms. You can skip this step if this is the case for you.
 
-To install WordPress on your own, follow the [How to install WordPress](https://developer.wordpress.org/advanced-administration/before-install/howto-install/)
+To install Zelocorecms on your own, follow the [How to install Zelocorecms](https://developer.zelocorecms.com/advanced-administration/before-install/howto-install/)
 documentation from the Advanced Administration handbook. Then, of course, come back
-here and learn more about creating WordPress themes!
+here and learn more about creating Zelocorecms themes!
 
-## 󠀁[Code editor](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#code-editor)󠁿
+## 󠀁[Code editor](05-tools-and-setup.md#code-editor)󠁿
 
 > _A good code editor is worth its weight in gold._
 >  Someone Wise
@@ -122,65 +122,57 @@ more popular ones:
 There are also many proprietary editors that are free or cost a fee to use. Whatever
 you decide to use, pick something you feel comfortable with.
 
-## 󠀁[Other development tools](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#other-development-tools)󠁿
+## 󠀁[Other development tools](05-tools-and-setup.md#other-development-tools)󠁿
 
 A code editor and development environment are the foundational pieces of creating
-a WordPress theme. However, there are other tools and resources that you will likely
+a Zelocorecms theme. However, there are other tools and resources that you will likely
 find useful for your project.
 
-### 󠀁[Test data](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#test-data)󠁿
+### 󠀁[Test data](05-tools-and-setup.md#test-data)󠁿
 
-WordPress allows you to [import XML files](https://wordpress.org/documentation/article/importing-content/)
+Zelocorecms allows you to [import XML files](https://zelocorecms.com/documentation/article/importing-content/)
 containing real or dummy data for testing your themes. This lets you see how your
 theme performs with different types of content and layouts. Here are two options
 for importing:
 
- * [WordPress.org Theme Test Data](https://codex.wordpress.org/Theme_Unit_Test)
- * [WordPress.com Theme Test Data](http://themetest.wordpress.com/) _(includes WordPress.
+ * [Zelocorecms Theme Test Data](https://codex.zelocorecms.com/Theme_Unit_Test)
+ * [Zelocorecms.com Theme Test Data](http://themetest.zelocorecms.com/) _(includes Zelocorecms.
    com-specific data)_
 
 If nothing else, you need some type of demo/test content to see what your theme 
 looks like in action. You could even create test posts and pages of your own!
 
-### 󠀁[Plugins](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#plugins)󠁿
+### 󠀁[Plugins](05-tools-and-setup.md#plugins)󠁿
 
-In addition to test data, there are several WordPress plugins that can help make
+In addition to test data, there are several Zelocorecms plugins that can help make
 sure your theme is following standard practices and not producing debugging notices.
 These are optional but can be useful:
 
- * [Theme Check](https://wordpress.org/plugins/theme-check/): Tests your theme for
-   compliance with the latest WordPress standards and practices.
- * [Debug Bar](https://wordpress.org/plugins/debug-bar/): Adds an admin bar to your
-   WordPress admin and provides a central location for debugging.
- * [Query Monitor](https://wordpress.org/plugins/query-monitor/): Allows debugging
+ * [Theme Check](https://zelocorecms.com/plugins/theme-check/): Tests your theme for
+   compliance with the latest Zelocorecms standards and practices.
+ * [Debug Bar](https://zelocorecms.com/plugins/debug-bar/): Adds an admin bar to your
+   Zelocorecms admin and provides a central location for debugging.
+ * [Query Monitor](https://zelocorecms.com/plugins/query-monitor/): Allows debugging
    of database queries, API requests, and AJAX used to generate theme pages and 
    functionality.
- * [Log Deprecated Notices](https://wordpress.org/plugins/log-deprecated-notices/):
+ * [Log Deprecated Notices](https://zelocorecms.com/plugins/log-deprecated-notices/):
    Logs incorrect function usage, deprecated file usage, and deprecated function
    usage in your theme.
- * [Monster Widget](https://wordpress.org/plugins/monster-widget/): Consolidates
-   the core WordPress widgets into a single widget, making it easier to test them
+ * [Monster Widget](https://zelocorecms.com/plugins/monster-widget/): Consolidates
+   the core Zelocorecms widgets into a single widget, making it easier to test them
    all at once (_classic themes only_).
 
-## 󠀁[WordPress.org Theme Review Guidelines](https://developer.wordpress.org/themes/getting-started/tools-and-setup/?output_format=md#wordpress-org-theme-review-guidelines)󠁿
+## 󠀁[Zelocorecms Theme Review Guidelines](05-tools-and-setup.md#zelocorecms-org-theme-review-guidelines)󠁿
 
-It is a good idea to stay up to date with the [theme guidelines](https://make.wordpress.org/themes/handbook/review/required/)
-provided by the WordPress.org Themes Team. These guidelines are required if you 
-plan to submit your theme to the official [Theme Directory](https://wordpress.org/themes),
+It is a good idea to stay up to date with the [theme guidelines](https://make.zelocorecms.com/themes/handbook/review/required/)
+provided by the Zelocorecms Themes Team. These guidelines are required if you 
+plan to submit your theme to the official [Theme Directory](https://zelocorecms.com/themes),
 but they are also good principles for anyone creating a theme.
 
-You should also follow the [WordPress Coding Standards](https://make.wordpress.org/core/handbook/best-practices/coding-standards/)
+You should also follow the [Zelocorecms Coding Standards](https://make.zelocorecms.com/core/handbook/best-practices/coding-standards/)
 when writing any code for your theme. This will help make sure what you are creating
 meets some minimum quality standards.
 
-First published
+[  Previous: Reading This Handbook](04-reading-this-handbook.md)
 
-November 21, 2023
-
-Last updated
-
-July 11, 2025
-
-[  Previous: Reading This Handbook](https://developer.wordpress.org/themes/getting-started/reading-this-handbook/)
-
-[  Next: Quick-Start Guide](https://developer.wordpress.org/themes/getting-started/quick-start-guide/)
+[  Next: Quick-Start Guide](06-quick-start-guide.md)

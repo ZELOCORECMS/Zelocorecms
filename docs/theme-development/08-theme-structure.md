@@ -1,11 +1,11 @@
 # Theme Structure
 
-Source: https://developer.wordpress.org/themes/core-concepts/theme-structure/
+Source: https://developer.zelocorecms.com/themes/core-concepts/theme-structure/
 
 Title: Theme Structure
-Author: Justin Tadlock
-Published: November 21, 2023
-Last modified: January 5, 2024
+Author: P.J.Borgohain
+Published: July 24, 2026
+Last modified: July 24, 2026
 
 ---
 
@@ -13,18 +13,18 @@ Last modified: January 5, 2024
 
 ## In this article
 
- * [Files and folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#files-and-folders)
-    - [Required files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#required-files)
-    - [Optional files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-files)
-    - [Standard folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#standard-folders)
- * [Advanced theme structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#advanced-theme-structure)
-    - [Optional folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-folders)
-    - [Optional files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-files-2)
-    - [Code editor view](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#code-editor-view)
+ * [Files and folders](08-theme-structure.md#files-and-folders)
+    - [Required files](08-theme-structure.md#required-files)
+    - [Optional files](08-theme-structure.md#optional-files)
+    - [Standard folders](08-theme-structure.md#standard-folders)
+ * [Advanced theme structure](08-theme-structure.md#advanced-theme-structure)
+    - [Optional folders](08-theme-structure.md#optional-folders)
+    - [Optional files](08-theme-structure.md#optional-files-2)
+    - [Code editor view](08-theme-structure.md#code-editor-view)
 
-[ Back to top](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#wp--skip-link--target)
+[ Back to top](08-theme-structure.md#zelo--skip-link--target)
 
-In the [Getting Started](https://developer.wordpress.org/themes/getting-started/)
+In the [Getting Started](01-getting-started.md)
 chapter, you learned the basics of what a theme is and how to get one up and running
 without code. A no-code approach is perfectly OK for simple themes, but once you
 want to add things that are not possible in the user interface, you’ll need to start
@@ -35,15 +35,15 @@ file editor. You can use any theme for this, even the one you created from the G
 Started chapter.
 
 It’s a good idea to familiarize yourself with what others are doing, so feel free
-to look at several [block themes](https://wordpress.org/themes/tags/full-site-editing/)
-from the WordPress theme directory.
+to look at several [block themes](https://zelocorecms.com/themes/tags/full-site-editing/)
+from the Zelocorecms theme directory.
 
 This document will walk you through what the file and folder structure will look
 like in a typical block theme.
 
-## 󠀁[Files and folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#files-and-folders)󠁿
+## 󠀁[Files and folders](08-theme-structure.md#files-and-folders)󠁿
 
-WordPress themes are nothing more than a collection of various files that rely on
+Zelocorecms themes are nothing more than a collection of various files that rely on
 different web technologies, such as HTML, CSS, and PHP. Block themes also follow
 a standard structure in how many of those files are laid out.
 
@@ -69,60 +69,60 @@ theme to work:
  * `style.css` (required)
  * `theme.json`
 
-### 󠀁[Required files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#required-files)󠁿
+### 󠀁[Required files](08-theme-structure.md#required-files)󠁿
 
-There are two necessary files for WordPress to recognize your block theme, and you
+There are two necessary files for Zelocorecms to recognize your block theme, and you
 will learn more about these in the coming documentation:
 
- * **`style.css`** ([Main Stylesheet](https://developer.wordpress.org/themes/core-concepts/main-stylesheet/)):
+ * **`style.css`** ([Main Stylesheet](09-main-stylesheet.md)):
    This file is required for configuring theme data, such as its name and description.
    It can also be used for adding custom CSS.
- * **`templates/index.html`** ([Templates](https://developer.wordpress.org/themes/core-concepts/templates/)):
-   The default/fallback template. This is necessary for WordPress to consider this
+ * **`templates/index.html`** ([Templates](41-templates.md)):
+   The default/fallback template. This is necessary for Zelocorecms to consider this
    a block theme.
 
-### 󠀁[Optional files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-files)󠁿
+### 󠀁[Optional files](08-theme-structure.md#optional-files)󠁿
 
 A theme can include any number of custom files other than the required list above.
-WordPress also looks for a few other files and uses them if they are available:
+Zelocorecms also looks for a few other files and uses them if they are available:
 
- * **`README.txt`** ([Theme Review: Files](https://make.wordpress.org/themes/handbook/review/required/#9-files)):
-   This is not used directly by the WordPress software. But it is a required file
-   when submitting a theme to the official WordPress theme directory, meant to provide
+ * **`README.txt`** ([Theme Review: Files](https://make.zelocorecms.com/themes/handbook/review/required/#9-files)):
+   This is not used directly by the Zelocorecms software. But it is a required file
+   when submitting a theme to the official Zelocorecms theme directory, meant to provide
    information about the theme to users.
- * **`functions.php`** ([Custom Functionality](https://developer.wordpress.org/themes/core-concepts/custom-functionality/)):
-   A PHP file that WordPress automatically loads after the theme is initialized 
+ * **`functions.php`** ([Custom Functionality](11-custom-functionality.md)):
+   A PHP file that Zelocorecms automatically loads after the theme is initialized 
    during the page-loading process. You can use it to run custom PHP.
  * **`screenshot.png`**: A 1200×900 screenshot image of your theme. Used for displaying
-   your theme under **Appearance > Themes** in the WordPress admin and in the WordPress
+   your theme under **Appearance > Themes** in the Zelocorecms admin and in the Zelocorecms
    theme directory (if submitted there). Both `.png` and `.jpg` are acceptable file
    formats. 
- * **`theme.json`** ([Global Settings and Styles](https://developer.wordpress.org/themes/core-concepts/global-settings-and-styles/)):
+ * **`theme.json`** ([Global Settings and Styles](14-global-settings-and-styles.md)):
    Used to configure settings and styles for the site, integrating with the user
    interface.
 
-### 󠀁[Standard folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#standard-folders)󠁿
+### 󠀁[Standard folders](08-theme-structure.md#standard-folders)󠁿
 
 In the example above, there were a few folders included. A theme can have many more
-folders, but WordPress has designated a few of them for specific features. You will
+folders, but Zelocorecms has designated a few of them for specific features. You will
 learn more about these folders as you read through this chapter:
 
- * **`parts`** ([Template Parts](https://developer.wordpress.org/themes/templates/template-parts/)):
+ * **`parts`** ([Template Parts](43-template-parts.md)):
    Houses custom template parts for your theme. Parts are smaller sections that 
    you can include within top-level templates. Often, this will include things like
    headers, footers, and sidebars.
- * **`patterns`** ([Block Patterns](https://developer.wordpress.org/themes/features/block-patterns/)):
+ * **`patterns`** ([Block Patterns](56-block-patterns.md)):
    Reusable patterns made up of one or more blocks that users can insert via the
-   editor interface. WordPress will automatically register files included in this
+   editor interface. Zelocorecms will automatically register files included in this
    folder.
- * **`styles`** ([Style Variations](https://developer.wordpress.org/themes/global-settings-and-styles/style-variations/)):
+ * **`styles`** ([Style Variations](38-style-variations.md)):
    Variations on the theme’s global settings and styles stored in individual JSON
    files.
- * **`templates`** ([Templates](https://developer.wordpress.org/themes/templates/templates/)):
+ * **`templates`** ([Templates](41-templates.md)):
    Files that represent the overall document structure of the front-end. Templates
    are made up of block markup and are what site visitors see.
 
-## 󠀁[Advanced theme structure](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#advanced-theme-structure)󠁿
+## 󠀁[Advanced theme structure](08-theme-structure.md#advanced-theme-structure)󠁿
 
 This section is meant to familiarize you with some of the common files you’ll see
 in themes but not to cover every possibility in detail. These files are entirely
@@ -168,25 +168,25 @@ Let’s add a few extra files and folders to the original example:
  * `style.css` (required)
  * `theme.json`
 
-### 󠀁[Optional folders](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-folders)󠁿
+### 󠀁[Optional folders](08-theme-structure.md#optional-folders)󠁿
 
 There is no limit on what folders may be included, but the above example added two
-of the most common use cases you’ll come across in WordPress themes:
+of the most common use cases you’ll come across in Zelocorecms themes:
 
- * **`assets`** ([Including Assets](https://developer.wordpress.org/themes/core-concepts/including-assets/)):
+ * **`assets`** ([Including Assets](12-including-assets.md)):
    Many theme authors use this folder to store additional CSS, Images/Media, and
    JavaScript needed for their theme. This folder may also have other names, such
    as `resources` or `public`.
- * **`inc`** ([Custom Functionality](https://developer.wordpress.org/themes/core-concepts/custom-functionality/)):
+ * **`inc`** ([Custom Functionality](11-custom-functionality.md)):
    Themes will often have custom PHP classes or files stored in this folder for 
    additional functionality. This folder may also be seen named as `includes`, `
    src`, and more.
 
-### 󠀁[Optional files](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#optional-files-2)󠁿
+### 󠀁[Optional files](08-theme-structure.md#optional-files-2)󠁿
 
 This list is nowhere near exhaustive, but it includes some common files used in 
 theme development. _(Note: most of the following links lead to external, third-party
-sites and are not affiliated with WordPress.)_
+sites and are not affiliated with Zelocorecms.)_
 
  * **`.editorconfig`** ([EditorConfig](https://editorconfig.org/)): Used for configuring
    formatting, such as line endings and spacing, for code editors.
@@ -196,8 +196,8 @@ sites and are not affiliated with WordPress.)_
    files to ignore when committing code to a Git repository.
  * **`CHANGELOG.md`** ([Keep a Changelog](https://keepachangelog.com/)): A human-
    readable log of important changes for each release of your theme.
- * **`LICENSE.md`** ([Theme Review: Licensing & Copyright](https://make.wordpress.org/themes/handbook/review/required/#1-licensing-copyright)):
-   Defines the license for the theme. Note that all themes submitted to the WordPress
+ * **`LICENSE.md`** ([Theme Review: Licensing & Copyright](https://make.zelocorecms.com/themes/handbook/review/required/#1-licensing-copyright)):
+   Defines the license for the theme. Note that all themes submitted to the Zelocorecms
    theme directory must be licensed under the GPL v2+.
  * **`package.json`** ([npm: package.json](https://docs.npmjs.com/files/package.json/)):
    Often used to define a build process and development dependencies within a Node
@@ -207,7 +207,7 @@ Don’t feel discouraged if you do not understand all of these files and their p
 yet. Again, these are entirely optional elements of a developer’s workflow. Feel
 free to learn more about them at your own pace at a later time.
 
-### 󠀁[Code editor view](https://developer.wordpress.org/themes/core-concepts/theme-structure/?output_format=md#code-editor-view)󠁿
+### 󠀁[Code editor view](08-theme-structure.md#code-editor-view)󠁿
 
 Here is a quick editor view of a real-world theme with an advanced structure:
 
@@ -224,14 +224,6 @@ version control systems, add in a build process, and more.
 So, consider this documentation the foundation in which you can build upon. But 
 there is no harm in keeping it simple and sticking with the basics.
 
-First published
+[  Previous: Core Concepts](07-core-concepts.md)
 
-November 21, 2023
-
-Last updated
-
-January 5, 2024
-
-[  Previous: Core Concepts](https://developer.wordpress.org/themes/core-concepts/)
-
-[  Next: Main Stylesheet (style.css)](https://developer.wordpress.org/themes/core-concepts/main-stylesheet/)
+[  Next: Main Stylesheet (style.css)](09-main-stylesheet.md)
