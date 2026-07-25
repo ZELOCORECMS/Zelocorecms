@@ -202,7 +202,7 @@ function zc_check_php_mysql_versions() {
 	if ( ! function_exists( 'mysqli_connect' )
 		&& ! file_exists( $zc_content_dir . '/db.php' )
 	) {
-		require_once ABSPATH . WPINC . '/functions.php';
+		require_once ABSPATH . ZCINC . '/functions.php';
 		zc_load_translations_early();
 
 		$message = '<p>' . __( 'Your PHP installation appears to be missing the MySQL extension which is required by ZelocoreCMS.' ) . "</p>\n";
@@ -408,7 +408,7 @@ function zc_maintenance() {
 		die();
 	}
 
-	require_once ABSPATH . WPINC . '/functions.php';
+	require_once ABSPATH . ZCINC . '/functions.php';
 	zc_load_translations_early();
 
 	header( 'Retry-After: 600' );
@@ -655,7 +655,7 @@ function zc_debug_mode() {
  *
  * If the language directory exists within `ZC_CONTENT_DIR`, it
  * is used. Otherwise the language directory is assumed to live
- * in `WPINC`.
+ * in `ZCINC`.
  *
  * @since 3.0.0
  * @access private
@@ -663,7 +663,7 @@ function zc_debug_mode() {
 function zc_set_lang_dir() {
 	if ( ! defined( 'ZC_LANG_DIR' ) ) {
 		if ( file_exists( ZC_CONTENT_DIR . '/languages' ) && @is_dir( ZC_CONTENT_DIR . '/languages' )
-			|| ! @is_dir( ABSPATH . WPINC . '/languages' )
+			|| ! @is_dir( ABSPATH . ZCINC . '/languages' )
 		) {
 			/**
 			 * Server path of the language directory.
@@ -686,11 +686,11 @@ function zc_set_lang_dir() {
 			 *
 			 * @since 2.1.0
 			 */
-			define( 'ZC_LANG_DIR', ABSPATH . WPINC . '/languages' );
+			define( 'ZC_LANG_DIR', ABSPATH . ZCINC . '/languages' );
 
 			if ( ! defined( 'LANGDIR' ) ) {
 				// Old relative path maintained for backward compatibility.
-				define( 'LANGDIR', WPINC . '/languages' );
+				define( 'LANGDIR', ZCINC . '/languages' );
 			}
 		}
 	}
@@ -706,7 +706,7 @@ function zc_set_lang_dir() {
 function require_zc_db() {
 	global $wpdb;
 
-	require_once ABSPATH . WPINC . '/class-wpdb.php';
+	require_once ABSPATH . ZCINC . '/class-wpdb.php';
 
 	if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) ) {
 		require_once ZC_CONTENT_DIR . '/db.php';
@@ -881,10 +881,10 @@ function zc_start_object_cache() {
 	}
 
 	if ( ! zc_using_ext_object_cache() ) {
-		require_once ABSPATH . WPINC . '/cache.php';
+		require_once ABSPATH . ZCINC . '/cache.php';
 	}
 
-	require_once ABSPATH . WPINC . '/cache-compat.php';
+	require_once ABSPATH . ZCINC . '/cache-compat.php';
 
 	/*
 	 * If cache supports reset, reset instead of init if already
@@ -950,8 +950,8 @@ function zc_not_installed() {
 		zc_die( __( 'The site you have requested is not installed properly. Please contact the system administrator.' ) );
 	}
 
-	require ABSPATH . WPINC . '/kses.php';
-	require ABSPATH . WPINC . '/pluggable.php';
+	require ABSPATH . ZCINC . '/kses.php';
+	require ABSPATH . ZCINC . '/pluggable.php';
 
 	$link = zc_guess_url() . '/zc-admin/install.php';
 
@@ -1536,22 +1536,22 @@ function zc_load_translations_early() {
 	}
 
 	// We need $zc_local_package.
-	require ABSPATH . WPINC . '/version.php';
+	require ABSPATH . ZCINC . '/version.php';
 
 	// Translation and localization.
-	require_once ABSPATH . WPINC . '/pomo/mo.php';
-	require_once ABSPATH . WPINC . '/l10n/class-zc-translation-controller.php';
-	require_once ABSPATH . WPINC . '/l10n/class-zc-translations.php';
-	require_once ABSPATH . WPINC . '/l10n/class-zc-translation-file.php';
-	require_once ABSPATH . WPINC . '/l10n/class-zc-translation-file-mo.php';
-	require_once ABSPATH . WPINC . '/l10n/class-zc-translation-file-php.php';
-	require_once ABSPATH . WPINC . '/l10n.php';
-	require_once ABSPATH . WPINC . '/class-zc-textdomain-registry.php';
-	require_once ABSPATH . WPINC . '/class-zc-locale.php';
-	require_once ABSPATH . WPINC . '/class-zc-locale-switcher.php';
+	require_once ABSPATH . ZCINC . '/pomo/mo.php';
+	require_once ABSPATH . ZCINC . '/l10n/class-zc-translation-controller.php';
+	require_once ABSPATH . ZCINC . '/l10n/class-zc-translations.php';
+	require_once ABSPATH . ZCINC . '/l10n/class-zc-translation-file.php';
+	require_once ABSPATH . ZCINC . '/l10n/class-zc-translation-file-mo.php';
+	require_once ABSPATH . ZCINC . '/l10n/class-zc-translation-file-php.php';
+	require_once ABSPATH . ZCINC . '/l10n.php';
+	require_once ABSPATH . ZCINC . '/class-zc-textdomain-registry.php';
+	require_once ABSPATH . ZCINC . '/class-zc-locale.php';
+	require_once ABSPATH . ZCINC . '/class-zc-locale-switcher.php';
 
 	// General libraries.
-	require_once ABSPATH . WPINC . '/plugin.php';
+	require_once ABSPATH . ZCINC . '/plugin.php';
 
 	$locales   = array();
 	$locations = array();
@@ -1588,8 +1588,8 @@ function zc_load_translations_early() {
 			$locations[] = ABSPATH . 'zc-content/languages';
 		}
 
-		if ( @is_dir( ABSPATH . WPINC . '/languages' ) ) {
-			$locations[] = ABSPATH . WPINC . '/languages';
+		if ( @is_dir( ABSPATH . ZCINC . '/languages' ) ) {
+			$locations[] = ABSPATH . ZCINC . '/languages';
 		}
 
 		if ( ! $locations ) {
@@ -1939,7 +1939,7 @@ function zc_is_jsonp_request() {
 	}
 
 	if ( ! function_exists( 'zc_check_jsonp_callback' ) ) {
-		require_once ABSPATH . WPINC . '/functions.php';
+		require_once ABSPATH . ZCINC . '/functions.php';
 	}
 
 	$jsonp_callback = $_GET['_jsonp'];

@@ -66,7 +66,7 @@ class Core_Upgrader extends ZC_Upgrader {
 	public function upgrade( $current, $args = array() ) {
 		global $zc_filesystem;
 
-		require ABSPATH . WPINC . '/version.php'; // $zc_version;
+		require ABSPATH . ZCINC . '/version.php'; // $zc_version;
 
 		$start_time = time();
 
@@ -277,7 +277,7 @@ class Core_Upgrader extends ZC_Upgrader {
 	 * @return bool True if we should update to the offered version, otherwise false.
 	 */
 	public static function should_update_to_version( $offered_ver ) {
-		require ABSPATH . WPINC . '/version.php'; // $zc_version; // x.y.z
+		require ABSPATH . ZCINC . '/version.php'; // $zc_version; // x.y.z
 
 		$current_branch = implode( '.', array_slice( preg_split( '/[.-]/', $zc_version ), 0, 2 ) ); // x.y
 		$new_branch     = implode( '.', array_slice( preg_split( '/[.-]/', $offered_ver ), 0, 2 ) ); // x.y

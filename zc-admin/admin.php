@@ -79,7 +79,7 @@ if ( get_option( 'db_upgraded' ) ) {
 		 * attempt to do no more than threshold value, with some +/- allowed.
 		 */
 		if ( $blog_count <= 50 || ( $blog_count > 50 && mt_rand( 0, (int) ( $blog_count / 50 ) ) === 1 ) ) {
-			require_once ABSPATH . WPINC . '/http.php';
+			require_once ABSPATH . ZCINC . '/http.php';
 
 			$response = zc_remote_get(
 				admin_url( 'upgrade.php?step=1' ),

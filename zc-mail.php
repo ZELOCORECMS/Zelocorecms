@@ -29,7 +29,7 @@ if ( empty( $mailserver_url ) || 'mail.example.com' === $mailserver_url ) {
 do_action( 'zc-mail.php' ); // phpcs:ignore ZelocoreCMS.NamingConventions.ValidHookName.UseUnderscores
 
 /** Get the POP3 class with which to access the mailbox. */
-require_once ABSPATH . WPINC . '/class-pop3.php';
+require_once ABSPATH . ZCINC . '/class-pop3.php';
 
 /** Only check at this interval for new messages. */
 if ( ! defined( 'ZC_MAIL_INTERVAL' ) ) {

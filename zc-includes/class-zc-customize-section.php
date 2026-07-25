@@ -405,10 +405,10 @@ class ZC_Customize_Section {
 }
 
 /** ZC_Customize_Themes_Section class */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-themes-section.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-themes-section.php';
 
 /** ZC_Customize_Sidebar_Section class */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-sidebar-section.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-sidebar-section.php';
 
 /** ZC_Customize_Nav_Menu_Section class */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-section.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-section.php';

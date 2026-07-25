@@ -13,7 +13,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /** Walker_Nav_Menu class */
-require_once ABSPATH . WPINC . '/class-walker-nav-menu.php';
+require_once ABSPATH . ZCINC . '/class-walker-nav-menu.php';
 
 /**
  * Displays a navigation menu.

@@ -966,24 +966,24 @@ class ZC_Customize_Setting {
 /**
  * ZC_Customize_Filter_Setting class.
  */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-filter-setting.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-filter-setting.php';
 
 /**
  * ZC_Customize_Header_Image_Setting class.
  */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-header-image-setting.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-header-image-setting.php';
 
 /**
  * ZC_Customize_Background_Image_Setting class.
  */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-background-image-setting.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-background-image-setting.php';
 
 /**
  * ZC_Customize_Nav_Menu_Item_Setting class.
  */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-item-setting.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-item-setting.php';
 
 /**
  * ZC_Customize_Nav_Menu_Setting class.
  */
-require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-setting.php';
+require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-setting.php';

@@ -10,7 +10,7 @@
  * @subpackage Meta
  */
 
-require ABSPATH . WPINC . '/class-zc-metadata-lazyloader.php';
+require ABSPATH . ZCINC . '/class-zc-metadata-lazyloader.php';
 
 /**
  * Adds metadata for the specified object.

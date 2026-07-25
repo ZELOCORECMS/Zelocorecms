@@ -987,7 +987,7 @@ function zc_get_attachment_image_src( $attachment_id, $size = 'thumbnail', $icon
 
 			if ( $src ) {
 				/** This filter is documented in zc-includes/post.php */
-				$icon_dir = apply_filters( 'icon_dir', ABSPATH . WPINC . '/images/media' );
+				$icon_dir = apply_filters( 'icon_dir', ABSPATH . ZCINC . '/images/media' );
 
 				$src_file = $icon_dir . '/' . zc_basename( $src );
 
@@ -4308,10 +4308,10 @@ function zc_image_editor_supports( $args = array() ) {
  *                      False if no editor claims to support the request.
  */
 function _zc_image_editor_choose( $args = array() ) {
-	require_once ABSPATH . WPINC . '/class-zc-image-editor.php';
-	require_once ABSPATH . WPINC . '/class-zc-image-editor-gd.php';
-	require_once ABSPATH . WPINC . '/class-zc-image-editor-imagick.php';
-	require_once ABSPATH . WPINC . '/class-avif-info.php';
+	require_once ABSPATH . ZCINC . '/class-zc-image-editor.php';
+	require_once ABSPATH . ZCINC . '/class-zc-image-editor-gd.php';
+	require_once ABSPATH . ZCINC . '/class-zc-image-editor-imagick.php';
+	require_once ABSPATH . ZCINC . '/class-avif-info.php';
 	/**
 	 * Filters the list of image editing library classes.
 	 *
@@ -5185,7 +5185,7 @@ function zc_enqueue_media( $args = array() ) {
 	zc_enqueue_style( 'imgareaselect' );
 	zc_plupload_default_settings();
 
-	require_once ABSPATH . WPINC . '/media-template.php';
+	require_once ABSPATH . ZCINC . '/media-template.php';
 	add_action( 'admin_footer', 'zc_print_media_templates' );
 	add_action( 'zc_footer', 'zc_print_media_templates' );
 	add_action( 'customize_controls_print_footer_scripts', 'zc_print_media_templates' );
@@ -5917,7 +5917,7 @@ function zc_get_avif_info( $filename ) {
 	}
 
 	// Parse the file using libavifinfo's PHP implementation.
-	require_once ABSPATH . WPINC . '/class-avif-info.php';
+	require_once ABSPATH . ZCINC . '/class-avif-info.php';
 
 	$handle = fopen( $filename, 'rb' );
 	if ( $handle ) {

@@ -177,11 +177,11 @@ class ZC_Fatal_Error_Handler {
 		}
 
 		if ( ! function_exists( 'zc_die' ) ) {
-			require_once ABSPATH . WPINC . '/functions.php';
+			require_once ABSPATH . ZCINC . '/functions.php';
 		}
 
 		if ( ! class_exists( 'ZC_Error' ) ) {
-			require_once ABSPATH . WPINC . '/class-zc-error.php';
+			require_once ABSPATH . ZCINC . '/class-zc-error.php';
 		}
 
 		if ( true === $handled && zc_is_recovery_mode() ) {

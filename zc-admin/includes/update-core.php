@@ -897,7 +897,7 @@ $_old_files = array(
 	'zc-includes/js/dist/script-modules/interactivity/debug.js',
 	'zc-includes/js/dist/script-modules/interactivity/debug.min.js',
 	'zc-includes/js/dist/vendor/react-jsx-runtime.min.js.LICENSE.txt',
-	// 7.0.2
+	// 0.0.1
 	'zc-includes/collaboration',
 	'zc-includes/collaboration.php',
 	'zc-includes/js/dist/sync.js',
@@ -1478,7 +1478,7 @@ function update_core( $from, $to ) {
 	 * Copy languages.
 	 */
 	if ( ! is_zc_error( $result ) && $zc_filesystem->is_dir( $from . $distro . 'zc-content/languages' ) ) {
-		if ( ZC_LANG_DIR !== ABSPATH . WPINC . '/languages' || @is_dir( ZC_LANG_DIR ) ) {
+		if ( ZC_LANG_DIR !== ABSPATH . ZCINC . '/languages' || @is_dir( ZC_LANG_DIR ) ) {
 			$lang_dir = ZC_LANG_DIR;
 		} else {
 			$lang_dir = ZC_CONTENT_DIR . '/languages';

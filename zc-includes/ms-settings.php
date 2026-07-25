@@ -37,16 +37,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 global $current_site, $current_blog, $domain, $path, $site_id, $public;
 
 /** ZC_Network class */
-require_once ABSPATH . WPINC . '/class-zc-network.php';
+require_once ABSPATH . ZCINC . '/class-zc-network.php';
 
 /** ZC_Site class */
-require_once ABSPATH . WPINC . '/class-zc-site.php';
+require_once ABSPATH . ZCINC . '/class-zc-site.php';
 
 /** Multisite loader */
-require_once ABSPATH . WPINC . '/ms-load.php';
+require_once ABSPATH . ZCINC . '/ms-load.php';
 
 /** Default Multisite constants */
-require_once ABSPATH . WPINC . '/ms-default-constants.php';
+require_once ABSPATH . ZCINC . '/ms-default-constants.php';
 
 if ( defined( 'SUNRISE' ) ) {
 	include_once ZC_CONTENT_DIR . '/sunrise.php';

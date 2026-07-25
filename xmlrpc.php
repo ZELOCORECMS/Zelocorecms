@@ -60,8 +60,8 @@ if ( isset( $_GET['rsd'] ) ) { // https://cyber.harvard.edu/blogs/gems/tech/rsd.
 }
 
 require_once ABSPATH . 'zc-admin/includes/admin.php';
-require_once ABSPATH . WPINC . '/class-IXR.php';
-require_once ABSPATH . WPINC . '/class-zc-xmlrpc-server.php';
+require_once ABSPATH . ZCINC . '/class-IXR.php';
+require_once ABSPATH . ZCINC . '/class-zc-xmlrpc-server.php';
 
 /**
  * Posts submitted via the XML-RPC interface get that title

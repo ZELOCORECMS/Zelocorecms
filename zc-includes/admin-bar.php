@@ -28,7 +28,7 @@ function _zc_admin_bar_init() {
 	}
 
 	/* Load the admin bar class code ready for instantiation */
-	require_once ABSPATH . WPINC . '/class-zc-admin-bar.php';
+	require_once ABSPATH . ZCINC . '/class-zc-admin-bar.php';
 
 	/* Instantiate the admin bar */
 

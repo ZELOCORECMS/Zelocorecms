@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 }
 
-define( 'WPINC', 'zc-includes' );
+define( 'ZCINC', 'zc-includes' );
 
 $protocol = $_SERVER['SERVER_PROTOCOL'];
 if ( ! in_array( $protocol, array( 'HTTP/1.1', 'HTTP/2', 'HTTP/2.0', 'HTTP/3' ), true ) ) {
@@ -41,8 +41,8 @@ if ( empty( $load ) ) {
 }
 
 require ABSPATH . 'zc-admin/includes/noop.php';
-require ABSPATH . WPINC . '/script-loader.php';
-require ABSPATH . WPINC . '/version.php';
+require ABSPATH . ZCINC . '/script-loader.php';
+require ABSPATH . ZCINC . '/version.php';
 
 $expires_offset = 31536000; // 1 year.
 $out            = '';

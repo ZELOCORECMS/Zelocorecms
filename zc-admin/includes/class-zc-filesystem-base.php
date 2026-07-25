@@ -61,7 +61,7 @@ class ZC_Filesystem_Base {
 		 * Perhaps the FTP folder is rooted at the ZelocoreCMS install.
 		 * Check for zc-includes folder in root. Could have some false positives, but rare.
 		 */
-		if ( ! $folder && $this->is_dir( '/' . WPINC ) ) {
+		if ( ! $folder && $this->is_dir( '/' . ZCINC ) ) {
 			$folder = '/';
 		}
 

@@ -215,7 +215,7 @@ final class ZC_Recovery_Mode_Cookie_Service {
 
 			if ( ! $auth_key ) {
 				if ( ! function_exists( 'zc_generate_password' ) ) {
-					require_once ABSPATH . WPINC . '/pluggable.php';
+					require_once ABSPATH . ZCINC . '/pluggable.php';
 				}
 
 				$auth_key = zc_generate_password( 64, true, true );
@@ -230,7 +230,7 @@ final class ZC_Recovery_Mode_Cookie_Service {
 
 			if ( ! $auth_salt ) {
 				if ( ! function_exists( 'zc_generate_password' ) ) {
-					require_once ABSPATH . WPINC . '/pluggable.php';
+					require_once ABSPATH . ZCINC . '/pluggable.php';
 				}
 
 				$auth_salt = zc_generate_password( 64, true, true );

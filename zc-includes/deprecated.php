@@ -3420,7 +3420,7 @@ function rich_edit_exists() {
 	_deprecated_function( __FUNCTION__, '3.9.0' );
 
 	if ( ! isset( $zc_rich_edit_exists ) )
-		$zc_rich_edit_exists = file_exists( ABSPATH . WPINC . '/js/tinymce/tinymce.js' );
+		$zc_rich_edit_exists = file_exists( ABSPATH . ZCINC . '/js/tinymce/tinymce.js' );
 
 	return $zc_rich_edit_exists;
 }
@@ -5899,7 +5899,7 @@ function print_embed_styles() {
 	$suffix = SCRIPT_DEBUG ? '' : '.min';
 	?>
 	<style>
-		<?php echo file_get_contents( ABSPATH . WPINC . "/css/zc-embed-template$suffix.css" ); ?>
+		<?php echo file_get_contents( ABSPATH . ZCINC . "/css/zc-embed-template$suffix.css" ); ?>
 	</style>
 	<?php
 }
@@ -6440,7 +6440,7 @@ function zc_add_editor_classic_theme_styles( $editor_settings ) {
 	}
 
 	$suffix               = zc_scripts_get_suffix();
-	$classic_theme_styles = ABSPATH . WPINC . "/css/classic-themes$suffix.css";
+	$classic_theme_styles = ABSPATH . ZCINC . "/css/classic-themes$suffix.css";
 
 	/*
 	 * This follows the pattern of get_block_editor_theme_styles,

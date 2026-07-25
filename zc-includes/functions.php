@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require ABSPATH . WPINC . '/option.php';
+require ABSPATH . ZCINC . '/option.php';
 
 /**
  * Converts given MySQL date string into a different format.
@@ -889,7 +889,7 @@ function do_enclose( $content, $post ) {
 	global $wpdb;
 
 	// @todo Tidy this code and make the debug code optional.
-	require_once ABSPATH . WPINC . '/class-IXR.php';
+	require_once ABSPATH . ZCINC . '/class-IXR.php';
 
 	$post = get_post( $post );
 	if ( ! $post ) {
@@ -1649,7 +1649,7 @@ function do_feed() {
  * @see load_template()
  */
 function do_feed_rdf() {
-	load_template( ABSPATH . WPINC . '/feed-rdf.php' );
+	load_template( ABSPATH . ZCINC . '/feed-rdf.php' );
 }
 
 /**
@@ -1660,7 +1660,7 @@ function do_feed_rdf() {
  * @see load_template()
  */
 function do_feed_rss() {
-	load_template( ABSPATH . WPINC . '/feed-rss.php' );
+	load_template( ABSPATH . ZCINC . '/feed-rss.php' );
 }
 
 /**
@@ -1674,9 +1674,9 @@ function do_feed_rss() {
  */
 function do_feed_rss2( $for_comments ) {
 	if ( $for_comments ) {
-		load_template( ABSPATH . WPINC . '/feed-rss2-comments.php' );
+		load_template( ABSPATH . ZCINC . '/feed-rss2-comments.php' );
 	} else {
-		load_template( ABSPATH . WPINC . '/feed-rss2.php' );
+		load_template( ABSPATH . ZCINC . '/feed-rss2.php' );
 	}
 }
 
@@ -1691,9 +1691,9 @@ function do_feed_rss2( $for_comments ) {
  */
 function do_feed_atom( $for_comments ) {
 	if ( $for_comments ) {
-		load_template( ABSPATH . WPINC . '/feed-atom-comments.php' );
+		load_template( ABSPATH . ZCINC . '/feed-atom-comments.php' );
 	} else {
-		load_template( ABSPATH . WPINC . '/feed-atom.php' );
+		load_template( ABSPATH . ZCINC . '/feed-atom.php' );
 	}
 }
 
@@ -5450,7 +5450,7 @@ function zc_maybe_load_widgets() {
 		return;
 	}
 
-	require_once ABSPATH . WPINC . '/default-widgets.php';
+	require_once ABSPATH . ZCINC . '/default-widgets.php';
 
 	add_action( '_admin_menu', 'zc_widgets_add_menu' );
 }
@@ -8986,7 +8986,7 @@ function zc_get_zc_version() {
 	static $zc_version;
 
 	if ( ! isset( $zc_version ) ) {
-		require ABSPATH . WPINC . '/version.php';
+		require ABSPATH . ZCINC . '/version.php';
 	}
 
 	return $zc_version;
@@ -9272,7 +9272,7 @@ function zc_verify_fast_hash(
 ): bool {
 	if ( ! str_starts_with( $hash, '$generic$' ) ) {
 		// Back-compat for old phpass hashes.
-		require_once ABSPATH . WPINC . '/class-phpass.php';
+		require_once ABSPATH . ZCINC . '/class-phpass.php';
 		return ( new PasswordHash( 8, true ) )->CheckPassword( $message, $hash );
 	}
 

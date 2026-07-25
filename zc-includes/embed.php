@@ -531,7 +531,7 @@ function get_post_embed_html( $width, $height, $post = null ) {
 	 */
 	$js_path = '/js/zc-embed' . zc_scripts_get_suffix() . '.js';
 	$output .= zc_get_inline_script_tag(
-		trim( file_get_contents( ABSPATH . WPINC . $js_path ) ) . "\n//# sourceURL=" . esc_url_raw( includes_url( $js_path ) )
+		trim( file_get_contents( ABSPATH . ZCINC . $js_path ) ) . "\n//# sourceURL=" . esc_url_raw( includes_url( $js_path ) )
 	);
 
 	/**
@@ -1094,7 +1094,7 @@ function zc_enqueue_embed_styles() {
 	$suffix = zc_scripts_get_suffix();
 	$handle = 'zc-embed-template';
 	zc_register_style( $handle, false );
-	zc_add_inline_style( $handle, file_get_contents( ABSPATH . WPINC . "/css/zc-embed-template$suffix.css" ) );
+	zc_add_inline_style( $handle, file_get_contents( ABSPATH . ZCINC . "/css/zc-embed-template$suffix.css" ) );
 	zc_enqueue_style( $handle );
 }
 
@@ -1106,7 +1106,7 @@ function zc_enqueue_embed_styles() {
 function print_embed_scripts() {
 	$js_path = '/js/zc-embed-template' . zc_scripts_get_suffix() . '.js';
 	zc_print_inline_script_tag(
-		trim( file_get_contents( ABSPATH . WPINC . $js_path ) ) . "\n//# sourceURL=" . esc_url_raw( includes_url( $js_path ) )
+		trim( file_get_contents( ABSPATH . ZCINC . $js_path ) ) . "\n//# sourceURL=" . esc_url_raw( includes_url( $js_path ) )
 	);
 }
 

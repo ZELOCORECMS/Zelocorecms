@@ -13,8 +13,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 	die( '-1' );
 }
 
-require_once ABSPATH . WPINC . '/ms-site.php';
-require_once ABSPATH . WPINC . '/ms-network.php';
+require_once ABSPATH . ZCINC . '/ms-site.php';
+require_once ABSPATH . ZCINC . '/ms-network.php';
 
 /**
  * Updates the last_updated field for the current site.

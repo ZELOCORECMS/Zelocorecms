@@ -3991,7 +3991,7 @@ function zc_default_editor() {
  */
 function zc_editor( $content, $editor_id, $settings = array() ) {
 	if ( ! class_exists( '_ZC_Editors', false ) ) {
-		require ABSPATH . WPINC . '/class-zc-editor.php';
+		require ABSPATH . ZCINC . '/class-zc-editor.php';
 	}
 	_ZC_Editors::editor( $content, $editor_id, $settings );
 }
@@ -4007,7 +4007,7 @@ function zc_editor( $content, $editor_id, $settings = array() ) {
  */
 function zc_enqueue_editor() {
 	if ( ! class_exists( '_ZC_Editors', false ) ) {
-		require ABSPATH . WPINC . '/class-zc-editor.php';
+		require ABSPATH . ZCINC . '/class-zc-editor.php';
 	}
 
 	_ZC_Editors::enqueue_default_editor();

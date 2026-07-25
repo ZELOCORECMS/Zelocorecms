@@ -377,7 +377,7 @@ $app->run();
 Options -Indexes -MultiViews
 DirectoryIndex index.php
 
-# Route all requests to index.php (like WordPress)
+# Route all requests to index.php (like ZelocoreCMS)
 <IfModule mod_rewrite.c>
     RewriteEngine On
     RewriteBase /

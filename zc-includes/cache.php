@@ -9,7 +9,7 @@
  */
 
 /** ZC_Object_Cache class */
-require_once ABSPATH . WPINC . '/class-zc-object-cache.php';
+require_once ABSPATH . ZCINC . '/class-zc-object-cache.php';
 
 /**
  * Sets up Object Cache Global and assigns it.

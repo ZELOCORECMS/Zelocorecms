@@ -3610,7 +3610,7 @@ function _zc_customize_include() {
 	);
 	$settings_previewed       = ! $is_customize_save_action;
 
-	require_once ABSPATH . WPINC . '/class-zc-customize-manager.php';
+	require_once ABSPATH . ZCINC . '/class-zc-customize-manager.php';
 	$GLOBALS['zc_customize'] = new ZC_Customize_Manager(
 		compact(
 			'changeset_uuid',
@@ -3650,7 +3650,7 @@ function _zc_customize_publish_changeset( $new_status, $old_status, $changeset_p
 	}
 
 	if ( empty( $zc_customize ) ) {
-		require_once ABSPATH . WPINC . '/class-zc-customize-manager.php';
+		require_once ABSPATH . ZCINC . '/class-zc-customize-manager.php';
 		$zc_customize = new ZC_Customize_Manager(
 			array(
 				'changeset_uuid'     => $changeset_post->post_name,

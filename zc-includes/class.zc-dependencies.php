@@ -8,7 +8,7 @@
  * @package ZelocoreCMS
  */
 
-_deprecated_file( basename( __FILE__ ), '6.1.0', WPINC . '/class-zc-dependencies.php' );
+_deprecated_file( basename( __FILE__ ), '6.1.0', ZCINC . '/class-zc-dependencies.php' );
 
 /** ZC_Dependencies class */
-require_once ABSPATH . WPINC . '/class-zc-dependencies.php';
+require_once ABSPATH . ZCINC . '/class-zc-dependencies.php';

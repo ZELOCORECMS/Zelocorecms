@@ -13,10 +13,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 if ( ! class_exists( 'WpOrg\Requests\Autoload' ) ) {
-	require ABSPATH . WPINC . '/Requests/src/Autoload.php';
+	require ABSPATH . ZCINC . '/Requests/src/Autoload.php';
 
 	WpOrg\Requests\Autoload::register();
-	WpOrg\Requests\Requests::set_certificate_path( ABSPATH . WPINC . '/certificates/ca-bundle.crt' );
+	WpOrg\Requests\Requests::set_certificate_path( ABSPATH . ZCINC . '/certificates/ca-bundle.crt' );
 }
 
 /**
@@ -141,7 +141,7 @@ class ZC_Http {
 	 *                                             need to be separately decompressed. Default true.
 	 *     @type bool         $sslverify           Whether to verify SSL for the request. Default true.
 	 *     @type string       $sslcertificates     Absolute path to an SSL certificate .crt file.
-	 *                                             Default ABSPATH . WPINC . '/certificates/ca-bundle.crt'.
+	 *                                             Default ABSPATH . ZCINC . '/certificates/ca-bundle.crt'.
 	 *     @type bool         $stream              Whether to stream to a file. If set to true and no filename was
 	 *                                             given, it will be dropped it in the WP temp dir and its name will
 	 *                                             be set using the basename of the URL. Default false.
@@ -226,7 +226,7 @@ class ZC_Http {
 			'compress'            => false,
 			'decompress'          => true,
 			'sslverify'           => true,
-			'sslcertificates'     => ABSPATH . WPINC . '/certificates/ca-bundle.crt',
+			'sslcertificates'     => ABSPATH . ZCINC . '/certificates/ca-bundle.crt',
 			'stream'              => false,
 			'filename'            => null,
 			'limit_response_size' => null,

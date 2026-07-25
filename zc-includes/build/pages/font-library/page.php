@@ -150,7 +150,7 @@ function zc_font_library_render_page() {
 	$routes = zc_get_font_library_routes();
 
 	// Get boot module asset file for dependencies
-	$asset_file = ABSPATH . WPINC . '/js/dist/script-modules/boot/index.min.asset.php';
+	$asset_file = ABSPATH . ZCINC . '/js/dist/script-modules/boot/index.min.asset.php';
 	if ( file_exists( $asset_file ) ) {
 		$asset = require $asset_file;
 

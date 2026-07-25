@@ -179,7 +179,7 @@ class ZC_Recovery_Mode {
 			}
 
 			if ( ! function_exists( 'zc_generate_password' ) ) {
-				require_once ABSPATH . WPINC . '/pluggable.php';
+				require_once ABSPATH . ZCINC . '/pluggable.php';
 			}
 
 			return $this->email_service->maybe_send_recovery_mode_email( $this->get_email_rate_limit(), $error, $extension );
@@ -459,7 +459,7 @@ class ZC_Recovery_Mode {
 	protected function redirect_protected() {
 		// Pluggable is usually loaded after plugins, so we manually include it here for redirection functionality.
 		if ( ! function_exists( 'zc_safe_redirect' ) ) {
-			require_once ABSPATH . WPINC . '/pluggable.php';
+			require_once ABSPATH . ZCINC . '/pluggable.php';
 		}
 
 		$scheme = is_ssl() ? 'https://' : 'http://';

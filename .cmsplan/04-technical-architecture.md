@@ -70,7 +70,7 @@ ZELOCORECMS is built on **three foundational principles**:
 ### Backend Core
 | Component | Technology | Justification |
 |-----------|-----------|---------------|
-| **Language** | PHP 8.2+ | Universal hosting, modern features, WordPress-familiar |
+| **Language** | PHP 8.2+ | Universal hosting, modern features, ZelocoreCMS-familiar |
 | **Framework Base** | Custom MVC (Slim framework core) | Lightweight, PSR-compliant, no framework lock-in |
 | **ORM/Query Builder** | Laravel Eloquent (standalone) | Industry standard, powerful, developer-friendly |
 | **Dependency Injection** | PHP-DI 7 | PSR-11 compliant, zero-config autowiring |
@@ -116,7 +116,7 @@ ZELOCORECMS is built on **three foundational principles**:
 | **Process Manager** | Supervisor | Queue worker on VPS |
 | **Reverse Proxy** | Nginx / Apache (.htaccess) | Shared hosting uses Apache |
 | **Job Queue** | Database-backed queue (default) / Redis Queue | No Redis needed on shared hosting |
-| **Scheduled Tasks** | Cron (via cpanel or server) | WordPress-style WP-Cron equivalent |
+| **Scheduled Tasks** | Cron (via cpanel or server) | ZelocoreCMS-style WP-Cron equivalent |
 
 ---
 
@@ -134,7 +134,7 @@ ZELOCORECMS is built on **three foundational principles**:
 | **Platform.sh** | ✅ Full | Official platform.sh config |
 | **Laravel Forge** | ✅ Full | Works out of the box |
 | **Cloudways** | ✅ Full | PHP 8.2 + MySQL available |
-| **Kinsta** | ✅ Full | Managed WordPress host supports PHP CMS |
+| **Kinsta** | ✅ Full | Managed ZelocoreCMS host supports PHP CMS |
 
 ### Minimum Server Requirements
 ```
@@ -153,7 +153,7 @@ Extensions: PDO, PDO_MySQL, mbstring, json, openssl,
 ```
 Request → Apache/Nginx
     ↓
-public/index.php  (single entry point, like WordPress)
+public/index.php  (single entry point, like ZelocoreCMS)
     ↓
 Bootstrap: Load config, bind services to DI container
     ↓
@@ -375,7 +375,7 @@ CREATE TABLE `zc_options` (
 
 ---
 
-## 7. The PHP Hook System (WordPress-Inspired, Modernized)
+## 7. The PHP Hook System (ZelocoreCMS-Inspired, Modernized)
 
 ```php
 <?php
@@ -389,7 +389,7 @@ class HookRegistry
     private array $filters = [];
     
     /**
-     * Register an action callback (like WordPress add_action)
+     * Register an action callback (like ZelocoreCMS add_action)
      */
     public function addAction(string $hook, callable $callback, int $priority = 10): void
     {
@@ -398,7 +398,7 @@ class HookRegistry
     }
     
     /**
-     * Fire an action (like WordPress do_action)
+     * Fire an action (like ZelocoreCMS do_action)
      */
     public function doAction(string $hook, mixed ...$args): void
     {
@@ -410,7 +410,7 @@ class HookRegistry
     }
     
     /**
-     * Register a filter (like WordPress add_filter)
+     * Register a filter (like ZelocoreCMS add_filter)
      */
     public function addFilter(string $hook, callable $callback, int $priority = 10): void
     {
@@ -419,7 +419,7 @@ class HookRegistry
     }
     
     /**
-     * Apply filters (like WordPress apply_filters)
+     * Apply filters (like ZelocoreCMS apply_filters)
      */
     public function applyFilters(string $hook, mixed $value, mixed ...$args): mixed
     {
@@ -442,11 +442,11 @@ class HookRegistry
     }
 }
 
-// Global instance (WordPress-compatible pattern)
+// Global instance (ZelocoreCMS-compatible pattern)
 // Usage: ZeloCMS::hooks()->doAction('content.afterPublish', $item);
 ```
 
-### Plugin Registration (WordPress-Style)
+### Plugin Registration (ZelocoreCMS-Style)
 ```php
 <?php
 // Example plugin: zelocms-seo/index.php

@@ -174,7 +174,7 @@ function zc_default_script_modules() {
 	 *     'interactivity-router/index.js' => array('dependencies' => array(…), 'version' => '…'),
 	 *     'block-library/navigation/view.js' => …
 	 */
-	$assets_file = ABSPATH . WPINC . '/assets/script-modules-packages.php';
+	$assets_file = ABSPATH . ZCINC . '/assets/script-modules-packages.php';
 	$assets      = file_exists( $assets_file ) ? include $assets_file : array();
 
 	foreach ( $assets as $file_name => $script_module_data ) {

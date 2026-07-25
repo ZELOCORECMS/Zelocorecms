@@ -9,7 +9,7 @@
  */
 
 if ( function_exists( '_deprecated_file' ) ) {
-	// Note: WPINC may not be defined yet, so 'zc-includes' is used here.
+	// Note: ZCINC may not be defined yet, so 'zc-includes' is used here.
 	_deprecated_file( basename( __FILE__ ), '6.1.0', 'zc-includes/class-wpdb.php' );
 }
 

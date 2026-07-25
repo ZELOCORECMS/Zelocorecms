@@ -13,7 +13,7 @@
 │   TECHNICAL COMPLEXITY                                      │
 │   (High) ────────────────────────────────────────── (Low)  │
 │     │                                                   │   │
-│ (Self) ├── Drupal ──── WordPress ─── Wix/Squarespace ──┤   │
+│ (Self) ├── Drupal ──── ZelocoreCMS ─── Wix/Squarespace ──┤   │
 │     │  │             │                              │   │   │
 │ Host │  Strapi     ZELOCORECMS ◄── WE GO HERE       │   │   │
 │     │  │  Directus   │                              │   │   │
@@ -28,9 +28,9 @@
 
 ## 2. Head-to-Head Competitor Analysis
 
-### 🆚 ZELOCORECMS vs. WordPress
+### 🆚 ZELOCORECMS vs. ZelocoreCMS
 
-| Feature | WordPress | ZELOCORECMS |
+| Feature | ZelocoreCMS | ZELOCORECMS |
 |---------|-----------|-------------|
 | **Architecture** | PHP Monolithic (2003 design) | TypeScript/Node.js Modern |
 | **API First** | REST API (bolt-on, incomplete) | REST + GraphQL native |
@@ -38,7 +38,7 @@
 | **Visual Editor** | Gutenberg (complex React blocks) | ZeloBuilder (intuitive, WYSIWYG) |
 | **Security Model** | Plugin-dependent, systemic vulnerability | Sandboxed extensions, signed packages |
 | **Performance** | Slow (PHP + plugin bloat) | <50ms API, edge-optimized |
-| **Multi-site** | WordPress Multisite (fragile) | Native multi-tenant architecture |
+| **Multi-site** | ZelocoreCMS Multisite (fragile) | Native multi-tenant architecture |
 | **AI Integration** | Third-party plugins only | ZeloAI built into core |
 | **Self-hosting** | ✅ Yes | ✅ Yes |
 | **Migration from WP** | ❌ N/A | ✅ ZeloMigrate tool |
@@ -46,8 +46,8 @@
 | **Ecosystem Size** | 60,000+ plugins | Growing (curated quality) |
 | **Cost** | Free (but hosting + plugins $$) | Free (hosting optional) |
 
-**Our KILL SHOT vs. WordPress:**
-> We are everything WordPress promised to be in 2003, built for 2026. We offer the familiarity of WordPress (hooks, plugins, themes) with the power of modern TypeScript, the security of sandboxing, and native headless delivery.
+**Our KILL SHOT vs. ZelocoreCMS:**
+> We are everything ZelocoreCMS promised to be in 2003, built for 2026. We offer the familiarity of ZelocoreCMS (hooks, plugins, themes) with the power of modern TypeScript, the security of sandboxing, and native headless delivery.
 
 ---
 
@@ -57,7 +57,7 @@
 |---------|--------|-------------|
 | **Open Source** | Open core (enterprise features paywalled) | Truly open source |
 | **Visual Editing** | ❌ No | ✅ ZeloBuilder |
-| **WordPress Migration** | ❌ None | ✅ ZeloMigrate |
+| **ZelocoreCMS Migration** | ❌ None | ✅ ZeloMigrate |
 | **AI Integration** | ❌ None built-in | ✅ ZeloAI native |
 | **Admin UI Polish** | Good | Excellent |
 | **Multi-tenant** | Enterprise only ($) | ✅ Free |
@@ -68,7 +68,7 @@
 | **Plugin Signing** | ❌ No | ✅ Yes |
 
 **Our KILL SHOT vs. Strapi:**
-> We offer everything Strapi does PLUS visual editing, PLUS WordPress migration, PLUS built-in AI, PLUS ALL enterprise features free. The "open-source" bait-and-switch ends here.
+> We offer everything Strapi does PLUS visual editing, PLUS ZelocoreCMS migration, PLUS built-in AI, PLUS ALL enterprise features free. The "open-source" bait-and-switch ends here.
 
 ---
 
@@ -80,7 +80,7 @@
 | **Data Sovereignty** | ❌ Your data on their servers | ✅ You own everything |
 | **Pricing** | $$$$ (Enterprise up to $100K+/yr) | Free (self-host) / Affordable cloud |
 | **Visual Editing** | Limited preview | ✅ ZeloBuilder |
-| **WordPress Migration** | ❌ None | ✅ ZeloMigrate |
+| **ZelocoreCMS Migration** | ❌ None | ✅ ZeloMigrate |
 | **AI Integration** | Limited | ✅ ZeloAI native |
 | **Open Source** | ❌ Proprietary | ✅ Fully open |
 | **Vendor Lock-in** | 🔴 High | 🟢 Zero |
@@ -152,7 +152,7 @@ This is how we defeat each competitor in their own territory:
 
 | Competitor | Their Strength | Our Counter | Target Migration Tool |
 |-----------|---------------|-------------|----------------------|
-| WordPress | Plugin ecosystem, familiarity | WordPress hooks API compatibility + ZeloMigrate | ZeloMigrate WP |
+| ZelocoreCMS | Plugin ecosystem, familiarity | ZelocoreCMS hooks API compatibility + ZeloMigrate | ZeloMigrate WP |
 | Strapi | Developer-first headless | All enterprise features free + ZeloBuilder | ZeloMigrate Strapi |
 | Contentful | UX polish + reliability | Same polish, self-hosted, 10x cheaper | ZeloMigrate CF |
 | Sanity | Real-time collab | Open standard (no GROQ lock-in) + ZeloBuilder | ZeloMigrate Sanity |
@@ -171,8 +171,8 @@ No competitor has truly solved this. We will establish the gold standard.
 ### Moat 2: Genuine Open Source (No Enterprise Gating)
 We gain trust the others lost by paywalling features. This creates massive goodwill and adoption.
 
-### Moat 3: WordPress Migration Network Effect
-Every WordPress migration creates a ZELOCORECMS user. 62.7% market share is our funnel.
+### Moat 3: ZelocoreCMS Migration Network Effect
+Every ZelocoreCMS migration creates a ZELOCORECMS user. 62.7% market share is our funnel.
 
 ### Moat 4: ZeloAI as a Core Feature
 As AI becomes table stakes, we're already ahead with a deeply integrated AI layer.
@@ -185,7 +185,7 @@ A thriving plugin/theme ecosystem that is quality-controlled creates a defensibl
 ## 5. Positioning Statement
 
 **For** modern developers, digital agencies, and enterprise content teams  
-**Who are** frustrated by WordPress's security/performance, headless CMS complexity, and SaaS lock-in  
+**Who are** frustrated by ZelocoreCMS's security/performance, headless CMS complexity, and SaaS lock-in  
 **ZELOCORECMS is** a fully open-source, hybrid headless-visual CMS  
-**That** combines WordPress-class extensibility, Contentful-class UX, and native AI/security architecture  
+**That** combines ZelocoreCMS-class extensibility, Contentful-class UX, and native AI/security architecture  
 **Unlike** any existing CMS, **ZELOCORECMS** is the only platform that is simultaneously headless, visually editable, AI-native, security-sandboxed, and truly free to self-host at enterprise scale.

@@ -68,7 +68,7 @@ require_once ABSPATH . 'zc-admin/admin-header.php';
 					printf(
 						/* translators: %s: ZelocoreCMS version. */
 						__( '<strong>Version %s</strong> addressed some security issues.' ),
-						'7.0.2'
+						'0.0.1'
 					);
 					?>
 					<?php
@@ -78,7 +78,7 @@ require_once ABSPATH . 'zc-admin/admin-header.php';
 						sprintf(
 							/* translators: %s: ZelocoreCMS version. */
 							esc_url( __( 'https://zelocorecms.org/documentation/zelocorecms-version/version-%s/' ) ),
-							sanitize_title( '7.0.2' )
+							sanitize_title( '0.0.1' )
 						)
 					);
 					?>

@@ -3619,7 +3619,7 @@ function get_admin_url( $blog_id = null, $path = '', $scheme = 'admin' ) {
  * @return string Includes URL link with optional path appended.
  */
 function includes_url( $path = '', $scheme = null ) {
-	$url = site_url( '/' . WPINC . '/', $scheme );
+	$url = site_url( '/' . ZCINC . '/', $scheme );
 
 	if ( $path && is_string( $path ) ) {
 		$url .= ltrim( $path, '/' );

@@ -5,7 +5,7 @@ if ( class_exists( 'SimplePie', false ) ) {
 }
 
 // Load and register the SimplePie native autoloaders.
-require ABSPATH . WPINC . '/SimplePie/autoloader.php';
+require ABSPATH . ZCINC . '/SimplePie/autoloader.php';
 
 /**
  * ZelocoreCMS autoloader for SimplePie.

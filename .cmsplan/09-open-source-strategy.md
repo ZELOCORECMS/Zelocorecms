@@ -11,14 +11,14 @@
 
 ZELOCORECMS uses the **GNU General Public License v2, or (at your option) any later version** — written as `GPL-2.0-or-later`.
 
-This is **identical to WordPress's license** and is the industry standard for open-source PHP CMS projects.
+This is **identical to ZelocoreCMS's license** and is the industry standard for open-source PHP CMS projects.
 
 **Why this is the right choice:**
 
 | Reason | Explanation |
 |--------|-------------|
-| **WordPress Compatibility** | GPL v2+ matches WordPress core. Plugins/themes can be GPL-compatible, enabling WP ecosystem crossover. |
-| **Ecosystem Familiarity** | Every WordPress developer already knows GPL. Zero friction in understanding ZELOCORECMS's licensing. |
+| **ZelocoreCMS Compatibility** | GPL v2+ matches ZelocoreCMS core. Plugins/themes can be GPL-compatible, enabling WP ecosystem crossover. |
+| **Ecosystem Familiarity** | Every ZelocoreCMS developer already knows GPL. Zero friction in understanding ZELOCORECMS's licensing. |
 | **Copyleft Protection** | Anyone who distributes ZELOCORECMS (including modified versions) must also share their source code. Prevents proprietary forks. |
 | **Patent Protection (v3 clause)** | The "or later" option means anyone can use GPL v3 provisions (explicit patent rights) if they prefer. |
 | **Cure Period (v3 benefit)** | If using as GPL v3, violators get a cure period to fix compliance issues — reducing legal conflict. |
@@ -97,7 +97,7 @@ As a **solo founder**, your open-source strategy must be radically focused. You 
 
 For ZELOCORECMS, the 10% unique core is:
 1. **Three-Tier Plugin Security** — No other CMS has adaptive isolation
-2. **ZeloMigrate** — Frictionless WordPress migration
+2. **ZeloMigrate** — Frictionless ZelocoreCMS migration
 3. **Headless + Admin in one PHP package** — No Node.js required
 4. **True open-source enterprise features** — No paywalled SSO/RBAC
 
@@ -196,7 +196,7 @@ ZELOCORECMS Discord
 **Content types:**
 - Release notes (every release)
 - Technical deep dives (how we built X)
-- CMS comparisons (ZELOCORECMS vs WordPress)
+- CMS comparisons (ZELOCORECMS vs ZelocoreCMS)
 - Tutorial series (building with ZELOCORECMS)
 
 **The "Building in Public" Strategy:**
@@ -211,7 +211,7 @@ ZELOCORECMS Discord
 
 ### What GPL Means for Plugins
 All plugins that extend ZELOCORECMS and are **distributed** must be GPL v2+.
-- This is exactly how WordPress works
+- This is exactly how ZelocoreCMS works
 - Plugin developers CAN charge money for their GPL plugins (Ghost, WooCommerce, etc.)
 - SaaS integrations (connecting to external APIs) are not required to be GPL
 

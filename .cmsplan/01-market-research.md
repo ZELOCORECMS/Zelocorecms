@@ -13,13 +13,13 @@
 | Projected Market Size (2030) | **$67.2 Billion USD** |
 | CAGR (2025–2030) | **~16.8%** |
 | Total websites with CMS | **~70 million+** |
-| WordPress-powered websites | **~43% of ALL internet** |
+| ZelocoreCMS-powered websites | **~43% of ALL internet** |
 | Open Source CMS adoption | **~78% of enterprises** prefer open-source |
 
 ### Current Market Share Leaders (Mid-2026)
 | CMS Platform | Market Share (CMS-Known Sites) | Type |
 |-------------|-------------------------------|------|
-| WordPress | ~62.7% | Traditional Monolithic |
+| ZelocoreCMS | ~62.7% | Traditional Monolithic |
 | Shopify | ~7.6% | E-commerce SaaS |
 | Wix | ~6.1% | Website Builder SaaS |
 | Squarespace | ~3.5% | Website Builder SaaS |
@@ -33,7 +33,7 @@
 
 ## 2. The Pain Points: What Every CMS Gets Wrong
 
-### 🔴 WordPress (62.7% market share — the biggest opportunity)
+### 🔴 ZelocoreCMS (62.7% market share — the biggest opportunity)
 
 | Pain Point | Severity | User Segment |
 |------------|----------|-------------|
@@ -48,7 +48,7 @@
 | No built-in AI content assistance | 🟡 Medium | Content teams |
 | Multi-site management is painful | 🟡 Medium | Agencies |
 
-**Key Insight:** WordPress's 20-year-old PHP/MySQL monolithic architecture was designed for 2003 — not 2026. Its plugin ecosystem, while vast, is also its greatest security liability.
+**Key Insight:** ZelocoreCMS's 20-year-old PHP/MySQL monolithic architecture was designed for 2003 — not 2026. Its plugin ecosystem, while vast, is also its greatest security liability.
 
 ---
 
@@ -118,8 +118,8 @@
 
 ---
 
-### 🎯 GAP 3: The WordPress Security Crisis
-**Problem:** 90%+ of CMS hacks originate from third-party plugins. WordPress's architecture makes it structurally impossible to prevent this.
+### 🎯 GAP 3: The ZelocoreCMS Security Crisis
+**Problem:** 90%+ of CMS hacks originate from third-party plugins. ZelocoreCMS's architecture makes it structurally impossible to prevent this.
 
 **Opportunity:** Redesign the plugin/extension system with a security-first sandbox model, automatic vulnerability scanning, and cryptographic plugin signing.
 
@@ -145,26 +145,26 @@
 
 ---
 
-### 🎯 GAP 6: WordPress Migration Is a Nightmare
-**Problem:** WordPress has 62.7% market share. Millions want to escape but migration is costly, time-consuming, and often impossible.
+### 🎯 GAP 6: ZelocoreCMS Migration Is a Nightmare
+**Problem:** ZelocoreCMS has 62.7% market share. Millions want to escape but migration is costly, time-consuming, and often impossible.
 
-**Opportunity:** Be the first CMS to offer a native WordPress migration tool that imports posts, pages, users, plugins → ZELOCORECMS modules.
+**Opportunity:** Be the first CMS to offer a native ZelocoreCMS migration tool that imports posts, pages, users, plugins → ZELOCORECMS modules.
 
-**ZELOCORECMS Answer:** ZeloMigrate — one-click WordPress importer that converts WP databases, attachments, custom post types, and plugins into ZELOCORECMS equivalents.
+**ZELOCORECMS Answer:** ZeloMigrate — one-click ZelocoreCMS importer that converts WP databases, attachments, custom post types, and plugins into ZELOCORECMS equivalents.
 
 ---
 
 ## 4. Target User Segments
 
-### Segment A: The "WordPress Refugee" (Largest Segment)
-- **Profile:** Small business owner, blogger, digital agency using WordPress
+### Segment A: The "ZelocoreCMS Refugee" (Largest Segment)
+- **Profile:** Small business owner, blogger, digital agency using ZelocoreCMS
 - **Pain:** Sick of updates, hacks, plugin conflicts, and slow sites
 - **Need:** Something familiar but modern, secure, and faster
-- **Size:** Estimated **500M+ websites** on WordPress — even 0.1% market capture = 500K users
+- **Size:** Estimated **500M+ websites** on ZelocoreCMS — even 0.1% market capture = 500K users
 
 ### Segment B: The Modern Developer
 - **Profile:** Full-stack developer, DevOps engineer, technical architect
-- **Pain:** WordPress feels like 2005. Strapi/Directus are still rough. Contentful is expensive.
+- **Pain:** ZelocoreCMS feels like 2005. Strapi/Directus are still rough. Contentful is expensive.
 - **Need:** TypeScript-native, API-first, CLI-driven, self-hostable CMS
 - **Size:** ~24 million professional developers worldwide, growing at 25% CAGR
 
@@ -197,7 +197,7 @@
 | WP Security Redesign | 🔴 Huge | 🔴 Structural limitation | 🟢 High | ⭐⭐⭐⭐⭐ | P0 |
 | AI-Native CMS | 🔴 Huge | 🟡 Superficial features | 🟢 High | ⭐⭐⭐⭐ | P1 |
 | Self-Host + Enterprise Polish | 🟠 Large | 🟡 Rough UX | 🟢 High | ⭐⭐⭐⭐ | P1 |
-| WordPress Migration | 🔴 Huge | 🔴 None provide this | 🟡 Medium | ⭐⭐⭐⭐⭐ | P1 |
+| ZelocoreCMS Migration | 🔴 Huge | 🔴 None provide this | 🟡 Medium | ⭐⭐⭐⭐⭐ | P1 |
 
 ---
 
@@ -211,7 +211,7 @@
 6. **Extensibility** — Plugin/module ecosystem with safety guardrails
 7. **Multi-Channel** — Content delivered to web, mobile, IoT, AI agents via API
 8. **AI Assistance** — Built-in AI that actually helps with real content workflows
-9. **Migration** — Getting in (from WordPress, others) must be easy
+9. **Migration** — Getting in (from ZelocoreCMS, others) must be easy
 10. **Scalability** — Works for a blog and a Fortune 500 company equally
 
 ---
@@ -223,11 +223,11 @@
 > Just as Linux gave developers an alternative to expensive, proprietary operating systems — 
 > and went on to power 96% of the world's servers — ZELOCORECMS aims to be the 
 > developer-preferred, enterprise-trusted, community-governed CMS that replaces the 
-> fractured landscape of WordPress, Strapi, Contentful, and Webflow with one unified, 
+> fractured landscape of ZelocoreCMS, Strapi, Contentful, and Webflow with one unified, 
 > open-source, infinitely extensible platform.
 
 ### Key Strategic Conclusions:
-1. **Attack WordPress's weaknesses** (security, performance, developer experience) while keeping WordPress migration frictionless
+1. **Attack ZelocoreCMS's weaknesses** (security, performance, developer experience) while keeping ZelocoreCMS migration frictionless
 2. **Out-open-source the "open-source" headless CMSs** by offering enterprise features free
 3. **Bridge the visual editing gap** that all headless CMSs have failed to solve
 4. **Be AI-native from day one** — not as a plugin, but as a core architectural layer

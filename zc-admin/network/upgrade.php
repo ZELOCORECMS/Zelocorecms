@@ -10,7 +10,7 @@
 /** Load ZelocoreCMS Administration Bootstrap */
 require_once __DIR__ . '/admin.php';
 
-require_once ABSPATH . WPINC . '/http.php';
+require_once ABSPATH . ZCINC . '/http.php';
 
 /**
  * @global int $zc_db_version ZelocoreCMS database version.

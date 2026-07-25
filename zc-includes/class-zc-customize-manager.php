@@ -302,44 +302,44 @@ final class ZC_Customize_Manager {
 			}
 		}
 
-		require_once ABSPATH . WPINC . '/class-zc-customize-setting.php';
-		require_once ABSPATH . WPINC . '/class-zc-customize-panel.php';
-		require_once ABSPATH . WPINC . '/class-zc-customize-section.php';
-		require_once ABSPATH . WPINC . '/class-zc-customize-control.php';
+		require_once ABSPATH . ZCINC . '/class-zc-customize-setting.php';
+		require_once ABSPATH . ZCINC . '/class-zc-customize-panel.php';
+		require_once ABSPATH . ZCINC . '/class-zc-customize-section.php';
+		require_once ABSPATH . ZCINC . '/class-zc-customize-control.php';
 
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-color-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-media-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-upload-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-image-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-background-image-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-background-position-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-cropped-image-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-site-icon-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-header-image-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-theme-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-code-editor-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-widget-area-customize-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-widget-form-customize-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-item-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-location-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-name-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-locations-control.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-auto-add-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-color-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-media-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-upload-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-image-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-background-image-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-background-position-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-cropped-image-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-site-icon-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-header-image-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-theme-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-code-editor-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-widget-area-customize-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-widget-form-customize-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-item-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-location-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-name-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-locations-control.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-auto-add-control.php';
 
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menus-panel.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menus-panel.php';
 
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-themes-panel.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-themes-section.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-sidebar-section.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-section.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-themes-panel.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-themes-section.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-sidebar-section.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-section.php';
 
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-custom-css-setting.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-filter-setting.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-header-image-setting.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-background-image-setting.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-item-setting.php';
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-nav-menu-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-custom-css-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-filter-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-header-image-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-background-image-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-item-setting.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-nav-menu-setting.php';
 
 		/**
 		 * Filters the core Customizer components to load.
@@ -358,16 +358,16 @@ final class ZC_Customize_Manager {
 		 */
 		$components = apply_filters( 'customize_loaded_components', $this->components, $this );
 
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-selective-refresh.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-selective-refresh.php';
 		$this->selective_refresh = new ZC_Customize_Selective_Refresh( $this );
 
 		if ( in_array( 'widgets', $components, true ) ) {
-			require_once ABSPATH . WPINC . '/class-zc-customize-widgets.php';
+			require_once ABSPATH . ZCINC . '/class-zc-customize-widgets.php';
 			$this->widgets = new ZC_Customize_Widgets( $this );
 		}
 
 		if ( in_array( 'nav_menus', $components, true ) ) {
-			require_once ABSPATH . WPINC . '/class-zc-customize-nav-menus.php';
+			require_once ABSPATH . ZCINC . '/class-zc-customize-nav-menus.php';
 			$this->nav_menus = new ZC_Customize_Nav_Menus( $this );
 		}
 

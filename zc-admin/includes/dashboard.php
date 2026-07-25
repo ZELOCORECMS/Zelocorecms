@@ -57,7 +57,7 @@ function zc_dashboard_setup() {
 	// Site Health.
 	if ( current_user_can( 'view_site_health_checks' ) && ! is_network_admin() ) {
 		if ( ! class_exists( 'ZC_Site_Health' ) ) {
-			require_once ABSPATH . 'zc-admin/includes/class-zc-site-health.php';
+			require_once ABSPATH . 'zc-admin/includes/class-zc-community-events.php';
 		}
 
 		ZC_Site_Health::get_instance();
@@ -88,9 +88,15 @@ function zc_dashboard_setup() {
 		zc_add_dashboard_widget( 'dashboard_quick_press', $quick_draft_title, 'zc_dashboard_quick_press' );
 	}
 
-	// ZelocoreCMS Premium Dashboard Widgets.
-	zc_add_dashboard_widget( 'dashboard_quick_stats', __( 'Quick Stats' ), 'zc_dashboard_quick_stats' );
-	zc_add_dashboard_widget( 'dashboard_content_performance', __( 'Content Performance' ), 'zc_dashboard_content_performance' );
+	// ZelocoreCMS-style Dashboard Widgets
+	zc_add_dashboard_widget( 'dashboard_site_setup', __( 'Site Setup' ), 'zc_dashboard_site_setup', null, null, 'normal', 'high' );
+	zc_add_dashboard_widget( 'dashboard_whats_hot', __( 'What\'s Hot' ), 'zc_dashboard_whats_hot', null, null, 'normal', 'core' );
+	zc_add_dashboard_widget( 'dashboard_jetpack_stats', __( 'ZeloPack Stats' ), 'zc_dashboard_jetpack_stats', null, null, 'normal', 'core' );
+
+	zc_add_dashboard_widget( 'dashboard_jetpack_newsletter', __( 'ZeloPack Newsletter' ), 'zc_dashboard_jetpack_newsletter', null, null, 'side', 'high' );
+	zc_add_dashboard_widget( 'dashboard_site', __( 'Site' ), 'zc_dashboard_site', null, null, 'side', 'high' );
+	zc_add_dashboard_widget( 'dashboard_daily_writing_prompt', __( 'Daily Writing Prompt' ), 'zc_dashboard_daily_writing_prompt', null, null, 'side', 'high' );
+	zc_add_dashboard_widget( 'dashboard_primary', __( 'ZelocoreCMS Events and News' ), 'zc_dashboard_primary', null, null, 'side', 'low' );
 
 	if ( is_network_admin() ) {
 
@@ -2214,4 +2220,217 @@ function zc_dashboard_content_performance() {
 		<?php endif; ?>
 	</div>
 	<?php
+}
+
+// ZelocoreCMS style widget callbacks
+
+function zc_dashboard_site_setup() {
+	echo '<div class="site-setup-content" style="font-size: 13px;">';
+	echo '<div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #f0f0f1;">';
+	echo '<span><span style="color: #4ab866; margin-right: 10px;">✓</span> Choose a plan</span>';
+	echo '</div>';
+	echo '<div style="padding: 10px 0; border-bottom: 1px solid #f0f0f1; display: flex; justify-content: space-between;"><a href="#" style="text-decoration: none; font-weight: 600; color: #0050d2;">Choose a theme</a> <span style="color: #0050d2; font-size: 16px;">›</span></div>';
+	echo '<div style="padding: 10px 0; border-bottom: 1px solid #f0f0f1; display: flex; justify-content: space-between; align-items: center;"><a href="#" style="text-decoration: none; font-weight: 600; color: #0050d2;">Choose a domain</a> <span><span style="background: #e6f0fa; color: #0050d2; padding: 2px 6px; border-radius: 4px; font-size: 11px; margin-right: 10px; font-weight: 600;">Upgrade plan</span><span style="color: #0050d2; font-size: 16px;">›</span></span></div>';
+	echo '<div style="padding: 10px 0; border-bottom: 1px solid #f0f0f1; display: flex; justify-content: space-between;"><a href="#" style="text-decoration: none; font-weight: 600; color: #0050d2;">Install the mobile app</a> <span style="color: #0050d2; font-size: 16px;">›</span></div>';
+	echo '<div style="padding: 10px 0; display: flex; justify-content: space-between;"><a href="#" style="text-decoration: none; font-weight: 600; color: #0050d2;">Launch your site</a> <span style="color: #0050d2; font-size: 16px;">›</span></div>';
+	echo '</div>';
+}
+
+function zc_dashboard_whats_hot() {
+	echo '<div class="whats-hot-content" style="font-size: 13px;">';
+	echo '<div style="display: flex; gap: 10px; margin-bottom: 15px; border-bottom: 1px solid #f0f0f1;">';
+	echo '<a href="#" class="zc-hot-tab active" data-target="zc-tab-freshly-pressed" style="font-weight: 600; border-bottom: 2px solid #1d2327; padding-bottom: 8px; margin-bottom: -1px; color: #1d2327; text-decoration: none;">Freshly Pressed</a>';
+	echo '<a href="#" class="zc-hot-tab" data-target="zc-tab-zelocore-blog" style="color: #646970; padding-bottom: 8px; text-decoration: none;">ZelocoreCMS Blog</a>';
+	echo '<a href="#" class="zc-hot-tab" data-target="zc-tab-latest" style="color: #646970; padding-bottom: 8px; text-decoration: none;">Latest</a>';
+	echo '</div>';
+
+	// Tab 1: Freshly Pressed (Most commented)
+	echo '<ul id="zc-tab-freshly-pressed" class="zc-hot-tab-content" style="list-style: none; margin: 0; padding: 0; line-height: 1.8;">';
+	$hot_posts = get_posts( array( 'numberposts' => 10, 'orderby' => 'comment_count', 'order' => 'DESC', 'post_type' => 'post', 'post_status' => 'publish' ) );
+	if ( ! empty( $hot_posts ) ) {
+		foreach ( $hot_posts as $hot_post ) {
+			$post_title = esc_html( get_the_title( $hot_post->ID ) ) ?: __( '(No title)' );
+			echo '<li><a href="' . esc_url( get_permalink( $hot_post->ID ) ) . '" style="text-decoration: none; color: #0050d2;">' . $post_title . '</a></li>';
+		}
+	} else {
+		echo '<li>' . __( 'No posts found.', 'zelocore' ) . '</li>';
+	}
+	echo '</ul>';
+
+	// Tab 2: ZelocoreCMS Blog (RSS Feed Placeholder or Local Fetch)
+	echo '<ul id="zc-tab-zelocore-blog" class="zc-hot-tab-content" style="list-style: none; margin: 0; padding: 0; line-height: 1.8; display: none;">';
+	// For now, we attempt to fetch a feed, but fallback gracefully if it fails.
+	include_once( ABSPATH . ZCINC . '/feed.php' );
+	$rss = fetch_feed( 'https://zelocorecms.org/news/feed/' ); // Placeholder feed for CMS news
+	if ( ! is_zc_error( $rss ) ) {
+		$maxitems = $rss->get_item_quantity( 5 );
+		$rss_items = $rss->get_items( 0, $maxitems );
+		foreach ( $rss_items as $item ) {
+			echo '<li><a href="' . esc_url( $item->get_permalink() ) . '" target="_blank" style="text-decoration: none; color: #0050d2;">' . esc_html( $item->get_title() ) . '</a></li>';
+		}
+	} else {
+		echo '<li>' . __( 'Unable to load feed.', 'zelocore' ) . '</li>';
+	}
+	echo '</ul>';
+
+	// Tab 3: Latest (Latest by date)
+	echo '<ul id="zc-tab-latest" class="zc-hot-tab-content" style="list-style: none; margin: 0; padding: 0; line-height: 1.8; display: none;">';
+	$latest_posts = get_posts( array( 'numberposts' => 10, 'orderby' => 'date', 'order' => 'DESC', 'post_type' => 'post', 'post_status' => 'publish' ) );
+	if ( ! empty( $latest_posts ) ) {
+		foreach ( $latest_posts as $latest_post ) {
+			$post_title = esc_html( get_the_title( $latest_post->ID ) ) ?: __( '(No title)' );
+			echo '<li><a href="' . esc_url( get_permalink( $latest_post->ID ) ) . '" style="text-decoration: none; color: #0050d2;">' . $post_title . '</a></li>';
+		}
+	} else {
+		echo '<li>' . __( 'No posts found.', 'zelocore' ) . '</li>';
+	}
+	echo '</ul>';
+
+	// JS to handle tab switching
+	echo '<script>
+	document.addEventListener("DOMContentLoaded", function() {
+		var tabs = document.querySelectorAll(".zc-hot-tab");
+		var contents = document.querySelectorAll(".zc-hot-tab-content");
+		tabs.forEach(function(tab) {
+			tab.addEventListener("click", function(e) {
+				e.preventDefault();
+				
+				// Reset all tabs
+				tabs.forEach(function(t) {
+					t.style.fontWeight = "normal";
+					t.style.borderBottom = "none";
+					t.style.color = "#646970";
+					t.style.marginBottom = "0";
+					t.classList.remove("active");
+				});
+				
+				// Set active tab
+				this.style.fontWeight = "600";
+				this.style.borderBottom = "2px solid #1d2327";
+				this.style.color = "#1d2327";
+				this.style.marginBottom = "-1px";
+				this.classList.add("active");
+				
+				// Hide all content
+				contents.forEach(function(c) {
+					c.style.display = "none";
+				});
+				
+				// Show target content
+				var target = document.getElementById(this.getAttribute("data-target"));
+				if (target) {
+					target.style.display = "block";
+				}
+			});
+		});
+	});
+	</script>';
+
+	echo '</div>';
+}
+
+function zc_dashboard_jetpack_stats() {
+	echo '<div class="jetpack-stats-content" style="font-size: 13px;">';
+	
+	echo '<div style="display: flex; border: 1px solid #c3c4c7; border-radius: 4px; margin-bottom: 20px; overflow: hidden; text-align: center;">';
+	echo '<span style="background: #0050d2; color: #fff; padding: 6px 12px; width: 25%; font-weight: 600;">Days</span>';
+	echo '<span style="padding: 6px 12px; width: 25%; border-left: 1px solid #c3c4c7; background: #fff;">Weeks</span>';
+	echo '<span style="padding: 6px 12px; width: 25%; border-left: 1px solid #c3c4c7; background: #fff;">Months</span>';
+	echo '<span style="padding: 6px 12px; width: 25%; border-left: 1px solid #c3c4c7; background: #fff;">Years</span>';
+	echo '</div>';
+	
+	echo '<div style="border: 1px solid #dcdcde; padding: 40px 20px; text-align: center; color: #646970; border-radius: 4px; margin-bottom: 30px;">';
+	echo '<div style="display: flex; align-items: flex-start; text-align: left; gap: 10px; max-width: 300px; margin: 0 auto;">';
+	echo '<span style="font-size: 20px;">ⓘ</span>';
+	echo '<span>Once stats become available, this chart will show you details about your views and visitors. <a href="#" style="color: #0050d2; text-decoration: none;">Learn more about stats</a></span>';
+	echo '</div>';
+	echo '</div>';
+
+	echo '<div class="7-day-highlights-content">';
+	echo '<h3 style="margin: 0 0 15px 0; padding: 0; font-size: 16px; font-weight: 600;">7 Day Highlights</h3>';
+	echo '<div style="display: flex; margin-bottom: 15px; border-radius: 4px; overflow: hidden; border: 1px solid #0050d2;">';
+	echo '<span style="background: #0050d2; color: #fff; padding: 6px 12px; width: 50%; text-align: center; font-weight: 600;">Top Posts & Pages</span>';
+	echo '<span style="background: #fff; color: #1d2327; padding: 6px 12px; width: 50%; text-align: center;">Top Referrers</span>';
+	echo '</div>';
+	echo '<p style="color: #646970; padding: 10px 0;">No data to show</p>';
+	
+	echo '<div style="display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f0f0f1; padding-top: 15px; margin-top: 15px; margin-left: -12px; margin-right: -12px; padding-left: 12px; padding-right: 12px;">';
+	echo '<span style="font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 5px;"><span style="background:#00d084; color:#fff; border-radius:100%; width: 16px; height: 16px; display:inline-block;"></span> ZeloPack</span>';
+	echo '<a href="#" style="text-decoration: underline; font-weight: 600; color: #1d2327;">View all stats</a>';
+	echo '</div>';
+	
+	echo '</div>';
+	echo '</div>';
+}
+
+function zc_dashboard_jetpack_newsletter() {
+	echo '<div class="jetpack-newsletter-content" style="font-size: 13px;">';
+	echo '<div style="display: flex; gap: 20px; margin-bottom: 15px;">';
+	echo '<span style="display: flex; align-items: center; gap: 5px;">✉ <a href="#" style="text-decoration: none; color: #0050d2;">1 subscriber (0 via email)</a></span>';
+	echo '<span style="display: flex; align-items: center; gap: 5px;">💳 <a href="#" style="text-decoration: none; color: #0050d2;">0 paid subscribers</a></span>';
+	echo '</div>';
+	echo '<p style="color: #646970; margin-bottom: 15px; line-height: 1.5;">Effortlessly turn posts into emails with our Newsletter feature. Expand your reach, engage readers, and monetize your writing. No coding required. <a href="#" style="color: #0050d2; text-decoration: none;">Learn more</a></p>';
+	echo '<p style="font-weight: 600; margin-bottom: 10px;">Quick Links</p>';
+	echo '<ul style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• Publish your next post</a></li>';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• Manage subscribers</a></li>';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• View subscriber stats</a></li>';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• Monetize</a></li>';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• Import subscribers</a></li>';
+	echo '<li><a href="#" style="text-decoration: none; color: #0050d2;">• Newsletter settings</a></li>';
+	echo '</ul>';
+	echo '</div>';
+}
+
+function zc_dashboard_site() {
+	echo '<div class="site-content" style="font-size: 13px;">';
+	echo '<div style="border: 1px solid #dcdcde; background: #fff; padding: 40px 20px; text-align: center; margin-bottom: 15px; border-radius: 4px;">';
+	echo '<div style="text-align: left; max-width: 400px; margin: 0 auto; box-shadow: 0 0 10px rgba(0,0,0,0.1); padding: 20px;">';
+	echo '<div style="display: flex; justify-content: space-between; margin-bottom: 60px;">';
+	echo '<span style="font-weight: 600;">trotad</span>';
+	echo '<span>About <span style="background:#1d2327; color:#fff; padding: 4px 8px; border-radius: 4px; margin-left: 5px;">Learn more</span></span>';
+	echo '</div>';
+	echo '<h2 style="font-size: 24px; font-weight: 600; margin-bottom: 10px;">Hello World!</h2>';
+	echo '<p style="color: #646970;">Welcome to ZelocoreCMS! This is your first post. Edit or delete it to take the first...</p>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div style="display: flex; align-items: center; justify-content: space-between; border-top: 1px solid #f0f0f1; padding-top: 15px; margin: 0 -12px; padding-left: 12px; padding-right: 12px;">';
+	echo '<div style="display: flex; align-items: center; gap: 10px;">';
+	echo '<span style="background: #f6f7f7; width: 36px; height: 36px; display: inline-block; border-radius: 4px; text-align: center; line-height: 36px; font-weight: 600; font-size: 18px; color: #1d2327; border: 1px solid #dcdcde;">t</span>';
+	echo '<div><div style="font-weight: 600; color: #1d2327; line-height: 1.2;">trotad</div><a href="#" style="text-decoration: underline; font-size: 12px; color: #0050d2;">trotad.w...</a></div>';
+	echo '</div>';
+	echo '<div style="display: flex; gap: 8px;">';
+	echo '<button style="background: #fff; border: 1px solid #0050d2; color: #0050d2; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Hosting Overview</button>';
+	echo '<button style="background: #fff; border: 1px solid #0050d2; color: #0050d2; padding: 4px 12px; border-radius: 4px; cursor: pointer; font-weight: 600;">Edit Site</button>';
+	echo '</div>';
+	echo '</div>';
+	echo '</div>';
+}
+
+function zc_dashboard_daily_writing_prompt() {
+	echo '<div class="daily-writing-prompt-content" style="font-size: 13px;">';
+	echo '<div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 15px;">';
+	echo '<p style="margin:0; font-size: 15px; line-height: 1.5; color: #1d2327; max-width: 70%;">What\'s a promise you made to yourself that you\'ve actually kept?</p>';
+	echo '<div style="display: flex; gap: -1px;">';
+	echo '<button style="border: 1px solid #c3c4c7; background: #fff; padding: 4px 8px; border-radius: 4px 0 0 4px; color: #646970;">←</button>';
+	echo '<button style="border: 1px solid #c3c4c7; background: #fff; padding: 4px 8px; border-radius: 0 4px 4px 0; color: #1d2327; border-left: none;">→</button>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div style="display: flex; justify-content: space-between; align-items: center;">';
+	echo '<button style="border: 1px solid #0050d2; background: #fff; color: #0050d2; padding: 4px 12px; border-radius: 4px; font-weight: 600;">Post your answer</button>';
+	echo '<div style="display: flex; align-items: center; gap: 8px;">';
+	echo '<div style="display: flex; margin-right: 5px;">';
+	echo '<div style="width: 24px; height: 24px; border-radius: 50%; background: #ccc; margin-right: -8px; border: 2px solid #fff;"></div>';
+	echo '<div style="width: 24px; height: 24px; border-radius: 50%; background: #aaa; margin-right: -8px; border: 2px solid #fff;"></div>';
+	echo '<div style="width: 24px; height: 24px; border-radius: 50%; background: #888; border: 2px solid #fff;"></div>';
+	echo '</div>';
+	echo '<span style="color: #646970; font-size: 12px;">+546</span>';
+	echo '<a href="#" style="text-decoration: underline; color: #0050d2; margin-left: 5px;">View responses ↗</a>';
+	echo '</div>';
+	echo '</div>';
+	echo '<div style="border-top: 1px solid #f0f0f1; margin-top: 15px; padding-top: 15px; margin-left: -12px; margin-right: -12px; padding-left: 12px; padding-right: 12px; display: flex; justify-content: space-between; align-items: center;">';
+	echo '<span style="font-weight: 600; font-size: 16px; display: flex; align-items: center; gap: 5px;"><span style="background:#00d084; color:#fff; border-radius:100%; width: 16px; height: 16px; display:inline-block;"></span> ZeloPack</span>';
+	echo '<a href="#" style="text-decoration: underline; color: #1d2327; font-weight: 600;">Read the blogs and topics you follow</a>';
+	echo '</div>';
+	echo '</div>';
 }

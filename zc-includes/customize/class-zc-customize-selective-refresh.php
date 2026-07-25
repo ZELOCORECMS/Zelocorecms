@@ -63,7 +63,7 @@ final class ZC_Customize_Selective_Refresh {
 	 */
 	public function __construct( ZC_Customize_Manager $manager ) {
 		$this->manager = $manager;
-		require_once ABSPATH . WPINC . '/customize/class-zc-customize-partial.php';
+		require_once ABSPATH . ZCINC . '/customize/class-zc-customize-partial.php';
 
 		add_action( 'customize_preview_init', array( $this, 'init_preview' ) );
 	}

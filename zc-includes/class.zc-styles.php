@@ -8,7 +8,7 @@
  * @package ZelocoreCMS
  */
 
-_deprecated_file( basename( __FILE__ ), '6.1.0', WPINC . '/class-zc-styles.php' );
+_deprecated_file( basename( __FILE__ ), '6.1.0', ZCINC . '/class-zc-styles.php' );
 
 /** ZC_Styles class */
-require_once ABSPATH . WPINC . '/class-zc-styles.php';
+require_once ABSPATH . ZCINC . '/class-zc-styles.php';

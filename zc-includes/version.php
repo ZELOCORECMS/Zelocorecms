@@ -16,7 +16,7 @@
  *
  * @global string $zc_version
  */
-$zc_version = '7.0.2';
+$zc_version = '0.0.1';
 
 /**
  * Holds the ZelocoreCMS DB revision, increments when changes are made to the ZelocoreCMS DB schema.

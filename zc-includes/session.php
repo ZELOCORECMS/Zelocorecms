@@ -8,5 +8,5 @@
 
 _deprecated_file( basename( __FILE__ ), '4.7.0' );
 
-require_once ABSPATH . WPINC . '/class-zc-session-tokens.php';
-require_once ABSPATH . WPINC . '/class-zc-user-meta-session-tokens.php';
+require_once ABSPATH . ZCINC . '/class-zc-session-tokens.php';
+require_once ABSPATH . ZCINC . '/class-zc-user-meta-session-tokens.php';

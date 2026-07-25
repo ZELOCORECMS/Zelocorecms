@@ -96,7 +96,7 @@ class ZC_Community_Events {
 		}
 
 		// Include an unmodified $zc_version.
-		require ABSPATH . WPINC . '/version.php';
+		require ABSPATH . ZCINC . '/version.php';
 
 		$api_url                    = 'http://api.zelocorecms.org/events/1.0/';
 		$request_args               = $this->get_request_args( $location_search, $timezone );

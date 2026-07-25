@@ -15,14 +15,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 if ( ! class_exists( 'Text_Diff', false ) ) {
 	/** Text_Diff class */
-	require ABSPATH . WPINC . '/Text/Diff.php';
+	require ABSPATH . ZCINC . '/Text/Diff.php';
 	/** Text_Diff_Renderer class */
-	require ABSPATH . WPINC . '/Text/Diff/Renderer.php';
+	require ABSPATH . ZCINC . '/Text/Diff/Renderer.php';
 	/** Text_Diff_Renderer_inline class */
-	require ABSPATH . WPINC . '/Text/Diff/Renderer/inline.php';
+	require ABSPATH . ZCINC . '/Text/Diff/Renderer/inline.php';
 	/** Text_Exception class */
-	require ABSPATH . WPINC . '/Text/Exception.php';
+	require ABSPATH . ZCINC . '/Text/Exception.php';
 }
 
-require ABSPATH . WPINC . '/class-zc-text-diff-renderer-table.php';
-require ABSPATH . WPINC . '/class-zc-text-diff-renderer-inline.php';
+require ABSPATH . ZCINC . '/class-zc-text-diff-renderer-table.php';
+require ABSPATH . ZCINC . '/class-zc-text-diff-renderer-inline.php';

@@ -770,7 +770,7 @@ function zc_tiny_mce( $teeny = false, $settings = false ) {
 	static $num = 1;
 
 	if ( ! class_exists( '_ZC_Editors', false ) )
-		require_once ABSPATH . WPINC . '/class-zc-editor.php';
+		require_once ABSPATH . ZCINC . '/class-zc-editor.php';
 
 	$editor_id = 'content' . $num++;
 

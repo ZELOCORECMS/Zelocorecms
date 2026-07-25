@@ -58,10 +58,10 @@ if ( file_exists( ABSPATH . 'zc-config.php' ) ) {
 
 	// A config file doesn't exist.
 
-	define( 'WPINC', 'zc-includes' );
-	require_once ABSPATH . WPINC . '/version.php';
-	require_once ABSPATH . WPINC . '/compat.php';
-	require_once ABSPATH . WPINC . '/load.php';
+	define( 'ZCINC', 'zc-includes' );
+	require_once ABSPATH . ZCINC . '/version.php';
+	require_once ABSPATH . ZCINC . '/compat.php';
+	require_once ABSPATH . ZCINC . '/load.php';
 
 	// Check for the required PHP version and for the MySQL extension or a database drop-in.
 	zc_check_php_mysql_versions();
@@ -70,7 +70,7 @@ if ( file_exists( ABSPATH . 'zc-config.php' ) ) {
 	zc_fix_server_vars();
 
 	define( 'ZC_CONTENT_DIR', ABSPATH . 'zc-content' );
-	require_once ABSPATH . WPINC . '/functions.php';
+	require_once ABSPATH . ZCINC . '/functions.php';
 
 	$path = zc_guess_url() . '/zc-admin/setup-config.php';
 

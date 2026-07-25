@@ -9,7 +9,7 @@
  * @subpackage oEmbed
  */
 
-_deprecated_file( basename( __FILE__ ), '5.3.0', WPINC . '/class-zc-oembed.php' );
+_deprecated_file( basename( __FILE__ ), '5.3.0', ZCINC . '/class-zc-oembed.php' );
 
 /** ZC_oEmbed class */
-require_once ABSPATH . WPINC . '/class-zc-oembed.php';
+require_once ABSPATH . ZCINC . '/class-zc-oembed.php';

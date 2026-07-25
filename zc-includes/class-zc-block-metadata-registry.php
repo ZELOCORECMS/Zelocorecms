@@ -338,7 +338,7 @@ class ZC_Block_Metadata_Registry {
 		}
 
 		$collection_roots = array(
-			zc_normalize_path( ABSPATH . WPINC ),
+			zc_normalize_path( ABSPATH . ZCINC ),
 			zc_normalize_path( ZC_CONTENT_DIR ),
 			zc_normalize_path( ZCMU_PLUGIN_DIR ),
 			zc_normalize_path( ZC_PLUGIN_DIR ),

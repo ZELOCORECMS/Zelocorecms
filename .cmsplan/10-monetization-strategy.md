@@ -160,7 +160,7 @@ For self-hosted customers who want SLA-backed support:
 
 | Service | Price |
 |---------|-------|
-| WordPress Migration (assisted) | $500–$2,500 (depending on site size) |
+| ZelocoreCMS Migration (assisted) | $500–$2,500 (depending on site size) |
 | Custom Plugin Development | $5,000–$50,000 |
 | Architecture Consultation | $200/hour |
 | Training & Onboarding | $1,500/day |

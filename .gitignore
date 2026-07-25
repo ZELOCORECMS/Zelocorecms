@@ -79,3 +79,8 @@ temp/
 /.npmrc
 /.phpunit.result.cache
 /.pi
+
+# ----------------------------------------------------------------------------
+# AI Memory Bank (local AI agent context — not for version control)
+# ----------------------------------------------------------------------------
+/memory-bank/

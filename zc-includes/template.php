@@ -739,8 +739,8 @@ function locate_template( $template_names, $load = false, $load_once = true, $ar
 		} elseif ( $is_child_theme && file_exists( $zc_template_path . '/' . $template_name ) ) {
 			$located = $zc_template_path . '/' . $template_name;
 			break;
-		} elseif ( file_exists( ABSPATH . WPINC . '/theme-compat/' . $template_name ) ) {
-			$located = ABSPATH . WPINC . '/theme-compat/' . $template_name;
+		} elseif ( file_exists( ABSPATH . ZCINC . '/theme-compat/' . $template_name ) ) {
+			$located = ABSPATH . ZCINC . '/theme-compat/' . $template_name;
 			break;
 		}
 	}

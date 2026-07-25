@@ -8,7 +8,7 @@
  * @package ZelocoreCMS
  */
 
-_deprecated_file( basename( __FILE__ ), '5.9.0', WPINC . '/class-zc-http.php' );
+_deprecated_file( basename( __FILE__ ), '5.9.0', ZCINC . '/class-zc-http.php' );
 
 /** ZC_Http class */
-require_once ABSPATH . WPINC . '/class-zc-http.php';
+require_once ABSPATH . ZCINC . '/class-zc-http.php';

@@ -8,7 +8,7 @@
  * @package ZelocoreCMS
  */
 
-_deprecated_file( basename( __FILE__ ), '5.3.0', WPINC . '/class-zc-date-query.php' );
+_deprecated_file( basename( __FILE__ ), '5.3.0', ZCINC . '/class-zc-date-query.php' );
 
 /** ZC_Date_Query class */
-require_once ABSPATH . WPINC . '/class-zc-date-query.php';
+require_once ABSPATH . ZCINC . '/class-zc-date-query.php';

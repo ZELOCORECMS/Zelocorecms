@@ -135,7 +135,7 @@ function locate_block_template( $template, $type, array $templates ) {
 	add_action( 'zc_head', '_block_template_render_title_tag', 1 ); // ...and make it unconditional.
 
 	// This file will be included instead of the theme's template file.
-	return ABSPATH . WPINC . '/template-canvas.php';
+	return ABSPATH . ZCINC . '/template-canvas.php';
 }
 
 /**

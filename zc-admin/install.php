@@ -41,7 +41,7 @@ require_once ABSPATH . 'zc-admin/includes/upgrade.php';
 require_once ABSPATH . 'zc-admin/includes/translation-install.php';
 
 /** Load wpdb */
-require_once ABSPATH . WPINC . '/class-wpdb.php';
+require_once ABSPATH . ZCINC . '/class-wpdb.php';
 
 nocache_headers();
 

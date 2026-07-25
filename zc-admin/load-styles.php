@@ -19,15 +19,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	define( 'ABSPATH', dirname( __DIR__ ) . '/' );
 }
 
-define( 'WPINC', 'zc-includes' );
+define( 'ZCINC', 'zc-includes' );
 define( 'ZC_CONTENT_DIR', ABSPATH . 'zc-content' );
 
 require ABSPATH . 'zc-admin/includes/noop.php';
-require ABSPATH . WPINC . '/theme.php';
-require ABSPATH . WPINC . '/class-zc-theme-json-resolver.php';
-require ABSPATH . WPINC . '/global-styles-and-settings.php';
-require ABSPATH . WPINC . '/script-loader.php';
-require ABSPATH . WPINC . '/version.php';
+require ABSPATH . ZCINC . '/theme.php';
+require ABSPATH . ZCINC . '/class-zc-theme-json-resolver.php';
+require ABSPATH . ZCINC . '/global-styles-and-settings.php';
+require ABSPATH . ZCINC . '/script-loader.php';
+require ABSPATH . ZCINC . '/version.php';
 
 $protocol = $_SERVER['SERVER_PROTOCOL'];
 if ( ! in_array( $protocol, array( 'HTTP/1.1', 'HTTP/2', 'HTTP/2.0', 'HTTP/3' ), true ) ) {
@@ -83,10 +83,10 @@ foreach ( $load as $handle ) {
 	$content = get_file( $path ) . "\n";
 
 	// Note: str_starts_with() is not used here, as zc-includes/compat.php is not loaded in this file.
-	if ( 0 === strpos( $style->src, '/' . WPINC . '/css/' ) ) {
-		$content = str_replace( '../images/', '../' . WPINC . '/images/', $content );
-		$content = str_replace( '../js/tinymce/', '../' . WPINC . '/js/tinymce/', $content );
-		$content = str_replace( '../fonts/', '../' . WPINC . '/fonts/', $content );
+	if ( 0 === strpos( $style->src, '/' . ZCINC . '/css/' ) ) {
+		$content = str_replace( '../images/', '../' . ZCINC . '/images/', $content );
+		$content = str_replace( '../js/tinymce/', '../' . ZCINC . '/js/tinymce/', $content );
+		$content = str_replace( '../fonts/', '../' . ZCINC . '/fonts/', $content );
 		$out    .= $content;
 	} else {
 		$out .= str_replace( '../images/', 'images/', $content );

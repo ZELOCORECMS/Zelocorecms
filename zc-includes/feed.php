@@ -803,12 +803,12 @@ function feed_content_type( $type = '' ) {
  */
 function fetch_feed( $url ) {
 	if ( ! class_exists( 'SimplePie\SimplePie', false ) ) {
-		require_once ABSPATH . WPINC . '/class-simplepie.php';
+		require_once ABSPATH . ZCINC . '/class-simplepie.php';
 	}
 
-	require_once ABSPATH . WPINC . '/class-zc-feed-cache-transient.php';
-	require_once ABSPATH . WPINC . '/class-zc-simplepie-file.php';
-	require_once ABSPATH . WPINC . '/class-zc-simplepie-sanitize-kses.php';
+	require_once ABSPATH . ZCINC . '/class-zc-feed-cache-transient.php';
+	require_once ABSPATH . ZCINC . '/class-zc-simplepie-file.php';
+	require_once ABSPATH . ZCINC . '/class-zc-simplepie-sanitize-kses.php';
 
 	$feed = new SimplePie\SimplePie();
 
@@ -826,7 +826,7 @@ function fetch_feed( $url ) {
 		$feed->set_cache_location( 'zc_transient' );
 	} else {
 		// Back-compat for SimplePie 1.2.x.
-		require_once ABSPATH . WPINC . '/class-zc-feed-cache.php';
+		require_once ABSPATH . ZCINC . '/class-zc-feed-cache.php';
 		$feed->set_cache_class( 'ZC_Feed_Cache' );
 	}
 

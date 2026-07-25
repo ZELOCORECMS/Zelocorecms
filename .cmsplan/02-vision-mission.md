@@ -123,7 +123,7 @@ Publish without fear.
 ## 6. Key Differentiators (Elevator Pitch)
 
 ### The 30-Second Pitch
-> "ZELOCORECMS is an open-source CMS that clones and massively improves upon WordPress's core, adds headless API architecture, real-time visual editing, built-in AI content assistance, enterprise-grade security, and a one-click WordPress migration tool — all for free, forever, with no vendor lock-in. We're the first CMS that doesn't force you to choose between developer power and editor simplicity."
+> "ZELOCORECMS is an open-source CMS that clones and massively improves upon ZelocoreCMS's core, adds headless API architecture, real-time visual editing, built-in AI content assistance, enterprise-grade security, and a one-click ZelocoreCMS migration tool — all for free, forever, with no vendor lock-in. We're the first CMS that doesn't force you to choose between developer power and editor simplicity."
 
 ### The 5-Word Pitch
 > **"The CMS that does everything."**

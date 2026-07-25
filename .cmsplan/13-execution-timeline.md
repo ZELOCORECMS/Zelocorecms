@@ -129,14 +129,14 @@ Installs: 0  0   10   50  200  1K   3K   5K   8K  12K  18K  25K
 |------|-------|----------|
 | W1 | Implement GraphQL API (webonyx/graphql-php, auto-schema from content types) | 🟠 |
 | W1 | Implement i18n module (multi-language content fields) | 🟡 |
-| W2 | Build **ZeloMigrate WordPress** importer (posts, pages, users, media, taxonomy) | 🔴 |
-| W2 | Test WP migration on 5 real WordPress sites | 🔴 |
+| W2 | Build **ZeloMigrate ZelocoreCMS** importer (posts, pages, users, media, taxonomy) | 🔴 |
+| W2 | Test WP migration on 5 real ZelocoreCMS sites | 🔴 |
 | W3 | Fix all alpha bugs (focus on alpha user feedback) | 🔴 |
 | W3 | Write developer documentation (Getting Started, API Reference, Plugin Dev) | 🔴 |
 | W4 | Security review: auth, CSRF, SQL injection, XSS | 🔴 |
 | W4 | **PUBLIC BETA LAUNCH** (Product Hunt "Coming Soon" + GitHub public) | 🔴 |
 
-**Week 20 Milestone:** Public beta live. WordPress migration working. 500+ beta users.
+**Week 20 Milestone:** Public beta live. ZelocoreCMS migration working. 500+ beta users.
 
 ---
 
@@ -266,7 +266,7 @@ These features will NOT be in v1.0 no matter how tempting:
 - [ ] PHPUnit tests: 70%+ coverage on core modules
 
 ### Month 5 Checkpoint (Beta Ready?)
-- [ ] WP migration runs on a real 5-year-old WordPress site
+- [ ] WP migration runs on a real 5-year-old ZelocoreCMS site
 - [ ] Plugin sandbox (Tier 1) blocks `exec()`, `system()`, `shell_exec()`
 - [ ] GraphQL schema auto-generated from content types
 - [ ] Works on PHP 8.2, 8.3, and 8.4

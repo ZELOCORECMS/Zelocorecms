@@ -95,7 +95,7 @@ function get_block_asset_url( $path ) {
 	// Path needs to be normalized to work in Windows env.
 	static $wpinc_path_norm = '';
 	if ( ! $wpinc_path_norm ) {
-		$wpinc_path_norm = zc_normalize_path( realpath( ABSPATH . WPINC ) );
+		$wpinc_path_norm = zc_normalize_path( realpath( ABSPATH . ZCINC ) );
 	}
 
 	if ( str_starts_with( $path, $wpinc_path_norm ) ) {
@@ -318,7 +318,7 @@ function register_block_style_handle( $metadata, $field_name, $index = 0 ) {
 
 	static $wpinc_path_norm = '';
 	if ( ! $wpinc_path_norm ) {
-		$wpinc_path_norm = zc_normalize_path( realpath( ABSPATH . WPINC ) );
+		$wpinc_path_norm = zc_normalize_path( realpath( ABSPATH . ZCINC ) );
 	}
 
 	$is_core_block = isset( $metadata['file'] ) && str_starts_with( $metadata['file'], $wpinc_path_norm );
@@ -471,7 +471,7 @@ function register_block_type_from_metadata( $file_or_folder, $args = array() ) {
 		trailingslashit( $file_or_folder ) . 'block.json' :
 		$file_or_folder;
 
-	$is_core_block        = str_starts_with( $file_or_folder, zc_normalize_path( ABSPATH . WPINC ) );
+	$is_core_block        = str_starts_with( $file_or_folder, zc_normalize_path( ABSPATH . ZCINC ) );
 	$metadata_file_exists = $is_core_block || file_exists( $metadata_file );
 	$registry_metadata    = ZC_Block_Metadata_Registry::get_metadata( $file_or_folder );
 

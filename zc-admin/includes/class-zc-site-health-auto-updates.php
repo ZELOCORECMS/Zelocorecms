@@ -328,7 +328,7 @@ class ZC_Site_Health_Auto_Updates {
 	public function test_all_files_writable() {
 		global $zc_filesystem;
 
-		require ABSPATH . WPINC . '/version.php'; // $zc_version; // x.y.z
+		require ABSPATH . ZCINC . '/version.php'; // $zc_version; // x.y.z
 
 		$skin    = new Automatic_Upgrader_Skin();
 		$success = $skin->request_filesystem_credentials( false, ABSPATH );
@@ -412,7 +412,7 @@ class ZC_Site_Health_Auto_Updates {
 	 *                          False if it isn't a development version. Null if the test passed.
 	 */
 	public function test_accepts_dev_updates() {
-		require ABSPATH . WPINC . '/version.php'; // $zc_version; // x.y.z
+		require ABSPATH . ZCINC . '/version.php'; // $zc_version; // x.y.z
 		// Only for dev versions.
 		if ( ! str_contains( $zc_version, '-' ) ) {
 			return false;

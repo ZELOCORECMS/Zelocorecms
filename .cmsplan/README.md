@@ -15,7 +15,7 @@
 | [`03-competitive-analysis.md`](./03-competitive-analysis.md) | Competitor-by-competitor analysis & our differentiation strategy |
 | [`04-technical-architecture.md`](./04-technical-architecture.md) | Full technical stack, system architecture & core design decisions |
 | [`05-feature-roadmap.md`](./05-feature-roadmap.md) | Complete feature set & phased development roadmap (v1→v3) |
-| [`06-core-modules.md`](./06-core-modules.md) | WordPress core clone design — hooks, DB schema, plugin system |
+| [`06-core-modules.md`](./06-core-modules.md) | ZelocoreCMS core clone design — hooks, DB schema, plugin system |
 | [`07-developer-experience.md`](./07-developer-experience.md) | Developer-first philosophy, CLI tools, SDK, and DX strategy |
 | [`08-security-plan.md`](./08-security-plan.md) | Security architecture, zero-trust model, OWASP compliance |
 | [`09-open-source-strategy.md`](./09-open-source-strategy.md) | GitHub strategy, community building, contributor funnel |
@@ -28,17 +28,17 @@
 
 ## 🎯 The One-Line Pitch
 
-**ZELOCORECMS** is the first open-source CMS that is simultaneously headless, hybrid-editable, AI-native, and WordPress-compatible — giving developers power and editors simplicity, with zero vendor lock-in.
+**ZELOCORECMS** is the first open-source CMS that is simultaneously headless, hybrid-editable, AI-native, and ZelocoreCMS-compatible — giving developers power and editors simplicity, with zero vendor lock-in.
 
 ---
 
 ## ⚡ Quick Stats — Why Now?
 
-- WordPress powers **62.7%** of all CMS-driven sites, yet **records its first ever sustained decline**
+- ZelocoreCMS powers **62.7%** of all CMS-driven sites, yet **records its first ever sustained decline**
 - The global CMS market is valued at **$28B+** and growing at 16% CAGR
 - **90%** of CMS hacks originate from plugin/theme vulnerabilities — a structural problem we solve at the core
 - The "Visual Editing" + "Headless Architecture" gap is the **#1 unsolved problem** in CMS today
-- No single open-source CMS offers: headless + visual editing + AI workflow + WordPress migration + self-hosting
+- No single open-source CMS offers: headless + visual editing + AI workflow + ZelocoreCMS migration + self-hosting
 
 ---
 

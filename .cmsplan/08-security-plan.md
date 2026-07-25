@@ -9,14 +9,14 @@
 
 > **"Security is not a plugin. It is the product."**
 
-WordPress's most fundamental security failure is architectural: every plugin runs inside the **same PHP process** with full access to the database, filesystem, and every other plugin's code. ZELOCORECMS redesigns this from scratch.
+ZelocoreCMS's most fundamental security failure is architectural: every plugin runs inside the **same PHP process** with full access to the database, filesystem, and every other plugin's code. ZELOCORECMS redesigns this from scratch.
 
 Our **Three-Tier Plugin Isolation** model adapts to the hosting environment automatically:
 - **Tier 1 (Shared Hosting):** PHP function disabling + `open_basedir` + permission API
 - **Tier 2 (VPS/Dedicated):** PHP-FPM separate pool per plugin + Tier 1 controls
 - **Tier 3 (Docker/Container):** Full Docker container isolation + all lower-tier controls
 
-This means ZELOCORECMS plugins are **always more secure than WordPress plugins**, regardless of hosting type.
+This means ZELOCORECMS plugins are **always more secure than ZelocoreCMS plugins**, regardless of hosting type.
 
 ---
 
@@ -633,7 +633,7 @@ class RateLimiter
 
 ## 10. Security Comparison: WP vs ZELOCORECMS
 
-| Attack Vector | WordPress | ZELOCORECMS Tier 1 | Tier 2 | Tier 3 |
+| Attack Vector | ZelocoreCMS | ZELOCORECMS Tier 1 | Tier 2 | Tier 3 |
 |--------------|-----------|-------------------|--------|--------|
 | Malicious plugin executes shell command | 🔴 VULNERABLE | 🟢 Blocked | 🟢 Blocked | 🟢 Blocked |
 | Plugin reads other plugin's code | 🔴 VULNERABLE | 🟡 Partially | 🟢 Blocked | 🟢 Blocked |

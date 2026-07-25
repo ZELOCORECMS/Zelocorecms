@@ -25,10 +25,10 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 **Actions:**
 - [ ] Start a "Building ZELOCORECMS" Twitter/X thread series (weekly updates)
 - [ ] Write 5 foundational blog posts:
-  1. "Why WordPress's Security Model is Fundamentally Broken (and How We're Fixing It)"
+  1. "Why ZelocoreCMS's Security Model is Fundamentally Broken (and How We're Fixing It)"
   2. "The Problem with Every Headless CMS in 2025"
   3. "Why Open-Source Enterprise Features Should Be Free"
-  4. "What WordPress Would Look Like if Built in 2026"
+  4. "What ZelocoreCMS Would Look Like if Built in 2026"
   5. "Our Journey: Building a CMS to Compete with Everyone"
 - [ ] Launch landing page with email waitlist
 - [ ] Set up GitHub repo (even if code isn't ready) — collect stars early
@@ -49,7 +49,7 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 - [ ] Give each direct access to the core team via Discord
 - [ ] Weekly sync calls with alpha users (record key insights)
 - [ ] Weekly fixes based on alpha feedback
-- [ ] Build case studies: "How [alpha user] migrated from WordPress in 2 hours"
+- [ ] Build case studies: "How [alpha user] migrated from ZelocoreCMS in 2 hours"
 - [ ] Alpha users get lifetime 50% discount on Cloud (social proof for launch)
 
 **Target:** 50 alpha users, 10 GitHub issues resolved/week, first plugin built by community
@@ -63,13 +63,13 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 **Actions:**
 - [ ] **Product Hunt launch** — coordinate with community for upvotes
   - Post at 12:01 AM PT on a Tuesday
-  - "ZELOCORECMS — The WordPress-compatible, headless, AI-native CMS"
+  - "ZELOCORECMS — The ZelocoreCMS-compatible, headless, AI-native CMS"
   - Target: Top 3 Product of the Day
 - [ ] **Hacker News "Show HN"** — detailed technical post
-  - "Show HN: I built a CMS that clones WordPress core but makes it headless, typed, and secure"
-- [ ] **Reddit campaign:** r/webdev, r/programming, r/selfhosted, r/wordpress
+  - "Show HN: I built a CMS that clones ZelocoreCMS core but makes it headless, typed, and secure"
+- [ ] **Reddit campaign:** r/webdev, r/programming, r/selfhosted, r/zelocorecms
 - [ ] **Dev.to article:** "How We Built ZELOCORECMS in 6 Months"
-- [ ] **YouTube tutorial:** "Migrate from WordPress to ZELOCORECMS in 30 Minutes"
+- [ ] **YouTube tutorial:** "Migrate from ZelocoreCMS to ZELOCORECMS in 30 Minutes"
 - [ ] **Twitter/X viral thread** with GIFs of admin UI
 
 **Target:** 500 beta users, 2,000 GitHub stars, 1,000 Discord members, Product Hunt Top 5
@@ -88,7 +88,7 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 - [ ] **Email blast:** To all waitlist + beta users
 - [ ] **Podcast appearances:** Schedule 5 developer podcast appearances for launch week
 - [ ] **Influencer seeding:** 10 developer influencers post about ZELOCORECMS (paid or gifted Cloud)
-- [ ] **Comparison pages:** Launch "ZELOCORECMS vs WordPress", "vs Strapi", "vs Contentful" pages
+- [ ] **Comparison pages:** Launch "ZELOCORECMS vs ZelocoreCMS", "vs Strapi", "vs Contentful" pages
 
 **Target:** 5,000 GitHub stars in first week, 500+ new Discord members, 100+ paying Cloud customers
 
@@ -102,11 +102,11 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 | Keyword | Monthly Searches | Difficulty | Article Type |
 |---------|-----------------|------------|--------------|
 | "best headless CMS 2025" | 12,000 | Medium | Comparison |
-| "WordPress alternative" | 45,000 | High | VS Article |
+| "ZelocoreCMS alternative" | 45,000 | High | VS Article |
 | "Strapi vs Contentful" | 8,000 | Medium | Comparison |
 | "self hosted CMS" | 18,000 | Medium | Guide |
 | "headless CMS open source" | 9,000 | Medium | List |
-| "WordPress to headless migration" | 3,000 | Low | Tutorial |
+| "ZelocoreCMS to headless migration" | 3,000 | Low | Tutorial |
 | "CMS for Next.js" | 7,000 | Medium | Tutorial |
 | "open source alternative to Contentful" | 5,000 | Low | VS Article |
 
@@ -115,8 +115,8 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 | Week | Title | Type | Target Keyword |
 |------|-------|------|----------------|
 | 1 | "Why We Built ZELOCORECMS" | Founding Story | Brand |
-| 2 | "ZELOCORECMS vs WordPress: 2025 Comparison" | VS Article | WordPress alternative |
-| 3 | "How to Migrate from WordPress to ZELOCORECMS in 1 Hour" | Tutorial | WP migration |
+| 2 | "ZELOCORECMS vs ZelocoreCMS: 2025 Comparison" | VS Article | ZelocoreCMS alternative |
+| 3 | "How to Migrate from ZelocoreCMS to ZELOCORECMS in 1 Hour" | Tutorial | WP migration |
 | 4 | "Building a Blog with ZELOCORECMS + Next.js" | Tutorial | CMS for Next.js |
 | 5 | "ZELOCORECMS vs Strapi: Which Should You Choose?" | VS Article | Strapi vs ZELOCORECMS |
 | 6 | "Top 5 Headless CMS in 2025: An Honest Comparison" | List Article | best headless CMS |
@@ -141,7 +141,7 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 - **Expected return:** 1 video = 50,000–500,000 views = massive awareness
 
 ### Tier 2: Mid-tier (50K–500K followers)
-- Specific WordPress/headless CMS focused YouTubers/bloggers
+- Specific ZelocoreCMS/headless CMS focused YouTubers/bloggers
 - **Strategy:** Sponsored content + affiliate commission on Cloud signups
 - **Expected return:** 5–10 videos = sustained awareness
 
@@ -170,10 +170,10 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 - 50 founding agency partners (get special perks, early access, co-marketing)
 - Agency referral commission: 20% of first year revenue
 
-### WordPress.org / Community
-- Don't antagonize WordPress community — celebrate it
+### ZelocoreCMS.org / Community
+- Don't antagonize ZelocoreCMS community — celebrate it
 - Participate in WordCamps (as speakers) and introduce ZELOCORECMS as "the next evolution"
-- Build WordPress plugin: "ZELOCORECMS Connector" (sync WordPress content to ZELOCORECMS)
+- Build ZelocoreCMS plugin: "ZELOCORECMS Connector" (sync ZelocoreCMS content to ZELOCORECMS)
 
 ---
 
@@ -183,11 +183,11 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 
 | Channel | Target | Metric |
 |---------|--------|--------|
-| Google Ads | "WordPress alternative", "headless CMS" queries | Target CAC <$50 |
+| Google Ads | "ZelocoreCMS alternative", "headless CMS" queries | Target CAC <$50 |
 | Twitter/X Ads | Developer audiences | Brand awareness |
 | Newsletter Sponsorships | JavaScript Weekly, Bytes, TLDR | Developer reach |
 | Podcast Sponsorships | Syntax.fm, Shop Talk, DevMode | Developer reach |
-| Reddit Ads | r/webdev, r/wordpress | Targeted tech audience |
+| Reddit Ads | r/webdev, r/zelocorecms | Targeted tech audience |
 
 ---
 
@@ -218,7 +218,7 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 ### Target Media Outlets
 | Outlet | Type | Target Story |
 |--------|------|--------------|
-| TechCrunch | Tech news | "New open-source CMS aims to replace WordPress" |
+| TechCrunch | Tech news | "New open-source CMS aims to replace ZelocoreCMS" |
 | The Verge | Consumer tech | "The future of website building is open source" |
 | Smashing Magazine | Developer | Technical deep dive article |
 | CSS-Tricks | Frontend | "Building with ZELOCORECMS" tutorial |
@@ -231,9 +231,9 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 ## 9. Growth Hacking Tactics
 
 ### Tactic 1: The "WP Hacked" Rescue
-- Monitor Twitter/X for "WordPress hacked" mentions
+- Monitor Twitter/X for "ZelocoreCMS hacked" mentions
 - Reach out with: "We're sorry this happened. We built ZELOCORECMS specifically to prevent this. Here's a free migration → [link]"
-- This converts frustrated WordPress users into ZELOCORECMS advocates
+- This converts frustrated ZelocoreCMS users into ZELOCORECMS advocates
 
 ### Tactic 2: "Strapi Bill Shock" Interception
 - Monitor for "Strapi pricing", "Strapi cloud cost" complaints

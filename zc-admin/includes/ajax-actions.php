@@ -1945,7 +1945,7 @@ function zc_ajax_zc_link_ajax() {
 	$args['pagenum'] = ! empty( $_POST['page'] ) ? absint( $_POST['page'] ) : 1;
 
 	if ( ! class_exists( '_ZC_Editors', false ) ) {
-		require ABSPATH . WPINC . '/class-zc-editor.php';
+		require ABSPATH . ZCINC . '/class-zc-editor.php';
 	}
 
 	$results = _ZC_Editors::zc_link_query( $args );

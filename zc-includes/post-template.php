@@ -892,7 +892,7 @@ function post_password_required( $post = null ) {
 		return apply_filters( 'post_password_required', true, $post );
 	}
 
-	require_once ABSPATH . WPINC . '/class-phpass.php';
+	require_once ABSPATH . ZCINC . '/class-phpass.php';
 	$hasher = new PasswordHash( 8, true );
 
 	$hash = zc_unslash( $_COOKIE[ 'zc-postpass_' . COOKIEHASH ] );

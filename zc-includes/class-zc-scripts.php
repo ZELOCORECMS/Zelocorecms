@@ -846,7 +846,7 @@ JS;
 			return true;
 		}
 
-		if ( str_starts_with( $src, '/' . WPINC . '/js/l10n' ) ) {
+		if ( str_starts_with( $src, '/' . ZCINC . '/js/l10n' ) ) {
 			return false;
 		}
 

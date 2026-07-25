@@ -7,18 +7,18 @@
 ## Roadmap Philosophy
 
 We ship in three major phases:
-- **Phase 1 (v1.0):** Beat WordPress at its own game — everything WP does, we do better + headless
+- **Phase 1 (v1.0):** Beat ZelocoreCMS at its own game — everything WP does, we do better + headless
 - **Phase 2 (v2.0):** Beat headless CMSs — visual editing, AI, enterprise, multi-tenant
 - **Phase 3 (v3.0):** Beat the entire market — commerce, personalization, edge, composable DXP
 
 ---
 
 ## Phase 1 — "The Foundation" (v0.1 → v1.0)
-### Target: 6 months | Goal: Beat WordPress on developer experience
+### Target: 6 months | Goal: Beat ZelocoreCMS on developer experience
 
 ### ✅ Core Content Engine
 - [ ] Flexible content type builder (custom fields, types, relations)
-- [ ] Post/Page/Custom type system (WordPress-compatible mental model)
+- [ ] Post/Page/Custom type system (ZelocoreCMS-compatible mental model)
 - [ ] Draft → Scheduled → Published → Archived workflow
 - [ ] Revision history & content versioning (unlimited versions)
 - [ ] Bulk actions (publish, delete, export)
@@ -97,12 +97,12 @@ We ship in three major phases:
 - [ ] Seed data support
 - [ ] API documentation (OpenAPI 3.0 auto-generated)
 
-### ✅ ZeloMigrate v1 (WordPress Importer)
-- [ ] Import WordPress posts, pages, categories, tags
-- [ ] Import WordPress users
-- [ ] Import WordPress media library
-- [ ] Map WordPress custom fields → ZELOCORECMS fields
-- [ ] Import WordPress custom post types
+### ✅ ZeloMigrate v1 (ZelocoreCMS Importer)
+- [ ] Import ZelocoreCMS posts, pages, categories, tags
+- [ ] Import ZelocoreCMS users
+- [ ] Import ZelocoreCMS media library
+- [ ] Map ZelocoreCMS custom fields → ZELOCORECMS fields
+- [ ] Import ZelocoreCMS custom post types
 - [ ] Progress reporting & error recovery
 
 ---

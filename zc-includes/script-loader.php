@@ -17,22 +17,22 @@
  */
 
 /** ZelocoreCMS Dependency Class */
-require ABSPATH . WPINC . '/class-zc-dependency.php';
+require ABSPATH . ZCINC . '/class-zc-dependency.php';
 
 /** ZelocoreCMS Dependencies Class */
-require ABSPATH . WPINC . '/class-zc-dependencies.php';
+require ABSPATH . ZCINC . '/class-zc-dependencies.php';
 
 /** ZelocoreCMS Scripts Class */
-require ABSPATH . WPINC . '/class-zc-scripts.php';
+require ABSPATH . ZCINC . '/class-zc-scripts.php';
 
 /** ZelocoreCMS Scripts Functions */
-require ABSPATH . WPINC . '/functions.zc-scripts.php';
+require ABSPATH . ZCINC . '/functions.zc-scripts.php';
 
 /** ZelocoreCMS Styles Class */
-require ABSPATH . WPINC . '/class-zc-styles.php';
+require ABSPATH . ZCINC . '/class-zc-styles.php';
 
 /** ZelocoreCMS Styles Functions */
-require ABSPATH . WPINC . '/functions.zc-styles.php';
+require ABSPATH . ZCINC . '/functions.zc-styles.php';
 
 /**
  * Registers TinyMCE scripts.
@@ -281,7 +281,7 @@ function zc_default_packages_scripts( $scripts ) {
 	 *     'annotations.js' => array('dependencies' => array(...), 'version' => '...'),
 	 *     'api-fetch.js' => array(...
 	 */
-	$assets_file = ABSPATH . WPINC . '/assets/script-loader-packages.php';
+	$assets_file = ABSPATH . ZCINC . '/assets/script-loader-packages.php';
 	$assets      = file_exists( $assets_file ) ? include $assets_file : array();
 
 	foreach ( $assets as $file_name => $package_data ) {
@@ -697,7 +697,7 @@ function zc_scripts_get_suffix( $type = '' ) {
 		 * via zc-admin/load-scripts.php or zc-admin/load-styles.php, in which case
 		 * zc-includes/functions.php is not loaded.
 		 */
-		require ABSPATH . WPINC . '/version.php';
+		require ABSPATH . ZCINC . '/version.php';
 
 		/*
 		 * Note: str_contains() is not used here, as this file can be included
@@ -1560,7 +1560,7 @@ function zc_default_styles( $styles ) {
 	 * via zc-admin/load-scripts.php or zc-admin/load-styles.php, in which case
 	 * zc-includes/functions.php is not loaded.
 	 */
-	require ABSPATH . WPINC . '/version.php';
+	require ABSPATH . ZCINC . '/version.php';
 
 	if ( ! defined( 'SCRIPT_DEBUG' ) ) {
 		/*
@@ -1655,7 +1655,7 @@ function zc_default_styles( $styles ) {
 	$styles->add( 'zc-pointer', "/zc-includes/css/zc-pointer$suffix.css", array( 'dashicons' ) );
 	$styles->add( 'customize-preview', "/zc-includes/css/customize-preview$suffix.css", array( 'dashicons' ) );
 	$styles->add( 'zc-empty-template-alert', "/zc-includes/css/zc-empty-template-alert$suffix.css" );
-	$skip_link_style_path = WPINC . "/css/zc-block-template-skip-link$suffix.css";
+	$skip_link_style_path = ZCINC . "/css/zc-block-template-skip-link$suffix.css";
 	$styles->add( 'zc-block-template-skip-link', "/$skip_link_style_path" );
 	$styles->add_data( 'zc-block-template-skip-link', 'path', ABSPATH . $skip_link_style_path );
 
@@ -1689,11 +1689,11 @@ function zc_default_styles( $styles ) {
 		$fonts_url = 'https://fonts.googleapis.com/css?family=' . urlencode( $font_family );
 	}
 	$styles->add( 'zc-editor-font', $fonts_url ); // No longer used in core as of 5.7.
-	$block_library_theme_path = WPINC . "/css/dist/block-library/theme$suffix.css";
+	$block_library_theme_path = ZCINC . "/css/dist/block-library/theme$suffix.css";
 	$styles->add( 'zc-block-library-theme', "/$block_library_theme_path" );
 	$styles->add_data( 'zc-block-library-theme', 'path', ABSPATH . $block_library_theme_path );
 
-	$classic_theme_styles_path = WPINC . "/css/classic-themes$suffix.css";
+	$classic_theme_styles_path = ZCINC . "/css/classic-themes$suffix.css";
 	$styles->add( 'classic-theme-styles', "/$classic_theme_styles_path" );
 	$styles->add_data( 'classic-theme-styles', 'path', ABSPATH . $classic_theme_styles_path );
 

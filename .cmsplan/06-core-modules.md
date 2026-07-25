@@ -1,12 +1,12 @@
-# 🔌 ZELOCORECMS — Core Modules & WordPress Core Clone Design
+# 🔌 ZELOCORECMS — Core Modules & ZelocoreCMS Core Clone Design
 
 > **Document 06 of 13 | ZELOCORECMS Startup Planning Suite**
 
 ---
 
-## 1. WordPress Core → ZELOCORECMS Equivalent Mapping
+## 1. ZelocoreCMS Core → ZELOCORECMS Equivalent Mapping
 
-| WordPress Concept | ZELOCORECMS Equivalent | Enhancement |
+| ZelocoreCMS Concept | ZELOCORECMS Equivalent | Enhancement |
 |-------------------|------------------------|-------------|
 | `wp_posts` table | `content_items` table | Typed, versioned, structured |
 | `wp_postmeta` (EAV) | `data JSONB` field | Performant, indexed, typed |
@@ -320,10 +320,10 @@ async function generateSitemap(workspaceId: string): Promise<string> {
 
 ---
 
-### Module 7: ZeloMigrate (`@zelocms/migrate-wordpress`)
+### Module 7: ZeloMigrate (`@zelocms/migrate-zelocorecms`)
 
 ```typescript
-// WordPress Migration Engine
+// ZelocoreCMS Migration Engine
 class WordPressMigrator {
   
   async analyze(wpConfig: WPConfig): Promise<MigrationReport> {
@@ -409,11 +409,11 @@ class WebhookManager {
 
 ---
 
-## 3. Built-In Content Types (Like WordPress's Pages & Posts)
+## 3. Built-In Content Types (Like ZelocoreCMS's Pages & Posts)
 
 ZELOCORECMS ships with these content types pre-configured:
 
-| Type | Slug | Description | WordPress Equivalent |
+| Type | Slug | Description | ZelocoreCMS Equivalent |
 |------|------|-------------|---------------------|
 | **Page** | `page` | Static pages | Pages |
 | **Post** | `post` | Blog posts | Posts |
@@ -428,7 +428,7 @@ ZELOCORECMS ships with these content types pre-configured:
 
 ## 4. Content Relationship System
 
-Unlike WordPress's fragile relationship via postmeta, ZELOCORECMS uses proper relational references:
+Unlike ZelocoreCMS's fragile relationship via postmeta, ZELOCORECMS uses proper relational references:
 
 ```typescript
 // Content relationships are typed and indexed

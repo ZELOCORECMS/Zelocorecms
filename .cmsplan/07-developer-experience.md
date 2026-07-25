@@ -70,8 +70,8 @@ zelocms plugin:enable seo    # Enable a plugin
 zelocms plugin:disable seo   # Disable a plugin
 zelocms plugin:create        # Scaffold a new plugin
 
-# WordPress Migration
-zelocms migrate:wordpress    # Interactive WP migration wizard
+# ZelocoreCMS Migration
+zelocms migrate:zelocorecms    # Interactive WP migration wizard
 zelocms migrate:strapi       # Migrate from Strapi
 zelocms migrate:contentful   # Migrate from Contentful
 
@@ -389,7 +389,7 @@ docs/
 │   ├── Building with Nuxt.js
 │   ├── Building with SvelteKit
 │   ├── Building with Astro
-│   ├── WordPress Migration Guide
+│   ├── ZelocoreCMS Migration Guide
 │   ├── Multi-tenant Setup
 │   └── Custom Authentication
 │
