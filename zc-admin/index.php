@@ -138,44 +138,7 @@ require_once ABSPATH . 'zc-admin/admin-header.php';
 ?>
 
 <div class="wrap zc-premium-dashboard">
-	<style>
-		/* ZelocoreCMS Premium Dashboard Aesthetics */
-		body.zc-admin {
-			background: #f4f7f6;
-			font-family: 'Inter', 'Outfit', sans-serif;
-		}
-		.zc-premium-dashboard h1 {
-			font-size: 2.5em;
-			font-weight: 800;
-			background: linear-gradient(135deg, #2c3e50, #3498db);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-			margin-bottom: 30px;
-		}
-		.zc-premium-dashboard #dashboard-widgets .postbox {
-			border: none;
-			border-radius: 16px;
-			background: rgba(255, 255, 255, 0.7);
-			backdrop-filter: blur(12px);
-			-webkit-backdrop-filter: blur(12px);
-			box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-			overflow: hidden;
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-		}
-		.zc-premium-dashboard #dashboard-widgets .postbox:hover {
-			transform: translateY(-4px);
-			box-shadow: 0 15px 35px rgba(0,0,0,0.1);
-		}
-		.zc-premium-dashboard #dashboard-widgets .postbox-header {
-			border-bottom: 1px solid rgba(0,0,0,0.05);
-			background: transparent;
-		}
-		.zc-premium-dashboard #dashboard-widgets .postbox-header h2 {
-			font-size: 1.1em;
-			font-weight: 600;
-			color: #2c3e50;
-		}
-	</style>
+
 	<h1><?php echo esc_html( $title ); ?></h1>
 
 	<?php

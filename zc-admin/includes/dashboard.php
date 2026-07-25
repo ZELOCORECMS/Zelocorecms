@@ -2153,69 +2153,35 @@ function zc_welcome_panel() {
  */
 function zc_dashboard_quick_stats() {
 	?>
-	<style>
-		/* Premium Glassmorphism Stats UI */
-		#dashboard_quick_stats .inside {
-			padding: 0;
-			margin: 0;
-			background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-		}
-		.zc-quick-stats {
-			display: grid;
-			grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-			gap: 15px;
-			padding: 20px;
-			font-family: 'Inter', 'Roboto', sans-serif;
-		}
-		.zc-stat-card {
-			background: rgba(255, 255, 255, 0.4);
-			backdrop-filter: blur(10px);
-			-webkit-backdrop-filter: blur(10px);
-			border: 1px solid rgba(255, 255, 255, 0.5);
-			border-radius: 12px;
-			padding: 20px;
-			text-align: center;
-			box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-			transition: transform 0.3s ease, box-shadow 0.3s ease;
-		}
-		.zc-stat-card:hover {
-			transform: translateY(-5px);
-			box-shadow: 0 12px 40px 0 rgba(31, 38, 135, 0.15);
-		}
-		.zc-stat-value {
-			font-size: 2.5em;
-			font-weight: 800;
-			color: #2c3e50;
-			margin-bottom: 5px;
-			background: linear-gradient(45deg, #2c3e50, #3498db);
-			-webkit-background-clip: text;
-			-webkit-text-fill-color: transparent;
-		}
-		.zc-stat-label {
-			font-size: 0.9em;
-			color: #576574;
-			font-weight: 600;
-			text-transform: uppercase;
-			letter-spacing: 1px;
-		}
-	</style>
-	<div class="zc-quick-stats">
-		<div class="zc-stat-card">
-			<div class="zc-stat-value"><?php echo zc_count_posts('post')->publish; ?></div>
-			<div class="zc-stat-label"><?php _e('Posts'); ?></div>
-		</div>
-		<div class="zc-stat-card">
-			<div class="zc-stat-value"><?php echo zc_count_posts('page')->publish; ?></div>
-			<div class="zc-stat-label"><?php _e('Pages'); ?></div>
-		</div>
-		<div class="zc-stat-card">
-			<div class="zc-stat-value"><?php echo zc_count_comments()->approved; ?></div>
-			<div class="zc-stat-label"><?php _e('Comments'); ?></div>
-		</div>
-		<div class="zc-stat-card">
-			<div class="zc-stat-value"><?php $users = count_users(); echo $users['total_users']; ?></div>
-			<div class="zc-stat-label"><?php _e('Users'); ?></div>
-		</div>
+	<div class="zc-advanced-stats">
+		<a href="<?php echo esc_url( admin_url( 'edit.php' ) ); ?>" class="zc-adv-stat-card">
+			<div class="zc-adv-stat-icon"><span class="dashicons dashicons-admin-post"></span></div>
+			<div class="zc-adv-stat-info">
+				<div class="zc-adv-stat-value"><?php echo zc_count_posts('post')->publish; ?></div>
+				<div class="zc-adv-stat-label"><?php _e('Posts'); ?></div>
+			</div>
+		</a>
+		<a href="<?php echo esc_url( admin_url( 'edit.php?post_type=page' ) ); ?>" class="zc-adv-stat-card">
+			<div class="zc-adv-stat-icon"><span class="dashicons dashicons-admin-page"></span></div>
+			<div class="zc-adv-stat-info">
+				<div class="zc-adv-stat-value"><?php echo zc_count_posts('page')->publish; ?></div>
+				<div class="zc-adv-stat-label"><?php _e('Pages'); ?></div>
+			</div>
+		</a>
+		<a href="<?php echo esc_url( admin_url( 'edit-comments.php' ) ); ?>" class="zc-adv-stat-card">
+			<div class="zc-adv-stat-icon"><span class="dashicons dashicons-admin-comments"></span></div>
+			<div class="zc-adv-stat-info">
+				<div class="zc-adv-stat-value"><?php echo zc_count_comments()->approved; ?></div>
+				<div class="zc-adv-stat-label"><?php _e('Comments'); ?></div>
+			</div>
+		</a>
+		<a href="<?php echo esc_url( admin_url( 'users.php' ) ); ?>" class="zc-adv-stat-card">
+			<div class="zc-adv-stat-icon"><span class="dashicons dashicons-admin-users"></span></div>
+			<div class="zc-adv-stat-info">
+				<div class="zc-adv-stat-value"><?php $users = count_users(); echo $users['total_users']; ?></div>
+				<div class="zc-adv-stat-label"><?php _e('Users'); ?></div>
+			</div>
+		</a>
 	</div>
 	<?php
 }
@@ -2227,93 +2193,25 @@ function zc_dashboard_quick_stats() {
  */
 function zc_dashboard_content_performance() {
 	?>
-	<style>
-		/* Premium Glassmorphism Performance UI */
-		#dashboard_content_performance .inside {
-			padding: 0;
-			margin: 0;
-			background: linear-gradient(135deg, #1e272e 0%, #2f3640 100%);
-			color: white;
-		}
-		.zc-perf-container {
-			padding: 25px;
-			font-family: 'Inter', 'Outfit', sans-serif;
-		}
-		.zc-perf-row {
-			background: rgba(255, 255, 255, 0.05);
-			backdrop-filter: blur(15px);
-			border: 1px solid rgba(255, 255, 255, 0.1);
-			border-radius: 12px;
-			padding: 15px 20px;
-			margin-bottom: 15px;
-			display: flex;
-			justify-content: space-between;
-			align-items: center;
-			transition: all 0.3s ease;
-		}
-		.zc-perf-row:hover {
-			background: rgba(255, 255, 255, 0.1);
-			transform: scale(1.02);
-		}
-		.zc-perf-title {
-			font-size: 1.1em;
-			font-weight: 500;
-		}
-		.zc-perf-metric {
-			font-size: 1.2em;
-			font-weight: 700;
-			color: #00d2d3;
-			text-shadow: 0 0 10px rgba(0, 210, 211, 0.5);
-		}
-		.zc-perf-bar-bg {
-			width: 100%;
-			height: 8px;
-			background: rgba(255,255,255,0.1);
-			border-radius: 4px;
-			margin-top: 10px;
-			overflow: hidden;
-		}
-		.zc-perf-bar-fill {
-			height: 100%;
-			background: linear-gradient(90deg, #0abde3, #5f27cd);
-			border-radius: 4px;
-			width: 0%;
-			transition: width 1s ease-in-out;
-		}
-	</style>
-	<div class="zc-perf-container">
-		<h3 style="margin-top: 0; font-weight: 300; letter-spacing: 1px; color: #c8d6e5;">Top Performing Content</h3>
-		<div class="zc-perf-row">
-			<div style="flex: 1; margin-right: 20px;">
-				<div class="zc-perf-title">Welcome to ZelocoreCMS</div>
-				<div class="zc-perf-bar-bg"><div class="zc-perf-bar-fill" style="width: 85%"></div></div>
-			</div>
-			<div class="zc-perf-metric">12.4k Views</div>
+	<div class="zc-advanced-perf-grid">
+		<?php 
+		$top_posts = get_posts( array(
+			'numberposts' => 3,
+			'orderby'     => 'comment_count',
+			'order'       => 'DESC',
+			'post_type'   => 'post',
+			'post_status' => 'publish',
+		) );
+		if ( ! empty( $top_posts ) ) :
+			foreach ( $top_posts as $post ) : 
+		?>
+		<div class="zc-perf-grid-item">
+			<a href="<?php echo esc_url( get_edit_post_link( $post->ID ) ); ?>" class="zc-perf-grid-title"><?php echo esc_html( get_the_title( $post->ID ) ); ?></a>
+			<div class="zc-perf-grid-stats"><span class="dashicons dashicons-admin-comments"></span> <?php echo number_format_i18n( $post->comment_count ); ?></div>
 		</div>
-		<div class="zc-perf-row">
-			<div style="flex: 1; margin-right: 20px;">
-				<div class="zc-perf-title">Getting Started Guide</div>
-				<div class="zc-perf-bar-bg"><div class="zc-perf-bar-fill" style="width: 62%"></div></div>
-			</div>
-			<div class="zc-perf-metric">8.1k Views</div>
-		</div>
-		<div class="zc-perf-row">
-			<div style="flex: 1; margin-right: 20px;">
-				<div class="zc-perf-title">About Us</div>
-				<div class="zc-perf-bar-bg"><div class="zc-perf-bar-fill" style="width: 45%"></div></div>
-			</div>
-			<div class="zc-perf-metric">4.5k Views</div>
-		</div>
+		<?php endforeach; else : ?>
+		<div class="zc-perf-grid-item"><?php _e( 'No content available yet.' ); ?></div>
+		<?php endif; ?>
 	</div>
-	<script>
-		// Subtle animation for bars
-		setTimeout(() => {
-			document.querySelectorAll('.zc-perf-bar-fill').forEach(bar => {
-				let targetWidth = bar.style.width;
-				bar.style.width = '0%';
-				setTimeout(() => { bar.style.width = targetWidth; }, 100);
-			});
-		}, 100);
-	</script>
 	<?php
 }
