@@ -1383,12 +1383,18 @@
 	content: "\f19a";
 }
 
-.dashicons-zelocorecms-alt:before {
-	content: "\f324";
-}
-
+.dashicons-zelocorecms-alt:before,
 .dashicons-zelocorecms:before {
-	content: "\f120";
+	content: "";
+	-webkit-mask-image: url('../images/zc-logo-white.png');
+	mask-image: url('../images/zc-logo-white.png');
+	-webkit-mask-size: contain;
+	mask-size: contain;
+	-webkit-mask-repeat: no-repeat;
+	mask-repeat: no-repeat;
+	-webkit-mask-position: center;
+	mask-position: center;
+	background-color: currentColor;
 }
 
 .dashicons-xing:before {

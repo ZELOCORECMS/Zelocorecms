@@ -1747,7 +1747,7 @@ function do_favicon() {
 	 */
 	do_action( 'do_faviconico' );
 
-	zc_redirect( get_site_icon_url( 32, includes_url( 'images/w-logo-blue-white-bg.png' ) ) );
+	zc_redirect( get_site_icon_url( 32, includes_url( 'images/zc-logo-blue-white-bg.png' ) ) );
 	exit;
 }
 
