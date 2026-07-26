@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).theme = (() => {
+var zc;
+(zc ||= {}).theme = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,14 +34,14 @@ var wp;
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 

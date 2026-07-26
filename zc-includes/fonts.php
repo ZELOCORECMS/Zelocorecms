@@ -73,7 +73,7 @@ function zc_print_font_faces_from_style_variations() {
 /**
  * Registers a new font collection in the font library.
  *
- * See {@link https://schemas.wp.org/trunk/font-collection.json} for the schema
+ * See {@link https://schemas.zc.org/trunk/font-collection.json} for the schema
  * the font collection data must adhere to.
  *
  * @since 6.5.0

@@ -422,9 +422,9 @@ final class ZC_Taxonomy {
 			$args['show_in_quick_edit'] = $args['show_ui'];
 		}
 
-		// If not set, default rest_namespace to wp/v2 if show_in_rest is true.
+		// If not set, default rest_namespace to zc/v2 if show_in_rest is true.
 		if ( false === $args['rest_namespace'] && ! empty( $args['show_in_rest'] ) ) {
-			$args['rest_namespace'] = 'wp/v2';
+			$args['rest_namespace'] = 'zc/v2';
 		}
 
 		$default_caps = array(
@@ -492,10 +492,10 @@ final class ZC_Taxonomy {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @global WP $zc Current ZelocoreCMS environment instance.
+	 * @global ZC $zc Current ZelocoreCMS environment instance.
 	 */
 	public function add_rewrite_rules() {
-		/* @var WP $zc */
+		/* @var ZC $zc */
 		global $zc;
 
 		// Non-publicly queryable taxonomies should not register query vars, except in the admin.
@@ -520,10 +520,10 @@ final class ZC_Taxonomy {
 	 *
 	 * @since 4.7.0
 	 *
-	 * @global WP $zc Current ZelocoreCMS environment instance.
+	 * @global ZC $zc Current ZelocoreCMS environment instance.
 	 */
 	public function remove_rewrite_rules() {
-		/* @var WP $zc */
+		/* @var ZC $zc */
 		global $zc;
 
 		// Remove query var.

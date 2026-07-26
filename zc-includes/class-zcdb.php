@@ -528,7 +528,7 @@ class wpdb {
 	/**
 	 * Format specifiers for DB columns.
 	 *
-	 * Columns not listed here default to %s. Initialized during WP load.
+	 * Columns not listed here default to %s. Initialized during ZC load.
 	 * Keys are column names, values are format types: 'ID' => '%d'.
 	 *
 	 * @since 2.8.0
@@ -1543,7 +1543,7 @@ class wpdb {
 			) {
 
 				/*
-				 * Before WP 6.2 the "force floats to be locale-unaware" RegEx didn't
+				 * Before ZC 6.2 the "force floats to be locale-unaware" RegEx didn't
 				 * convert "%%%f" to "%%%F" (note the uppercase F).
 				 * This was because it didn't check to see if the leading "%" was escaped.
 				 * And because the "Escape any unescaped percents" RegEx used "[sdF]" in its
@@ -2412,7 +2412,7 @@ class wpdb {
 		static $placeholder;
 
 		if ( ! $placeholder ) {
-			// Old WP installs may not have AUTH_SALT defined.
+			// Old ZC installs may not have AUTH_SALT defined.
 			$salt = defined( 'AUTH_SALT' ) && AUTH_SALT ? AUTH_SALT : (string) rand();
 
 			$placeholder = '{' . hash_hmac( 'sha256', uniqid( $salt, true ), $salt ) . '}';
@@ -3821,7 +3821,7 @@ class wpdb {
 		}
 
 		/*
-		 * SHOW TABLE STATUS LIKE and SHOW TABLES LIKE 'wp\_123\_%'
+		 * SHOW TABLE STATUS LIKE and SHOW TABLES LIKE 'zc\_123\_%'
 		 * This quoted LIKE operand seldom holds a full table name.
 		 * It is usually a pattern for matching a prefix so we just
 		 * strip the trailing % and unescape the _ to get 'zc_123_'

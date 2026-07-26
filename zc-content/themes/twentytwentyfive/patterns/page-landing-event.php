@@ -16,8 +16,8 @@
 
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfive/hero-full-width-image"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/heading-and-paragraph-with-image"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/banner-description-images-grid"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/text-faqs"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/contact-centered-social-link"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/hero-full-width-image"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/heading-and-paragraph-with-image"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/banner-description-images-grid"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/text-faqs"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/contact-centered-social-link"} /-->

@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).primitives = (() => {
+var zc;
+(zc ||= {}).primitives = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 

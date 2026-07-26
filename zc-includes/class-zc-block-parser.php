@@ -17,7 +17,7 @@ class ZC_Block_Parser {
 	/**
 	 * Input document being parsed
 	 *
-	 * @example "Pre-text\n<!-- wp:paragraph -->This is inside a block!<!-- /wp:paragraph -->"
+	 * @example "Pre-text\n<!-- zc:paragraph -->This is inside a block!<!-- /zc:paragraph -->"
 	 *
 	 * @since 5.0.0
 	 * @var string
@@ -240,12 +240,12 @@ class ZC_Block_Parser {
 		 * aye the magic
 		 * we're using a single RegExp to tokenize the block comment delimiters
 		 * we're also using a trick here because the only difference between a
-		 * block opener and a block closer is the leading `/` before `wp:` (and
+		 * block opener and a block closer is the leading `/` before `zc:` (and
 		 * a closer has no attributes). we can trap them both and process the
 		 * match back in PHP to see which one it was.
 		 */
 		$has_match = preg_match(
-			'/<!--\s+(?P<closer>\/)?wp:(?P<namespace>[a-z][a-z0-9_-]*\/)?(?P<name>[a-z][a-z0-9_-]*)\s+(?P<attrs>{(?:(?:[^}]+|}+(?=})|(?!}\s+\/?-->).)*+)?}\s+)?(?P<void>\/)?-->/s',
+			'/<!--\s+(?P<closer>\/)?zc:(?P<namespace>[a-z][a-z0-9_-]*\/)?(?P<name>[a-z][a-z0-9_-]*)\s+(?P<attrs>{(?:(?:[^}]+|}+(?=})|(?!}\s+\/?-->).)*+)?}\s+)?(?P<void>\/)?-->/s',
 			$this->document,
 			$matches,
 			PREG_OFFSET_CAPTURE,

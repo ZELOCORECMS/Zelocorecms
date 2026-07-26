@@ -51,10 +51,10 @@
 		 * @param {string} context.successUrl The URL the user will be redirected to after approving the request.
 		 * @param {string} context.rejectUrl  The URL the user will be redirected to after rejecting the request.
 		 */
-		request = wp.hooks.applyFilters( 'zc_application_passwords_approve_app_request', request, context );
+		request = zc.hooks.applyFilters( 'zc_application_passwords_approve_app_request', request, context );
 
-		wp.apiRequest( {
-			path: '/wp/v2/users/me/application-passwords?_locale=user',
+		zc.apiRequest( {
+			path: '/zc/v2/users/me/application-passwords?_locale=user',
 			method: 'POST',
 			data: request
 		} ).done( function( response, textStatus, jqXHR ) {
@@ -72,7 +72,7 @@
 			 * @param {string} textStatus        The status of the request.
 			 * @param {jqXHR}  jqXHR             The underlying jqXHR object that made the request.
 			 */
-			wp.hooks.doAction( 'zc_application_passwords_approve_app_request_success', response, textStatus, jqXHR );
+			zc.hooks.doAction( 'zc_application_passwords_approve_app_request_success', response, textStatus, jqXHR );
 
 			var raw = authApp.success,
 				url, message, $notice;
@@ -85,9 +85,9 @@
 
 				window.location = url;
 			} else {
-				message = wp.i18n.sprintf(
+				message = zc.i18n.sprintf(
 					/* translators: %s: Application name. */
-					'<label for="new-application-password-value">' + wp.i18n.__( 'Your new password for %s is:' ) + '</label>',
+					'<label for="new-application-password-value">' + zc.i18n.__( 'Your new password for %s is:' ) + '</label>',
 					'<strong></strong>'
 				) + ' <input id="new-application-password-value" type="text" class="code" readonly="readonly" value="" />';
 				$notice = $( '<div></div>' )
@@ -95,7 +95,7 @@
 					.attr( 'tabindex', -1 )
 					.addClass( 'notice notice-success notice-alt' )
 					.append( $( '<p></p>' ).addClass( 'application-password-display' ).html( message ) )
-					.append( '<p>' + wp.i18n.__( 'Be sure to save this in a safe location. You will not be able to retrieve it.' ) + '</p>' );
+					.append( '<p>' + zc.i18n.__( 'Be sure to save this in a safe location. You will not be able to retrieve it.' ) + '</p>' );
 
 				// We're using .text() to write the variables to avoid any chance of XSS.
 				$( 'strong', $notice ).text( response.name );
@@ -136,7 +136,7 @@
 			 * @param {string}      errorThrown The error message associated with the response status code.
 			 * @param {jqXHR}       jqXHR       The underlying jqXHR object that made the request.
 			 */
-			wp.hooks.doAction( 'zc_application_passwords_approve_app_request_error', error, textStatus, errorThrown, jqXHR );
+			zc.hooks.doAction( 'zc_application_passwords_approve_app_request_error', error, textStatus, errorThrown, jqXHR );
 		} );
 	} );
 
@@ -153,7 +153,7 @@
 		 * @param {string} context.successUrl The URL the user will be redirected to after approving the request.
 		 * @param {string} context.rejectUrl  The URL the user will be redirected to after rejecting the request.
 		 */
-		wp.hooks.doAction( 'zc_application_passwords_reject_app', context );
+		zc.hooks.doAction( 'zc_application_passwords_reject_app', context );
 
 		// @todo: Make a better way to do this so it feels like less of a semi-open redirect.
 		window.location = authApp.reject;

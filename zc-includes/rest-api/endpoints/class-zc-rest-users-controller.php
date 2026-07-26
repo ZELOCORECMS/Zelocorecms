@@ -38,7 +38,7 @@ class ZC_REST_Users_Controller extends ZC_REST_Controller {
 	 * @since 4.7.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'users';
 
 		$this->meta = new ZC_REST_User_Meta_Fields();

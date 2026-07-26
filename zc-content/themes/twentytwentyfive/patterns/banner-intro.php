@@ -11,9 +11,9 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--80);padding-bottom:var(--zc--preset--spacing--80)">
-	<!-- wp:heading {"align":"wide","fontSize":"x-large"} -->
+	<!-- zc:heading {"align":"wide","fontSize":"x-large"} -->
 	<h2 class="zc-block-heading alignwide has-x-large-font-size">
 		<?php
 			printf(
@@ -23,6 +23,6 @@
 			);
 			?>
 	</h2>
-	<!-- /wp:heading -->
+	<!-- /zc:heading -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

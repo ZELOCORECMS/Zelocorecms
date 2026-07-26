@@ -167,7 +167,7 @@ class ZC_Nav_Menu_Widget extends ZC_Widget {
 		<p class="nav-menu-widget-no-menus-message" <?php echo $not_empty_menus_style; ?>>
 			<?php
 			if ( $zc_customize instanceof ZC_Customize_Manager ) {
-				$url = 'javascript: wp.customize.panel( "nav_menus" ).focus();';
+				$url = 'javascript: zc.customize.panel( "nav_menus" ).focus();';
 			} else {
 				$url = admin_url( 'nav-menus.php' );
 			}

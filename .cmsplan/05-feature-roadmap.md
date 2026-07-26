@@ -7,7 +7,7 @@
 ## Roadmap Philosophy
 
 We ship in three major phases:
-- **Phase 1 (v1.0):** Beat ZelocoreCMS at its own game — everything WP does, we do better + headless
+- **Phase 1 (v1.0):** Beat ZelocoreCMS at its own game — everything ZC does, we do better + headless
 - **Phase 2 (v2.0):** Beat headless CMSs — visual editing, AI, enterprise, multi-tenant
 - **Phase 3 (v3.0):** Beat the entire market — commerce, personalization, edge, composable DXP
 
@@ -256,7 +256,7 @@ We ship in three major phases:
 | Content Type Builder | ⭐⭐⭐⭐⭐ | Medium | 1 |
 | REST + GraphQL API | ⭐⭐⭐⭐⭐ | Medium | 1 |
 | RBAC | ⭐⭐⭐⭐⭐ | Medium | 1 |
-| WP Migration | ⭐⭐⭐⭐⭐ | High | 1 |
+| ZC Migration | ⭐⭐⭐⭐⭐ | High | 1 |
 | SEO Built-in | ⭐⭐⭐⭐⭐ | Low | 1 |
 | Visual Builder | ⭐⭐⭐⭐⭐ | Very High | 2 |
 | ZeloAI | ⭐⭐⭐⭐⭐ | High | 2 |

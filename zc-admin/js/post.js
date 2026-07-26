@@ -11,12 +11,12 @@
 // Backward compatibility: prevent fatal errors.
 window.makeSlugeditClickable = window.editPermalink = function(){};
 
-// Make sure the wp object exists.
-window.wp = window.wp || {};
+// Make sure the zc object exists.
+window.zc = window.zc || {};
 
 ( function( $ ) {
 	var titleHasFocus = false,
-		__ = wp.i18n.__;
+		__ = zc.i18n.__;
 
 	/**
 	 * Control loading of comments on the post and term edit pages.
@@ -193,16 +193,16 @@ window.wp = window.wp || {};
 				wrap = $('#post-lock-dialog');
 
 				if ( wrap.length && ! wrap.is(':visible') ) {
-					if ( wp.autosave ) {
+					if ( zc.autosave ) {
 						// Save the latest changes and disable.
 						$(document).one( 'heartbeat-tick', function() {
-							wp.autosave.server.suspend();
+							zc.autosave.server.suspend();
 							wrap.removeClass('saving').addClass('saved');
 							$(window).off( 'beforeunload.edit-post' );
 						});
 
 						wrap.addClass('saving');
-						wp.autosave.server.triggerSave();
+						zc.autosave.server.triggerSave();
 					}
 
 					if ( received.lock_error.avatar_src ) {
@@ -314,7 +314,7 @@ jQuery( function($) {
 		isMac = window.navigator.platform ? window.navigator.platform.indexOf( 'Mac' ) !== -1 : false,
 		copyAttachmentURLClipboard = new ClipboardJS( '.copy-attachment-url.edit-media' ),
 		copyAttachmentURLSuccessTimeout,
-		__ = wp.i18n.__, _x = wp.i18n._x;
+		__ = zc.i18n.__, _x = zc.i18n._x;
 
 	postboxes.add_postbox_toggles(pagenow);
 
@@ -344,8 +344,8 @@ jQuery( function($) {
 	}).filter(':visible').find('.zc-tab-first').trigger( 'focus' );
 
 	// Set the heartbeat interval to 10 seconds if post lock dialogs are enabled.
-	if ( wp.heartbeat && $('#post-lock-dialog').length ) {
-		wp.heartbeat.interval( 10 );
+	if ( zc.heartbeat && $('#post-lock-dialog').length ) {
+		zc.heartbeat.interval( 10 );
 	}
 
 	// The form is being submitted by the user.
@@ -369,8 +369,8 @@ jQuery( function($) {
 			}
 
 			// Stop auto save.
-			if ( wp.autosave ) {
-				wp.autosave.server.suspend();
+			if ( zc.autosave ) {
+				zc.autosave.server.suspend();
 			}
 
 			if ( typeof commentReply !== 'undefined' ) {
@@ -416,8 +416,8 @@ jQuery( function($) {
 			return;
 		}
 
-		if ( wp.autosave ) {
-			wp.autosave.server.tempBlockSave();
+		if ( zc.autosave ) {
+			zc.autosave.server.tempBlockSave();
 		}
 
 		$previewField.val('dopreview');
@@ -449,8 +449,8 @@ jQuery( function($) {
 			});
 
 			window.setTimeout( function() {
-				if ( ! cancel && wp.autosave ) {
-					wp.autosave.server.triggerSave();
+				if ( ! cancel && zc.autosave ) {
+					zc.autosave.server.triggerSave();
 				}
 			}, 200 );
 		});
@@ -459,7 +459,7 @@ jQuery( function($) {
 	$document.on( 'autosave-disable-buttons.edit-post', function() {
 		$submitButtons.addClass( 'disabled' );
 	}).on( 'autosave-enable-buttons.edit-post', function() {
-		if ( ! wp.heartbeat || ! wp.heartbeat.hasConnectionError() ) {
+		if ( ! zc.heartbeat || ! zc.heartbeat.hasConnectionError() ) {
 			$submitButtons.removeClass( 'disabled' );
 		}
 	}).on( 'before-autosave.edit-post', function() {
@@ -480,8 +480,8 @@ jQuery( function($) {
 		var editor  = window.tinymce && window.tinymce.get( 'content' );
 		var changed = false;
 
-		if ( wp.autosave ) {
-			changed = wp.autosave.server.postChanged();
+		if ( zc.autosave ) {
+			changed = zc.autosave.server.postChanged();
 		} else if ( editor ) {
 			changed = ( ! editor.isHidden() && editor.isDirty() );
 		}
@@ -846,7 +846,7 @@ jQuery( function($) {
 			// Update "Status:" to currently selected status.
 			$('#post-status-display').text(
 				// Remove any potential tags from post status text.
-				wp.sanitize.stripTagsAndEncodeText( $('option:selected', postStatus).text() )
+				zc.sanitize.stripTagsAndEncodeText( $('option:selected', postStatus).text() )
 			);
 
 			// Show or hide the "Save Draft" button.
@@ -961,8 +961,8 @@ jQuery( function($) {
 				event.preventDefault();
 				$timestampdiv.show();
 
-				if ( wp.autosave ) {
-					wp.autosave.enableButtons();
+				if ( zc.autosave ) {
+					zc.autosave.enableButtons();
 				}
 
 				$( '#publishing-action .spinner' ).removeClass( 'is-active' );
@@ -1063,7 +1063,7 @@ jQuery( function($) {
 					permalink.html(permalinkOrig);
 					real_slug.val(new_slug);
 					$( '.edit-slug' ).trigger( 'focus' );
-					wp.a11y.speak( __( 'Permalink saved' ) );
+					zc.a11y.speak( __( 'Permalink saved' ) );
 				}
 			);
 		});
@@ -1272,7 +1272,7 @@ jQuery( function($) {
 				return;
 			}
 
-			wp.autosave && wp.autosave.server.triggerSave();
+			zc.autosave && zc.autosave.server.triggerSave();
 			event.preventDefault();
 		}
 	});
@@ -1316,7 +1316,7 @@ jQuery( function($) {
 		}, 3000 );
 
 		// Handle success audible feedback.
-		wp.a11y.speak( __( 'The file URL has been copied to your clipboard' ) );
+		zc.a11y.speak( __( 'The file URL has been copied to your clipboard' ) );
 	} );
 } );
 
@@ -1372,4 +1372,4 @@ jQuery( function($) {
 		update();
 	} );
 
-} )( jQuery, new wp.utils.WordCounter() );
+} )( jQuery, new zc.utils.WordCounter() );

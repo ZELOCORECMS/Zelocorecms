@@ -515,7 +515,7 @@ function zc_update_nav_menu_item( $menu_id = 0, $menu_item_db_id = 0, $menu_item
 			$args['menu-item-title'] = '';
 		}
 
-		// Hack to get wp to create a post object when too many properties are empty.
+		// Hack to get zc to create a post object when too many properties are empty.
 		if ( '' === $args['menu-item-title'] && '' === $args['menu-item-description'] ) {
 			$args['menu-item-description'] = ' ';
 		}

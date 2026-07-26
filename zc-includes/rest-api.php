@@ -203,7 +203,7 @@ function register_rest_field( $object_type, $attribute, $args = array() ) {
  * @since 4.4.0
  *
  * @see rest_api_register_rewrites()
- * @global WP $zc Current ZelocoreCMS environment instance.
+ * @global ZC $zc Current ZelocoreCMS environment instance.
  */
 function rest_api_init() {
 	rest_api_register_rewrites();
@@ -435,7 +435,7 @@ function create_initial_rest_routes() {
  *
  * @since 4.4.0
  *
- * @global WP $zc Current ZelocoreCMS environment instance.
+ * @global ZC $zc Current ZelocoreCMS environment instance.
  */
 function rest_api_loaded() {
 	if ( empty( $GLOBALS['zc']->query_vars['rest_route'] ) ) {
@@ -1028,7 +1028,7 @@ function rest_is_field_included( $field, $fields ) {
 }
 
 /**
- * Adds the REST API URL to the WP RSD endpoint.
+ * Adds the REST API URL to the ZC RSD endpoint.
  *
  * @since 4.4.0
  *
@@ -3237,7 +3237,7 @@ function rest_get_route_for_post_type_items( $post_type ) {
 		return '';
 	}
 
-	$namespace = ! empty( $post_type->rest_namespace ) ? $post_type->rest_namespace : 'wp/v2';
+	$namespace = ! empty( $post_type->rest_namespace ) ? $post_type->rest_namespace : 'zc/v2';
 	$rest_base = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
 	$route     = sprintf( '/%s/%s', $namespace, $rest_base );
 
@@ -3304,7 +3304,7 @@ function rest_get_route_for_taxonomy_items( $taxonomy ) {
 		return '';
 	}
 
-	$namespace = ! empty( $taxonomy->rest_namespace ) ? $taxonomy->rest_namespace : 'wp/v2';
+	$namespace = ! empty( $taxonomy->rest_namespace ) ? $taxonomy->rest_namespace : 'zc/v2';
 	$rest_base = ! empty( $taxonomy->rest_base ) ? $taxonomy->rest_base : $taxonomy->name;
 	$route     = sprintf( '/%s/%s', $namespace, $rest_base );
 
@@ -3332,7 +3332,7 @@ function rest_get_queried_resource_route() {
 	} elseif ( is_category() || is_tag() || is_tax() ) {
 		$route = rest_get_route_for_term( get_queried_object() );
 	} elseif ( is_author() ) {
-		$route = '/wp/v2/users/' . get_queried_object_id();
+		$route = '/zc/v2/users/' . get_queried_object_id();
 	} else {
 		$route = '';
 	}

@@ -171,10 +171,10 @@ function zc_get_popular_importers() {
 		}
 
 		foreach ( $popular_importers['importers'] as &$importer ) {
-			// phpcs:ignore ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText
+			// phpcs:ignore ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText
 			$importer['description'] = translate( $importer['description'] );
 			if ( 'ZelocoreCMS' !== $importer['name'] ) {
-				// phpcs:ignore ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText
+				// phpcs:ignore ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText
 				$importer['name'] = translate( $importer['name'] );
 			}
 		}

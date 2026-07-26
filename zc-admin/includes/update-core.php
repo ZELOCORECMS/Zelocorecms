@@ -40,7 +40,7 @@ $_old_files = array(
 	'zc-images/smilies',
 	'zc-images/zc-small.png',
 	'zc-images/wpminilogo.png',
-	'wp.php',
+	'zc.php',
 	// 2.1
 	'zc-admin/edit-form-ajax-cat.php',
 	'zc-admin/execute-pings.php',
@@ -1375,7 +1375,7 @@ function update_core( $from, $to ) {
 	/** This filter is documented in zc-admin/includes/update-core.php */
 	apply_filters( 'update_feedback', __( 'Copying the required files&#8230;' ) );
 
-	// Copy new versions of WP files into place.
+	// Copy new versions of ZC files into place.
 	$result = copy_dir( $from . $distro, $to, $skip );
 
 	if ( is_zc_error( $result ) ) {

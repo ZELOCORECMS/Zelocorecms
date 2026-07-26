@@ -12,110 +12,110 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--60);padding-bottom:var(--zc--preset--spacing--60)">
-	<!-- wp:heading {"textAlign":"center","align":"wide"} -->
+	<!-- zc:heading {"textAlign":"center","align":"wide"} -->
 	<h2 class="zc-block-heading alignwide has-text-align-center"><?php esc_html_e( 'Pricing', 'twentytwentyfive' ); ?></h2>
-	<!-- /wp:heading -->
+	<!-- /zc:heading -->
 
-	<!-- wp:paragraph {"align":"center"} -->
+	<!-- zc:paragraph {"align":"center"} -->
 	<p class="has-text-align-center"><?php esc_html_e( 'Cancel or pause anytime.', 'twentytwentyfive' ); ?></p>
-	<!-- /wp:paragraph -->
+	<!-- /zc:paragraph -->
 
-	<!-- wp:spacer {"height":"var:preset|spacing|40"} -->
+	<!-- zc:spacer {"height":"var:preset|spacing|40"} -->
 	<div style="height:var(--zc--preset--spacing--40)" aria-hidden="true" class="zc-block-spacer"></div>
-	<!-- /wp:spacer -->
+	<!-- /zc:spacer -->
 
-	<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|30","left":"var:preset|spacing|50"}}}} -->
+	<!-- zc:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|30","left":"var:preset|spacing|50"}}}} -->
 	<div class="zc-block-columns alignwide">
-		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","right":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50"}},"border":{"width":"1px","color":"var:preset|color|accent-6","radius":"10px"}}} -->
+		<!-- zc:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","right":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50"}},"border":{"width":"1px","color":"var:preset|color|accent-6","radius":"10px"}}} -->
 		<div class="zc-block-column has-border-color" style="border-color:var(--zc--preset--color--accent-6);border-width:1px;border-radius:10px;padding-top:var(--zc--preset--spacing--50);padding-right:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50);padding-left:var(--zc--preset--spacing--50)">
-			<!-- wp:heading {"level":3} -->
+			<!-- zc:heading {"level":3} -->
 			<h3 class="zc-block-heading" id="free"><?php esc_html_e( 'Free', 'twentytwentyfive' ); ?></h3>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"large"} -->
+			<!-- zc:paragraph {"fontSize":"large"} -->
 			<p class="has-large-font-size"><?php esc_html_e( '0€', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 
-			<!-- wp:list {"className":"is-style-checkmark-list","style":{"spacing":{"padding":{"left":"var:preset|spacing|20","bottom":"var:preset|spacing|20"}}},"fontSize":"small"} -->
+			<!-- zc:list {"className":"is-style-checkmark-list","style":{"spacing":{"padding":{"left":"var:preset|spacing|20","bottom":"var:preset|spacing|20"}}},"fontSize":"small"} -->
 			<ul style="padding-bottom:var(--zc--preset--spacing--20);padding-left:var(--zc--preset--spacing--20)" class="zc-block-list is-style-checkmark-list has-small-font-size">
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Get access to our paid articles and weekly newsletter.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Join our IRL events.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Get a free tote bag.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'An elegant addition of home decor collection.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Join our forums.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 			</ul>
-			<!-- /wp:list -->
+			<!-- /zc:list -->
 
-			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+			<!-- zc:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 			<div class="zc-block-buttons">
-				<!-- wp:button {"width":100} -->
+				<!-- zc:button {"width":100} -->
 				<div class="zc-block-button has-custom-width zc-block-button__width-100"><a class="zc-block-button__link zc-element-button"><?php echo esc_html_x( 'Join', 'Button text, refers to joining a community. Verb.', 'twentytwentyfive' ); ?></a></div>
-				<!-- /wp:button -->
+				<!-- /zc:button -->
 			</div>
-			<!-- /wp:buttons -->
+			<!-- /zc:buttons -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","right":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50"}},"border":{"width":"1px","color":"var:preset|color|accent-6","radius":"10px"}},"layout":{"type":"default"}} -->
+		<!-- zc:column {"style":{"spacing":{"padding":{"top":"var:preset|spacing|50","right":"var:preset|spacing|50","bottom":"var:preset|spacing|50","left":"var:preset|spacing|50"}},"border":{"width":"1px","color":"var:preset|color|accent-6","radius":"10px"}},"layout":{"type":"default"}} -->
 		<div class="zc-block-column has-border-color" style="border-color:var(--zc--preset--color--accent-6);border-width:1px;border-radius:10px;padding-top:var(--zc--preset--spacing--50);padding-right:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50);padding-left:var(--zc--preset--spacing--50)">
-			<!-- wp:heading {"level":3} -->
+			<!-- zc:heading {"level":3} -->
 			<h3 class="zc-block-heading" id="single"><?php echo esc_html_x( 'Single', 'Name of membership package.', 'twentytwentyfive' ); ?></h3>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"large"} -->
+			<!-- zc:paragraph {"fontSize":"large"} -->
 			<p class="has-large-font-size"><?php esc_html_e( '20€/month', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 
-			<!-- wp:list {"className":"is-style-checkmark-list","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|20","left":"var:preset|spacing|20"}}},"fontSize":"small"} -->
+			<!-- zc:list {"className":"is-style-checkmark-list","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|20","left":"var:preset|spacing|20"}}},"fontSize":"small"} -->
 			<ul style="padding-bottom:var(--zc--preset--spacing--20);padding-left:var(--zc--preset--spacing--20)" class="zc-block-list is-style-checkmark-list has-small-font-size">
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Get access to our paid articles and weekly newsletter.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Join our IRL events.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Get a free tote bag.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'An elegant addition of home decor collection.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 
-				<!-- wp:list-item -->
+				<!-- zc:list-item -->
 				<li><?php esc_html_e( 'Join our forums.', 'twentytwentyfive' ); ?></li>
-				<!-- /wp:list-item -->
+				<!-- /zc:list-item -->
 			</ul>
-			<!-- /wp:list -->
+			<!-- /zc:list -->
 
-			<!-- wp:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
+			<!-- zc:buttons {"layout":{"type":"flex","justifyContent":"center"}} -->
 			<div class="zc-block-buttons">
-				<!-- wp:button {"width":100} -->
+				<!-- zc:button {"width":100} -->
 				<div class="zc-block-button has-custom-width zc-block-button__width-100"><a class="zc-block-button__link zc-element-button"><?php echo esc_html_x( 'Join', 'Button text, refers to joining a community. Verb.', 'twentytwentyfive' ); ?></a></div>
-				<!-- /wp:button -->
+				<!-- /zc:button -->
 			</div>
-			<!-- /wp:buttons -->
+			<!-- /zc:buttons -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

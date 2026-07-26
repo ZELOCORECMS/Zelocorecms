@@ -11,7 +11,7 @@
 
 (function($) {
 	var $document = $( document ),
-		__ = wp.i18n.__;
+		__ = zc.i18n.__;
 
 	/**
 	 * This object contains all function to handle the behavior of the post boxes. The post boxes are the boxes you see
@@ -114,7 +114,7 @@
 					__( 'The box is on the first position' ) :
 					__( 'The box is on the last position' );
 
-				wp.a11y.speak( firstOrLastPositionMessage );
+				zc.a11y.speak( firstOrLastPositionMessage );
 				return;
 			}
 
@@ -471,7 +471,7 @@
 					page: page
 				},
 				function() {
-					wp.a11y.speak( __( 'Screen Options updated.' ) );
+					zc.a11y.speak( __( 'Screen Options updated.' ) );
 				}
 			);
 		},
@@ -507,7 +507,7 @@
 				postVars,
 				function( response ) {
 					if ( response.success ) {
-						wp.a11y.speak( __( 'The boxes order has been saved.' ) );
+						zc.a11y.speak( __( 'The boxes order has been saved.' ) );
 					}
 				}
 			);

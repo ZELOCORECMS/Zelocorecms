@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).undoManager = (() => {
+var zc;
+(zc ||= {}).undoManager = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 

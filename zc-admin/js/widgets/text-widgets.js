@@ -6,9 +6,9 @@
 /* eslint consistent-this: [ "error", "control" ] */
 
 /**
- * @namespace wp.textWidgets
+ * @namespace zc.textWidgets
  */
-wp.textWidgets = ( function( $ ) {
+zc.textWidgets = ( function( $ ) {
 	'use strict';
 
 	var component = {
@@ -16,7 +16,7 @@ wp.textWidgets = ( function( $ ) {
 		idBases: [ 'text' ]
 	};
 
-	component.TextWidgetControl = Backbone.View.extend(/** @lends wp.textWidgets.TextWidgetControl.prototype */{
+	component.TextWidgetControl = Backbone.View.extend(/** @lends zc.textWidgets.TextWidgetControl.prototype */{
 
 		/**
 		 * View events.
@@ -28,7 +28,7 @@ wp.textWidgets = ( function( $ ) {
 		/**
 		 * Text widget control.
 		 *
-		 * @constructs wp.textWidgets.TextWidgetControl
+		 * @constructs zc.textWidgets.TextWidgetControl
 		 * @augments   Backbone.View
 		 * @abstract
 		 *
@@ -52,7 +52,7 @@ wp.textWidgets = ( function( $ ) {
 			control.syncContainer = options.syncContainer;
 
 			control.$el.addClass( 'text-widget-fields' );
-			control.$el.html( wp.template( 'widget-text-control-fields' ) );
+			control.$el.html( zc.template( 'widget-text-control-fields' ) );
 
 			control.customHtmlWidgetPointer = control.$el.find( '.zc-pointer.custom-html-widget-pointer' );
 			if ( control.customHtmlWidgetPointer.length ) {
@@ -109,7 +109,7 @@ wp.textWidgets = ( function( $ ) {
 		 */
 		dismissPointers: function dismissPointers( pointers ) {
 			_.each( pointers, function( pointer ) {
-				wp.ajax.post( 'dismiss-zc-pointer', {
+				zc.ajax.post( 'dismiss-zc-pointer', {
 					pointer: pointer
 				});
 				component.dismissedPointers.push( pointer );
@@ -124,17 +124,17 @@ wp.textWidgets = ( function( $ ) {
 		 */
 		openAvailableWidgetsPanel: function openAvailableWidgetsPanel() {
 			var sidebarControl;
-			wp.customize.section.each( function( section ) {
-				if ( section.extended( wp.customize.Widgets.SidebarSection ) && section.expanded() ) {
-					sidebarControl = wp.customize.control( 'sidebars_widgets[' + section.params.sidebarId + ']' );
+			zc.customize.section.each( function( section ) {
+				if ( section.extended( zc.customize.Widgets.SidebarSection ) && section.expanded() ) {
+					sidebarControl = zc.customize.control( 'sidebars_widgets[' + section.params.sidebarId + ']' );
 				}
 			});
 			if ( ! sidebarControl ) {
 				return;
 			}
 			setTimeout( function() { // Timeout to prevent click event from causing panel to immediately collapse.
-				wp.customize.Widgets.availableWidgetsPanel.open( sidebarControl );
-				wp.customize.Widgets.availableWidgetsPanel.$search.val( 'HTML' ).trigger( 'keyup' );
+				zc.customize.Widgets.availableWidgetsPanel.open( sidebarControl );
+				zc.customize.Widgets.availableWidgetsPanel.$search.val( 'HTML' ).trigger( 'keyup' );
 			});
 		},
 
@@ -161,7 +161,7 @@ wp.textWidgets = ( function( $ ) {
 					control.fields.text.val( syncInput.val() );
 				}
 			} else if ( control.editor && ! control.editorFocused && syncInput.val() !== control.fields.text.val() ) {
-				control.editor.setContent( wp.oldEditor.autop( syncInput.val() ) );
+				control.editor.setContent( zc.oldEditor.autop( syncInput.val() ) );
 			}
 		},
 
@@ -182,7 +182,7 @@ wp.textWidgets = ( function( $ ) {
 			 * @return {void}
 			 */
 			triggerChangeIfDirty = function() {
-				var updateWidgetBuffer = 300; // See wp.customize.Widgets.WidgetControl._setupUpdateUI() which uses 250ms for updateWidgetDebounced.
+				var updateWidgetBuffer = 300; // See zc.customize.Widgets.WidgetControl._setupUpdateUI() which uses 250ms for updateWidgetDebounced.
 				if ( control.editor.isDirty() ) {
 
 					/*
@@ -197,10 +197,10 @@ wp.textWidgets = ( function( $ ) {
 					 * having to make server round-trips to call the respective ZC_Widget::update()
 					 * callbacks. See <https://core.trac.zelocorecms.org/ticket/33507>.
 					 */
-					if ( wp.customize && wp.customize.state ) {
-						wp.customize.state( 'processing' ).set( wp.customize.state( 'processing' ).get() + 1 );
+					if ( zc.customize && zc.customize.state ) {
+						zc.customize.state( 'processing' ).set( zc.customize.state( 'processing' ).get() + 1 );
 						_.delay( function() {
-							wp.customize.state( 'processing' ).set( wp.customize.state( 'processing' ).get() - 1 );
+							zc.customize.state( 'processing' ).set( zc.customize.state( 'processing' ).get() - 1 );
 						}, updateWidgetBuffer );
 					}
 
@@ -237,7 +237,7 @@ wp.textWidgets = ( function( $ ) {
 
 				// The user has disabled TinyMCE.
 				if ( typeof window.tinymce === 'undefined' ) {
-					wp.oldEditor.initialize( id, {
+					zc.oldEditor.initialize( id, {
 						quicktags: true,
 						mediaButtons: true
 					});
@@ -248,7 +248,7 @@ wp.textWidgets = ( function( $ ) {
 				// Destroy any existing editor so that it can be re-initialized after a widget-updated event.
 				if ( tinymce.get( id ) ) {
 					restoreTextMode = tinymce.get( id ).isHidden();
-					wp.oldEditor.remove( id );
+					zc.oldEditor.remove( id );
 				}
 
 				// Add or enable the `wpview` plugin.
@@ -262,7 +262,7 @@ wp.textWidgets = ( function( $ ) {
 					}
 				} );
 
-				wp.oldEditor.initialize( id, {
+				zc.oldEditor.initialize( id, {
 					tinymce: {
 						wpautop: true
 					},
@@ -279,7 +279,7 @@ wp.textWidgets = ( function( $ ) {
 				showPointerElement = function( pointerElement ) {
 					pointerElement.show();
 					pointerElement.find( '.close' ).trigger( 'focus' );
-					wp.a11y.speak( pointerElement.find( 'h3, p' ).map( function() {
+					zc.a11y.speak( pointerElement.find( 'h3, p' ).map( function() {
 						return $( this ).text();
 					} ).get().join( '\n\n' ) );
 				};
@@ -363,16 +363,16 @@ wp.textWidgets = ( function( $ ) {
 	/**
 	 * Mapping of widget ID to instances of TextWidgetControl subclasses.
 	 *
-	 * @memberOf wp.textWidgets
+	 * @memberOf zc.textWidgets
 	 *
-	 * @type {Object.<string, wp.textWidgets.TextWidgetControl>}
+	 * @type {Object.<string, zc.textWidgets.TextWidgetControl>}
 	 */
 	component.widgetControls = {};
 
 	/**
 	 * Handle widget being added or initialized for the first time at the widget-added event.
 	 *
-	 * @memberOf wp.textWidgets
+	 * @memberOf zc.textWidgets
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -440,7 +440,7 @@ wp.textWidgets = ( function( $ ) {
 	/**
 	 * Setup widget in accessibility mode.
 	 *
-	 * @memberOf wp.textWidgets
+	 * @memberOf zc.textWidgets
 	 *
 	 * @return {void}
 	 */
@@ -480,7 +480,7 @@ wp.textWidgets = ( function( $ ) {
 	 * the widgets admin screen and also via the 'widget-synced' event when making
 	 * a change to a widget in the customizer.
 	 *
-	 * @memberOf wp.textWidgets
+	 * @memberOf zc.textWidgets
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -509,9 +509,9 @@ wp.textWidgets = ( function( $ ) {
 	 *
 	 * This function exists to prevent the JS file from having to boot itself.
 	 * When ZelocoreCMS enqueues this script, it should have an inline script
-	 * attached which calls wp.textWidgets.init().
+	 * attached which calls zc.textWidgets.init().
 	 *
-	 * @memberOf wp.textWidgets
+	 * @memberOf zc.textWidgets
 	 *
 	 * @return {void}
 	 */

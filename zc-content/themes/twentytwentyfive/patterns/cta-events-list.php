@@ -11,56 +11,56 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:heading -->
+		<!-- zc:heading -->
 		<h2 class="zc-block-heading"><?php esc_html_e( 'Upcoming events', 'twentytwentyfive' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:paragraph -->
+		<!-- zc:paragraph -->
 		<p><?php esc_html_e( 'These are some of the upcoming events', 'twentytwentyfive' ); ?></p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:group {"style":{"spacing":{"blockGap":"0","margin":{"top":"var:preset|spacing|70"}}},"layout":{"type":"default"}} -->
+		<!-- zc:group {"style":{"spacing":{"blockGap":"0","margin":{"top":"var:preset|spacing|70"}}},"layout":{"type":"default"}} -->
 		<div class="zc-block-group" style="margin-top:var(--zc--preset--spacing--70)">
-			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+			<!-- zc:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 			<div class="zc-block-group" style="padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)">
-				<!-- wp:group {"layout":{"type":"constrained"}} -->
+				<!-- zc:group {"layout":{"type":"constrained"}} -->
 				<div class="zc-block-group">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php esc_html_e( 'Tell your story', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php esc_html_e( 'Atlanta, GA, USA', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 
-				<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+				<!-- zc:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 				<div class="zc-block-group">
-					<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
+					<!-- zc:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
 					<p style="text-transform:uppercase"><?php echo esc_html_x( 'Mon, Jan 1', 'Example event date in pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 
-					<!-- wp:buttons -->
+					<!-- zc:buttons -->
 					<div class="zc-block-buttons">
-						<!-- wp:button {"fontSize":"small"} -->
+						<!-- zc:button {"fontSize":"small"} -->
 						<div class="zc-block-button has-custom-font-size has-small-font-size"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Buy Tickets', 'twentytwentyfive' ); ?></a></div>
-						<!-- /wp:button -->
+						<!-- /zc:button -->
 					</div>
-					<!-- /wp:buttons -->
+					<!-- /zc:buttons -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 
-			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
-			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- wp:group {"layout":{"type":"constrained"}} -->
+			<!-- zc:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- zc:group {"layout":{"type":"constrained"}} -->
 				<div class="zc-block-group">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading">
 						<?php
 						echo zc_kses_post(
@@ -69,67 +69,67 @@
 						);
 						?>
 					</h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php esc_html_e( 'Mexico City, Mexico', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 
-				<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+				<!-- zc:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 				<div class="zc-block-group">
-					<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
+					<!-- zc:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
 					<p style="text-transform:uppercase"><?php echo esc_html_x( 'Mon, Jan 1', 'Example event date in pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 
-					<!-- wp:buttons -->
+					<!-- zc:buttons -->
 					<div class="zc-block-buttons">
-						<!-- wp:button {"fontSize":"small"} -->
+						<!-- zc:button {"fontSize":"small"} -->
 						<div class="zc-block-button has-custom-font-size has-small-font-size"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Buy Tickets', 'twentytwentyfive' ); ?></a></div>
-						<!-- /wp:button -->
+						<!-- /zc:button -->
 					</div>
-					<!-- /wp:buttons -->
+					<!-- /zc:buttons -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 
-			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
-			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- wp:group {"layout":{"type":"constrained"}} -->
+			<!-- zc:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- zc:group {"layout":{"type":"constrained"}} -->
 				<div class="zc-block-group">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php esc_html_e( 'Tell your story', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php esc_html_e( 'Thornville, OH, USA', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 
-				<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+				<!-- zc:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 				<div class="zc-block-group">
-					<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
+					<!-- zc:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
 					<p style="text-transform:uppercase"><?php echo esc_html_x( 'Mon, Jan 1', 'Example event date in pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 
-					<!-- wp:buttons -->
+					<!-- zc:buttons -->
 					<div class="zc-block-buttons">
-						<!-- wp:button {"fontSize":"small"} -->
+						<!-- zc:button {"fontSize":"small"} -->
 						<div class="zc-block-button has-custom-font-size has-small-font-size"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Buy Tickets', 'twentytwentyfive' ); ?></a></div>
-						<!-- /wp:button -->
+						<!-- /zc:button -->
 					</div>
-					<!-- /wp:buttons -->
+					<!-- /zc:buttons -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 
-			<!-- wp:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
-			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- wp:group {"layout":{"type":"constrained"}} -->
+			<!-- zc:group {"style":{"spacing":{"padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40"}},"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+			<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40)"><!-- zc:group {"layout":{"type":"constrained"}} -->
 				<div class="zc-block-group">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading">
 						<?php
 						echo zc_kses_post(
@@ -138,34 +138,34 @@
 						);
 						?>
 					</h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php esc_html_e( 'Thornville, OH, USA', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 
-				<!-- wp:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+				<!-- zc:group {"style":{"spacing":{"blockGap":"var:preset|spacing|70"}},"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 				<div class="zc-block-group">
-					<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
+					<!-- zc:paragraph {"style":{"typography":{"textTransform":"uppercase"}}} -->
 					<p style="text-transform:uppercase"><?php echo esc_html_x( 'Mon, Jan 1', 'Example event date in pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 
-					<!-- wp:buttons -->
+					<!-- zc:buttons -->
 					<div class="zc-block-buttons">
-						<!-- wp:button {"fontSize":"small"} -->
+						<!-- zc:button {"fontSize":"small"} -->
 						<div class="zc-block-button has-custom-font-size has-small-font-size"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Buy Tickets', 'twentytwentyfive' ); ?></a></div>
-						<!-- /wp:button -->
+						<!-- /zc:button -->
 					</div>
-					<!-- /wp:buttons -->
+					<!-- /zc:buttons -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</div>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

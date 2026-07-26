@@ -14,7 +14,7 @@
  * file. It also handles parsing the request to get the correct setup for the
  * ZelocoreCMS Query class.
  *
- * The Rewrite along with WP class function as a front controller for ZelocoreCMS.
+ * The Rewrite along with ZC class function as a front controller for ZelocoreCMS.
  * You can add rules to trigger your page view and processing using this
  * component. The full functionality of a front controller does not exist,
  * meaning you can't define how the template files load based on the rewrite
@@ -256,7 +256,7 @@ class ZC_Rewrite {
 	 * also match a page name (e.g. %postname% or %author%) then this flag is
 	 * set to true. Prior to ZelocoreCMS 3.3 this flag indicated that every page
 	 * would have a set of rules added to the top of the rewrite rules array.
-	 * Now it tells WP::parse_request() to check if a URL matching the page
+	 * Now it tells ZC::parse_request() to check if a URL matching the page
 	 * permastruct is actually a page before accepting it.
 	 *
 	 * @since 2.5.0
@@ -1561,7 +1561,7 @@ class ZC_Rewrite {
 		// Prevent -f checks on index.php.
 		$rules .= "RewriteRule ^index\.php$ - [L]\n";
 
-		// Add in the rules that don't redirect to WP's index.php (and thus shouldn't be handled by WP at all).
+		// Add in the rules that don't redirect to ZC's index.php (and thus shouldn't be handled by ZC at all).
 		foreach ( (array) $this->non_zc_rules as $match => $query ) {
 			// Apache 1.3 does not support the reluctant (non-greedy) modifier.
 			$match = str_replace( '.+?', '.+', $match );
@@ -1724,7 +1724,7 @@ class ZC_Rewrite {
 	 * @since 4.3.0 Added support for skipping query var registration by passing `false` to `$query_var`.
 	 *
 	 * @see add_rewrite_endpoint() for full documentation.
-	 * @global WP $zc Current ZelocoreCMS environment instance.
+	 * @global ZC $zc Current ZelocoreCMS environment instance.
 	 *
 	 * @param string      $name      Name of the endpoint.
 	 * @param int         $places    Endpoint mask describing the places the endpoint should be added.

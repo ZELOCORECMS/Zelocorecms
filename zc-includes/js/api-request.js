@@ -1,10 +1,10 @@
 /**
- * Thin jQuery.ajax wrapper for WP REST API requests.
+ * Thin jQuery.ajax wrapper for ZC REST API requests.
  *
  * Currently only applies to requests that do not use the `zc-api.js` Backbone
  * client library, though this may change.  Serves several purposes:
  *
- * - Allows overriding these requests as needed by customized WP installations.
+ * - Allows overriding these requests as needed by customized ZC installations.
  * - Sends the REST API nonce as a request header.
  * - Allows specifying only an endpoint namespace/path instead of a full URL.
  *
@@ -118,7 +118,7 @@
 
 	apiRequest.transport = $.ajax;
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
-	window.wp.apiRequest = apiRequest;
+	/** @namespace zc */
+	window.zc = window.zc || {};
+	window.zc.apiRequest = apiRequest;
 } )( jQuery );

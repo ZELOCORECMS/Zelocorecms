@@ -17,7 +17,7 @@
 function render_block_core_search( $attributes ) {
 	// Older versions of the Search block defaulted the label and buttonText
 	// attributes to `__( 'Search' )` meaning that many posts contain `<!--
-	// wp:search /-->`. Support these by defaulting an undefined label and
+	// zc:search /-->`. Support these by defaulting an undefined label and
 	// buttonText to `__( 'Search' )`.
 	$attributes = zc_parse_args(
 		$attributes,

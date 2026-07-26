@@ -7,14 +7,14 @@
 
 /* global isRtl */
 
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 (function($) {
 	var revisions;
 	/**
-	 * Expose the module in window.wp.revisions.
+	 * Expose the module in window.zc.revisions.
 	 */
-	revisions = wp.revisions = { model: {}, view: {}, controller: {} };
+	revisions = zc.revisions = { model: {}, view: {}, controller: {} };
 
 	// Link post revisions data served from the back end.
 	revisions.settings = window._wpRevisionsSettings || {};
@@ -23,7 +23,7 @@ window.wp = window.wp || {};
 	revisions.debug = false;
 
 	/**
-	 * wp.revisions.log
+	 * zc.revisions.log
 	 *
 	 * A debugging utility for revisions. Works only when a
 	 * debug flag is on and the browser supports it.
@@ -183,7 +183,7 @@ window.wp = window.wp || {};
 	revisions.model.Revision = Backbone.Model.extend({});
 
 	/**
-	 * wp.revisions.model.Revisions
+	 * zc.revisions.model.Revisions
 	 *
 	 * A collection of post revisions.
 	 */
@@ -246,7 +246,7 @@ window.wp = window.wp || {};
 				to       = id.split(':')[1];
 			ids[id] = true;
 
-			wp.revisions.log( 'ensure', id );
+			zc.revisions.log( 'ensure', id );
 
 			this.trigger( 'ensure', ids, from, to, deferred.promise() );
 
@@ -316,10 +316,10 @@ window.wp = window.wp || {};
 		},
 
 		load: function( comparisons ) {
-			wp.revisions.log( 'load', comparisons );
+			zc.revisions.log( 'load', comparisons );
 			// Our collection should only ever grow, never shrink, so `remove: false`.
 			return this.fetch({ data: { compare: comparisons }, remove: false }).done( function() {
-				wp.revisions.log( 'load:complete', comparisons );
+				zc.revisions.log( 'load:complete', comparisons );
 			});
 		},
 
@@ -332,7 +332,7 @@ window.wp = window.wp || {};
 					post_id: this.postId
 				});
 
-				var deferred = wp.ajax.send( options ),
+				var deferred = zc.ajax.send( options ),
 					requests = this.requests;
 
 				// Record that we're requesting each diff.
@@ -362,11 +362,11 @@ window.wp = window.wp || {};
 
 
 	/**
-	 * wp.revisions.model.FrameState
+	 * zc.revisions.model.FrameState
 	 *
 	 * The frame state.
 	 *
-	 * @see wp.revisions.view.Frame
+	 * @see zc.revisions.view.Frame
 	 *
 	 * @param {object}                    attributes        Model attributes - none are required.
 	 * @param {object}                    options           Options for the model.
@@ -529,16 +529,16 @@ window.wp = window.wp || {};
 	 */
 
 	/**
-	 * wp.revisions.view.Frame
+	 * zc.revisions.view.Frame
 	 *
 	 * Top level frame that orchestrates the revisions experience.
 	 *
 	 * @param {object}                     options       The options hash for the view.
 	 * @param {revisions.model.FrameState} options.model The frame state model.
 	 */
-	revisions.view.Frame = wp.Backbone.View.extend({
+	revisions.view.Frame = zc.Backbone.View.extend({
 		className: 'revisions',
-		template: wp.template('revisions-frame'),
+		template: zc.template('revisions-frame'),
 
 		initialize: function() {
 			this.listenTo( this.model, 'update:diff', this.renderDiff );
@@ -552,7 +552,7 @@ window.wp = window.wp || {};
 		},
 
 		render: function() {
-			wp.Backbone.View.prototype.render.apply( this, arguments );
+			zc.Backbone.View.prototype.render.apply( this, arguments );
 
 			$('html').css( 'overflow-y', 'scroll' );
 			$('#wpbody-content .wrap').append( this.el );
@@ -583,13 +583,13 @@ window.wp = window.wp || {};
 	});
 
 	/**
-	 * wp.revisions.view.Controls
+	 * zc.revisions.view.Controls
 	 *
 	 * The controls view.
 	 *
 	 * Contains the revision slider, previous/next buttons, the meta info and the compare checkbox.
 	 */
-	revisions.view.Controls = wp.Backbone.View.extend({
+	revisions.view.Controls = zc.Backbone.View.extend({
 		className: 'revisions-controls',
 
 		initialize: function() {
@@ -645,7 +645,7 @@ window.wp = window.wp || {};
 		ready: function() {
 			this.top = this.$el.offset().top;
 			this.window = $(window);
-			this.window.on( 'scroll.wp.revisions', {controls: this}, function(e) {
+			this.window.on( 'scroll.zc.revisions', {controls: this}, function(e) {
 				var controls  = e.data.controls,
 					container = controls.$el.parent(),
 					scrolled  = controls.window.scrollTop(),
@@ -655,13 +655,13 @@ window.wp = window.wp || {};
 					if ( ! frame.$el.hasClass('pinned') ) {
 						controls.setWidth();
 						container.css('height', container.height() + 'px' );
-						controls.window.on('resize.wp.revisions.pinning click.wp.revisions.pinning', {controls: controls}, function(e) {
+						controls.window.on('resize.zc.revisions.pinning click.zc.revisions.pinning', {controls: controls}, function(e) {
 							e.data.controls.setWidth();
 						});
 					}
 					frame.$el.addClass('pinned');
 				} else if ( frame.$el.hasClass('pinned') ) {
-					controls.window.off('.wp.revisions.pinning');
+					controls.window.off('.zc.revisions.pinning');
 					controls.$el.css('width', 'auto');
 					frame.$el.removeClass('pinned');
 					container.css('height', 'auto');
@@ -678,7 +678,7 @@ window.wp = window.wp || {};
 	});
 
 	// The tickmarks view.
-	revisions.view.Tickmarks = wp.Backbone.View.extend({
+	revisions.view.Tickmarks = zc.Backbone.View.extend({
 		className: 'revisions-tickmarks',
 		direction: isRtl ? 'right' : 'left',
 
@@ -725,7 +725,7 @@ window.wp = window.wp || {};
 	});
 
 	// The metabox view.
-	revisions.view.Metabox = wp.Backbone.View.extend({
+	revisions.view.Metabox = zc.Backbone.View.extend({
 		className: 'revisions-meta',
 
 		initialize: function() {
@@ -743,8 +743,8 @@ window.wp = window.wp || {};
 	});
 
 	// The revision meta view (to be extended).
-	revisions.view.Meta = wp.Backbone.View.extend({
-		template: wp.template('revisions-meta'),
+	revisions.view.Meta = zc.Backbone.View.extend({
+		template: zc.template('revisions-meta'),
 
 		events: {
 			'click .restore-revision': 'restoreRevision'
@@ -778,9 +778,9 @@ window.wp = window.wp || {};
 	});
 
 	// The checkbox view.
-	revisions.view.Checkbox = wp.Backbone.View.extend({
+	revisions.view.Checkbox = zc.Backbone.View.extend({
 		className: 'revisions-checkbox',
-		template: wp.template('revisions-checkbox'),
+		template: zc.template('revisions-checkbox'),
 
 		events: {
 			'click .compare-two-revisions': 'compareTwoToggle'
@@ -808,16 +808,16 @@ window.wp = window.wp || {};
 	});
 
 	// The slider visually hidden help view.
- 	revisions.view.SliderHelp = wp.Backbone.View.extend({
+ 	revisions.view.SliderHelp = zc.Backbone.View.extend({
 		className: 'revisions-slider-hidden-help',
-		template:  wp.template( 'revisions-slider-hidden-help' )
+		template:  zc.template( 'revisions-slider-hidden-help' )
 	});
    
 	// The tooltip view.
 	// Encapsulates the tooltip.
-	revisions.view.Tooltip = wp.Backbone.View.extend({
+	revisions.view.Tooltip = zc.Backbone.View.extend({
 		className: 'revisions-tooltip',
-		template: wp.template('revisions-meta'),
+		template: zc.template('revisions-meta'),
 
 		initialize: function() {
 			this.listenTo( this.model, 'change:offset', this.render );
@@ -852,7 +852,7 @@ window.wp = window.wp || {};
 				directionVal = flipped ? 'rightPlusWidth' : direction;
 			}
 			otherDirection = 'right' === direction ? 'left': 'right';
-			wp.Backbone.View.prototype.render.apply( this, arguments );
+			zc.Backbone.View.prototype.render.apply( this, arguments );
 			css[direction] = this.model.get('offset')[directionVal] + 'px';
 			css[otherDirection] = '';
 			this.$el.toggleClass( 'flipped', flipped ).css( css );
@@ -874,9 +874,9 @@ window.wp = window.wp || {};
 
 	// The buttons view.
 	// Encapsulates all of the configuration for the previous/next buttons.
-	revisions.view.Buttons = wp.Backbone.View.extend({
+	revisions.view.Buttons = zc.Backbone.View.extend({
 		className: 'revisions-buttons',
-		template: wp.template('revisions-buttons'),
+		template: zc.template('revisions-buttons'),
 
 		events: {
 			'click .revisions-next .button': 'nextRevision',
@@ -936,7 +936,7 @@ window.wp = window.wp || {};
 
 
 	// The slider view.
-	revisions.view.Slider = wp.Backbone.View.extend({
+	revisions.view.Slider = zc.Backbone.View.extend({
 		className: 'zc-slider',
 		direction: isRtl ? 'right' : 'left',
 
@@ -1032,7 +1032,7 @@ window.wp = window.wp || {};
 
 			// Track the mouse position to enable smooth dragging,
 			// overrides default jQuery UI step behavior.
-			$( window ).on( 'mousemove.wp.revisions', { view: this }, function( e ) {
+			$( window ).on( 'mousemove.zc.revisions', { view: this }, function( e ) {
 				var handles,
 					view              = e.data.view,
 					leftDragBoundary  = view.$el.offset().left,
@@ -1111,7 +1111,7 @@ window.wp = window.wp || {};
 		},
 
 		stop: function() {
-			$( window ).off('mousemove.wp.revisions');
+			$( window ).off('mousemove.zc.revisions');
 			this.model.updateSliderSettings(); // To snap us back to a tick mark.
 			this.model.set({ scrubbing: false });
 		}
@@ -1119,9 +1119,9 @@ window.wp = window.wp || {};
 
 	// The diff view.
 	// This is the view for the current active diff.
-	revisions.view.Diff = wp.Backbone.View.extend({
+	revisions.view.Diff = zc.Backbone.View.extend({
 		className: 'revisions-diff',
-		template:  wp.template('revisions-diff'),
+		template:  zc.template('revisions-diff'),
 
 		// Generate the options to be passed to the template.
 		prepare: function() {

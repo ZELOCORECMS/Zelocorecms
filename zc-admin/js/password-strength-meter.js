@@ -3,11 +3,11 @@
  */
 
 /* global zxcvbn */
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 (function($){
-	var __ = wp.i18n.__,
-		sprintf = wp.i18n.sprintf;
+	var __ = zc.i18n.__,
+		sprintf = zc.i18n.sprintf;
 
 	/**
 	 * Contains functions to determine the password strength.
@@ -16,7 +16,7 @@ window.wp = window.wp || {};
 	 *
 	 * @namespace
 	 */
-	wp.passwordStrength = {
+	zc.passwordStrength = {
 		/**
 		 * Determines the strength of a given password.
 		 *
@@ -64,13 +64,13 @@ window.wp = window.wp || {};
 				sprintf(
 					/* translators: 1: Deprecated function name, 2: Version number, 3: Alternative function name. */
 					__( '%1$s is deprecated since version %2$s! Use %3$s instead. Please consider writing more inclusive code.' ),
-					'wp.passwordStrength.userInputBlacklist()',
+					'zc.passwordStrength.userInputBlacklist()',
 					'5.5.0',
-					'wp.passwordStrength.userInputDisallowedList()'
+					'zc.passwordStrength.userInputDisallowedList()'
 				)
 			);
 
-			return wp.passwordStrength.userInputDisallowedList();
+			return zc.passwordStrength.userInputDisallowedList();
 		},
 
 		/**
@@ -139,11 +139,11 @@ window.wp = window.wp || {};
 	 * Password strength meter function.
 	 *
 	 * @since 2.5.0
-	 * @deprecated 3.7.0 Use wp.passwordStrength.meter instead.
+	 * @deprecated 3.7.0 Use zc.passwordStrength.meter instead.
 	 *
 	 * @global
 	 *
-	 * @type {wp.passwordStrength.meter}
+	 * @type {zc.passwordStrength.meter}
 	 */
-	window.passwordStrength = wp.passwordStrength.meter;
+	window.passwordStrength = zc.passwordStrength.meter;
 })(jQuery);

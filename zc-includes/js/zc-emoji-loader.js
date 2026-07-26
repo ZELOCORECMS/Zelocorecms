@@ -20,7 +20,7 @@ const settings = /** @type {WPEmojiSettings} */ (
 	JSON.parse( document.getElementById( 'zc-emoji-settings' ).textContent )
 );
 
-// For compatibility with other scripts that read from this global, in particular zc-includes/js/zc-emoji.js (source file: js/_enqueues/wp/emoji.js).
+// For compatibility with other scripts that read from this global, in particular zc-includes/js/zc-emoji.js (source file: js/_enqueues/zc/emoji.js).
 window._wpemojiSettings = settings;
 
 /**

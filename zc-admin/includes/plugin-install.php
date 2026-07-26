@@ -903,7 +903,7 @@ function install_plugin_information() {
  *     @type string   $version          The plugin's version string. Used when getting the install status.
  * }
  * @param bool         $compatible_php   The result of a PHP compatibility check.
- * @param bool         $compatible_wp    The result of a WP compatibility check.
+ * @param bool         $compatible_wp    The result of a ZC compatibility check.
  * @return string The markup for the dependency row button. An empty string if the user does not have capabilities.
  */
 function zc_get_plugin_action_button( $name, $data, $compatible_php, $compatible_wp ) {

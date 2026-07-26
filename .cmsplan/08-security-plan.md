@@ -631,7 +631,7 @@ class RateLimiter
 
 ---
 
-## 10. Security Comparison: WP vs ZELOCORECMS
+## 10. Security Comparison: ZC vs ZELOCORECMS
 
 | Attack Vector | ZelocoreCMS | ZELOCORECMS Tier 1 | Tier 2 | Tier 3 |
 |--------------|-----------|-------------------|--------|--------|

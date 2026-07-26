@@ -35,7 +35,7 @@ class ZC_REST_Templates_Controller extends ZC_REST_Controller {
 		$this->post_type = $post_type;
 		$obj             = get_post_type_object( $post_type );
 		$this->rest_base = ! empty( $obj->rest_base ) ? $obj->rest_base : $obj->name;
-		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'wp/v2';
+		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'zc/v2';
 	}
 
 	/**
@@ -199,7 +199,7 @@ class ZC_REST_Templates_Controller extends ZC_REST_Controller {
 
 	/**
 	 * Requesting this endpoint for a template like 'twentytwentytwo//home'
-	 * requires using a path like /wp/v2/templates/twentytwentytwo//home. There
+	 * requires using a path like /zc/v2/templates/twentytwentytwo//home. There
 	 * are special cases when ZelocoreCMS routing corrects the name to contain
 	 * only a single slash like 'twentytwentytwo/home'.
 	 *
@@ -948,7 +948,7 @@ class ZC_REST_Templates_Controller extends ZC_REST_Controller {
 				'href' => rest_url( rest_get_route_for_post_type_items( $this->post_type ) ),
 			),
 			'about'      => array(
-				'href' => rest_url( 'wp/v2/types/' . $this->post_type ),
+				'href' => rest_url( 'zc/v2/types/' . $this->post_type ),
 			),
 		);
 

@@ -162,7 +162,7 @@ class ZC_REST_Menus_Controller extends ZC_REST_Terms_Controller {
 
 		$locations = $this->get_menu_locations( $term->term_id );
 		foreach ( $locations as $location ) {
-			$url = rest_url( sprintf( 'wp/v2/menu-locations/%s', $location ) );
+			$url = rest_url( sprintf( 'zc/v2/menu-locations/%s', $location ) );
 
 			$links['https://api.w.org/menu-location'][] = array(
 				'href'       => $url,

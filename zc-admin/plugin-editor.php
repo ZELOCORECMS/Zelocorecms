@@ -163,8 +163,8 @@ $settings = array(
 	'codeEditor' => zc_enqueue_code_editor( array( 'file' => $real_file ) ),
 );
 zc_enqueue_script( 'zc-theme-plugin-editor' );
-zc_add_inline_script( 'zc-theme-plugin-editor', sprintf( 'jQuery( function( $ ) { wp.themePluginEditor.init( $( "#template" ), %s ); } )', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
-zc_add_inline_script( 'zc-theme-plugin-editor', sprintf( 'wp.themePluginEditor.themeOrPlugin = "plugin";' ) );
+zc_add_inline_script( 'zc-theme-plugin-editor', sprintf( 'jQuery( function( $ ) { zc.themePluginEditor.init( $( "#template" ), %s ); } )', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
+zc_add_inline_script( 'zc-theme-plugin-editor', sprintf( 'zc.themePluginEditor.themeOrPlugin = "plugin";' ) );
 
 require_once ABSPATH . 'zc-admin/admin-header.php';
 

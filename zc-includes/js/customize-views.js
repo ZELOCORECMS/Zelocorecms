@@ -2,27 +2,27 @@
  * @output zc-includes/js/customize-views.js
  */
 
-(function( $, wp, _ ) {
+(function( $, zc, _ ) {
 
-	if ( ! wp || ! wp.customize ) { return; }
-	var api = wp.customize;
+	if ( ! zc || ! zc.customize ) { return; }
+	var api = zc.customize;
 
 	/**
-	 * wp.customize.HeaderTool.CurrentView
+	 * zc.customize.HeaderTool.CurrentView
 	 *
 	 * Displays the currently selected header image, or a placeholder in lack
 	 * thereof.
 	 *
-	 * Instantiate with model wp.customize.HeaderTool.currentHeader.
+	 * Instantiate with model zc.customize.HeaderTool.currentHeader.
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.CurrentView
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.CurrentView
 	 *
 	 * @constructor
-	 * @augments wp.Backbone.View
+	 * @augments zc.Backbone.View
 	 */
-	api.HeaderTool.CurrentView = wp.Backbone.View.extend(/** @lends wp.customize.HeaderTool.CurrentView.prototype */{
-		template: wp.template('header-current'),
+	api.HeaderTool.CurrentView = zc.Backbone.View.extend(/** @lends zc.customize.HeaderTool.CurrentView.prototype */{
+		template: zc.template('header-current'),
 
 		initialize: function() {
 			this.listenTo(this.model, 'change', this.render);
@@ -51,24 +51,24 @@
 
 
 	/**
-	 * wp.customize.HeaderTool.ChoiceView
+	 * zc.customize.HeaderTool.ChoiceView
 	 *
 	 * Represents a choosable header image, be it user-uploaded,
 	 * theme-suggested or a special Randomize choice.
 	 *
-	 * Takes a wp.customize.HeaderTool.ImageModel.
+	 * Takes a zc.customize.HeaderTool.ImageModel.
 	 *
-	 * Manually changes model wp.customize.HeaderTool.currentHeader via the
+	 * Manually changes model zc.customize.HeaderTool.currentHeader via the
 	 * `select` method.
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.ChoiceView
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.ChoiceView
 	 *
 	 * @constructor
-	 * @augments wp.Backbone.View
+	 * @augments zc.Backbone.View
 	 */
-	api.HeaderTool.ChoiceView = wp.Backbone.View.extend(/** @lends wp.customize.HeaderTool.ChoiceView.prototype */{
-		template: wp.template('header-choice'),
+	api.HeaderTool.ChoiceView = zc.Backbone.View.extend(/** @lends zc.customize.HeaderTool.ChoiceView.prototype */{
+		template: zc.template('header-choice'),
 
 		className: 'header-view',
 
@@ -132,20 +132,20 @@
 
 
 	/**
-	 * wp.customize.HeaderTool.ChoiceListView
+	 * zc.customize.HeaderTool.ChoiceListView
 	 *
 	 * A container for ChoiceViews. These choices should be of one same type:
 	 * user-uploaded headers or theme-defined ones.
 	 *
-	 * Takes a wp.customize.HeaderTool.ChoiceList.
+	 * Takes a zc.customize.HeaderTool.ChoiceList.
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.ChoiceListView
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.ChoiceListView
 	 *
 	 * @constructor
-	 * @augments wp.Backbone.View
+	 * @augments zc.Backbone.View
 	 */
-	api.HeaderTool.ChoiceListView = wp.Backbone.View.extend(/** @lends wp.customize.HeaderTool.ChoiceListView.prototype */{
+	api.HeaderTool.ChoiceListView = zc.Backbone.View.extend(/** @lends zc.customize.HeaderTool.ChoiceListView.prototype */{
 		initialize: function() {
 			this.listenTo(this.collection, 'add', this.addOne);
 			this.listenTo(this.collection, 'remove', this.render);
@@ -180,18 +180,18 @@
 
 
 	/**
-	 * wp.customize.HeaderTool.CombinedList
+	 * zc.customize.HeaderTool.CombinedList
 	 *
-	 * Aggregates wp.customize.HeaderTool.ChoiceList collections (or any
+	 * Aggregates zc.customize.HeaderTool.ChoiceList collections (or any
 	 * Backbone object, really) and acts as a bus to feed them events.
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.CombinedList
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.CombinedList
 	 *
 	 * @constructor
-	 * @augments wp.Backbone.View
+	 * @augments zc.Backbone.View
 	 */
-	api.HeaderTool.CombinedList = wp.Backbone.View.extend(/** @lends wp.customize.HeaderTool.CombinedList.prototype */{
+	api.HeaderTool.CombinedList = zc.Backbone.View.extend(/** @lends zc.customize.HeaderTool.CombinedList.prototype */{
 		initialize: function(collections) {
 			this.collections = collections;
 			this.on('all', this.propagate, this);
@@ -203,4 +203,4 @@
 		}
 	});
 
-})( jQuery, window.wp, _ );
+})( jQuery, window.zc, _ );

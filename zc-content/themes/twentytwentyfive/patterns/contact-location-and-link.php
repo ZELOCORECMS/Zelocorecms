@@ -11,33 +11,33 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained","justifyContent":"center"}} -->
+<!-- zc:group {"align":"full","className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained","justifyContent":"center"}} -->
 <div class="zc-block-group alignfull is-style-section-3" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-	<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
+	<!-- zc:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
 	<div class="zc-block-columns alignwide">
-		<!-- wp:column {"verticalAlignment":"top","width":""} -->
+		<!-- zc:column {"verticalAlignment":"top","width":""} -->
 		<div class="zc-block-column is-vertically-aligned-top">
-			<!-- wp:group {"style":{"dimensions":{"minHeight":"100%"},"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch","verticalAlignment":"space-between"}} -->
-			<div class="zc-block-group" style="min-height:100%"><!-- wp:paragraph {"className":"is-style-text-display","fontSize":"xx-large"} -->
+			<!-- zc:group {"style":{"dimensions":{"minHeight":"100%"},"spacing":{"blockGap":"var:preset|spacing|40"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch","verticalAlignment":"space-between"}} -->
+			<div class="zc-block-group" style="min-height:100%"><!-- zc:paragraph {"className":"is-style-text-display","fontSize":"xx-large"} -->
 				<p class="is-style-text-display has-xx-large-font-size"><?php esc_html_e( 'Visit us at 123 Example St. Manhattan, NY 10300, United States', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 
-				<!-- wp:paragraph {"style":{"typography":{"textTransform":"uppercase"}},"fontSize":"medium"} -->
+				<!-- zc:paragraph {"style":{"typography":{"textTransform":"uppercase"}},"fontSize":"medium"} -->
 				<p class="has-medium-font-size" style="text-transform:uppercase"><a href="#"><?php esc_html_e( 'Get directions', 'twentytwentyfive' ); ?></a></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column {"verticalAlignment":"top","width":""} -->
+		<!-- zc:column {"verticalAlignment":"top","width":""} -->
 		<div class="zc-block-column is-vertically-aligned-top">
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","linkDestination":"none","className":"zc-block-image size-large"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","linkDestination":"none","className":"zc-block-image size-large"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/location.webp" alt="<?php esc_attr_e( 'The business location', 'twentytwentyfive' ); ?>"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

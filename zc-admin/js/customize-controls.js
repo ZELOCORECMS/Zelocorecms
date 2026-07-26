@@ -4,7 +4,7 @@
 
 /* global _wpCustomizeHeader, _wpCustomizeBackground, _wpMediaViewsL10n, MediaElementPlayer, console, confirm */
 (function( exports, $ ){
-	var Container, focus, normalizedTransitionendEventName, api = wp.customize;
+	var Container, focus, normalizedTransitionendEventName, api = zc.customize;
 
 	var reducedMotionMediaQuery = window.matchMedia( '(prefers-reduced-motion: reduce)' );
 	var isReducedMotion = reducedMotionMediaQuery.matches;
@@ -12,7 +12,7 @@
 		isReducedMotion = event.matches;
 	});
 
-	api.OverlayNotification = api.Notification.extend(/** @lends wp.customize.OverlayNotification.prototype */{
+	api.OverlayNotification = api.Notification.extend(/** @lends zc.customize.OverlayNotification.prototype */{
 
 		/**
 		 * Whether the notification should show a loading spinner.
@@ -25,8 +25,8 @@
 		/**
 		 * A notification that is displayed in a full-screen overlay.
 		 *
-		 * @constructs wp.customize.OverlayNotification
-		 * @augments   wp.customize.Notification
+		 * @constructs zc.customize.OverlayNotification
+		 * @augments   zc.customize.Notification
 		 *
 		 * @since 4.9.0
 		 *
@@ -74,7 +74,7 @@
 		}
 	});
 
-	api.Notifications = api.Values.extend(/** @lends wp.customize.Notifications.prototype */{
+	api.Notifications = api.Values.extend(/** @lends zc.customize.Notifications.prototype */{
 
 		/**
 		 * Whether the alternative style should be used.
@@ -97,8 +97,8 @@
 		 *
 		 * @since 4.9.0
 		 *
-		 * @constructs wp.customize.Notifications
-		 * @augments   wp.customize.Values
+		 * @constructs zc.customize.Notifications
+		 * @augments   zc.customize.Values
 		 *
 		 * @param {Object}  options - Options.
 		 * @param {jQuery}  [options.container] - Container element for notifications. This can be injected later.
@@ -141,9 +141,9 @@
 		 *
 		 * @since 4.9.0
 		 *
-		 * @param {string|wp.customize.Notification} notification - Notification object to add. Alternatively code may be supplied, and in that case the second notificationObject argument must be supplied.
-		 * @param {wp.customize.Notification} [notificationObject] - Notification to add when first argument is the code string.
-		 * @return {wp.customize.Notification} Added notification (or existing instance if it was already added).
+		 * @param {string|zc.customize.Notification} notification - Notification object to add. Alternatively code may be supplied, and in that case the second notificationObject argument must be supplied.
+		 * @param {zc.customize.Notification} [notificationObject] - Notification to add when first argument is the code string.
+		 * @return {zc.customize.Notification} Added notification (or existing instance if it was already added).
 		 */
 		add: function( notification, notificationObject ) {
 			var collection = this, code, instance;
@@ -182,7 +182,7 @@
 		 * @since 4.9.0
 		 * @param {Object}  args - Args.
 		 * @param {boolean} [args.sort=false] - Whether to return the notifications sorted.
-		 * @return {Array.<wp.customize.Notification>} Notifications.
+		 * @return {Array.<zc.customize.Notification>} Notifications.
 		 */
 		get: function( args ) {
 			var collection = this, notifications, errorTypePriorities, params;
@@ -255,8 +255,8 @@
 			// Add all notifications in the sorted order.
 			_.each( notifications, function( notification ) {
 				var notificationContainer;
-				if ( wp.a11y && ( ! previousNotificationsByCode[ notification.code ] || ! _.isEqual( notification.message, previousNotificationsByCode[ notification.code ].message ) ) ) {
-					wp.a11y.speak( notification.message, 'assertive' );
+				if ( zc.a11y && ( ! previousNotificationsByCode[ notification.code ] || ! _.isEqual( notification.message, previousNotificationsByCode[ notification.code ].message ) ) ) {
+					zc.a11y.speak( notification.message, 'assertive' );
 				}
 				notificationContainer = $( notification.render() );
 				notification.container = notificationContainer;
@@ -340,7 +340,7 @@
 		}
 	});
 
-	api.Setting = api.Value.extend(/** @lends wp.customize.Setting.prototype */{
+	api.Setting = api.Value.extend(/** @lends zc.customize.Setting.prototype */{
 
 		/**
 		 * Default params.
@@ -361,8 +361,8 @@
 		 *
 		 * @see PHP class ZC_Customize_Setting.
 		 *
-		 * @constructs wp.customize.Setting
-		 * @augments   wp.customize.Value
+		 * @constructs zc.customize.Setting
+		 * @augments   zc.customize.Value
 		 *
 		 * @since 3.4.0
 		 *
@@ -371,7 +371,7 @@
 		 * @param {Object}  [options={}]                - Options.
 		 * @param {string}  [options.transport=refresh] - The transport to use for previewing. Supports 'refresh' and 'postMessage'.
 		 * @param {boolean} [options.dirty=false]       - Whether the setting should be considered initially dirty.
-		 * @param {Object}  [options.previewer]         - The Previewer instance to sync with. Defaults to wp.customize.previewer.
+		 * @param {Object}  [options.previewer]         - The Previewer instance to sync with. Defaults to zc.customize.previewer.
 		 */
 		initialize: function( id, value, options ) {
 			var setting = this, params;
@@ -425,7 +425,7 @@
 		 * Find controls associated with this setting.
 		 *
 		 * @since 4.6.0
-		 * @return {wp.customize.Control[]} Controls associated with setting.
+		 * @return {zc.customize.Control[]} Controls associated with setting.
 		 */
 		findControls: function() {
 			var setting = this, controls = [];
@@ -443,7 +443,7 @@
 	/**
 	 * Current change count.
 	 *
-	 * @alias wp.customize._latestRevision
+	 * @alias zc.customize._latestRevision
 	 *
 	 * @since 4.7.0
 	 * @type {number}
@@ -454,7 +454,7 @@
 	/**
 	 * Last revision that was saved.
 	 *
-	 * @alias wp.customize._lastSavedRevision
+	 * @alias zc.customize._lastSavedRevision
 	 *
 	 * @since 4.7.0
 	 * @type {number}
@@ -465,7 +465,7 @@
 	/**
 	 * Latest revisions associated with the updated setting.
 	 *
-	 * @alias wp.customize._latestSettingRevisions
+	 * @alias zc.customize._latestSettingRevisions
 	 *
 	 * @since 4.7.0
 	 * @type {object}
@@ -496,7 +496,7 @@
 	/**
 	 * Get the dirty setting values.
 	 *
-	 * @alias wp.customize.dirtyValues
+	 * @alias zc.customize.dirtyValues
 	 *
 	 * @since 4.7.0
 	 * @access public
@@ -529,7 +529,7 @@
 	/**
 	 * Request updates to the changeset.
 	 *
-	 * @alias wp.customize.requestChangesetUpdate
+	 * @alias zc.customize.requestChangesetUpdate
 	 *
 	 * @since 4.7.0
 	 * @access public
@@ -584,7 +584,7 @@
 			return deferred.promise();
 		}
 
-		// A status would cause a revision to be made, and for this wp.customize.previewer.save() should be used.
+		// A status would cause a revision to be made, and for this zc.customize.previewer.save() should be used.
 		// Status is also disallowed for revisions regardless.
 		if ( submittedArgs.status ) {
 			return deferred.reject( { code: 'illegal_status_in_changeset_update' } ).promise();
@@ -622,7 +622,7 @@
 		// Allow plugins to modify the params included with the save request.
 		api.trigger( 'save-request-params', data );
 
-		request = wp.ajax.post( 'customize_save', data );
+		request = zc.ajax.post( 'customize_save', data );
 
 		request.done( function requestChangesetUpdateDone( data ) {
 			var savedChangesetValues = {};
@@ -667,11 +667,11 @@
 	/**
 	 * Watch all changes to Value properties, and bubble changes to parent Values instance
 	 *
-	 * @alias wp.customize.utils.bubbleChildValueChanges
+	 * @alias zc.customize.utils.bubbleChildValueChanges
 	 *
 	 * @since 4.1.0
 	 *
-	 * @param {wp.customize.Class} instance
+	 * @param {zc.customize.Class} instance
 	 * @param {Array}              properties  The names of the Value instances to watch.
 	 */
 	api.utils.bubbleChildValueChanges = function ( instance, properties ) {
@@ -687,7 +687,7 @@
 	/**
 	 * Expand a panel, section, or control and focus on the first focusable element.
 	 *
-	 * @alias wp.customize~focus
+	 * @alias zc.customize~focus
 	 *
 	 * @since 4.1.0
 	 *
@@ -748,12 +748,12 @@
 	 *
 	 * If a.priority() === b.priority(), then sort by their respective params.instanceNumber.
 	 *
-	 * @alias wp.customize.utils.prioritySort
+	 * @alias zc.customize.utils.prioritySort
 	 *
 	 * @since 4.1.0
 	 *
-	 * @param {(wp.customize.Panel|wp.customize.Section|wp.customize.Control)} a
-	 * @param {(wp.customize.Panel|wp.customize.Section|wp.customize.Control)} b
+	 * @param {(zc.customize.Panel|zc.customize.Section|zc.customize.Control)} a
+	 * @param {(zc.customize.Panel|zc.customize.Section|zc.customize.Control)} b
 	 * @return {number}
 	 */
 	api.utils.prioritySort = function ( a, b ) {
@@ -767,7 +767,7 @@
 	/**
 	 * Return whether the supplied Event object is for a keydown event but not the Enter key.
 	 *
-	 * @alias wp.customize.utils.isKeydownButNotEnterEvent
+	 * @alias zc.customize.utils.isKeydownButNotEnterEvent
 	 *
 	 * @since 4.1.0
 	 *
@@ -781,7 +781,7 @@
 	/**
 	 * Return whether the two lists of elements are the same and are in the same order.
 	 *
-	 * @alias wp.customize.utils.areElementListsEqual
+	 * @alias zc.customize.utils.areElementListsEqual
 	 *
 	 * @since 4.1.0
 	 *
@@ -809,7 +809,7 @@
 	 * UI element, after an optional delay. If the user focuses the element
 	 * before the delay passes, the reminder is canceled.
 	 *
-	 * @alias wp.customize.utils.highlightButton
+	 * @alias zc.customize.utils.highlightButton
 	 *
 	 * @since 4.9.0
 	 *
@@ -864,7 +864,7 @@
 	 *
 	 * Same functionality as the `current_time( 'mysql', false )` function in PHP.
 	 *
-	 * @alias wp.customize.utils.getCurrentTimestamp
+	 * @alias zc.customize.utils.getCurrentTimestamp
 	 *
 	 * @since 4.9.0
 	 *
@@ -883,7 +883,7 @@
 	/**
 	 * Get remaining time of when the date is set.
 	 *
-	 * @alias wp.customize.utils.getRemainingTime
+	 * @alias zc.customize.utils.getRemainingTime
 	 *
 	 * @since 4.9.0
 	 *
@@ -933,7 +933,7 @@
 		}
 	})();
 
-	Container = api.Class.extend(/** @lends wp.customize~Container.prototype */{
+	Container = api.Class.extend(/** @lends zc.customize~Container.prototype */{
 		defaultActiveArguments: { duration: 'fast', completeCallback: $.noop },
 		defaultExpandedArguments: { duration: 'fast', completeCallback: $.noop },
 		containerType: 'container',
@@ -950,12 +950,12 @@
 		/**
 		 * Base class for Panel and Section.
 		 *
-		 * @constructs wp.customize~Container
-		 * @augments   wp.customize.Class
+		 * @constructs zc.customize~Container
+		 * @augments   zc.customize.Class
 		 *
 		 * @since 4.1.0
 		 *
-		 * @borrows wp.customize~focus as focus
+		 * @borrows zc.customize~focus as focus
 		 *
 		 * @param {string}  id - The ID for the container.
 		 * @param {Object}  options - Object containing one property: params.
@@ -963,7 +963,7 @@
 		 * @param {string}  [options.description] - Description shown at the top of the panel.
 		 * @param {number}  [options.priority=100] - The sort priority for the panel.
 		 * @param {string}  [options.templateId] - Template selector for container.
-		 * @param {string}  [options.type=default] - The type of the panel. See wp.customize.panelConstructor.
+		 * @param {string}  [options.type=default] - The type of the panel. See zc.customize.panelConstructor.
 		 * @param {string}  [options.content] - The markup to be used for the panel container. If empty, a JS template is used.
 		 * @param {boolean} [options.active=true] - Whether the panel is active or not.
 		 * @param {Object}  [options.params] - Deprecated wrapper for the above properties.
@@ -1358,9 +1358,9 @@
 				container = this;
 
 			if ( 0 !== $( '#tmpl-' + container.templateSelector ).length ) {
-				template = wp.template( container.templateSelector );
+				template = zc.template( container.templateSelector );
 			} else {
-				template = wp.template( 'customize-' + container.containerType + '-default' );
+				template = zc.template( 'customize-' + container.containerType + '-default' );
 			}
 			if ( template && container.container ) {
 				return template( _.extend(
@@ -1407,7 +1407,7 @@
 		}
 	});
 
-	api.Section = Container.extend(/** @lends wp.customize.Section.prototype */{
+	api.Section = Container.extend(/** @lends zc.customize.Section.prototype */{
 		containerType: 'section',
 		containerParent: '#customize-theme-controls',
 		containerPaneParent: '.customize-pane-parent',
@@ -1424,8 +1424,8 @@
 		},
 
 		/**
-		 * @constructs wp.customize.Section
-		 * @augments   wp.customize~Container
+		 * @constructs zc.customize.Section
+		 * @augments   zc.customize~Container
 		 *
 		 * @since 4.1.0
 		 *
@@ -1434,7 +1434,7 @@
 		 * @param {string}  options.title - Title shown when section is collapsed and expanded.
 		 * @param {string}  [options.description] - Description shown at the top of the section.
 		 * @param {number}  [options.priority=100] - The sort priority for the section.
-		 * @param {string}  [options.type=default] - The type of the section. See wp.customize.sectionConstructor.
+		 * @param {string}  [options.type=default] - The type of the section. See zc.customize.sectionConstructor.
 		 * @param {string}  [options.content] - The markup to be used for the section container. If empty, a JS template is used.
 		 * @param {boolean} [options.active=true] - Whether the section is active or not.
 		 * @param {string}  options.panel - The ID for the panel this section is associated with.
@@ -1684,7 +1684,7 @@
 		}
 	});
 
-	api.ThemesSection = api.Section.extend(/** @lends wp.customize.ThemesSection.prototype */{
+	api.ThemesSection = api.Section.extend(/** @lends zc.customize.ThemesSection.prototype */{
 		currentTheme: '',
 		overlay: '',
 		template: '',
@@ -1703,13 +1703,13 @@
 		updateCountDebounced: null,
 
 		/**
-		 * wp.customize.ThemesSection
+		 * zc.customize.ThemesSection
 		 *
 		 * Custom section for themes that loads themes by category, and also
 		 * handles the theme-details view rendering and navigation.
 		 *
-		 * @constructs wp.customize.ThemesSection
-		 * @augments   wp.customize.Section
+		 * @constructs zc.customize.ThemesSection
+		 * @augments   zc.customize.Section
 		 *
 		 * @since 4.9.0
 		 *
@@ -1769,7 +1769,7 @@
 		ready: function() {
 			var section = this;
 			section.overlay = section.container.find( '.theme-overlay' );
-			section.template = wp.template( 'customize-themes-details-view' );
+			section.template = zc.template( 'customize-themes-details-view' );
 
 			// Bind global keyboard events.
 			section.container.on( 'keydown', function( event ) {
@@ -2102,7 +2102,7 @@
 			section.headContainer.closest( '.zc-full-overlay' ).addClass( 'loading' );
 			section.loading = true;
 			section.container.find( '.no-themes' ).hide();
-			request = wp.ajax.post( 'customize_load_themes', params );
+			request = zc.ajax.post( 'customize_load_themes', params );
 			request.done(function( data ) {
 				var themes = data.themes;
 
@@ -2136,7 +2136,7 @@
 							}
 						});
 						if ( 'local' !== section.params.filter_type ) {
-							wp.a11y.speak( api.settings.l10n.themeSearchResults.replace( '%d', data.info.results ) );
+							zc.a11y.speak( api.settings.l10n.themeSearchResults.replace( '%d', data.info.results ) );
 						}
 					}
 
@@ -2149,7 +2149,7 @@
 				} else {
 					if ( 0 === section.loaded ) {
 						section.container.find( '.no-themes' ).show();
-						wp.a11y.speak( section.container.find( '.no-themes' ).text() );
+						zc.a11y.speak( section.container.find( '.no-themes' ).text() );
 					} else {
 						section.fullyLoaded = true;
 					}
@@ -2168,7 +2168,7 @@
 			request.fail(function( data ) {
 				if ( 'undefined' === typeof data ) {
 					section.container.find( '.unexpected-error' ).show();
-					wp.a11y.speak( section.container.find( '.unexpected-error' ).text() );
+					zc.a11y.speak( section.container.find( '.unexpected-error' ).text() );
 				} else if ( 'undefined' !== typeof console && console.error ) {
 					console.error( data );
 				}
@@ -2264,7 +2264,7 @@
 
 			if ( 0 === count ) {
 				section.container.find( noFilter ).show();
-				wp.a11y.speak( section.container.find( noFilter ).text() );
+				zc.a11y.speak( section.container.find( noFilter ).text() );
 			} else {
 				section.container.find( noFilter ).hide();
 			}
@@ -2281,7 +2281,7 @@
 		 *
 		 * @since 4.9.0
 		 *
-		 * @param {wp.customize.ThemesSection} section - The current theme section, passed through the debouncer.
+		 * @param {zc.customize.ThemesSection} section - The current theme section, passed through the debouncer.
 		 * @return {void}
 		 */
 		checkTerm: function( section ) {
@@ -2461,7 +2461,7 @@
 					countEl.text( count );
 					displayed.fadeIn( 180 );
 				} );
-				wp.a11y.speak( api.settings.l10n.announceThemeCount.replace( '%d', count ) );
+				zc.a11y.speak( api.settings.l10n.announceThemeCount.replace( '%d', count ) );
 			}
 		},
 
@@ -2486,7 +2486,7 @@
 		 *
 		 * @since 4.2.0
 		 *
-		 * @return {wp.customize.ThemeControl|boolean} Next theme.
+		 * @return {zc.customize.ThemeControl|boolean} Next theme.
 		 */
 		getNextTheme: function () {
 			var section = this, control, nextControl, sectionControls, i;
@@ -2523,7 +2523,7 @@
 		 * Get the previous theme model.
 		 *
 		 * @since 4.2.0
-		 * @return {wp.customize.ThemeControl|boolean} Previous theme.
+		 * @return {zc.customize.ThemeControl|boolean} Previous theme.
 		 */
 		getPreviousTheme: function () {
 			var section = this, control, nextControl, sectionControls, i;
@@ -2602,7 +2602,7 @@
 			section.$body.addClass( 'modal-open' );
 			section.containFocus( section.overlay );
 			section.updateLimits();
-			wp.a11y.speak( api.settings.l10n.announceThemeDetails.replace( '%s', theme.name ) );
+			zc.a11y.speak( api.settings.l10n.announceThemeDetails.replace( '%s', theme.name ) );
 			if ( callback ) {
 				callback();
 			}
@@ -2656,16 +2656,16 @@
 		}
 	});
 
-	api.OuterSection = api.Section.extend(/** @lends wp.customize.OuterSection.prototype */{
+	api.OuterSection = api.Section.extend(/** @lends zc.customize.OuterSection.prototype */{
 
 		/**
-		 * Class wp.customize.OuterSection.
+		 * Class zc.customize.OuterSection.
 		 *
 		 * Creates section outside of the sidebar, there is no ui to trigger collapse/expand so
 		 * it would require custom handling.
 		 *
-		 * @constructs wp.customize.OuterSection
-		 * @augments   wp.customize.Section
+		 * @constructs zc.customize.OuterSection
+		 * @augments   zc.customize.Section
 		 *
 		 * @since 4.9.0
 		 *
@@ -2765,12 +2765,12 @@
 		}
 	});
 
-	api.Panel = Container.extend(/** @lends wp.customize.Panel.prototype */{
+	api.Panel = Container.extend(/** @lends zc.customize.Panel.prototype */{
 		containerType: 'panel',
 
 		/**
-		 * @constructs wp.customize.Panel
-		 * @augments   wp.customize~Container
+		 * @constructs zc.customize.Panel
+		 * @augments   zc.customize~Container
 		 *
 		 * @since 4.1.0
 		 *
@@ -2779,7 +2779,7 @@
 		 * @param {string}  options.title - Title shown when panel is collapsed and expanded.
 		 * @param {string}  [options.description] - Description shown at the top of the panel.
 		 * @param {number}  [options.priority=100] - The sort priority for the panel.
-		 * @param {string}  [options.type=default] - The type of the panel. See wp.customize.panelConstructor.
+		 * @param {string}  [options.type=default] - The type of the panel. See zc.customize.panelConstructor.
 		 * @param {string}  [options.content] - The markup to be used for the panel container. If empty, a JS template is used.
 		 * @param {boolean} [options.active=true] - Whether the panel is active or not.
 		 * @param {Object}  [options.params] - Deprecated wrapper for the above properties.
@@ -3019,9 +3019,9 @@
 
 			// Add the content to the container.
 			if ( 0 !== $( '#tmpl-' + panel.templateSelector + '-content' ).length ) {
-				template = wp.template( panel.templateSelector + '-content' );
+				template = zc.template( panel.templateSelector + '-content' );
 			} else {
-				template = wp.template( 'customize-panel-default-content' );
+				template = zc.template( 'customize-panel-default-content' );
 			}
 			if ( template && panel.headContainer ) {
 				panel.contentContainer.html( template( _.extend(
@@ -3032,15 +3032,15 @@
 		}
 	});
 
-	api.ThemesPanel = api.Panel.extend(/** @lends wp.customize.ThemsPanel.prototype */{
+	api.ThemesPanel = api.Panel.extend(/** @lends zc.customize.ThemsPanel.prototype */{
 
 		/**
-		 *  Class wp.customize.ThemesPanel.
+		 *  Class zc.customize.ThemesPanel.
 		 *
 		 * Custom section for themes that displays without the customize preview.
 		 *
-		 * @constructs wp.customize.ThemesPanel
-		 * @augments   wp.customize.Panel
+		 * @constructs zc.customize.ThemesPanel
+		 * @augments   zc.customize.Panel
 		 *
 		 * @since 4.9.0
 		 *
@@ -3193,7 +3193,7 @@
 		},
 
 		/**
-		 * Install a theme via wp.updates.
+		 * Install a theme via zc.updates.
 		 *
 		 * @since 4.9.0
 		 *
@@ -3228,7 +3228,7 @@
 				return deferred.promise();
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			onInstallSuccess = function( response ) {
 				var theme = false, themeControl;
@@ -3276,7 +3276,7 @@
 			};
 
 			panel.installingThemes.push( slug ); // Note: we don't remove elements from installingThemes, since they shouldn't be installed again.
-			request = wp.updates.installTheme( {
+			request = zc.updates.installTheme( {
 				slug: slug
 			} );
 
@@ -3374,7 +3374,7 @@
 		},
 
 		/**
-		 * Update a theme via wp.updates.
+		 * Update a theme via zc.updates.
 		 *
 		 * @since 4.9.0
 		 *
@@ -3382,7 +3382,7 @@
 		 * @return {void}
 		 */
 		updateTheme: function( event ) {
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			$( document ).one( 'zc-theme-update-success', function( e, response ) {
 
@@ -3398,13 +3398,13 @@
 				});
 			} );
 
-			wp.updates.updateTheme( {
+			zc.updates.updateTheme( {
 				slug: $( event.target ).closest( '.notice' ).data( 'slug' )
 			} );
 		},
 
 		/**
-		 * Delete a theme via wp.updates.
+		 * Delete a theme via zc.updates.
 		 *
 		 * @since 4.9.0
 		 *
@@ -3428,7 +3428,7 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			$( document ).one( 'zc-theme-delete-success', function() {
 				var control = api.control( 'installed_theme_' + theme );
@@ -3449,7 +3449,7 @@
 				});
 			} );
 
-			wp.updates.deleteTheme( {
+			zc.updates.deleteTheme( {
 				slug: theme
 			} );
 
@@ -3459,7 +3459,7 @@
 		}
 	});
 
-	api.Control = api.Class.extend(/** @lends wp.customize.Control.prototype */{
+	api.Control = api.Class.extend(/** @lends zc.customize.Control.prototype */{
 		defaultActiveArguments: { duration: 'fast', completeCallback: $.noop },
 
 		/**
@@ -3482,13 +3482,13 @@
 		 *
 		 * @see PHP class ZC_Customize_Control.
 		 *
-		 * @constructs wp.customize.Control
-		 * @augments   wp.customize.Class
+		 * @constructs zc.customize.Control
+		 * @augments   zc.customize.Class
 		 *
-		 * @borrows wp.customize~focus as this#focus
-		 * @borrows wp.customize~Container#activate as this#activate
-		 * @borrows wp.customize~Container#deactivate as this#deactivate
-		 * @borrows wp.customize~Container#_toggleActive as this#_toggleActive
+		 * @borrows zc.customize~focus as this#focus
+		 * @borrows zc.customize~Container#activate as this#activate
+		 * @borrows zc.customize~Container#deactivate as this#deactivate
+		 * @borrows zc.customize~Container#_toggleActive as this#_toggleActive
 		 *
 		 * @param {string} id                       - Unique identifier for the control instance.
 		 * @param {Object} options                  - Options hash for the control instance.
@@ -3848,13 +3848,13 @@
 		 *
 		 * @deprecated in favor of `control.notifications.render()`
 		 * @since 4.6.0
-		 * @this {wp.customize.Control}
+		 * @this {zc.customize.Control}
 		 */
 		renderNotifications: function() {
 			var control = this, container, notifications, hasError = false;
 
 			if ( 'undefined' !== typeof console && console.warn ) {
-				console.warn( '[DEPRECATED] wp.customize.Control.prototype.renderNotifications() is deprecated in favor of instantiating a wp.customize.Notifications and calling its render() method.' );
+				console.warn( '[DEPRECATED] zc.customize.Control.prototype.renderNotifications() is deprecated in favor of instantiating a zc.customize.Notifications and calling its render() method.' );
 			}
 
 			container = control.getNotificationsContainerElement();
@@ -3878,7 +3878,7 @@
 			}
 
 			if ( ! control.notificationsTemplate ) {
-				control.notificationsTemplate = wp.template( 'customize-control-notifications' );
+				control.notificationsTemplate = zc.template( 'customize-control-notifications' );
 			}
 
 			control.container.toggleClass( 'has-notifications', 0 !== notifications.length );
@@ -4043,7 +4043,7 @@
 
 			// Replace the container element's content with the control.
 			if ( document.getElementById( 'tmpl-' + templateId ) ) {
-				template = wp.template( templateId );
+				template = zc.template( templateId );
 				if ( template && control.container ) {
 					control.container.html( template( control.params ) );
 				}
@@ -4084,7 +4084,7 @@
 				input.attr('aria-invalid', 'true');
 				input.attr('aria-describedby', inputError.attr('id'));
 				inputError.slideDown( 'fast' );
-				wp.a11y.speak( inputError.text() );
+				zc.a11y.speak( inputError.text() );
 				return;
 			}
 
@@ -4118,7 +4118,7 @@
 				// Add the new item to the list of available menu items.
 				api.Menus.availableMenuItemsPanel.collection.add( availableItem );
 				$content = $( '#available-menu-items-post_type-page' ).find( '.available-menu-items-list' );
-				itemTemplate = wp.template( 'available-menu-item' );
+				itemTemplate = zc.template( 'available-menu-item' );
 				$content.prepend( itemTemplate( availableItem.attributes ) );
 
 				// Focus the select control.
@@ -4138,10 +4138,10 @@
 	/**
 	 * A colorpicker control.
 	 *
-	 * @class    wp.customize.ColorControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.ColorControl
+	 * @augments zc.customize.Control
 	 */
-	api.ColorControl = api.Control.extend(/** @lends wp.customize.ColorControl.prototype */{
+	api.ColorControl = api.Control.extend(/** @lends zc.customize.ColorControl.prototype */{
 		ready: function() {
 			var control = this,
 				isHueSlider = this.params.mode === 'hue',
@@ -4201,10 +4201,10 @@
 	/**
 	 * A control that implements the media modal.
 	 *
-	 * @class    wp.customize.MediaControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.MediaControl
+	 * @augments zc.customize.Control
 	 */
-	api.MediaControl = api.Control.extend(/** @lends wp.customize.MediaControl.prototype */{
+	api.MediaControl = api.Control.extend(/** @lends zc.customize.MediaControl.prototype */{
 
 		/**
 		 * When the control's DOM structure is ready,
@@ -4264,12 +4264,12 @@
 
 				// Fetch the attachment data.
 				if ( 'pending' === hasAttachmentData.state() ) {
-					wp.media.attachment( value ).fetch().done( function() {
+					zc.media.attachment( value ).fetch().done( function() {
 						control.params.attachment = this.attributes;
 						hasAttachmentData.resolve();
 
 						// Send attachment information to the preview for possible use in `postMessage` transport.
-						wp.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
+						zc.customize.previewer.send( control.setting.id + '-attachment-data', this.attributes );
 					} );
 				}
 
@@ -4290,7 +4290,7 @@
 		},
 
 		cleanupPlayer: function () {
-			this.player && wp.media.mixin.removePlayer( this.player );
+			this.player && zc.media.mixin.removePlayer( this.player );
 		},
 
 		/**
@@ -4314,14 +4314,14 @@
 		 * Create a media modal select frame, and store it so the instance can be reused when needed.
 		 */
 		initFrame: function() {
-			this.frame = wp.media({
+			this.frame = zc.media({
 				button: {
 					text: this.params.button_labels.frame_button
 				},
 				states: [
-					new wp.media.controller.Library({
+					new zc.media.controller.Library({
 						title:     this.params.button_labels.frame_title,
-						library:   wp.media.query({ type: this.params.mime_type }),
+						library:   zc.media.query({ type: this.params.mime_type }),
 						multiple:  false,
 						date:      false
 					})
@@ -4389,10 +4389,10 @@
 	/**
 	 * An upload control, which utilizes the media modal.
 	 *
-	 * @class    wp.customize.UploadControl
-	 * @augments wp.customize.MediaControl
+	 * @class    zc.customize.UploadControl
+	 * @augments zc.customize.MediaControl
 	 */
-	api.UploadControl = api.MediaControl.extend(/** @lends wp.customize.UploadControl.prototype */{
+	api.UploadControl = api.MediaControl.extend(/** @lends zc.customize.UploadControl.prototype */{
 
 		/**
 		 * Callback handler for when an attachment is selected in the media modal.
@@ -4431,10 +4431,10 @@
 	 * This control no longer needs to do anything more
 	 * than what the upload control does in JS.
 	 *
-	 * @class    wp.customize.ImageControl
-	 * @augments wp.customize.UploadControl
+	 * @class    zc.customize.ImageControl
+	 * @augments zc.customize.UploadControl
 	 */
-	api.ImageControl = api.UploadControl.extend(/** @lends wp.customize.ImageControl.prototype */{
+	api.ImageControl = api.UploadControl.extend(/** @lends zc.customize.ImageControl.prototype */{
 		// @deprecated
 		thumbnailSrc: function() {}
 	});
@@ -4442,10 +4442,10 @@
 	/**
 	 * A control for uploading background images.
 	 *
-	 * @class    wp.customize.BackgroundControl
-	 * @augments wp.customize.UploadControl
+	 * @class    zc.customize.BackgroundControl
+	 * @augments zc.customize.UploadControl
 	 */
-	api.BackgroundControl = api.UploadControl.extend(/** @lends wp.customize.BackgroundControl.prototype */{
+	api.BackgroundControl = api.UploadControl.extend(/** @lends zc.customize.BackgroundControl.prototype */{
 
 		/**
 		 * When the control's DOM structure is ready,
@@ -4462,7 +4462,7 @@
 		select: function() {
 			api.UploadControl.prototype.select.apply( this, arguments );
 
-			wp.ajax.post( 'custom-background-add', {
+			zc.ajax.post( 'custom-background-add', {
 				nonce: _wpCustomizeBackground.nonces.add,
 				zc_customize: 'on',
 				customize_theme: api.settings.theme.stylesheet,
@@ -4476,10 +4476,10 @@
 	 *
 	 * @since 4.7.0
 	 *
-	 * @class    wp.customize.BackgroundPositionControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.BackgroundPositionControl
+	 * @augments zc.customize.Control
 	 */
-	api.BackgroundPositionControl = api.Control.extend(/** @lends wp.customize.BackgroundPositionControl.prototype */{
+	api.BackgroundPositionControl = api.Control.extend(/** @lends zc.customize.BackgroundPositionControl.prototype */{
 
 		/**
 		 * Set up control UI once embedded in DOM and settings are created.
@@ -4514,10 +4514,10 @@
 	/**
 	 * A control for selecting and cropping an image.
 	 *
-	 * @class    wp.customize.CroppedImageControl
-	 * @augments wp.customize.MediaControl
+	 * @class    zc.customize.CroppedImageControl
+	 * @augments zc.customize.MediaControl
 	 */
-	api.CroppedImageControl = api.MediaControl.extend(/** @lends wp.customize.CroppedImageControl.prototype */{
+	api.CroppedImageControl = api.MediaControl.extend(/** @lends zc.customize.CroppedImageControl.prototype */{
 
 		/**
 		 * Open the media modal to the library state.
@@ -4537,22 +4537,22 @@
 		initFrame: function() {
 			var l10n = _wpMediaViewsL10n;
 
-			this.frame = wp.media({
+			this.frame = zc.media({
 				button: {
 					text: l10n.select,
 					close: false
 				},
 				states: [
-					new wp.media.controller.Library({
+					new zc.media.controller.Library({
 						title: this.params.button_labels.frame_title,
-						library: wp.media.query({ type: 'image' }),
+						library: zc.media.query({ type: 'image' }),
 						multiple: false,
 						date: false,
 						priority: 20,
 						suggestedWidth: this.params.width,
 						suggestedHeight: this.params.height
 					}),
-					new wp.media.controller.CustomizeImageCropper({
+					new zc.media.controller.CustomizeImageCropper({
 						imgSelectOptions: this.calculateImageSelectOptions,
 						control: this
 					})
@@ -4591,10 +4591,10 @@
 		/**
 		 * Returns a set of options, computed from the attached image data and
 		 * control-specific data, to be fed to the imgAreaSelect plugin in
-		 * wp.media.view.Cropper.
+		 * zc.media.view.Cropper.
 		 *
-		 * @param {wp.media.model.Attachment} attachment
-		 * @param {wp.media.controller.Cropper} controller
+		 * @param {zc.media.model.Attachment} attachment
+		 * @param {zc.media.controller.Cropper} controller
 		 * @return {Object} Options
 		 */
 		calculateImageSelectOptions: function( attachment, controller ) {
@@ -4745,10 +4745,10 @@
 	/**
 	 * A control for selecting and cropping Site Icons.
 	 *
-	 * @class    wp.customize.SiteIconControl
-	 * @augments wp.customize.CroppedImageControl
+	 * @class    zc.customize.SiteIconControl
+	 * @augments zc.customize.CroppedImageControl
 	 */
-	api.SiteIconControl = api.CroppedImageControl.extend(/** @lends wp.customize.SiteIconControl.prototype */{
+	api.SiteIconControl = api.CroppedImageControl.extend(/** @lends zc.customize.SiteIconControl.prototype */{
 
 		/**
 		 * Create a media modal select frame, and store it so the instance can be reused when needed.
@@ -4756,22 +4756,22 @@
 		initFrame: function() {
 			var l10n = _wpMediaViewsL10n;
 
-			this.frame = wp.media({
+			this.frame = zc.media({
 				button: {
 					text: l10n.select,
 					close: false
 				},
 				states: [
-					new wp.media.controller.Library({
+					new zc.media.controller.Library({
 						title: this.params.button_labels.frame_title,
-						library: wp.media.query({ type: 'image' }),
+						library: zc.media.query({ type: 'image' }),
 						multiple: false,
 						date: false,
 						priority: 20,
 						suggestedWidth: this.params.width,
 						suggestedHeight: this.params.height
 					}),
-					new wp.media.controller.SiteIconCropper({
+					new zc.media.controller.SiteIconCropper({
 						imgSelectOptions: this.calculateImageSelectOptions,
 						control: this
 					})
@@ -4792,7 +4792,7 @@
 				controller = this;
 
 			if ( this.params.width === attachment.width && this.params.height === attachment.height && ! this.params.flex_width && ! this.params.flex_height ) {
-				wp.ajax.post( 'crop-image', {
+				zc.ajax.post( 'crop-image', {
 					nonce: attachment.nonces.edit,
 					id: attachment.id,
 					context: 'site-icon',
@@ -4872,10 +4872,10 @@
 	});
 
 	/**
-	 * @class    wp.customize.HeaderControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.HeaderControl
+	 * @augments zc.customize.Control
 	 */
-	api.HeaderControl = api.Control.extend(/** @lends wp.customize.HeaderControl.prototype */{
+	api.HeaderControl = api.Control.extend(/** @lends zc.customize.HeaderControl.prototype */{
 		ready: function() {
 			this.btnRemove = $('#customize-control-header_image .actions .remove');
 			this.btnNew    = $('#customize-control-header_image .actions .new');
@@ -4908,8 +4908,8 @@
 			]);
 
 			// Ensure custom-header-crop Ajax requests bootstrap the Customizer to activate the previewed theme.
-			wp.media.controller.Cropper.prototype.defaults.doCropArgs.zc_customize = 'on';
-			wp.media.controller.Cropper.prototype.defaults.doCropArgs.customize_theme = api.settings.theme.stylesheet;
+			zc.media.controller.Cropper.prototype.defaults.doCropArgs.zc_customize = 'on';
+			zc.media.controller.Cropper.prototype.defaults.doCropArgs.customize_theme = api.settings.theme.stylesheet;
 		},
 
 		/**
@@ -4947,10 +4947,10 @@
 		/**
 		 * Returns a set of options, computed from the attached image data and
 		 * theme-specific data, to be fed to the imgAreaSelect plugin in
-		 * wp.media.view.Cropper.
+		 * zc.media.view.Cropper.
 		 *
-		 * @param {wp.media.model.Attachment} attachment
-		 * @param {wp.media.controller.Cropper} controller
+		 * @param {zc.media.model.Attachment} attachment
+		 * @param {zc.media.controller.Cropper} controller
 		 * @return {Object} Options
 		 */
 		calculateImageSelectOptions: function(attachment, controller) {
@@ -5027,22 +5027,22 @@
 
 			event.preventDefault();
 
-			this.frame = wp.media({
+			this.frame = zc.media({
 				button: {
 					text: l10n.selectAndCrop,
 					close: false
 				},
 				states: [
-					new wp.media.controller.Library({
+					new zc.media.controller.Library({
 						title:     l10n.chooseImage,
-						library:   wp.media.query({ type: 'image' }),
+						library:   zc.media.query({ type: 'image' }),
 						multiple:  false,
 						date:      false,
 						priority:  20,
 						suggestedWidth: _wpCustomizeHeader.data.width,
 						suggestedHeight: _wpCustomizeHeader.data.height
 					}),
-					new wp.media.controller.Cropper({
+					new zc.media.controller.Cropper({
 						imgSelectOptions: this.calculateImageSelectOptions
 					})
 				]
@@ -5089,7 +5089,7 @@
 		},
 
 		/**
-		 * Creates a new wp.customize.HeaderTool.ImageModel from provided
+		 * Creates a new zc.customize.HeaderTool.ImageModel from provided
 		 * header image data and inserts it into the user-uploaded headers
 		 * collection.
 		 *
@@ -5139,12 +5139,12 @@
 	});
 
 	/**
-	 * wp.customize.ThemeControl
+	 * zc.customize.ThemeControl
 	 *
-	 * @class    wp.customize.ThemeControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.ThemeControl
+	 * @augments zc.customize.Control
 	 */
-	api.ThemeControl = api.Control.extend(/** @lends wp.customize.ThemeControl.prototype */{
+	api.ThemeControl = api.Control.extend(/** @lends zc.customize.ThemeControl.prototype */{
 
 		touchDrag: false,
 		screenshotRendered: false,
@@ -5288,14 +5288,14 @@
 	});
 
 	/**
-	 * Class wp.customize.CodeEditorControl
+	 * Class zc.customize.CodeEditorControl
 	 *
 	 * @since 4.9.0
 	 *
-	 * @class    wp.customize.CodeEditorControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.CodeEditorControl
+	 * @augments zc.customize.Control
 	 */
-	api.CodeEditorControl = api.Control.extend(/** @lends wp.customize.CodeEditorControl.prototype */{
+	api.CodeEditorControl = api.Control.extend(/** @lends zc.customize.CodeEditorControl.prototype */{
 
 		/**
 		 * Initialize.
@@ -5376,10 +5376,10 @@
 			var control = this, element, editorSettings = false;
 
 			// Obtain editorSettings for instantiation.
-			if ( wp.codeEditor && ( _.isUndefined( control.params.editor_settings ) || false !== control.params.editor_settings ) ) {
+			if ( zc.codeEditor && ( _.isUndefined( control.params.editor_settings ) || false !== control.params.editor_settings ) ) {
 
 				// Obtain default editor settings.
-				editorSettings = wp.codeEditor.defaultSettings ? _.clone( wp.codeEditor.defaultSettings ) : {};
+				editorSettings = zc.codeEditor.defaultSettings ? _.clone( zc.codeEditor.defaultSettings ) : {};
 				editorSettings.codemirror = _.extend(
 					{},
 					editorSettings.codemirror,
@@ -5453,7 +5453,7 @@
 				onUpdateErrorNotice: _.bind( control.onUpdateErrorNotice, control )
 			});
 
-			control.editor = wp.codeEditor.initialize( $textarea, settings );
+			control.editor = zc.codeEditor.initialize( $textarea, settings );
 
 			// Improve the editor accessibility.
 			$( control.editor.codemirror.display.lineDiv )
@@ -5609,13 +5609,13 @@
 	});
 
 	/**
-	 * Class wp.customize.DateTimeControl.
+	 * Class zc.customize.DateTimeControl.
 	 *
 	 * @since 4.9.0
-	 * @class    wp.customize.DateTimeControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.DateTimeControl
+	 * @augments zc.customize.Control
 	 */
-	api.DateTimeControl = api.Control.extend(/** @lends wp.customize.DateTimeControl.prototype */{
+	api.DateTimeControl = api.Control.extend(/** @lends zc.customize.DateTimeControl.prototype */{
 
 		/**
 		 * Initialize behaviors.
@@ -5941,7 +5941,7 @@
 		 *
 		 * @since 4.9.0
 		 * @param {boolean} notify Add or remove the notification.
-		 * @return {wp.customize.DateTimeControl}
+		 * @return {zc.customize.DateTimeControl}
 		 */
 		toggleFutureDateNotification: function toggleFutureDateNotification( notify ) {
 			var control = this, notificationCode, notification;
@@ -5966,10 +5966,10 @@
 	 * Class PreviewLinkControl.
 	 *
 	 * @since 4.9.0
-	 * @class    wp.customize.PreviewLinkControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.PreviewLinkControl
+	 * @augments zc.customize.Control
 	 */
-	api.PreviewLinkControl = api.Control.extend(/** @lends wp.customize.PreviewLinkControl.prototype */{
+	api.PreviewLinkControl = api.Control.extend(/** @lends zc.customize.PreviewLinkControl.prototype */{
 
 		defaults: _.extend( {}, api.Control.prototype.defaults, {
 			templateId: 'customize-preview-link-control'
@@ -6086,55 +6086,55 @@
 	/**
 	 * Change objects contained within the main customize object to Settings.
 	 *
-	 * @alias wp.customize.defaultConstructor
+	 * @alias zc.customize.defaultConstructor
 	 */
 	api.defaultConstructor = api.Setting;
 
 	/**
 	 * Callback for resolved controls.
 	 *
-	 * @callback wp.customize.deferredControlsCallback
-	 * @param {wp.customize.Control[]} controls Resolved controls.
+	 * @callback zc.customize.deferredControlsCallback
+	 * @param {zc.customize.Control[]} controls Resolved controls.
 	 */
 
 	/**
 	 * Collection of all registered controls.
 	 *
-	 * @alias wp.customize.control
+	 * @alias zc.customize.control
 	 *
 	 * @since 3.4.0
 	 *
 	 * @type {Function}
 	 * @param {...string} ids - One or more ids for controls to obtain.
 	 * @param {deferredControlsCallback} [callback] - Function called when all supplied controls exist.
-	 * @return {wp.customize.Control|undefined|jQuery.promise} Control instance or undefined (if function called with one id param),
+	 * @return {zc.customize.Control|undefined|jQuery.promise} Control instance or undefined (if function called with one id param),
 	 *                                                         or promise resolving to requested controls.
 	 *
 	 * @example <caption>Loop over all registered controls.</caption>
-	 * wp.customize.control.each( function( control ) { ... } );
+	 * zc.customize.control.each( function( control ) { ... } );
 	 *
 	 * @example <caption>Getting `background_color` control instance.</caption>
-	 * control = wp.customize.control( 'background_color' );
+	 * control = zc.customize.control( 'background_color' );
 	 *
 	 * @example <caption>Check if control exists.</caption>
-	 * hasControl = wp.customize.control.has( 'background_color' );
+	 * hasControl = zc.customize.control.has( 'background_color' );
 	 *
 	 * @example <caption>Deferred getting of `background_color` control until it exists, using callback.</caption>
-	 * wp.customize.control( 'background_color', function( control ) { ... } );
+	 * zc.customize.control( 'background_color', function( control ) { ... } );
 	 *
 	 * @example <caption>Get title and tagline controls when they both exist, using promise (only available when multiple IDs are present).</caption>
-	 * promise = wp.customize.control( 'blogname', 'blogdescription' );
+	 * promise = zc.customize.control( 'blogname', 'blogdescription' );
 	 * promise.done( function( titleControl, taglineControl ) { ... } );
 	 *
 	 * @example <caption>Get title and tagline controls when they both exist, using callback.</caption>
-	 * wp.customize.control( 'blogname', 'blogdescription', function( titleControl, taglineControl ) { ... } );
+	 * zc.customize.control( 'blogname', 'blogdescription', function( titleControl, taglineControl ) { ... } );
 	 *
 	 * @example <caption>Getting setting value for `background_color` control.</caption>
-	 * value = wp.customize.control( 'background_color ').setting.get();
-	 * value = wp.customize( 'background_color' ).get(); // Same as above, since setting ID and control ID are the same.
+	 * value = zc.customize.control( 'background_color ').setting.get();
+	 * value = zc.customize( 'background_color' ).get(); // Same as above, since setting ID and control ID are the same.
 	 *
 	 * @example <caption>Add new control for site title.</caption>
-	 * wp.customize.control.add( new wp.customize.Control( 'other_blogname', {
+	 * zc.customize.control.add( new zc.customize.Control( 'other_blogname', {
 	 *     setting: 'blogname',
 	 *     type: 'text',
 	 *     label: 'Site title',
@@ -6142,138 +6142,138 @@
 	 * } ) );
 	 *
 	 * @example <caption>Remove control.</caption>
-	 * wp.customize.control.remove( 'other_blogname' );
+	 * zc.customize.control.remove( 'other_blogname' );
 	 *
 	 * @example <caption>Listen for control being added.</caption>
-	 * wp.customize.control.bind( 'add', function( addedControl ) { ... } )
+	 * zc.customize.control.bind( 'add', function( addedControl ) { ... } )
 	 *
 	 * @example <caption>Listen for control being removed.</caption>
-	 * wp.customize.control.bind( 'removed', function( removedControl ) { ... } )
+	 * zc.customize.control.bind( 'removed', function( removedControl ) { ... } )
 	 */
 	api.control = new api.Values({ defaultConstructor: api.Control });
 
 	/**
 	 * Callback for resolved sections.
 	 *
-	 * @callback wp.customize.deferredSectionsCallback
-	 * @param {wp.customize.Section[]} sections Resolved sections.
+	 * @callback zc.customize.deferredSectionsCallback
+	 * @param {zc.customize.Section[]} sections Resolved sections.
 	 */
 
 	/**
 	 * Collection of all registered sections.
 	 *
-	 * @alias wp.customize.section
+	 * @alias zc.customize.section
 	 *
 	 * @since 3.4.0
 	 *
 	 * @type {Function}
 	 * @param {...string} ids - One or more ids for sections to obtain.
 	 * @param {deferredSectionsCallback} [callback] - Function called when all supplied sections exist.
-	 * @return {wp.customize.Section|undefined|jQuery.promise} Section instance or undefined (if function called with one id param),
+	 * @return {zc.customize.Section|undefined|jQuery.promise} Section instance or undefined (if function called with one id param),
 	 *                                                         or promise resolving to requested sections.
 	 *
 	 * @example <caption>Loop over all registered sections.</caption>
-	 * wp.customize.section.each( function( section ) { ... } )
+	 * zc.customize.section.each( function( section ) { ... } )
 	 *
 	 * @example <caption>Getting `title_tagline` section instance.</caption>
-	 * section = wp.customize.section( 'title_tagline' )
+	 * section = zc.customize.section( 'title_tagline' )
 	 *
 	 * @example <caption>Expand dynamically-created section when it exists.</caption>
-	 * wp.customize.section( 'dynamically_created', function( section ) {
+	 * zc.customize.section( 'dynamically_created', function( section ) {
 	 *     section.expand();
 	 * } );
 	 *
-	 * @see {@link wp.customize.control} for further examples of how to interact with {@link wp.customize.Values} instances.
+	 * @see {@link zc.customize.control} for further examples of how to interact with {@link zc.customize.Values} instances.
 	 */
 	api.section = new api.Values({ defaultConstructor: api.Section });
 
 	/**
 	 * Callback for resolved panels.
 	 *
-	 * @callback wp.customize.deferredPanelsCallback
-	 * @param {wp.customize.Panel[]} panels Resolved panels.
+	 * @callback zc.customize.deferredPanelsCallback
+	 * @param {zc.customize.Panel[]} panels Resolved panels.
 	 */
 
 	/**
 	 * Collection of all registered panels.
 	 *
-	 * @alias wp.customize.panel
+	 * @alias zc.customize.panel
 	 *
 	 * @since 4.0.0
 	 *
 	 * @type {Function}
 	 * @param {...string} ids - One or more ids for panels to obtain.
 	 * @param {deferredPanelsCallback} [callback] - Function called when all supplied panels exist.
-	 * @return {wp.customize.Panel|undefined|jQuery.promise} Panel instance or undefined (if function called with one id param),
+	 * @return {zc.customize.Panel|undefined|jQuery.promise} Panel instance or undefined (if function called with one id param),
 	 *                                                       or promise resolving to requested panels.
 	 *
 	 * @example <caption>Loop over all registered panels.</caption>
-	 * wp.customize.panel.each( function( panel ) { ... } )
+	 * zc.customize.panel.each( function( panel ) { ... } )
 	 *
 	 * @example <caption>Getting nav_menus panel instance.</caption>
-	 * panel = wp.customize.panel( 'nav_menus' );
+	 * panel = zc.customize.panel( 'nav_menus' );
 	 *
 	 * @example <caption>Expand dynamically-created panel when it exists.</caption>
-	 * wp.customize.panel( 'dynamically_created', function( panel ) {
+	 * zc.customize.panel( 'dynamically_created', function( panel ) {
 	 *     panel.expand();
 	 * } );
 	 *
-	 * @see {@link wp.customize.control} for further examples of how to interact with {@link wp.customize.Values} instances.
+	 * @see {@link zc.customize.control} for further examples of how to interact with {@link zc.customize.Values} instances.
 	 */
 	api.panel = new api.Values({ defaultConstructor: api.Panel });
 
 	/**
 	 * Callback for resolved notifications.
 	 *
-	 * @callback wp.customize.deferredNotificationsCallback
-	 * @param {wp.customize.Notification[]} notifications Resolved notifications.
+	 * @callback zc.customize.deferredNotificationsCallback
+	 * @param {zc.customize.Notification[]} notifications Resolved notifications.
 	 */
 
 	/**
 	 * Collection of all global notifications.
 	 *
-	 * @alias wp.customize.notifications
+	 * @alias zc.customize.notifications
 	 *
 	 * @since 4.9.0
 	 *
 	 * @type {Function}
 	 * @param {...string} codes - One or more codes for notifications to obtain.
 	 * @param {deferredNotificationsCallback} [callback] - Function called when all supplied notifications exist.
-	 * @return {wp.customize.Notification|undefined|jQuery.promise} Notification instance or undefined (if function called with one code param),
+	 * @return {zc.customize.Notification|undefined|jQuery.promise} Notification instance or undefined (if function called with one code param),
 	 *                                                              or promise resolving to requested notifications.
 	 *
 	 * @example <caption>Check if existing notification</caption>
-	 * exists = wp.customize.notifications.has( 'a_new_day_arrived' );
+	 * exists = zc.customize.notifications.has( 'a_new_day_arrived' );
 	 *
 	 * @example <caption>Obtain existing notification</caption>
-	 * notification = wp.customize.notifications( 'a_new_day_arrived' );
+	 * notification = zc.customize.notifications( 'a_new_day_arrived' );
 	 *
 	 * @example <caption>Obtain notification that may not exist yet.</caption>
-	 * wp.customize.notifications( 'a_new_day_arrived', function( notification ) { ... } );
+	 * zc.customize.notifications( 'a_new_day_arrived', function( notification ) { ... } );
 	 *
 	 * @example <caption>Add a warning notification.</caption>
-	 * wp.customize.notifications.add( new wp.customize.Notification( 'midnight_almost_here', {
+	 * zc.customize.notifications.add( new zc.customize.Notification( 'midnight_almost_here', {
 	 *     type: 'warning',
 	 *     message: 'Midnight has almost arrived!',
 	 *     dismissible: true
 	 * } ) );
 	 *
 	 * @example <caption>Remove a notification.</caption>
-	 * wp.customize.notifications.remove( 'a_new_day_arrived' );
+	 * zc.customize.notifications.remove( 'a_new_day_arrived' );
 	 *
-	 * @see {@link wp.customize.control} for further examples of how to interact with {@link wp.customize.Values} instances.
+	 * @see {@link zc.customize.control} for further examples of how to interact with {@link zc.customize.Values} instances.
 	 */
 	api.notifications = new api.Notifications();
 
-	api.PreviewFrame = api.Messenger.extend(/** @lends wp.customize.PreviewFrame.prototype */{
+	api.PreviewFrame = api.Messenger.extend(/** @lends zc.customize.PreviewFrame.prototype */{
 		sensitivity: null, // Will get set to api.settings.timeouts.previewFrameSensitivity.
 
 		/**
 		 * An object that fetches a preview in the background of the document, which
 		 * allows for seamless replacement of an existing preview.
 		 *
-		 * @constructs wp.customize.PreviewFrame
-		 * @augments   wp.customize.Messenger
+		 * @constructs zc.customize.PreviewFrame
+		 * @augments   zc.customize.Messenger
 		 *
 		 * @param {Object} params.container
 		 * @param {Object} params.previewUrl
@@ -6357,7 +6357,7 @@
 				title: api.l10n.previewIframeTitle,
 				name: 'customize-' + previewFrame.channel()
 			} );
-			previewFrame.iframe.attr( 'onmousewheel', '' ); // Workaround for Safari bug. See WP Trac #38149.
+			previewFrame.iframe.attr( 'onmousewheel', '' ); // Workaround for Safari bug. See ZC Trac #38149.
 			previewFrame.iframe.attr( 'sandbox', 'allow-forms allow-modals allow-orientation-lock allow-pointer-lock allow-popups allow-popups-to-escape-sandbox allow-presentation allow-same-origin allow-scripts' );
 
 			if ( ! hasPendingChangesetUpdate ) {
@@ -6492,7 +6492,7 @@
 	/**
 	 * Set the document title of the customizer.
 	 *
-	 * @alias wp.customize.setDocumentTitle
+	 * @alias zc.customize.setDocumentTitle
 	 *
 	 * @since 4.1.0
 	 *
@@ -6506,12 +6506,12 @@
 		api.trigger( 'title', title );
 	};
 
-	api.Previewer = api.Messenger.extend(/** @lends wp.customize.Previewer.prototype */{
+	api.Previewer = api.Messenger.extend(/** @lends zc.customize.Previewer.prototype */{
 		refreshBuffer: null, // Will get set to api.settings.timeouts.windowRefresh.
 
 		/**
-		 * @constructs wp.customize.Previewer
-		 * @augments   wp.customize.Messenger
+		 * @constructs zc.customize.Previewer
+		 * @augments   zc.customize.Messenger
 		 *
 		 * @param {Array}  params.allowedUrls
 		 * @param {string} params.container   A selector or jQuery element for the preview
@@ -6923,7 +6923,7 @@
 
 			deferred.promise();
 
-			request = wp.ajax.post( 'customize_refresh_nonces', {
+			request = zc.ajax.post( 'customize_refresh_nonces', {
 				zc_customize: 'on',
 				customize_theme: api.settings.theme.stylesheet
 			});
@@ -6969,7 +6969,7 @@
 	 *
 	 * Add notifications to the settings and focus on the first control that has an invalid setting.
 	 *
-	 * @alias wp.customize._handleSettingValidities
+	 * @alias zc.customize._handleSettingValidities
 	 *
 	 * @since 4.6.0
 	 * @private
@@ -7046,11 +7046,11 @@
 	/**
 	 * Find all controls associated with the given settings.
 	 *
-	 * @alias wp.customize.findControlsForSettings
+	 * @alias zc.customize.findControlsForSettings
 	 *
 	 * @since 4.6.0
 	 * @param {string[]} settingIds Setting IDs.
-	 * @return {Object<string, wp.customize.Control>} Mapping setting ids to arrays of controls.
+	 * @return {Object<string, zc.customize.Control>} Mapping setting ids to arrays of controls.
 	 */
 	api.findControlsForSettings = function findControlsForSettings( settingIds ) {
 		var controls = {}, settingControls;
@@ -7069,7 +7069,7 @@
 	/**
 	 * Sort panels, sections, controls by priorities. Hide empty sections and panels.
 	 *
-	 * @alias wp.customize.reflowPaneContents
+	 * @alias zc.customize.reflowPaneContents
 	 *
 	 * @since 4.1.0
 	 */
@@ -7224,7 +7224,7 @@
 			trashControl.deferred.embedded.done( function() {
 				trashControl.container.find( '.button-link' ).on( 'click', function() {
 					if ( confirm( api.l10n.trashConfirm ) ) {
-						wp.customize.previewer.trash();
+						zc.customize.previewer.trash();
 					}
 				} );
 			} );
@@ -7440,14 +7440,14 @@
 		/**
 		 * Initialize Previewer
 		 *
-		 * @alias wp.customize.previewer
+		 * @alias zc.customize.previewer
 		 */
 		api.previewer = new api.Previewer({
 			container:   '#customize-preview',
 			form:        '#customize-controls',
 			previewUrl:  api.settings.url.preview,
 			allowedUrls: api.settings.url.allowed
-		},/** @lends wp.customize.previewer */{
+		},/** @lends zc.customize.previewer */{
 
 			nonce: api.settings.nonce,
 
@@ -7619,7 +7619,7 @@
 					 * will get re-validated, perhaps in the case of settings that are invalid
 					 * due to dependencies on other settings.
 					 */
-					request = wp.ajax.post( 'customize_save', query );
+					request = zc.ajax.post( 'customize_save', query );
 					api.state( 'processing' ).set( api.state( 'processing' ).get() + 1 );
 
 					api.trigger( 'save', request );
@@ -7781,7 +7781,7 @@
 				api.state( 'trashing' ).set( true );
 				api.state( 'processing' ).set( api.state( 'processing' ).get() + 1 );
 
-				request = wp.ajax.post( 'customize_trash', {
+				request = zc.ajax.post( 'customize_trash', {
 					customize_changeset_uuid: api.settings.changeset.uuid,
 					nonce: api.settings.nonce.trash
 				} );
@@ -8050,7 +8050,7 @@
 			changesetDate( api.settings.changeset.publishDate );
 			selectedChangesetDate( api.settings.changeset.publishDate );
 			selectedChangesetStatus( '' === api.settings.changeset.status || 'auto-draft' === api.settings.changeset.status ? defaultSelectedChangesetStatus : api.settings.changeset.status );
-			selectedChangesetStatus.link( changesetStatus ); // Ensure that direct updates to status on server via wp.customizer.previewer.save() will update selection.
+			selectedChangesetStatus.link( changesetStatus ); // Ensure that direct updates to status on server via zc.customizer.previewer.save() will update selection.
 			saved( true );
 			if ( '' === changesetStatus() ) { // Handle case for loading starter content.
 				api.each( function( setting ) {
@@ -8153,7 +8153,7 @@
 		 */
 		( function checkAndDisplayLockNotice() {
 
-			var LockedNotification = api.OverlayNotification.extend(/** @lends wp.customize~LockedNotification.prototype */{
+			var LockedNotification = api.OverlayNotification.extend(/** @lends zc.customize~LockedNotification.prototype */{
 
 				/**
 				 * Template ID.
@@ -8172,8 +8172,8 @@
 				/**
 				 * A notification that is displayed in a full-screen overlay with information about the locked changeset.
 				 *
-				 * @constructs wp.customize~LockedNotification
-				 * @augments   wp.customize.OverlayNotification
+				 * @constructs zc.customize~LockedNotification
+				 * @augments   zc.customize.OverlayNotification
 				 *
 				 * @since 4.9.0
 				 *
@@ -8232,7 +8232,7 @@
 						}
 
 						takeOverButton.addClass( 'disabled' );
-						request = wp.ajax.post( 'customize_override_changeset_lock', {
+						request = zc.ajax.post( 'customize_override_changeset_lock', {
 							zc_customize: 'on',
 							customize_theme: api.settings.theme.stylesheet,
 							customize_changeset_uuid: api.settings.changeset.uuid,
@@ -8406,7 +8406,7 @@
 				if ( autosaveDismissed ) {
 					return;
 				}
-				wp.ajax.post( 'customize_dismiss_autosave_or_lock', {
+				zc.ajax.post( 'customize_dismiss_autosave_or_lock', {
 					zc_customize: 'on',
 					customize_theme: api.settings.theme.stylesheet,
 					customize_changeset_uuid: api.settings.changeset.uuid,
@@ -8607,7 +8607,7 @@
 			 * @since 4.7.0
 			 * @access private
 			 *
-			 * @param {wp.customize.Panel|wp.customize.Section} container Construct.
+			 * @param {zc.customize.Panel|zc.customize.Section} container Construct.
 			 * @return {void}
 			 */
 			changeContainer = function( container ) {
@@ -8859,7 +8859,7 @@
 		 * Create a postMessage connection with a parent frame,
 		 * in case the Customizer frame was opened with the Customize loader.
 		 *
-		 * @see wp.customize.Loader
+		 * @see zc.customize.Loader
 		 */
 		parent = new api.Messenger({
 			url: api.settings.url.parent,
@@ -8950,7 +8950,7 @@
 				}
 
 				if ( dismissLock || dismissAutoSave ) {
-					wp.ajax.send( 'customize_dismiss_autosave_or_lock', {
+					zc.ajax.send( 'customize_dismiss_autosave_or_lock', {
 						timeout: 500, // Don't wait too long.
 						data: {
 							zc_customize: 'on',
@@ -9386,4 +9386,4 @@
 		api.trigger( 'ready' );
 	});
 
-})( wp, jQuery );
+})( zc, jQuery );

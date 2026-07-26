@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).isShallowEqual = (() => {
+var zc;
+(zc ||= {}).isShallowEqual = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;

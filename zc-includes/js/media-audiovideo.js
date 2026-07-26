@@ -4,22 +4,22 @@
 /***/ 1206
 (module) {
 
-var State = wp.media.controller.State,
-	l10n = wp.media.view.l10n,
+var State = zc.media.controller.State,
+	l10n = zc.media.view.l10n,
 	AudioDetails;
 
 /**
- * wp.media.controller.AudioDetails
+ * zc.media.controller.AudioDetails
  *
  * The controller for the Audio Details state
  *
- * @memberOf wp.media.controller
+ * @memberOf zc.media.controller
  *
  * @class
- * @augments wp.media.controller.State
+ * @augments zc.media.controller.State
  * @augments Backbone.Model
  */
-AudioDetails = State.extend(/** @lends wp.media.controller.AudioDetails.prototype */{
+AudioDetails = State.extend(/** @lends zc.media.controller.AudioDetails.prototype */{
 	defaults: {
 		id: 'audio-details',
 		toolbar: 'audio-details',
@@ -45,21 +45,21 @@ module.exports = AudioDetails;
 (module) {
 
 /**
- * wp.media.controller.VideoDetails
+ * zc.media.controller.VideoDetails
  *
  * The controller for the Video Details state
  *
- * @memberOf wp.media.controller
+ * @memberOf zc.media.controller
  *
  * @class
- * @augments wp.media.controller.State
+ * @augments zc.media.controller.State
  * @augments Backbone.Model
  */
-var State = wp.media.controller.State,
-	l10n = wp.media.view.l10n,
+var State = zc.media.controller.State,
+	l10n = zc.media.view.l10n,
 	VideoDetails;
 
-VideoDetails = State.extend(/** @lends wp.media.controller.VideoDetails.prototype */{
+VideoDetails = State.extend(/** @lends zc.media.controller.VideoDetails.prototype */{
 	defaults: {
 		id: 'video-details',
 		toolbar: 'video-details',
@@ -85,17 +85,17 @@ module.exports = VideoDetails;
 (module) {
 
 /**
- * wp.media.model.PostMedia
+ * zc.media.model.PostMedia
  *
  * Shared model class for audio and video. Updates the model after
  *   "Add Audio|Video Source" and "Replace Audio|Video" states return
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
  * @augments Backbone.Model
  */
-var PostMedia = Backbone.Model.extend(/** @lends wp.media.model.PostMedia.prototype */{
+var PostMedia = Backbone.Model.extend(/** @lends zc.media.model.PostMedia.prototype */{
 	initialize: function() {
 		this.attachment = false;
 	},
@@ -108,7 +108,7 @@ var PostMedia = Backbone.Model.extend(/** @lends wp.media.model.PostMedia.protot
 			this.unset( 'src' );
 		}
 
-		if ( _.contains( wp.media.view.settings.embedExts, this.extension ) ) {
+		if ( _.contains( zc.media.view.settings.embedExts, this.extension ) ) {
 			this.set( this.extension, this.attachment.get( 'url' ) );
 		} else {
 			this.unset( this.extension );
@@ -119,7 +119,7 @@ var PostMedia = Backbone.Model.extend(/** @lends wp.media.model.PostMedia.protot
 		this.setSource( attachment );
 
 		this.unset( 'src' );
-		_.each( _.without( wp.media.view.settings.embedExts, this.extension ), function( ext ) {
+		_.each( _.without( zc.media.view.settings.embedExts, this.extension ), function( ext ) {
 			this.unset( ext );
 		}, this );
 	}
@@ -133,25 +133,25 @@ module.exports = PostMedia;
 /***/ 3713
 (module) {
 
-var MediaDetails = wp.media.view.MediaDetails,
+var MediaDetails = zc.media.view.MediaDetails,
 	AudioDetails;
 
 /**
- * wp.media.view.AudioDetails
+ * zc.media.view.AudioDetails
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.MediaDetails
- * @augments wp.media.view.Settings.AttachmentDisplay
- * @augments wp.media.view.Settings
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaDetails
+ * @augments zc.media.view.Settings.AttachmentDisplay
+ * @augments zc.media.view.Settings
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-AudioDetails = MediaDetails.extend(/** @lends wp.media.view.AudioDetails.prototype */{
+AudioDetails = MediaDetails.extend(/** @lends zc.media.view.AudioDetails.prototype */{
 	className: 'audio-details',
-	template:  wp.template('audio-details'),
+	template:  zc.template('audio-details'),
 
 	setMedia: function() {
 		var audio = this.$('.zc-audio-shortcode');
@@ -178,28 +178,28 @@ module.exports = AudioDetails;
 /***/ 175
 (module) {
 
-var MediaDetails = wp.media.view.MediaFrame.MediaDetails,
-	MediaLibrary = wp.media.controller.MediaLibrary,
+var MediaDetails = zc.media.view.MediaFrame.MediaDetails,
+	MediaLibrary = zc.media.controller.MediaLibrary,
 
-	l10n = wp.media.view.l10n,
+	l10n = zc.media.view.l10n,
 	AudioDetails;
 
 /**
- * wp.media.view.MediaFrame.AudioDetails
+ * zc.media.view.MediaFrame.AudioDetails
  *
- * @memberOf wp.media.view.MediaFrame
+ * @memberOf zc.media.view.MediaFrame
  *
  * @class
- * @augments wp.media.view.MediaFrame.MediaDetails
- * @augments wp.media.view.MediaFrame.Select
- * @augments wp.media.view.MediaFrame
- * @augments wp.media.view.Frame
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaFrame.MediaDetails
+ * @augments zc.media.view.MediaFrame.Select
+ * @augments zc.media.view.MediaFrame
+ * @augments zc.media.view.Frame
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
- * @mixes wp.media.controller.StateMachine
+ * @mixes zc.media.controller.StateMachine
  */
-AudioDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.AudioDetails.prototype */{
+AudioDetails = MediaDetails.extend(/** @lends zc.media.view.MediaFrame.AudioDetails.prototype */{
 	defaults: {
 		id:      'audio',
 		url:     '',
@@ -212,7 +212,7 @@ AudioDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.AudioDeta
 	},
 
 	initialize: function( options ) {
-		options.DetailsView = wp.media.view.AudioDetails;
+		options.DetailsView = zc.media.view.AudioDetails;
 		options.cancelText = l10n.audioDetailsCancel;
 		options.addText = l10n.audioAddSourceTitle;
 
@@ -228,7 +228,7 @@ AudioDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.AudioDeta
 
 	createStates: function() {
 		this.states.add([
-			new wp.media.controller.AudioDetails( {
+			new zc.media.controller.AudioDetails( {
 				media: this.media
 			} ),
 
@@ -261,25 +261,25 @@ module.exports = AudioDetails;
 /***/ 741
 (module) {
 
-var Select = wp.media.view.MediaFrame.Select,
-	l10n = wp.media.view.l10n,
+var Select = zc.media.view.MediaFrame.Select,
+	l10n = zc.media.view.l10n,
 	MediaDetails;
 
 /**
- * wp.media.view.MediaFrame.MediaDetails
+ * zc.media.view.MediaFrame.MediaDetails
  *
- * @memberOf wp.media.view.MediaFrame
+ * @memberOf zc.media.view.MediaFrame
  *
  * @class
- * @augments wp.media.view.MediaFrame.Select
- * @augments wp.media.view.MediaFrame
- * @augments wp.media.view.Frame
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaFrame.Select
+ * @augments zc.media.view.MediaFrame
+ * @augments zc.media.view.Frame
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
- * @mixes wp.media.controller.StateMachine
+ * @mixes zc.media.controller.StateMachine
  */
-MediaDetails = Select.extend(/** @lends wp.media.view.MediaFrame.MediaDetails.prototype */{
+MediaDetails = Select.extend(/** @lends zc.media.view.MediaFrame.MediaDetails.prototype */{
 	defaults: {
 		id:      'media',
 		url:     '',
@@ -295,8 +295,8 @@ MediaDetails = Select.extend(/** @lends wp.media.view.MediaFrame.MediaDetails.pr
 		this.cancelText = options.cancelText;
 		this.addText = options.addText;
 
-		this.media = new wp.media.model.PostMedia( options.metadata );
-		this.options.selection = new wp.media.model.Selection( this.media.attachment, { multiple: false } );
+		this.media = new zc.media.model.PostMedia( options.metadata );
+		this.options.selection = new zc.media.model.Selection( this.media.attachment, { multiple: false } );
 		Select.prototype.initialize.apply( this, arguments );
 	},
 
@@ -338,7 +338,7 @@ MediaDetails = Select.extend(/** @lends wp.media.view.MediaFrame.MediaDetails.pr
 					}
 				}
 			},
-			separateCancel: new wp.media.View({
+			separateCancel: new zc.media.View({
 				className: 'separator',
 				priority: 40
 			})
@@ -347,7 +347,7 @@ MediaDetails = Select.extend(/** @lends wp.media.view.MediaFrame.MediaDetails.pr
 	},
 
 	setPrimaryButton: function(text, handler) {
-		this.toolbar.set( new wp.media.view.Toolbar({
+		this.toolbar.set( new zc.media.view.Toolbar({
 			controller: this,
 			items: {
 				button: {
@@ -398,27 +398,27 @@ module.exports = MediaDetails;
 /***/ 8646
 (module) {
 
-var MediaDetails = wp.media.view.MediaFrame.MediaDetails,
-	MediaLibrary = wp.media.controller.MediaLibrary,
-	l10n = wp.media.view.l10n,
+var MediaDetails = zc.media.view.MediaFrame.MediaDetails,
+	MediaLibrary = zc.media.controller.MediaLibrary,
+	l10n = zc.media.view.l10n,
 	VideoDetails;
 
 /**
- * wp.media.view.MediaFrame.VideoDetails
+ * zc.media.view.MediaFrame.VideoDetails
  *
- * @memberOf wp.media.view.MediaFrame
+ * @memberOf zc.media.view.MediaFrame
  *
  * @class
- * @augments wp.media.view.MediaFrame.MediaDetails
- * @augments wp.media.view.MediaFrame.Select
- * @augments wp.media.view.MediaFrame
- * @augments wp.media.view.Frame
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaFrame.MediaDetails
+ * @augments zc.media.view.MediaFrame.Select
+ * @augments zc.media.view.MediaFrame
+ * @augments zc.media.view.Frame
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
- * @mixes wp.media.controller.StateMachine
+ * @mixes zc.media.controller.StateMachine
  */
-VideoDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.VideoDetails.prototype */{
+VideoDetails = MediaDetails.extend(/** @lends zc.media.view.MediaFrame.VideoDetails.prototype */{
 	defaults: {
 		id:      'video',
 		url:     '',
@@ -431,7 +431,7 @@ VideoDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.VideoDeta
 	},
 
 	initialize: function( options ) {
-		options.DetailsView = wp.media.view.VideoDetails;
+		options.DetailsView = zc.media.view.VideoDetails;
 		options.cancelText = l10n.videoDetailsCancel;
 		options.addText = l10n.videoAddSourceTitle;
 
@@ -449,7 +449,7 @@ VideoDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.VideoDeta
 
 	createStates: function() {
 		this.states.add([
-			new wp.media.controller.VideoDetails({
+			new zc.media.controller.VideoDetails({
 				media: this.media
 			}),
 
@@ -498,15 +498,15 @@ VideoDetails = MediaDetails.extend(/** @lends wp.media.view.MediaFrame.VideoDeta
 			controller.media.set( 'poster', attachment.get( 'url' ) );
 			state.trigger( 'set-poster-image', controller.media.toJSON() );
 
-			_.each( wp.media.view.settings.embedExts, function (ext) {
+			_.each( zc.media.view.settings.embedExts, function (ext) {
 				if ( controller.media.get( ext ) ) {
 					urls.push( controller.media.get( ext ) );
 				}
 			} );
 
-			wp.ajax.send( 'set-attachment-thumbnail', {
+			zc.ajax.send( 'set-attachment-thumbnail', {
 				data : {
-					_ajax_nonce: wp.media.view.settings.nonce.setAttachmentThumbnail,
+					_ajax_nonce: zc.media.view.settings.nonce.setAttachmentThumbnail,
 					urls: urls,
 					thumbnail_id: attachment.get( 'id' )
 				}
@@ -542,29 +542,29 @@ module.exports = VideoDetails;
 (module) {
 
 /* global MediaElementPlayer */
-var AttachmentDisplay = wp.media.view.Settings.AttachmentDisplay,
+var AttachmentDisplay = zc.media.view.Settings.AttachmentDisplay,
 	$ = jQuery,
 	MediaDetails;
 
 /**
- * wp.media.view.MediaDetails
+ * zc.media.view.MediaDetails
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.Settings.AttachmentDisplay
- * @augments wp.media.view.Settings
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.Settings.AttachmentDisplay
+ * @augments zc.media.view.Settings
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-MediaDetails = AttachmentDisplay.extend(/** @lends wp.media.view.MediaDetails.prototype */{
+MediaDetails = AttachmentDisplay.extend(/** @lends zc.media.view.MediaDetails.prototype */{
 	initialize: function() {
 		_.bindAll(this, 'success');
 		this.players = [];
-		this.listenTo( this.controller.states, 'close', wp.media.mixin.unsetPlayers );
+		this.listenTo( this.controller.states, 'close', zc.media.mixin.unsetPlayers );
 		this.on( 'ready', this.setPlayer );
-		this.on( 'media:setting:remove', wp.media.mixin.unsetPlayers, this );
+		this.on( 'media:setting:remove', zc.media.mixin.unsetPlayers, this );
 		this.on( 'media:setting:remove', this.render );
 		this.on( 'media:setting:remove', this.setPlayer );
 
@@ -589,7 +589,7 @@ MediaDetails = AttachmentDisplay.extend(/** @lends wp.media.view.MediaDetails.pr
 	/**
 	 * Remove a setting's UI when the model unsets it
 	 *
-	 * @fires wp.media.view.MediaDetails#media:setting:remove
+	 * @fires zc.media.view.MediaDetails#media:setting:remove
 	 *
 	 * @param {Event} e
 	 */
@@ -607,7 +607,7 @@ MediaDetails = AttachmentDisplay.extend(/** @lends wp.media.view.MediaDetails.pr
 
 	/**
 	 *
-	 * @fires wp.media.view.MediaDetails#media:setting:remove
+	 * @fires zc.media.view.MediaDetails#media:setting:remove
 	 */
 	setTracks : function() {
 		var tracks = '';
@@ -677,7 +677,7 @@ MediaDetails = AttachmentDisplay.extend(/** @lends wp.media.view.MediaDetails.pr
 
 		this.settings = _.defaults( {
 			success : this.success
-		}, wp.media.mixin.mejsSettings );
+		}, zc.media.mixin.mejsSettings );
 
 		return this.setMedia();
 	},
@@ -685,7 +685,7 @@ MediaDetails = AttachmentDisplay.extend(/** @lends wp.media.view.MediaDetails.pr
 	scrollToTop: function() {
 		this.$( '.embed-media-settings' ).scrollTop( 0 );
 	}
-},/** @lends wp.media.view.MediaDetails */{
+},/** @lends zc.media.view.MediaDetails */{
 	instances : 0,
 	/**
 	 * When multiple players in the DOM contain the same src, things get weird.
@@ -716,25 +716,25 @@ module.exports = MediaDetails;
 /***/ 5836
 (module) {
 
-var MediaDetails = wp.media.view.MediaDetails,
+var MediaDetails = zc.media.view.MediaDetails,
 	VideoDetails;
 
 /**
- * wp.media.view.VideoDetails
+ * zc.media.view.VideoDetails
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.MediaDetails
- * @augments wp.media.view.Settings.AttachmentDisplay
- * @augments wp.media.view.Settings
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaDetails
+ * @augments zc.media.view.Settings.AttachmentDisplay
+ * @augments zc.media.view.Settings
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-VideoDetails = MediaDetails.extend(/** @lends wp.media.view.VideoDetails.prototype */{
+VideoDetails = MediaDetails.extend(/** @lends zc.media.view.VideoDetails.prototype */{
 	className: 'video-details',
-	template:  wp.template('video-details'),
+	template:  zc.template('video-details'),
 
 	setMedia: function() {
 		var video = this.$('.zc-video-shortcode');
@@ -794,19 +794,19 @@ module.exports = VideoDetails;
  * @output zc-includes/js/media-audiovideo.js
  */
 
-var media = wp.media,
+var media = zc.media,
 	baseSettings = window._wpmejsSettings || {},
 	l10n = window._wpMediaViewsL10n || {};
 
 /**
  *
- * Defines the wp.media.mixin object.
+ * Defines the zc.media.mixin object.
  *
  * @mixin
  *
  * @since 4.2.0
  */
-wp.media.mixin = {
+zc.media.mixin = {
 	mejsSettings: baseSettings,
 
 	/**
@@ -887,7 +887,7 @@ wp.media.mixin = {
 		if ( this.players && this.players.length ) {
 			_.each( this.players, function (player) {
 				player.pause();
-				wp.media.mixin.removePlayer( player );
+				zc.media.mixin.removePlayer( player );
 			} );
 			this.players = [];
 		}
@@ -899,11 +899,11 @@ wp.media.mixin = {
  *
  * @since 4.2.0
  */
-wp.media.playlist = new wp.media.collection({
+zc.media.playlist = new zc.media.collection({
 	tag: 'playlist',
 	editTitle : l10n.editPlaylistTitle,
 	defaults : {
-		id: wp.media.view.settings.post.id,
+		id: zc.media.view.settings.post.id,
 		style: 'light',
 		tracklist: true,
 		tracknumbers: true,
@@ -923,11 +923,11 @@ wp.media.playlist = new wp.media.collection({
  *
  * @since 4.2.0
  */
-wp.media.audio = {
-	coerce : wp.media.coerce,
+zc.media.audio = {
+	coerce : zc.media.coerce,
 
 	defaults : {
-		id : wp.media.view.settings.post.id,
+		id : zc.media.view.settings.post.id,
 		src : '',
 		loop : false,
 		autoplay : false,
@@ -941,12 +941,12 @@ wp.media.audio = {
 	 * @since 4.2.0
 	 *
 	 * @param {string} data The text to apply the shortcode on.
-	 * @return {wp.media} The media object.
+	 * @return {zc.media} The media object.
 	 */
 	edit : function( data ) {
-		var frame, shortcode = wp.shortcode.next( 'audio', data ).shortcode;
+		var frame, shortcode = zc.shortcode.next( 'audio', data ).shortcode;
 
-		frame = wp.media({
+		frame = zc.media({
 			frame: 'audio',
 			state: 'audio-details',
 			metadata: _.defaults( shortcode.attrs.named, this.defaults )
@@ -961,7 +961,7 @@ wp.media.audio = {
 	 * @since 4.2.0
 	 *
 	 * @param {Array} model Array with attributes for the shortcode.
-	 * @return {wp.shortcode} The audio shortcode object.
+	 * @return {zc.shortcode} The audio shortcode object.
 	 */
 	shortcode : function( model ) {
 		var content;
@@ -977,7 +977,7 @@ wp.media.audio = {
 		content = model.content;
 		delete model.content;
 
-		return new wp.shortcode({
+		return new zc.shortcode({
 			tag: 'audio',
 			attrs: model,
 			content: content
@@ -995,11 +995,11 @@ wp.media.audio = {
  *
  * @namespace
  */
-wp.media.video = {
-	coerce : wp.media.coerce,
+zc.media.video = {
+	coerce : zc.media.coerce,
 
 	defaults : {
-		id : wp.media.view.settings.post.id,
+		id : zc.media.view.settings.post.id,
 		src : '',
 		poster : '',
 		loop : false,
@@ -1016,17 +1016,17 @@ wp.media.video = {
 	 * @since 4.2.0
 	 *
 	 * @param {string} data The text to apply the shortcode on.
-	 * @return {wp.media} The media object.
+	 * @return {zc.media} The media object.
 	 */
 	edit : function( data ) {
 		var frame,
-			shortcode = wp.shortcode.next( 'video', data ).shortcode,
+			shortcode = zc.shortcode.next( 'video', data ).shortcode,
 			attrs;
 
 		attrs = shortcode.attrs.named;
 		attrs.content = shortcode.content;
 
-		frame = wp.media({
+		frame = zc.media({
 			frame: 'video',
 			state: 'video-details',
 			metadata: _.defaults( attrs, this.defaults )
@@ -1041,7 +1041,7 @@ wp.media.video = {
 	 * @since 4.2.0
 	 *
 	 * @param {Array} model Array with attributes for the shortcode.
-	 * @return {wp.shortcode} The video shortcode object.
+	 * @return {zc.shortcode} The video shortcode object.
 	 */
 	shortcode : function( model ) {
 		var content;
@@ -1057,7 +1057,7 @@ wp.media.video = {
 		content = model.content;
 		delete model.content;
 
-		return new wp.shortcode({
+		return new zc.shortcode({
 			tag: 'video',
 			attrs: model,
 			content: content

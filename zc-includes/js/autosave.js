@@ -688,14 +688,14 @@ window.autosave = function() {
 			 */
 			function triggerSave() {
 				nextRun = 0;
-				wp.heartbeat.connectNow();
+				zc.heartbeat.connectNow();
 			}
 
 			/**
 			 * Checks if the post content in the textarea has changed since page load.
 			 *
 			 * This also happens when TinyMCE is active and editor.save() is triggered by
-			 * wp.autosave.getPostData().
+			 * zc.autosave.getPostData().
 			 *
 			 * @since 3.9.0
 			 *
@@ -832,7 +832,7 @@ window.autosave = function() {
 				if ( 'timeout' === error || 603 === status ) {
 					var $notice = $('#lost-connection-notice');
 
-					if ( ! wp.autosave.local.hasStorage ) {
+					if ( ! zc.autosave.local.hasStorage ) {
 						$notice.find('.hide-if-no-sessionstorage').hide();
 					}
 
@@ -896,8 +896,8 @@ window.autosave = function() {
 		};
 	}
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
-	window.wp.autosave = autosave();
+	/** @namespace zc */
+	window.zc = window.zc || {};
+	window.zc.autosave = autosave();
 
 }( jQuery, window ));

@@ -9,17 +9,17 @@ return array(
 	'title'      => _x( 'Standard', 'Block pattern title' ),
 	'blockTypes' => array( 'core/query' ),
 	'categories' => array( 'query' ),
-	'content'    => '<!-- wp:query {"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
+	'content'    => '<!-- zc:query {"query":{"perPage":3,"pages":0,"offset":0,"postType":"post","order":"desc","orderBy":"date","author":"","search":"","exclude":[],"sticky":"","inherit":false}} -->
 					<div class="zc-block-query">
-					<!-- wp:post-template -->
-					<!-- wp:post-title {"isLink":true} /-->
-					<!-- wp:post-featured-image  {"isLink":true,"align":"wide"} /-->
-					<!-- wp:post-excerpt /-->
-					<!-- wp:separator -->
+					<!-- zc:post-template -->
+					<!-- zc:post-title {"isLink":true} /-->
+					<!-- zc:post-featured-image  {"isLink":true,"align":"wide"} /-->
+					<!-- zc:post-excerpt /-->
+					<!-- zc:separator -->
 					<hr class="zc-block-separator"/>
-					<!-- /wp:separator -->
-					<!-- wp:post-date /-->
-					<!-- /wp:post-template -->
+					<!-- /zc:separator -->
+					<!-- zc:post-date /-->
+					<!-- /zc:post-template -->
 					</div>
-					<!-- /wp:query -->',
+					<!-- /zc:query -->',
 );

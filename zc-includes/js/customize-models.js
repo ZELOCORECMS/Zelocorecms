@@ -3,14 +3,14 @@
  */
 
 /* global _wpCustomizeHeader */
-(function( $, wp ) {
-	var api = wp.customize;
-	/** @namespace wp.customize.HeaderTool */
+(function( $, zc ) {
+	var api = zc.customize;
+	/** @namespace zc.customize.HeaderTool */
 	api.HeaderTool = {};
 
 
 	/**
-	 * wp.customize.HeaderTool.ImageModel
+	 * zc.customize.HeaderTool.ImageModel
 	 *
 	 * A header image. This is where saves via the Customizer API are
 	 * abstracted away, plus our own Ajax calls to add images to and remove
@@ -18,13 +18,13 @@
 	 * These calls are made regardless of whether the user actually saves new
 	 * Customizer settings.
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.ImageModel
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.ImageModel
 	 *
 	 * @constructor
 	 * @augments Backbone.Model
 	 */
-	api.HeaderTool.ImageModel = Backbone.Model.extend(/** @lends wp.customize.HeaderTool.ImageModel.prototype */{
+	api.HeaderTool.ImageModel = Backbone.Model.extend(/** @lends zc.customize.HeaderTool.ImageModel.prototype */{
 		defaults: function() {
 			return {
 				header: {
@@ -59,7 +59,7 @@
 				api.HeaderTool.currentHeader.trigger('hide');
 			}
 
-			wp.ajax.post( 'custom-header-remove', {
+			zc.ajax.post( 'custom-header-remove', {
 				nonce: _wpCustomizeHeader.nonces.remove,
 				zc_customize: 'on',
 				theme: api.settings.theme.stylesheet,
@@ -92,7 +92,7 @@
 				return;
 			}
 
-			wp.ajax.post( 'custom-header-add', {
+			zc.ajax.post( 'custom-header-add', {
 				nonce: _wpCustomizeHeader.nonces.add,
 				zc_customize: 'on',
 				theme: api.settings.theme.stylesheet,
@@ -131,10 +131,10 @@
 
 
 	/**
-	 * wp.customize.HeaderTool.ChoiceList
+	 * zc.customize.HeaderTool.ChoiceList
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.ChoiceList
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.ChoiceList
 	 *
 	 * @constructor
 	 * @augments Backbone.Collection
@@ -261,13 +261,13 @@
 
 
 	/**
-	 * wp.customize.HeaderTool.DefaultsList
+	 * zc.customize.HeaderTool.DefaultsList
 	 *
-	 * @memberOf wp.customize.HeaderTool
-	 * @alias wp.customize.HeaderTool.DefaultsList
+	 * @memberOf zc.customize.HeaderTool
+	 * @alias zc.customize.HeaderTool.DefaultsList
 	 *
 	 * @constructor
-	 * @augments wp.customize.HeaderTool.ChoiceList
+	 * @augments zc.customize.HeaderTool.ChoiceList
 	 * @augments Backbone.Collection
 	 */
 	api.HeaderTool.DefaultsList = api.HeaderTool.ChoiceList.extend({
@@ -278,4 +278,4 @@
 		}
 	});
 
-})( jQuery, window.wp );
+})( jQuery, window.zc );

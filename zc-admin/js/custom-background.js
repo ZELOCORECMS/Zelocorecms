@@ -77,7 +77,7 @@
 		});
 
 		/**
-		 * Binds the event for opening the WP Media dialog.
+		 * Binds the event for opening the ZC Media dialog.
 		 *
 		 * @since 3.5.0
 		 *
@@ -95,7 +95,7 @@
 			}
 
 			// Create the media frame.
-			frame = wp.media.frames.customBackground = wp.media({
+			frame = zc.media.frames.customBackground = zc.media({
 				// Set the title of the modal.
 				title: $el.data('choose'),
 

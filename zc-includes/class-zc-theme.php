@@ -1063,7 +1063,7 @@ final class ZC_Theme implements ArrayAccess {
 					return $this->name_translated;
 				}
 
-				// phpcs:ignore ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText,ZelocoreCMS.WP.I18n.NonSingularStringLiteralDomain
+				// phpcs:ignore ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralDomain
 				$this->name_translated = translate( $value, $this->get( 'TextDomain' ) );
 
 				return $this->name_translated;
@@ -1117,7 +1117,7 @@ final class ZC_Theme implements ArrayAccess {
 				return $value;
 
 			default:
-				// phpcs:ignore ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText,ZelocoreCMS.WP.I18n.NonSingularStringLiteralDomain
+				// phpcs:ignore ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralDomain
 				$value = translate( $value, $this->get( 'TextDomain' ) );
 		}
 		return $value;

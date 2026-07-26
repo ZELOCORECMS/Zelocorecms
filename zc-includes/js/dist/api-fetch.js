@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).apiFetch = (() => {
+var zc;
+(zc ||= {}).apiFetch = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,14 +35,14 @@ var wp;
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
@@ -326,7 +326,7 @@ var wp;
   // packages/api-fetch/build-module/middlewares/media-upload.mjs
   function isMediaUploadRequest(options) {
     const isCreateMethod = !!options.method && options.method === "POST";
-    const isMediaEndpoint = !!options.path && options.path.indexOf("/wp/v2/media") !== -1 || !!options.url && options.url.indexOf("/wp/v2/media") !== -1;
+    const isMediaEndpoint = !!options.path && options.path.indexOf("/zc/v2/media") !== -1 || !!options.url && options.url.indexOf("/zc/v2/media") !== -1;
     return isMediaEndpoint && isCreateMethod;
   }
   var mediaUploadMiddleware = (options, next) => {
@@ -338,7 +338,7 @@ var wp;
     const postProcess = (attachmentId) => {
       retries++;
       return next({
-        path: `/wp/v2/media/${attachmentId}/post-process`,
+        path: `/zc/v2/media/${attachmentId}/post-process`,
         method: "POST",
         data: { action: "create-image-subsizes" },
         parse: false
@@ -347,7 +347,7 @@ var wp;
           return postProcess(attachmentId);
         }
         next({
-          path: `/wp/v2/media/${attachmentId}?force=true`,
+          path: `/zc/v2/media/${attachmentId}?force=true`,
           method: "DELETE"
         });
         return Promise.reject();
@@ -522,4 +522,4 @@ var wp;
   var index_default = apiFetch;
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.apiFetch === 'object' && wp.apiFetch.default) { wp.apiFetch = wp.apiFetch.default; }
+if (typeof zc.apiFetch === 'object' && zc.apiFetch.default) { zc.apiFetch = zc.apiFetch.default; }

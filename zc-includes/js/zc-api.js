@@ -10,19 +10,19 @@
 	 * Initialize the ZC_API.
 	 */
 	function ZC_API() {
-		/** @namespace wp.api.models */
+		/** @namespace zc.api.models */
 		this.models = {};
-		/** @namespace wp.api.collections */
+		/** @namespace zc.api.collections */
 		this.collections = {};
-		/** @namespace wp.api.views */
+		/** @namespace zc.api.views */
 		this.views = {};
 	}
 
-	/** @namespace wp */
-	window.wp            = window.wp || {};
-	/** @namespace wp.api */
-	wp.api               = wp.api || new ZC_API();
-	wp.api.versionString = wp.api.versionString || 'wp/v2/';
+	/** @namespace zc */
+	window.zc            = window.zc || {};
+	/** @namespace zc.api */
+	zc.api               = zc.api || new ZC_API();
+	zc.api.versionString = zc.api.versionString || 'zc/v2/';
 
 	// Alias _includes to _.contains, ensuring it is available if lodash is used.
 	if ( ! _.isFunction( _.includes ) && _.isFunction( _.contains ) ) {
@@ -37,12 +37,12 @@
 
 	var pad, r;
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
-	/** @namespace wp.api */
-	wp.api = wp.api || {};
-	/** @namespace wp.api.utils */
-	wp.api.utils = wp.api.utils || {};
+	/** @namespace zc */
+	window.zc = window.zc || {};
+	/** @namespace zc.api */
+	zc.api = zc.api || {};
+	/** @namespace zc.api.utils */
+	zc.api.utils = zc.api.utils || {};
 
 	/**
 	 * Determine model based on API route.
@@ -51,8 +51,8 @@
 	 *
 	 * @return {Backbone Model} The model found at given route. Undefined if not found.
 	 */
-	wp.api.getModelByRoute = function( route ) {
-		return _.find( wp.api.models, function( model ) {
+	zc.api.getModelByRoute = function( route ) {
+		return _.find( zc.api.models, function( model ) {
 			return model.prototype.route && route === model.prototype.route.index;
 		} );
 	};
@@ -64,8 +64,8 @@
 	 *
 	 * @return {Backbone Model} The collection found at given route. Undefined if not found.
 	 */
-	wp.api.getCollectionByRoute = function( route ) {
-		return _.find( wp.api.collections, function( collection ) {
+	zc.api.getCollectionByRoute = function( route ) {
+		return _.find( zc.api.collections, function( collection ) {
 			return collection.prototype.route && route === collection.prototype.route.index;
 		} );
 	};
@@ -102,7 +102,7 @@
 	 *
 	 * @param {Date} date.
 	 */
-	wp.api.utils.parseISO8601 = function( date ) {
+	zc.api.utils.parseISO8601 = function( date ) {
 		var timestamp, struct, i, k,
 			minutesOffset = 0,
 			numericKeys = [ 1, 4, 5, 6, 7, 10, 11 ];
@@ -144,7 +144,7 @@
 	 * Helper function for getting the root URL.
 	 * @return {[type]} [description]
 	 */
-	wp.api.utils.getRootUrl = function() {
+	zc.api.utils.getRootUrl = function() {
 		return window.location.origin ?
 			window.location.origin + '/' :
 			window.location.protocol + '//' + window.location.host + '/';
@@ -153,7 +153,7 @@
 	/**
 	 * Helper for capitalizing strings.
 	 */
-	wp.api.utils.capitalize = function( str ) {
+	zc.api.utils.capitalize = function( str ) {
 		if ( _.isUndefined( str ) ) {
 			return str;
 		}
@@ -164,19 +164,19 @@
 	 * Helper function that capitalizes the first word and camel cases any words starting
 	 * after dashes, removing the dashes.
 	 */
-	wp.api.utils.capitalizeAndCamelCaseDashes = function( str ) {
+	zc.api.utils.capitalizeAndCamelCaseDashes = function( str ) {
 		if ( _.isUndefined( str ) ) {
 			return str;
 		}
-		str = wp.api.utils.capitalize( str );
+		str = zc.api.utils.capitalize( str );
 
-		return wp.api.utils.camelCaseDashes( str );
+		return zc.api.utils.camelCaseDashes( str );
 	};
 
 	/**
 	 * Helper function to camel case the letter after dashes, removing the dashes.
 	 */
-	wp.api.utils.camelCaseDashes = function( str ) {
+	zc.api.utils.camelCaseDashes = function( str ) {
 		return str.replace( /-([a-z])/g, function( g ) {
 			return g[ 1 ].toUpperCase();
 		} );
@@ -188,14 +188,14 @@
 	 * @param {string}   route          The endpoint route.
 	 * @param {number}   part           The number of parts from the end of the route to retrieve. Default 1.
 	 *                                  Example route `/a/b/c`: part 1 is `c`, part 2 is `b`, part 3 is `a`.
-	 * @param {string}  [versionString] Version string, defaults to `wp.api.versionString`.
+	 * @param {string}  [versionString] Version string, defaults to `zc.api.versionString`.
 	 * @param {boolean} [reverse]       Whether to reverse the order when extracting the route part. Optional, default false.
 	 */
-	wp.api.utils.extractRoutePart = function( route, part, versionString, reverse ) {
+	zc.api.utils.extractRoutePart = function( route, part, versionString, reverse ) {
 		var routeParts;
 
 		part = part || 1;
-		versionString = versionString || wp.api.versionString;
+		versionString = versionString || zc.api.versionString;
 
 		// Remove versions string from route to avoid returning it.
 		if ( 0 === route.indexOf( '/' + versionString ) ) {
@@ -217,7 +217,7 @@
 	 *
 	 * @param {string} route The route to extract a name from.
 	 */
-	wp.api.utils.extractParentName = function( route ) {
+	zc.api.utils.extractParentName = function( route ) {
 		var name,
 			lastSlash = route.lastIndexOf( '_id>[\\d]+)/' );
 
@@ -238,7 +238,7 @@
 	 * @param {Object} modelInstance  An instance of the model (or collection)
 	 *                                to add the args to.
 	 */
-	wp.api.utils.decorateFromRoute = function( routeEndpoints, modelInstance ) {
+	zc.api.utils.decorateFromRoute = function( routeEndpoints, modelInstance ) {
 
 		/**
 		 * Build the args based on route endpoint data.
@@ -292,7 +292,7 @@
 	 * @param {string}         modelClassName The classname of the constructed model.
 	 * @param {Object} 	       loadingObjects An object containing the models and collections we are building.
 	 */
-	wp.api.utils.addMixinsAndHelpers = function( model, modelClassName, loadingObjects ) {
+	zc.api.utils.addMixinsAndHelpers = function( model, modelClassName, loadingObjects ) {
 
 		var hasDate = false,
 
@@ -353,7 +353,7 @@
 						return false;
 					}
 
-					return new Date( wp.api.utils.parseISO8601( theISODate ) );
+					return new Date( zc.api.utils.parseISO8601( theISODate ) );
 				}
 			},
 
@@ -391,7 +391,7 @@
 				}
 
 				// Create the new getModel model.
-				getModel = new wp.api.models[ modelName ]( attributes );
+				getModel = new zc.api.models[ modelName ]( attributes );
 
 				if ( ! getModel.get( embedCheckField ) ) {
 					getModel.fetch( {
@@ -428,7 +428,7 @@
 				 * Uses the embedded data if available, otherwise fetches the
 				 * data from the server.
 				 *
-				 * @return {Deferred.promise} promise Resolves to a wp.api.collections[ collectionName ]
+				 * @return {Deferred.promise} promise Resolves to a zc.api.collections[ collectionName ]
 				 * collection.
 				 */
 				var postId, embeddedObjects, getObjects,
@@ -465,7 +465,7 @@
 				}
 
 				// Create the new getObjects collection.
-				getObjects = new wp.api.collections[ collectionName ]( properties, classProperties );
+				getObjects = new zc.api.collections[ collectionName ]( properties, classProperties );
 
 				// If we didn’t have embedded getObjects, fetch the getObjects data.
 				if ( _.isUndefined( getObjects.models[0] ) ) {
@@ -574,7 +574,7 @@
 				 */
 				getTags: function() {
 					var tagIds = this.get( 'tags' ),
-						tags  = new wp.api.collections.Tags();
+						tags  = new zc.api.collections.Tags();
 
 					// Resolve with an empty array if no tags.
 					if ( _.isEmpty( tagIds ) ) {
@@ -605,14 +605,14 @@
 					if ( _.isArray( tags ) ) {
 
 						// Get all the tags.
-						allTags = new wp.api.collections.Tags();
+						allTags = new zc.api.collections.Tags();
 						allTags.fetch( {
 							data:    { per_page: 100 },
 							success: function( alltags ) {
 
 								// Find the passed tags and set them up.
 								_.each( tags, function( tag ) {
-									newTag = new wp.api.models.Tag( alltags.findWhere( { slug: tag } ) );
+									newTag = new zc.api.models.Tag( alltags.findWhere( { slug: tag } ) );
 
 									// Tie the new tag to the post.
 									newTag.set( 'parent_post', self.get( 'id' ) );
@@ -620,7 +620,7 @@
 									// Add the new tag to the collection.
 									newTags.push( newTag );
 								} );
-								tags = new wp.api.collections.Tags( newTags );
+								tags = new zc.api.collections.Tags( newTags );
 								self.setTagsWithCollection( tags );
 							}
 						} );
@@ -658,7 +658,7 @@
 				 */
 				getCategories: function() {
 					var categoryIds = this.get( 'categories' ),
-						categories  = new wp.api.collections.Categories();
+						categories  = new zc.api.collections.Categories();
 
 					// Resolve with an empty array if no categories.
 					if ( _.isEmpty( categoryIds ) ) {
@@ -689,14 +689,14 @@
 					if ( _.isArray( categories ) ) {
 
 						// Get all the categories.
-						allCategories = new wp.api.collections.Categories();
+						allCategories = new zc.api.collections.Categories();
 						allCategories.fetch( {
 							data:    { per_page: 100 },
 							success: function( allcats ) {
 
 								// Find the passed categories and set them up.
 								_.each( categories, function( category ) {
-									newCategory = new wp.api.models.Category( allcats.findWhere( { slug: category } ) );
+									newCategory = new zc.api.models.Category( allcats.findWhere( { slug: category } ) );
 
 									// Tie the new category to the post.
 									newCategory.set( 'parent_post', self.get( 'id' ) );
@@ -704,7 +704,7 @@
 									// Add the new category to the collection.
 									newCategories.push( newCategory );
 								} );
-								categories = new wp.api.collections.Categories( newCategories );
+								categories = new zc.api.collections.Categories( newCategories );
 								self.setCategoriesWithCollection( categories );
 							}
 						} );
@@ -745,7 +745,7 @@
 			 */
 			FeaturedMediaMixin = {
 				getFeaturedMedia: function() {
-					return buildModelGetter( this, this.get( 'featured_media' ), 'Media', 'wp:featuredmedia', 'source_url' );
+					return buildModelGetter( this, this.get( 'featured_media' ), 'Media', 'zc:featuredmedia', 'source_url' );
 				}
 			};
 
@@ -815,7 +815,7 @@
 	/**
 	 * Backbone base model for all models.
 	 */
-	wp.api.WPApiBaseModel = Backbone.Model.extend(
+	zc.api.WPApiBaseModel = Backbone.Model.extend(
 		/** @lends WPApiBaseModel.prototype  */
 		{
 
@@ -926,7 +926,7 @@
 	/**
 	 * API Schema model. Contains meta information about the API.
 	 */
-	wp.api.models.Schema = wp.api.WPApiBaseModel.extend(
+	zc.api.models.Schema = zc.api.WPApiBaseModel.extend(
 		/** @lends Schema.prototype  */
 		{
 			defaults: {
@@ -939,7 +939,7 @@
 				var model = this;
 				options = options || {};
 
-				wp.api.WPApiBaseModel.prototype.initialize.call( model, attributes, options );
+				zc.api.WPApiBaseModel.prototype.initialize.call( model, attributes, options );
 
 				model.apiRoot = options.apiRoot || wpApiSettings.root;
 				model.versionString = options.versionString || wpApiSettings.versionString;
@@ -961,7 +961,7 @@
 	/**
 	 * Contains basic collection functionality such as pagination.
 	 */
-	wp.api.WPApiBaseCollection = Backbone.Collection.extend(
+	zc.api.WPApiBaseCollection = Backbone.Collection.extend(
 		/** @lends BaseCollection.prototype  */
 		{
 
@@ -1114,11 +1114,11 @@
 	var Endpoint, initializedDeferreds = {},
 		wpApiSettings = window.wpApiSettings || {};
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
+	/** @namespace zc */
+	window.zc = window.zc || {};
 
-	/** @namespace wp.api */
-	wp.api    = wp.api || {};
+	/** @namespace zc.api */
+	zc.api    = zc.api || {};
 
 	// If wpApiSettings is unavailable, try the default.
 	if ( _.isEmpty( wpApiSettings ) ) {
@@ -1128,7 +1128,7 @@
 	Endpoint = Backbone.Model.extend(/** @lends Endpoint.prototype */{
 		defaults: {
 			apiRoot: wpApiSettings.root,
-			versionString: wp.api.versionString,
+			versionString: zc.api.versionString,
 			nonce: null,
 			schema: null,
 			models: {},
@@ -1146,7 +1146,7 @@
 			deferred = jQuery.Deferred();
 			model.schemaConstructed = deferred.promise();
 
-			model.schemaModel = new wp.api.models.Schema( null, {
+			model.schemaModel = new zc.api.models.Schema( null, {
 				apiRoot:       model.get( 'apiRoot' ),
 				versionString: model.get( 'versionString' ),
 				nonce:         model.get( 'nonce' )
@@ -1247,7 +1247,7 @@
 			 */
 			modelRoutes      = [];
 			collectionRoutes = [];
-			schemaRoot       = routeModel.get( 'apiRoot' ).replace( wp.api.utils.getRootUrl(), '' );
+			schemaRoot       = routeModel.get( 'apiRoot' ).replace( zc.api.utils.getRootUrl(), '' );
 			loadingObjects   = {};
 
 			/**
@@ -1284,9 +1284,9 @@
 
 				// Extract the name and any parent from the route.
 				var modelClassName,
-					routeName  = wp.api.utils.extractRoutePart( modelRoute.index, 2, routeModel.get( 'versionString' ), true ),
-					parentName = wp.api.utils.extractRoutePart( modelRoute.index, 1, routeModel.get( 'versionString' ), false ),
-					routeEnd   = wp.api.utils.extractRoutePart( modelRoute.index, 1, routeModel.get( 'versionString' ), true );
+					routeName  = zc.api.utils.extractRoutePart( modelRoute.index, 2, routeModel.get( 'versionString' ), true ),
+					parentName = zc.api.utils.extractRoutePart( modelRoute.index, 1, routeModel.get( 'versionString' ), false ),
+					routeEnd   = zc.api.utils.extractRoutePart( modelRoute.index, 1, routeModel.get( 'versionString' ), true );
 
 				// Clear the parent part of the rouite if its actually the version string.
 				if ( parentName === routeModel.get( 'versionString' ) ) {
@@ -1300,9 +1300,9 @@
 
 				// If the model has a parent in its route, add that to its class name.
 				if ( '' !== parentName && parentName !== routeName ) {
-					modelClassName = wp.api.utils.capitalizeAndCamelCaseDashes( parentName ) + wp.api.utils.capitalizeAndCamelCaseDashes( routeName );
+					modelClassName = zc.api.utils.capitalizeAndCamelCaseDashes( parentName ) + zc.api.utils.capitalizeAndCamelCaseDashes( routeName );
 					modelClassName = mapping.models[ modelClassName ] || modelClassName;
-					loadingObjects.models[ modelClassName ] = wp.api.WPApiBaseModel.extend( {
+					loadingObjects.models[ modelClassName ] = zc.api.WPApiBaseModel.extend( {
 
 						// Return a constructed url based on the parent and id.
 						url: function() {
@@ -1343,9 +1343,9 @@
 				} else {
 
 					// This is a model without a parent in its route.
-					modelClassName = wp.api.utils.capitalizeAndCamelCaseDashes( routeName );
+					modelClassName = zc.api.utils.capitalizeAndCamelCaseDashes( routeName );
 					modelClassName = mapping.models[ modelClassName ] || modelClassName;
-					loadingObjects.models[ modelClassName ] = wp.api.WPApiBaseModel.extend( {
+					loadingObjects.models[ modelClassName ] = zc.api.WPApiBaseModel.extend( {
 
 						// Function that returns a constructed url based on the ID.
 						url: function() {
@@ -1381,7 +1381,7 @@
 				}
 
 				// Add defaults to the new model, pulled form the endpoint.
-				wp.api.utils.decorateFromRoute(
+				zc.api.utils.decorateFromRoute(
 					modelRoute.route.endpoints,
 					loadingObjects.models[ modelClassName ],
 					routeModel.get( 'versionString' )
@@ -1399,15 +1399,15 @@
 				// Extract the name and any parent from the route.
 				var collectionClassName, modelClassName,
 						routeName  = collectionRoute.index.slice( collectionRoute.index.lastIndexOf( '/' ) + 1 ),
-						parentName = wp.api.utils.extractRoutePart( collectionRoute.index, 1, routeModel.get( 'versionString' ), false );
+						parentName = zc.api.utils.extractRoutePart( collectionRoute.index, 1, routeModel.get( 'versionString' ), false );
 
 				// If the collection has a parent in its route, add that to its class name.
 				if ( '' !== parentName && parentName !== routeName && routeModel.get( 'versionString' ) !== parentName ) {
 
-					collectionClassName = wp.api.utils.capitalizeAndCamelCaseDashes( parentName ) + wp.api.utils.capitalizeAndCamelCaseDashes( routeName );
+					collectionClassName = zc.api.utils.capitalizeAndCamelCaseDashes( parentName ) + zc.api.utils.capitalizeAndCamelCaseDashes( routeName );
 					modelClassName      = mapping.models[ collectionClassName ] || collectionClassName;
 					collectionClassName = mapping.collections[ collectionClassName ] || collectionClassName;
-					loadingObjects.collections[ collectionClassName ] = wp.api.WPApiBaseCollection.extend( {
+					loadingObjects.collections[ collectionClassName ] = zc.api.WPApiBaseCollection.extend( {
 
 						// Function that returns a constructed url passed on the parent.
 						url: function() {
@@ -1443,10 +1443,10 @@
 				} else {
 
 					// This is a collection without a parent in its route.
-					collectionClassName = wp.api.utils.capitalizeAndCamelCaseDashes( routeName );
+					collectionClassName = zc.api.utils.capitalizeAndCamelCaseDashes( routeName );
 					modelClassName      = mapping.models[ collectionClassName ] || collectionClassName;
 					collectionClassName = mapping.collections[ collectionClassName ] || collectionClassName;
-					loadingObjects.collections[ collectionClassName ] = wp.api.WPApiBaseCollection.extend( {
+					loadingObjects.collections[ collectionClassName ] = zc.api.WPApiBaseCollection.extend( {
 
 						// For the url of a root level collection, use a string.
 						url: function() {
@@ -1477,12 +1477,12 @@
 				}
 
 				// Add defaults to the new model, pulled form the endpoint.
-				wp.api.utils.decorateFromRoute( collectionRoute.route.endpoints, loadingObjects.collections[ collectionClassName ] );
+				zc.api.utils.decorateFromRoute( collectionRoute.route.endpoints, loadingObjects.collections[ collectionClassName ] );
 			} );
 
 			// Add mixins and helpers for each of the models.
 			_.each( loadingObjects.models, function( model, index ) {
-				loadingObjects.models[ index ] = wp.api.utils.addMixinsAndHelpers( model, index, loadingObjects );
+				loadingObjects.models[ index ] = zc.api.utils.addMixinsAndHelpers( model, index, loadingObjects );
 			} );
 
 			// Set the routeModel models and collections.
@@ -1493,7 +1493,7 @@
 
 	} );
 
-	wp.api.endpoints = new Backbone.Collection();
+	zc.api.endpoints = new Backbone.Collection();
 
 	/**
 	 * Initialize the zc-api, optionally passing the API root.
@@ -1504,13 +1504,13 @@
 	 * @param {string} [args.versionString] The version string. Optional, defaults to wpApiSettings.root.
 	 * @param {Object} [args.schema] The schema. Optional, will be fetched from API if not provided.
 	 */
-	wp.api.init = function( args ) {
+	zc.api.init = function( args ) {
 		var endpoint, attributes = {}, deferred, promise;
 
 		args                      = args || {};
 		attributes.nonce          = _.isString( args.nonce ) ? args.nonce : ( wpApiSettings.nonce || '' );
 		attributes.apiRoot        = args.apiRoot || wpApiSettings.root || '/zc-json';
-		attributes.versionString  = args.versionString || wpApiSettings.versionString || 'wp/v2/';
+		attributes.versionString  = args.versionString || wpApiSettings.versionString || 'zc/v2/';
 		attributes.schema         = args.schema || null;
 		attributes.modelEndpoints = args.modelEndpoints || [ 'me', 'settings' ];
 		if ( ! attributes.schema && attributes.apiRoot === wpApiSettings.root && attributes.versionString === wpApiSettings.versionString ) {
@@ -1520,7 +1520,7 @@
 		if ( ! initializedDeferreds[ attributes.apiRoot + attributes.versionString ] ) {
 
 			// Look for an existing copy of this endpoint.
-			endpoint = wp.api.endpoints.findWhere( { 'apiRoot': attributes.apiRoot, 'versionString': attributes.versionString } );
+			endpoint = zc.api.endpoints.findWhere( { 'apiRoot': attributes.apiRoot, 'versionString': attributes.versionString } );
 			if ( ! endpoint ) {
 				endpoint = new Endpoint( attributes );
 			}
@@ -1528,11 +1528,11 @@
 			promise = deferred.promise();
 
 			endpoint.schemaConstructed.done( function( resolvedEndpoint ) {
-				wp.api.endpoints.add( resolvedEndpoint );
+				zc.api.endpoints.add( resolvedEndpoint );
 
 				// Map the default endpoints, extending any already present items (including Schema model).
-				wp.api.models      = _.extend( wp.api.models, resolvedEndpoint.get( 'models' ) );
-				wp.api.collections = _.extend( wp.api.collections, resolvedEndpoint.get( 'collections' ) );
+				zc.api.models      = _.extend( zc.api.models, resolvedEndpoint.get( 'models' ) );
+				zc.api.collections = _.extend( zc.api.collections, resolvedEndpoint.get( 'collections' ) );
 				deferred.resolve( resolvedEndpoint );
 			} );
 			initializedDeferreds[ attributes.apiRoot + attributes.versionString ] = promise;
@@ -1544,7 +1544,7 @@
 	 * Construct the default endpoints and add to an endpoints collection.
 	 */
 
-	// The wp.api.init function returns a promise that will resolve with the endpoint once it is ready.
-	wp.api.loadPromise = wp.api.init();
+	// The zc.api.init function returns a promise that will resolve with the endpoint once it is ready.
+	zc.api.loadPromise = zc.api.init();
 
 } )();

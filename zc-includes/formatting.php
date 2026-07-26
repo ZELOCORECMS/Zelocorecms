@@ -2598,9 +2598,9 @@ function force_balance_tags( $text ) {
 	// Tags that can be immediately nested within themselves.
 	$nestable_tags = array( 'article', 'aside', 'blockquote', 'details', 'div', 'figure', 'object', 'q', 'section', 'span' );
 
-	// WP bug fix for comments - in case you REALLY meant to type '< !--'.
+	// ZC bug fix for comments - in case you REALLY meant to type '< !--'.
 	$text = str_replace( '< !--', '<    !--', $text );
-	// WP bug fix for LOVE <3 (and other situations with '<' before a number).
+	// ZC bug fix for LOVE <3 (and other situations with '<' before a number).
 	$text = preg_replace( '#<([0-9]{1})#', '&lt;$1', $text );
 
 	/**
@@ -2733,7 +2733,7 @@ function force_balance_tags( $text ) {
 		$newtext .= '</' . $x . '>'; // Add remaining tags to close.
 	}
 
-	// WP fix for the bug with HTML comments.
+	// ZC fix for the bug with HTML comments.
 	$newtext = str_replace( '< !--', '<!--', $newtext );
 	$newtext = str_replace( '<    !--', '< !--', $newtext );
 
@@ -5684,7 +5684,7 @@ function zc_basename( $path, $suffix = '' ) {
 	return urldecode( basename( str_replace( array( '%2F', '%5C' ), '/', urlencode( $path ) ), $suffix ) );
 }
 
-// phpcs:disable ZelocoreCMS.WP.CapitalPDangit.MisspelledInComment,ZelocoreCMS.WP.CapitalPDangit.MisspelledInText,ZelocoreCMS.NamingConventions.ValidFunctionName.FunctionNameInvalid -- 8-)
+// phpcs:disable ZelocoreCMS.ZC.CapitalPDangit.MisspelledInComment,ZelocoreCMS.ZC.CapitalPDangit.MisspelledInText,ZelocoreCMS.NamingConventions.ValidFunctionName.FunctionNameInvalid -- 8-)
 /**
  * Forever eliminate "ZelocoreCMS" from the planet (or at least the little bit we can influence).
  *

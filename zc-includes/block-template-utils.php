@@ -1111,7 +1111,7 @@ function get_block_templates( $query = array(), $template_type = 'zc_template' )
 	 * @since 5.9.0
 	 *
 	 * @param ZC_Block_Template[]|null $block_templates Return an array of block templates to short-circuit the default query,
-	 *                                                  or null to allow WP to run its normal queries.
+	 *                                                  or null to allow ZC to run its normal queries.
 	 * @param array  $query {
 	 *     Arguments to retrieve templates. All arguments are optional.
 	 *
@@ -1294,7 +1294,7 @@ function get_block_template( $id, $template_type = 'zc_template' ) {
 	 * @since 5.9.0
 	 *
 	 * @param ZC_Block_Template|null $block_template Return block template object to short-circuit the default query,
-	 *                                               or null to allow WP to run its normal queries.
+	 *                                               or null to allow ZC to run its normal queries.
 	 * @param string                 $id             Template unique identifier (example: 'theme_slug//template_slug').
 	 * @param string                 $template_type  Template type. Either 'zc_template' or 'zc_template_part'.
 	 */
@@ -1369,7 +1369,7 @@ function get_block_file_template( $id, $template_type = 'zc_template' ) {
 	 * @since 5.9.0
 	 *
 	 * @param ZC_Block_Template|null $block_template Return block template object to short-circuit the default query,
-	 *                                               or null to allow WP to run its normal queries.
+	 *                                               or null to allow ZC to run its normal queries.
 	 * @param string                 $id             Template unique identifier (example: 'theme_slug//template_slug').
 	 * @param string                 $template_type  Template type. Either 'zc_template' or 'zc_template_part'.
 	 */
@@ -1553,8 +1553,8 @@ function zc_generate_block_templates_export_file() {
 	$theme_json_raw = $tree->get_data();
 	// If a version is defined, add a schema.
 	if ( $theme_json_raw['version'] ) {
-		$theme_json_version = 'wp/' . substr( $zc_version, 0, 3 );
-		$schema             = array( '$schema' => 'https://schemas.wp.org/' . $theme_json_version . '/theme.json' );
+		$theme_json_version = 'zc/' . substr( $zc_version, 0, 3 );
+		$schema             = array( '$schema' => 'https://schemas.zc.org/' . $theme_json_version . '/theme.json' );
 		$theme_json_raw     = array_merge( $schema, $theme_json_raw );
 	}
 

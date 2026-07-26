@@ -826,7 +826,7 @@ function has_blocks( $post = null ) {
 		$post = $zc_post->post_content;
 	}
 
-	return str_contains( (string) $post, '<!-- wp:' );
+	return str_contains( (string) $post, '<!-- zc:' );
 }
 
 /**
@@ -868,7 +868,7 @@ function has_block( $block_name, $post = null ) {
 	}
 
 	// Test for existence of block by its fully qualified name.
-	$has_block = str_contains( $post, '<!-- wp:' . $block_name . ' ' );
+	$has_block = str_contains( $post, '<!-- zc:' . $block_name . ' ' );
 
 	if ( ! $has_block ) {
 		/*
@@ -877,7 +877,7 @@ function has_block( $block_name, $post = null ) {
 		 */
 		$serialized_block_name = strip_core_block_namespace( $block_name );
 		if ( $serialized_block_name !== $block_name ) {
-			$has_block = str_contains( $post, '<!-- wp:' . $serialized_block_name . ' ' );
+			$has_block = str_contains( $post, '<!-- zc:' . $serialized_block_name . ' ' );
 		}
 	}
 
@@ -1696,11 +1696,11 @@ function get_comment_delimited_block_content( $block_name, $block_attributes, $b
 	$serialized_attributes = empty( $block_attributes ) ? '' : serialize_block_attributes( $block_attributes ) . ' ';
 
 	if ( empty( $block_content ) ) {
-		return sprintf( '<!-- wp:%s %s/-->', $serialized_block_name, $serialized_attributes );
+		return sprintf( '<!-- zc:%s %s/-->', $serialized_block_name, $serialized_attributes );
 	}
 
 	return sprintf(
-		'<!-- wp:%s %s-->%s<!-- /wp:%s -->',
+		'<!-- zc:%s %s-->%s<!-- /zc:%s -->',
 		$serialized_block_name,
 		$serialized_attributes,
 		$block_content,

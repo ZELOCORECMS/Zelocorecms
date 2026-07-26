@@ -4,8 +4,8 @@
 
 /* global jQuery, JSON, _customizePartialRefreshExports, console */
 
-/** @namespace wp.customize.selectiveRefresh */
-wp.customize.selectiveRefresh = ( function( $, api ) {
+/** @namespace zc.customize.selectiveRefresh */
+zc.customize.selectiveRefresh = ( function( $, api ) {
 	'use strict';
 	var self, Partial, Placement;
 
@@ -29,15 +29,15 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 *
 	 * A partial provides a rendering of one or more settings according to a template.
 	 *
-	 * @memberOf wp.customize.selectiveRefresh
+	 * @memberOf zc.customize.selectiveRefresh
 	 *
 	 * @see PHP class ZC_Customize_Partial.
 	 *
 	 * @class
-	 * @augments wp.customize.Class
+	 * @augments zc.customize.Class
 	 * @since 4.5.0
 	 */
-	Partial = self.Partial = api.Class.extend(/** @lends wp.customize.SelectiveRefresh.Partial.prototype */{
+	Partial = self.Partial = api.Class.extend(/** @lends zc.customize.SelectiveRefresh.Partial.prototype */{
 
 		id: null,
 
@@ -303,7 +303,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 		 *
 		 * @since 4.5.0
 		 *
-		 * @param {wp.customize.Value|string} setting  ID or object for setting.
+		 * @param {zc.customize.Value|string} setting  ID or object for setting.
 		 * @return {boolean} Whether the setting is related to the partial.
 		 */
 		isRelatedSetting: function( setting /*... newValue, oldValue */ ) {
@@ -363,7 +363,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 		 *
 		 * @since 4.5.0
 		 *
-		 * @this {wp.customize.selectiveRefresh.Partial}
+		 * @this {zc.customize.selectiveRefresh.Partial}
 		 * @return {jQuery.Promise}
 		 */
 		refresh: function() {
@@ -436,8 +436,8 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 			/* jshint ignore:end */
 			try {
 				content = placement.addedContent;
-				if ( wp.emoji && wp.emoji.parse && ! $.contains( document.head, placement.container[0] ) ) {
-					content = wp.emoji.parse( content );
+				if ( zc.emoji && zc.emoji.parse && ! $.contains( document.head, placement.container[0] ) ) {
+					content = zc.emoji.parse( content );
 				}
 
 				if ( partial.params.containerInclusive ) {
@@ -485,15 +485,15 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 
 			/*
 			 * Note that the 'zc_audio_shortcode_library' and 'zc_video_shortcode_library' filters
-			 * will determine whether or not wp.mediaelement is loaded and whether it will
+			 * will determine whether or not zc.mediaelement is loaded and whether it will
 			 * initialize audio and video respectively. See also https://core.trac.zelocorecms.org/ticket/40144
 			 */
-			if ( wp.mediaelement ) {
-				wp.mediaelement.initialize();
+			if ( zc.mediaelement ) {
+				zc.mediaelement.initialize();
 			}
 
-			if ( wp.playlist ) {
-				wp.playlist.initialize();
+			if ( zc.playlist ) {
+				zc.playlist.initialize();
 			}
 
 			/**
@@ -525,18 +525,18 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 * It also may have information in relation to how a placement may have just changed.
 	 * The placement is conceptually similar to a DOM Range or MutationRecord.
 	 *
-	 * @memberOf wp.customize.selectiveRefresh
+	 * @memberOf zc.customize.selectiveRefresh
 	 *
 	 * @class Placement
-	 * @augments wp.customize.Class
+	 * @augments zc.customize.Class
 	 * @since 4.5.0
 	 */
-	self.Placement = Placement = api.Class.extend(/** @lends wp.customize.selectiveRefresh.prototype */{
+	self.Placement = Placement = api.Class.extend(/** @lends zc.customize.selectiveRefresh.prototype */{
 
 		/**
 		 * The partial with which the container is associated.
 		 *
-		 * @param {wp.customize.selectiveRefresh.Partial}
+		 * @param {zc.customize.selectiveRefresh.Partial}
 		 */
 		partial: null,
 
@@ -633,7 +633,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 *
 	 * @since 4.5.0
 	 *
-	 * @type {Object.<string, wp.customize.selectiveRefresh.Partial>}
+	 * @type {Object.<string, zc.customize.selectiveRefresh.Partial>}
 	 */
 	self.partialConstructor = {};
 
@@ -643,7 +643,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 * Get the POST vars for a Customizer preview request.
 	 *
 	 * @since 4.5.0
-	 * @see wp.customize.previewer.query()
+	 * @see zc.customize.previewer.query()
 	 *
 	 * @return {Object}
 	 */
@@ -668,7 +668,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 * Currently-requested partials and their associated deferreds.
 	 *
 	 * @since 4.5.0
-	 * @type {Object<string, { deferred: jQuery.Promise, partial: wp.customize.selectiveRefresh.Partial }>}
+	 * @type {Object<string, { deferred: jQuery.Promise, partial: zc.customize.selectiveRefresh.Partial }>}
 	 */
 	self._pendingPartialRequests = {};
 
@@ -707,7 +707,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	 *
 	 * @since 4.5.0
 	 *
-	 * @param {wp.customize.selectiveRefresh.Partial} partial
+	 * @param {zc.customize.selectiveRefresh.Partial} partial
 	 * @return {jQuery.Promise}
 	 */
 	self.requestPartial = function( partial ) {
@@ -770,7 +770,7 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 				data.partials = JSON.stringify( partialPlacementContexts );
 				data[ self.data.renderQueryVar ] = '1';
 
-				request = self._currentRequest = wp.ajax.send( null, {
+				request = self._currentRequest = zc.ajax.send( null, {
 					data: data,
 					url: api.settings.url.self
 				} );
@@ -944,12 +944,12 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 		/**
 		 * Handle change to a setting.
 		 *
-		 * Note this is largely needed because adding a 'change' event handler to wp.customize
+		 * Note this is largely needed because adding a 'change' event handler to zc.customize
 		 * will only include the changed setting object as an argument, not including the
 		 * new value or the old value.
 		 *
 		 * @since 4.5.0
-		 * @this {wp.customize.Setting}
+		 * @this {zc.customize.Setting}
 		 *
 		 * @param {*|null} newValue New value, or null if the setting was just removed.
 		 * @param {*|null} oldValue Old value, or null if the setting was just added.
@@ -967,9 +967,9 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 		 * Trigger the initial change for the added setting, and watch for changes.
 		 *
 		 * @since 4.5.0
-		 * @this {wp.customize.Values}
+		 * @this {zc.customize.Values}
 		 *
-		 * @param {wp.customize.Setting} setting
+		 * @param {zc.customize.Setting} setting
 		 */
 		watchSettingChange = function( setting ) {
 			handleSettingChange.call( setting, setting(), null );
@@ -980,9 +980,9 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 		 * Trigger the final change for the removed setting, and unwatch for changes.
 		 *
 		 * @since 4.5.0
-		 * @this {wp.customize.Values}
+		 * @this {zc.customize.Values}
 		 *
-		 * @param {wp.customize.Setting} setting
+		 * @param {zc.customize.Setting} setting
 		 */
 		unwatchSettingChange = function( setting ) {
 			handleSettingChange.call( setting, null, setting() );
@@ -1063,4 +1063,4 @@ wp.customize.selectiveRefresh = ( function( $, api ) {
 	} );
 
 	return self;
-}( jQuery, wp.customize ) );
+}( jQuery, zc.customize ) );

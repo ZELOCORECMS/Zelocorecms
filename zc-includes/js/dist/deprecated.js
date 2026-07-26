@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).deprecated = (() => {
+var zc;
+(zc ||= {}).deprecated = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
@@ -65,4 +65,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.deprecated === 'object' && wp.deprecated.default) { wp.deprecated = wp.deprecated.default; }
+if (typeof zc.deprecated === 'object' && zc.deprecated.default) { zc.deprecated = zc.deprecated.default; }

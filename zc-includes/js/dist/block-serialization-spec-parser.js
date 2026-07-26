@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).blockSerializationSpecParser = (() => {
+var zc;
+(zc ||= {}).blockSerializationSpecParser = (() => {
   var __getOwnPropNames = Object.getOwnPropertyNames;
   var __commonJS = (cb, mod) => function __require() {
     return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
@@ -104,7 +104,7 @@ var wp;
           return [b, html];
         }, peg$c2 = function(pre, bs, post) {
           return joinBlocks(pre, bs, post);
-        }, peg$c3 = "<!--", peg$c4 = peg$literalExpectation("<!--", false), peg$c5 = "wp:", peg$c6 = peg$literalExpectation("wp:", false), peg$c7 = function(blockName, a) {
+        }, peg$c3 = "<!--", peg$c4 = peg$literalExpectation("<!--", false), peg$c5 = "zc:", peg$c6 = peg$literalExpectation("zc:", false), peg$c7 = function(blockName, a) {
           return a;
         }, peg$c8 = "/-->", peg$c9 = peg$literalExpectation("/-->", false), peg$c10 = function(blockName, attrs) {
           return {
@@ -131,7 +131,7 @@ var wp;
             blockName,
             attrs: attrs || {}
           };
-        }, peg$c15 = "/wp:", peg$c16 = peg$literalExpectation("/wp:", false), peg$c17 = function(blockName) {
+        }, peg$c15 = "/zc:", peg$c16 = peg$literalExpectation("/zc:", false), peg$c17 = function(blockName) {
           return {
             blockName
           };

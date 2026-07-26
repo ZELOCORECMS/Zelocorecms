@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).widgets = (() => {
+var zc;
+(zc ||= {}).widgets = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,21 +34,21 @@ var wp;
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
@@ -62,56 +62,56 @@ var wp;
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
@@ -157,7 +157,7 @@ var wp;
 
   // packages/widgets/build-module/blocks/legacy-widget/block.json
   var block_default = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/legacy-widget",
     title: "Legacy Widget",
@@ -564,7 +564,7 @@ var wp;
     let widget;
     if (formData) {
       widget = await (0, import_api_fetch.default)({
-        path: `/wp/v2/widgets/${id}?context=edit`,
+        path: `/zc/v2/widgets/${id}?context=edit`,
         method: "PUT",
         data: {
           form_data: formData
@@ -572,7 +572,7 @@ var wp;
       });
     } else {
       widget = await (0, import_api_fetch.default)({
-        path: `/wp/v2/widgets/${id}?context=edit`,
+        path: `/zc/v2/widgets/${id}?context=edit`,
         method: "GET"
       });
     }
@@ -580,7 +580,7 @@ var wp;
   }
   async function encodeWidget({ idBase, instance, number, formData = null }) {
     const response = await (0, import_api_fetch.default)({
-      path: `/wp/v2/widget-types/${idBase}/encode`,
+      path: `/zc/v2/widget-types/${idBase}/encode`,
       method: "POST",
       data: {
         instance,
@@ -749,7 +749,7 @@ var wp;
     (0, import_element2.useEffect)(() => {
       const abortController = typeof window.AbortController === "undefined" ? void 0 : new window.AbortController();
       async function fetchPreviewHTML() {
-        const restRoute = `/wp/v2/widget-types/${idBase}/render`;
+        const restRoute = `/zc/v2/widget-types/${idBase}/render`;
         return await (0, import_api_fetch2.default)({
           path: restRoute,
           method: "POST",
@@ -1195,7 +1195,7 @@ var wp;
 
   // packages/widgets/build-module/blocks/widget-group/block.json
   var block_default2 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/widget-group",
     title: "Widget Group",

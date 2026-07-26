@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).nux = (() => {
+var zc;
+(zc ||= {}).nux = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,49 +34,49 @@ var wp;
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
@@ -318,9 +318,9 @@ var wp;
   )(DotTip);
 
   // packages/nux/build-module/index.mjs
-  (0, import_deprecated.default)("wp.nux", {
+  (0, import_deprecated.default)("zc.nux", {
     since: "5.4",
-    hint: "wp.components.Guide can be used to show a user guide.",
+    hint: "zc.components.Guide can be used to show a user guide.",
     version: "6.2"
   });
   return __toCommonJS(index_exports);

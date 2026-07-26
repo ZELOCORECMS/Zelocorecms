@@ -161,7 +161,7 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 			$mode = get_user_setting( 'posts_list_mode', 'list' );
 		}
 
-		// Is going to call wp().
+		// Is going to call zc().
 		$avail_post_stati = zc_edit_posts_query();
 
 		$this->set_hierarchical_display(

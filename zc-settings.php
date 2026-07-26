@@ -117,7 +117,7 @@ require ABSPATH . ZCINC . '/meta.php';
 require ABSPATH . ZCINC . '/functions.php';
 require ABSPATH . ZCINC . '/class-zc-meta-query.php';
 require ABSPATH . ZCINC . '/class-zc-matchesmapregex.php';
-require ABSPATH . ZCINC . '/class-wp.php';
+require ABSPATH . ZCINC . '/class-zc.php';
 require ABSPATH . ZCINC . '/class-zc-error.php';
 require ABSPATH . ZCINC . '/pomo/mo.php';
 require ABSPATH . ZCINC . '/l10n/class-zc-translation-controller.php';
@@ -667,9 +667,9 @@ $GLOBALS['zc_rewrite'] = new ZC_Rewrite();
  *
  * @since 2.0.0
  *
- * @global WP $zc Current ZelocoreCMS environment instance.
+ * @global ZC $zc Current ZelocoreCMS environment instance.
  */
-$GLOBALS['zc'] = new WP();
+$GLOBALS['zc'] = new ZC();
 
 /**
  * ZelocoreCMS Widget Factory Object
@@ -760,11 +760,11 @@ $GLOBALS['zc']->init();
 /**
  * Fires after ZelocoreCMS has finished loading but before any headers are sent.
  *
- * Most of WP is loaded at this stage, and the user is authenticated. WP continues
+ * Most of ZC is loaded at this stage, and the user is authenticated. ZC continues
  * to load on the {@see 'init'} hook that follows (e.g. widgets), and many plugins instantiate
  * themselves on it for all sorts of reasons (e.g. they need a user, a taxonomy, etc.).
  *
- * If you wish to plug an action once WP is loaded, use the {@see 'zc_loaded'} hook below.
+ * If you wish to plug an action once ZC is loaded, use the {@see 'zc_loaded'} hook below.
  *
  * @since 1.5.0
  */
@@ -781,7 +781,7 @@ if ( is_multisite() ) {
 }
 
 /**
- * This hook is fired once WP, all plugins, and the theme are fully loaded and instantiated.
+ * This hook is fired once ZC, all plugins, and the theme are fully loaded and instantiated.
  *
  * Ajax requests should use zc-admin/admin-ajax.php. admin-ajax.php can handle requests for
  * users not logged in.

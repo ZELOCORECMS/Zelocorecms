@@ -320,7 +320,7 @@ class ZC_REST_Font_Families_Controller extends ZC_REST_Posts_Controller {
 					),
 				),
 				// Font family settings come directly from theme.json schema
-				// See https://schemas.wp.org/trunk/theme.json
+				// See https://schemas.zc.org/trunk/theme.json
 				'font_family_settings' => array(
 					'description'          => __( 'font-face definition in theme.json format.' ),
 					'type'                 => 'object',

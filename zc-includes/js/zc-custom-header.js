@@ -7,8 +7,8 @@
 
 	var NativeHandler, YouTubeHandler;
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
+	/** @namespace zc */
+	window.zc = window.zc || {};
 
 	// Fail gracefully in unsupported browsers.
 	if ( ! ( 'addEventListener' in window ) ) {
@@ -37,7 +37,7 @@
 	/**
 	 * Create a custom header instance.
 	 *
-	 * @memberOf wp
+	 * @memberOf zc
 	 *
 	 * @class
 	 */
@@ -98,7 +98,7 @@
 	/**
 	 * Create a video handler instance.
 	 *
-	 * @memberOf wp
+	 * @memberOf zc
 	 *
 	 * @class
 	 */
@@ -136,16 +136,16 @@
 			this.container.addEventListener( 'play', function() {
 				button.className = 'zc-custom-header-video-button zc-custom-header-video-play';
 				button.innerHTML = settings.l10n.pause;
-				if ( 'a11y' in window.wp ) {
-					window.wp.a11y.speak( settings.l10n.playSpeak);
+				if ( 'a11y' in window.zc ) {
+					window.zc.a11y.speak( settings.l10n.playSpeak);
 				}
 			});
 
 			this.container.addEventListener( 'pause', function() {
 				button.className = 'zc-custom-header-video-button zc-custom-header-video-pause';
 				button.innerHTML = settings.l10n.play;
-				if ( 'a11y' in window.wp ) {
-					window.wp.a11y.speak( settings.l10n.pauseSpeak);
+				if ( 'a11y' in window.zc ) {
+					window.zc.a11y.speak( settings.l10n.pauseSpeak);
 				}
 			});
 
@@ -237,7 +237,7 @@
 	/**
 	 * Create a custom handler.
 	 *
-	 * @memberOf wp
+	 * @memberOf zc
 	 *
 	 * @param {Object} protoProps Properties to apply to the prototype.
 	 * @return CustomHandler The subclass.
@@ -263,11 +263,11 @@
 	/**
 	 * Native video handler.
 	 *
-	 * @memberOf wp
+	 * @memberOf zc
 	 *
 	 * @class
 	 */
-	NativeHandler = BaseHandler.extend(/** @lends wp.NativeHandler.prototype */{
+	NativeHandler = BaseHandler.extend(/** @lends zc.NativeHandler.prototype */{
 		/**
 		 * Whether the native handler supports a video.
 		 *
@@ -338,11 +338,11 @@
 	/**
 	 * YouTube video handler.
 	 *
-	 * @memberOf wp
+	 * @memberOf zc
 	 *
-	 * @class wp.YouTubeHandler
+	 * @class zc.YouTubeHandler
 	 */
-	YouTubeHandler = BaseHandler.extend(/** @lends wp.YouTubeHandler.prototype */{
+	YouTubeHandler = BaseHandler.extend(/** @lends zc.YouTubeHandler.prototype */{
 		/**
 		 * Whether the handler supports a video.
 		 *
@@ -445,20 +445,20 @@
 	});
 
 	// Initialize the custom header when the DOM is ready.
-	window.wp.customHeader = new CustomHeader();
-	document.addEventListener( 'DOMContentLoaded', window.wp.customHeader.initialize.bind( window.wp.customHeader ), false );
+	window.zc.customHeader = new CustomHeader();
+	document.addEventListener( 'DOMContentLoaded', window.zc.customHeader.initialize.bind( window.zc.customHeader ), false );
 
 	// Selective refresh support in the Customizer.
-	if ( 'customize' in window.wp ) {
-		window.wp.customize.selectiveRefresh.bind( 'render-partials-response', function( response ) {
+	if ( 'customize' in window.zc ) {
+		window.zc.customize.selectiveRefresh.bind( 'render-partials-response', function( response ) {
 			if ( 'custom_header_settings' in response ) {
 				settings = response.custom_header_settings;
 			}
 		});
 
-		window.wp.customize.selectiveRefresh.bind( 'partial-content-rendered', function( placement ) {
+		window.zc.customize.selectiveRefresh.bind( 'partial-content-rendered', function( placement ) {
 			if ( 'custom_header' === placement.partial.id ) {
-				window.wp.customHeader.initialize();
+				window.zc.customHeader.initialize();
 			}
 		});
 	}

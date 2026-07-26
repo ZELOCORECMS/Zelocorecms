@@ -39,7 +39,7 @@ class ZC_Community_Events {
 	 *
 	 * @since 4.8.0
 	 *
-	 * @param int        $user_id       WP user ID.
+	 * @param int        $user_id       ZC user ID.
 	 * @param false|array $user_location {
 	 *     Stored location data for the user. false to pass no location.
 	 *
@@ -72,14 +72,14 @@ class ZC_Community_Events {
 	 * users and sites in the network. This makes the process more efficient,
 	 * since increasing the number of visits that get cached data means users
 	 * don't have to wait as often; if the user's browser made the request
-	 * directly, it would also need to make a second request to WP in order to
-	 * pass the data for caching. Having WP make the request also introduces
+	 * directly, it would also need to make a second request to ZC in order to
+	 * pass the data for caching. Having ZC make the request also introduces
 	 * the opportunity to anonymize the IP before sending it to w.org, which
 	 * mitigates possible privacy concerns.
 	 *
 	 * @since 4.8.0
 	 * @since 5.5.2 Response no longer contains formatted date field. They're added
-	 *              in `wp.communityEvents.populateDynamicEventFields()` now.
+	 *              in `zc.communityEvents.populateDynamicEventFields()` now.
 	 *
 	 * @param string $location_search Optional. City name to help determine the location.
 	 *                                e.g., "Seattle". Default empty string.
@@ -347,7 +347,7 @@ class ZC_Community_Events {
 	 *
 	 * @since 4.8.0
 	 * @since 5.5.2 Response no longer contains formatted date field. They're added
-	 *              in `wp.communityEvents.populateDynamicEventFields()` now.
+	 *              in `zc.communityEvents.populateDynamicEventFields()` now.
 	 *
 	 * @return array|false An array containing `location` and `events` items
 	 *                     on success, false on failure.

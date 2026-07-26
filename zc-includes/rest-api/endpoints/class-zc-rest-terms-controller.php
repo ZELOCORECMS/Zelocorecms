@@ -67,7 +67,7 @@ class ZC_REST_Terms_Controller extends ZC_REST_Controller {
 		$this->taxonomy  = $taxonomy;
 		$tax_obj         = get_taxonomy( $taxonomy );
 		$this->rest_base = ! empty( $tax_obj->rest_base ) ? $tax_obj->rest_base : $tax_obj->name;
-		$this->namespace = ! empty( $tax_obj->rest_namespace ) ? $tax_obj->rest_namespace : 'wp/v2';
+		$this->namespace = ! empty( $tax_obj->rest_namespace ) ? $tax_obj->rest_namespace : 'zc/v2';
 
 		$this->meta = new ZC_REST_Term_Meta_Fields( $taxonomy );
 	}
@@ -993,7 +993,7 @@ class ZC_REST_Terms_Controller extends ZC_REST_Controller {
 				'href' => rest_url( rest_get_route_for_taxonomy_items( $this->taxonomy ) ),
 			),
 			'about'      => array(
-				'href' => rest_url( sprintf( 'wp/v2/taxonomies/%s', $this->taxonomy ) ),
+				'href' => rest_url( sprintf( 'zc/v2/taxonomies/%s', $this->taxonomy ) ),
 			),
 		);
 

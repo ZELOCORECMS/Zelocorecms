@@ -8,14 +8,14 @@
  */
 ?>
 
-<!-- wp:template-part {"slug":"header","area":"header","tagName":"header"} /-->
+<!-- zc:template-part {"slug":"header","area":"header","tagName":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"blockGap":"0","margin":{"top":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"tagName":"main","style":{"spacing":{"blockGap":"0","margin":{"top":"0"}}},"layout":{"type":"constrained"}} -->
 <main class="zc-block-group" style="margin-top:0">
-	<!-- wp:query-title {"type":"archive","style":{"typography":{"lineHeight":"1"},"spacing":{"padding":{"top":"var:preset|spacing|50"}}}} /-->
+	<!-- zc:query-title {"type":"archive","style":{"typography":{"lineHeight":"1"},"spacing":{"padding":{"top":"var:preset|spacing|50"}}}} /-->
 
-	<!-- wp:pattern {"slug":"twentytwentyfour/posts-1-col"} /-->
+	<!-- zc:pattern {"slug":"twentytwentyfour/posts-1-col"} /-->
 </main>
-<!-- /wp:group -->
+<!-- /zc:group -->
 
-<!-- wp:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->
+<!-- zc:template-part {"slug":"footer","area":"footer","tagName":"footer"} /-->

@@ -1441,7 +1441,7 @@ class ZC_REST_Server {
 
 		if ( $should_add ) {
 			$theme = zc_get_theme();
-			$response->add_link( 'https://api.w.org/active-theme', rest_url( 'wp/v2/themes/' . $theme->get_stylesheet() ) );
+			$response->add_link( 'https://api.w.org/active-theme', rest_url( 'zc/v2/themes/' . $theme->get_stylesheet() ) );
 		}
 	}
 

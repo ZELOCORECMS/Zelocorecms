@@ -44,7 +44,7 @@ if ( isset( $_REQUEST['action'] ) && 'update-site' === $_REQUEST['action'] && is
 		$key = zc_unslash( $key );
 		$val = zc_unslash( $val );
 		if ( 0 === $key || is_array( $val ) || in_array( $key, $skip_options, true ) ) {
-			continue; // Avoids "0 is a protected WP option and may not be modified" error when editing blog options.
+			continue; // Avoids "0 is a protected ZC option and may not be modified" error when editing blog options.
 		}
 		update_option( $key, $val );
 	}

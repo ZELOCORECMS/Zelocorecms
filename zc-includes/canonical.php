@@ -19,7 +19,7 @@
  *
  * Prevents redirection for feeds, trackbacks, searches, and
  * admin URLs. Does not redirect on non-pretty-permalink-supporting IIS 7+,
- * page/post previews, WP admin, Trackbacks, robots.txt, favicon.ico, searches,
+ * page/post previews, ZC admin, Trackbacks, robots.txt, favicon.ico, searches,
  * or on POST requests.
  *
  * Will also attempt to find the correct link when a user enters a URL that does
@@ -32,7 +32,7 @@
  * @global bool       $is_IIS
  * @global ZC_Query   $zc_query   ZelocoreCMS Query object.
  * @global wpdb       $wpdb       ZelocoreCMS database abstraction object.
- * @global WP         $zc         Current ZelocoreCMS environment instance.
+ * @global ZC         $zc         Current ZelocoreCMS environment instance.
  *
  * @param string $requested_url Optional. The URL that was requested, used to
  *                              figure if redirect is needed.

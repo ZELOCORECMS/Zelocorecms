@@ -3,7 +3,7 @@
  */
 
 /* global menus, _wpCustomizeNavMenusSettings, wpNavMenu, console */
-( function( api, wp, $ ) {
+( function( api, zc, $ ) {
 	'use strict';
 
 	/**
@@ -18,7 +18,7 @@
 	};
 
 	/**
-	 * @namespace wp.customize.Menus
+	 * @namespace zc.customize.Menus
 	 */
 	api.Menus = api.Menus || {};
 
@@ -42,7 +42,7 @@
 	 * Newly-created Nav Menus and Nav Menu Items have negative integer IDs which
 	 * serve as placeholders until Save & Publish happens.
 	 *
-	 * @alias wp.customize.Menus.generatePlaceholderAutoIncrementId
+	 * @alias zc.customize.Menus.generatePlaceholderAutoIncrementId
 	 *
 	 * @return {number}
 	 */
@@ -51,11 +51,11 @@
 	};
 
 	/**
-	 * wp.customize.Menus.AvailableItemModel
+	 * zc.customize.Menus.AvailableItemModel
 	 *
 	 * A single available menu item model. See PHP's ZC_Customize_Nav_Menu_Item_Setting class.
 	 *
-	 * @class    wp.customize.Menus.AvailableItemModel
+	 * @class    zc.customize.Menus.AvailableItemModel
 	 * @augments Backbone.Model
 	 */
 	api.Menus.AvailableItemModel = Backbone.Model.extend( $.extend(
@@ -66,14 +66,14 @@
 	) );
 
 	/**
-	 * wp.customize.Menus.AvailableItemCollection
+	 * zc.customize.Menus.AvailableItemCollection
 	 *
 	 * Collection for available menu item models.
 	 *
-	 * @class    wp.customize.Menus.AvailableItemCollection
+	 * @class    zc.customize.Menus.AvailableItemCollection
 	 * @augments Backbone.Collection
 	 */
-	api.Menus.AvailableItemCollection = Backbone.Collection.extend(/** @lends wp.customize.Menus.AvailableItemCollection.prototype */{
+	api.Menus.AvailableItemCollection = Backbone.Collection.extend(/** @lends zc.customize.Menus.AvailableItemCollection.prototype */{
 		model: api.Menus.AvailableItemModel,
 
 		sort_key: 'order',
@@ -93,7 +93,7 @@
 	 * Insert a new `auto-draft` post.
 	 *
 	 * @since 4.7.0
-	 * @alias wp.customize.Menus.insertAutoDraftPost
+	 * @alias zc.customize.Menus.insertAutoDraftPost
 	 *
 	 * @param {Object} params - Parameters for the draft post to create.
 	 * @param {string} params.post_type - Post type to add.
@@ -103,7 +103,7 @@
 	api.Menus.insertAutoDraftPost = function insertAutoDraftPost( params ) {
 		var request, deferred = $.Deferred();
 
-		request = wp.ajax.post( 'customize-nav-menus-insert-auto-draft', {
+		request = zc.ajax.post( 'customize-nav-menus-insert-auto-draft', {
 			'customize-menus-nonce': api.settings.nonce['customize-menus'],
 			'zc_customize': 'on',
 			'customize_changeset_uuid': api.settings.changeset.uuid,
@@ -150,7 +150,7 @@
 		return deferred.promise();
 	};
 
-	api.Menus.AvailableMenuItemsPanelView = wp.Backbone.View.extend(/** @lends wp.customize.Menus.AvailableMenuItemsPanelView.prototype */{
+	api.Menus.AvailableMenuItemsPanelView = zc.Backbone.View.extend(/** @lends zc.customize.Menus.AvailableMenuItemsPanelView.prototype */{
 
 		el: '#available-menu-items',
 
@@ -181,12 +181,12 @@
 		addingNew: false,
 
 		/**
-		 * wp.customize.Menus.AvailableMenuItemsPanelView
+		 * zc.customize.Menus.AvailableMenuItemsPanelView
 		 *
 		 * View class for the available menu items panel.
 		 *
-		 * @constructs wp.customize.Menus.AvailableMenuItemsPanelView
-		 * @augments   wp.Backbone.View
+		 * @constructs zc.customize.Menus.AvailableMenuItemsPanelView
+		 * @augments   zc.Backbone.View
 		 */
 		initialize: function() {
 			var self = this;
@@ -297,7 +297,7 @@
 			var self = this, params,
 				$section = $( '#available-menu-items-search' ),
 				$content = $section.find( '.accordion-section-content' ),
-				itemTemplate = wp.template( 'available-menu-item' );
+				itemTemplate = zc.template( 'available-menu-item' );
 
 			if ( self.currentRequest ) {
 				self.currentRequest.abort();
@@ -308,10 +308,10 @@
 			} else if ( page > 1 ) {
 				$section.addClass( 'loading-more' );
 				$content.attr( 'aria-busy', 'true' );
-				wp.a11y.speak( api.Menus.data.l10n.itemsLoadingMore );
+				zc.a11y.speak( api.Menus.data.l10n.itemsLoadingMore );
 			} else if ( '' === self.searchTerm ) {
 				$content.html( '' );
-				wp.a11y.speak( '' );
+				zc.a11y.speak( '' );
 				return;
 			}
 
@@ -326,7 +326,7 @@
 				'page': page
 			} );
 
-			self.currentRequest = wp.ajax.post( 'search-available-menu-items-customizer', params );
+			self.currentRequest = zc.ajax.post( 'search-available-menu-items-customizer', params );
 
 			self.currentRequest.done(function( data ) {
 				var items;
@@ -349,9 +349,9 @@
 					self.pages.search = self.pages.search + 1;
 				}
 				if ( items && page > 1 ) {
-					wp.a11y.speak( api.Menus.data.l10n.itemsFoundMore.replace( '%d', items.length ) );
+					zc.a11y.speak( api.Menus.data.l10n.itemsFoundMore.replace( '%d', items.length ) );
 				} else if ( items && page === 1 ) {
-					wp.a11y.speak( api.Menus.data.l10n.itemsFound.replace( '%d', items.length ) );
+					zc.a11y.speak( api.Menus.data.l10n.itemsFound.replace( '%d', items.length ) );
 				}
 			});
 
@@ -359,7 +359,7 @@
 				// data.message may be undefined, for example when typing slow and the request is aborted.
 				if ( data.message ) {
 					$content.empty().append( $( '<li class="nothing-found"></li>' ).text( data.message ) );
-					wp.a11y.speak( data.message );
+					zc.a11y.speak( data.message );
 				}
 				self.pages.search = -1;
 			});
@@ -396,7 +396,7 @@
 		 */
 		loadItems: function( itemTypes, deprecated ) {
 			var self = this, _itemTypes, requestItemTypes = [], params, request, itemTemplate, availableMenuItemContainers = {};
-			itemTemplate = wp.template( 'available-menu-item' );
+			itemTemplate = zc.template( 'available-menu-item' );
 
 			if ( _.isString( itemTypes ) && _.isString( deprecated ) ) {
 				_itemTypes = [ { type: itemTypes, object: deprecated } ];
@@ -433,7 +433,7 @@
 				'item_types': requestItemTypes
 			} );
 
-			request = wp.ajax.post( 'load-available-menu-items-customizer', params );
+			request = zc.ajax.post( 'load-available-menu-items-customizer', params );
 
 			request.done(function( data ) {
 				var typeInner;
@@ -586,7 +586,7 @@
 					urlErrorMessage.show();
 					errorText = urlErrorMessage.text();
 					// Announce error message via screen reader
-					wp.a11y.speak( errorText, 'assertive' );
+					zc.a11y.speak( errorText, 'assertive' );
 				}
 				if ( '' === itemName.val() ) {
 					itemName.addClass( 'invalid' )
@@ -595,7 +595,7 @@
 					nameErrorMessage.show();
 					errorText = ( '' === errorText ) ? nameErrorMessage.text() : errorText + nameErrorMessage.text();
 					// Announce error message via screen reader
-					wp.a11y.speak( errorText, 'assertive' );
+					zc.a11y.speak( errorText, 'assertive' );
 				}
 				return;
 			}
@@ -683,7 +683,7 @@
 				itemName.attr('aria-invalid', 'true');
 				itemName.attr('aria-describedby', inputError.attr('id'));
 				inputError.slideDown( 'fast' );
-				wp.a11y.speak( inputError.text() );
+				zc.a11y.speak( inputError.text() );
 				return;
 			} else {
 				container.removeClass( 'form-invalid' );
@@ -717,7 +717,7 @@
 				// Add the new item to the list of available items.
 				api.Menus.availableMenuItemsPanel.collection.add( availableItem );
 				$content = container.find( '.available-menu-items-list' );
-				itemElement = $( wp.template( 'available-menu-item' )( availableItem.attributes ) );
+				itemElement = $( zc.template( 'available-menu-item' )( availableItem.attributes ) );
 				itemElement.find( '.menu-item-handle:first' ).addClass( 'item-added' );
 				$content.prepend( itemElement );
 				$content.scrollTop();
@@ -798,15 +798,15 @@
 	});
 
 	/**
-	 * wp.customize.Menus.MenusPanel
+	 * zc.customize.Menus.MenusPanel
 	 *
 	 * Customizer panel for menus. This is used only for screen options management.
 	 * Note that 'menus' must match the ZC_Customize_Menu_Panel::$type.
 	 *
-	 * @class    wp.customize.Menus.MenusPanel
-	 * @augments wp.customize.Panel
+	 * @class    zc.customize.Menus.MenusPanel
+	 * @augments zc.customize.Panel
 	 */
-	api.Menus.MenusPanel = api.Panel.extend(/** @lends wp.customize.Menus.MenusPanel.prototype */{
+	api.Menus.MenusPanel = api.Panel.extend(/** @lends zc.customize.Menus.MenusPanel.prototype */{
 
 		attachEvents: function() {
 			api.Panel.prototype.attachEvents.call( this );
@@ -874,7 +874,7 @@
 			// Inject additional heading into the menu locations section's head container.
 			api.section( 'menu_locations', function( section ) {
 				section.headContainer.prepend(
-					wp.template( 'nav-menu-locations-header' )( api.Menus.data )
+					zc.template( 'nav-menu-locations-header' )( api.Menus.data )
 				);
 			} );
 		},
@@ -893,7 +893,7 @@
 				panel._updateHiddenColumnsRequest.abort();
 			}
 
-			panel._updateHiddenColumnsRequest = wp.ajax.post( 'hidden-columns', {
+			panel._updateHiddenColumnsRequest = zc.ajax.post( 'hidden-columns', {
 				hidden: panel.hidden(),
 				screenoptionnonce: $( '#screenoptionnonce' ).val(),
 				page: 'nav-menus'
@@ -930,15 +930,15 @@
 	} );
 
 	/**
-	 * wp.customize.Menus.MenuSection
+	 * zc.customize.Menus.MenuSection
 	 *
 	 * Customizer section for menus. This is used only for lazy-loading child controls.
 	 * Note that 'nav_menu' must match the ZC_Customize_Menu_Section::$type.
 	 *
-	 * @class    wp.customize.Menus.MenuSection
-	 * @augments wp.customize.Section
+	 * @class    zc.customize.Menus.MenuSection
+	 * @augments zc.customize.Section
 	 */
-	api.Menus.MenuSection = api.Section.extend(/** @lends wp.customize.Menus.MenuSection.prototype */{
+	api.Menus.MenuSection = api.Section.extend(/** @lends zc.customize.Menus.MenuSection.prototype */{
 
 		/**
 		 * Initialize.
@@ -1189,7 +1189,7 @@
 						wpNavMenu.initSortables(); // Depends on menu-to-edit ID being set above.
 						section.deferred.initSortables.resolve( wpNavMenu.menuList ); // Now MenuControl can extend the sortable.
 
-						// @todo Note that wp.customize.reflowPaneContents() is debounced,
+						// @todo Note that zc.customize.reflowPaneContents() is debounced,
 						// so this immediate change will show a slight flicker while priorities get updated.
 						api.control( 'nav_menu[' + String( section.params.menu_id ) + ']' ).reflowMenuItems();
 					}
@@ -1224,7 +1224,7 @@
 	 * @since 4.9.0
 	 *
 	 * @param {string} [name=''] Nav menu name.
-	 * @return {wp.customize.Menus.MenuSection} Added nav menu.
+	 * @return {zc.customize.Menus.MenuSection} Added nav menu.
 	 */
 	api.Menus.createNavMenu = function createNavMenu( name ) {
 		var customizeId, placeholderId, setting;
@@ -1261,14 +1261,14 @@
 	};
 
 	/**
-	 * wp.customize.Menus.NewMenuSection
+	 * zc.customize.Menus.NewMenuSection
 	 *
 	 * Customizer section for new menus.
 	 *
-	 * @class    wp.customize.Menus.NewMenuSection
-	 * @augments wp.customize.Section
+	 * @class    zc.customize.Menus.NewMenuSection
+	 * @augments zc.customize.Section
 	 */
-	api.Menus.NewMenuSection = api.Section.extend(/** @lends wp.customize.Menus.NewMenuSection.prototype */{
+	api.Menus.NewMenuSection = api.Section.extend(/** @lends zc.customize.Menus.NewMenuSection.prototype */{
 
 		/**
 		 * Add behaviors for the accordion section.
@@ -1282,7 +1282,7 @@
 				navMenuSettingPattern = /^nav_menu\[/;
 
 			section.headContainer.find( '.accordion-section-title' ).replaceWith(
-				wp.template( 'nav-menu-create-menu-section-title' )
+				zc.template( 'nav-menu-create-menu-section-title' )
 			);
 
 			/*
@@ -1334,7 +1334,7 @@
 			 * Handle setting addition.
 			 *
 			 * @since 4.9.0
-			 * @param {wp.customize.Setting} setting - Added setting.
+			 * @param {zc.customize.Setting} setting - Added setting.
 			 * @return {void}
 			 */
 			function addChangeEventListener( setting ) {
@@ -1348,7 +1348,7 @@
 			 * Handle setting removal.
 			 *
 			 * @since 4.9.0
-			 * @param {wp.customize.Setting} setting - Removed setting.
+			 * @param {zc.customize.Setting} setting - Removed setting.
 			 * @return {void}
 			 */
 			function removeChangeEventListener( setting ) {
@@ -1465,7 +1465,7 @@
 				}
 			} );
 
-			wp.a11y.speak( api.Menus.data.l10n.menuAdded );
+			zc.a11y.speak( api.Menus.data.l10n.menuAdded );
 
 			// Focus on the new menu section.
 			menuSection.focus( {
@@ -1499,15 +1499,15 @@
 	});
 
 	/**
-	 * wp.customize.Menus.MenuLocationControl
+	 * zc.customize.Menus.MenuLocationControl
 	 *
 	 * Customizer control for menu locations (rendered as a <select>).
 	 * Note that 'nav_menu_location' must match the ZC_Customize_Nav_Menu_Location_Control::$type.
 	 *
-	 * @class    wp.customize.Menus.MenuLocationControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Menus.MenuLocationControl
+	 * @augments zc.customize.Control
 	 */
-	api.Menus.MenuLocationControl = api.Control.extend(/** @lends wp.customize.Menus.MenuLocationControl.prototype */{
+	api.Menus.MenuLocationControl = api.Control.extend(/** @lends zc.customize.Menus.MenuLocationControl.prototype */{
 		initialize: function( id, options ) {
 			var control = this,
 				matches = id.match( /^nav_menu_locations\[(.+?)]/ );
@@ -1582,16 +1582,16 @@
 		}
 	});
 
-	api.Menus.MenuItemControl = api.Control.extend(/** @lends wp.customize.Menus.MenuItemControl.prototype */{
+	api.Menus.MenuItemControl = api.Control.extend(/** @lends zc.customize.Menus.MenuItemControl.prototype */{
 
 		/**
-		 * wp.customize.Menus.MenuItemControl
+		 * zc.customize.Menus.MenuItemControl
 		 *
 		 * Customizer control for menu items.
 		 * Note that 'menu_item' must match the ZC_Customize_Menu_Item_Control::$type.
 		 *
-		 * @constructs wp.customize.Menus.MenuItemControl
-		 * @augments   wp.customize.Control
+		 * @constructs zc.customize.Menus.MenuItemControl
+		 * @augments   zc.customize.Control
 		 *
 		 * @inheritDoc
 		 */
@@ -1774,7 +1774,7 @@
 		_setupReorderUI: function() {
 			var control = this, template, $reorderNav;
 
-			template = wp.template( 'menu-item-reorder-nav' );
+			template = zc.template( 'menu-item-reorder-nav' );
 
 			// Add the menu item reordering elements to the menu item control.
 			control.container.find( '.item-controls' ).after( template );
@@ -1976,7 +1976,7 @@
 
 				control.container.slideUp( function() {
 					control.setting.set( false );
-					wp.a11y.speak( api.Menus.data.l10n.itemDeleted );
+					zc.a11y.speak( api.Menus.data.l10n.itemDeleted );
 					$adjacentFocusTarget.focus(); // Keyboard accessibility.
 				} );
 
@@ -2103,7 +2103,7 @@
 		 **********************************************************************/
 
 		/**
-		 * @return {wp.customize.controlConstructor.nav_menu|null}
+		 * @return {zc.customize.controlConstructor.nav_menu|null}
 		 */
 		getMenuControl: function() {
 			var control = this, settingValue = control.setting();
@@ -2306,7 +2306,7 @@
 		 */
 		moveUp: function() {
 			this._changePosition( -1 );
-			wp.a11y.speak( api.Menus.data.l10n.movedUp );
+			zc.a11y.speak( api.Menus.data.l10n.movedUp );
 		},
 
 		/**
@@ -2314,14 +2314,14 @@
 		 */
 		moveDown: function() {
 			this._changePosition( 1 );
-			wp.a11y.speak( api.Menus.data.l10n.movedDown );
+			zc.a11y.speak( api.Menus.data.l10n.movedDown );
 		},
 		/**
 		 * Move menu item and all children up one level of depth.
 		 */
 		moveLeft: function() {
 			this._changeDepth( -1 );
-			wp.a11y.speak( api.Menus.data.l10n.movedLeft );
+			zc.a11y.speak( api.Menus.data.l10n.movedLeft );
 		},
 
 		/**
@@ -2329,7 +2329,7 @@
 		 */
 		moveRight: function() {
 			this._changeDepth( 1 );
-			wp.a11y.speak( api.Menus.data.l10n.movedRight );
+			zc.a11y.speak( api.Menus.data.l10n.movedRight );
 		},
 
 		/**
@@ -2493,14 +2493,14 @@
 	} );
 
 	/**
-	 * wp.customize.Menus.MenuNameControl
+	 * zc.customize.Menus.MenuNameControl
 	 *
 	 * Customizer control for a nav menu's name.
 	 *
-	 * @class    wp.customize.Menus.MenuNameControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Menus.MenuNameControl
+	 * @augments zc.customize.Control
 	 */
-	api.Menus.MenuNameControl = api.Control.extend(/** @lends wp.customize.Menus.MenuNameControl.prototype */{
+	api.Menus.MenuNameControl = api.Control.extend(/** @lends zc.customize.Menus.MenuNameControl.prototype */{
 
 		ready: function() {
 			var control = this;
@@ -2532,15 +2532,15 @@
 	});
 
 	/**
-	 * wp.customize.Menus.MenuLocationsControl
+	 * zc.customize.Menus.MenuLocationsControl
 	 *
 	 * Customizer control for a nav menu's locations.
 	 *
 	 * @since 4.9.0
-	 * @class    wp.customize.Menus.MenuLocationsControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Menus.MenuLocationsControl
+	 * @augments zc.customize.Control
 	 */
-	api.Menus.MenuLocationsControl = api.Control.extend(/** @lends wp.customize.Menus.MenuLocationsControl.prototype */{
+	api.Menus.MenuLocationsControl = api.Control.extend(/** @lends zc.customize.Menus.MenuLocationsControl.prototype */{
 
 		/**
 		 * Set up the control.
@@ -2606,14 +2606,14 @@
 	});
 
 	/**
-	 * wp.customize.Menus.MenuAutoAddControl
+	 * zc.customize.Menus.MenuAutoAddControl
 	 *
 	 * Customizer control for a nav menu's auto add.
 	 *
-	 * @class    wp.customize.Menus.MenuAutoAddControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Menus.MenuAutoAddControl
+	 * @augments zc.customize.Control
 	 */
-	api.Menus.MenuAutoAddControl = api.Control.extend(/** @lends wp.customize.Menus.MenuAutoAddControl.prototype */{
+	api.Menus.MenuAutoAddControl = api.Control.extend(/** @lends zc.customize.Menus.MenuAutoAddControl.prototype */{
 
 		ready: function() {
 			var control = this,
@@ -2658,15 +2658,15 @@
 	});
 
 	/**
-	 * wp.customize.Menus.MenuControl
+	 * zc.customize.Menus.MenuControl
 	 *
 	 * Customizer control for menus.
 	 * Note that 'nav_menu' must match the ZC_Menu_Customize_Control::$type
 	 *
-	 * @class    wp.customize.Menus.MenuControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Menus.MenuControl
+	 * @augments zc.customize.Control
 	 */
-	api.Menus.MenuControl = api.Control.extend(/** @lends wp.customize.Menus.MenuControl.prototype */{
+	api.Menus.MenuControl = api.Control.extend(/** @lends zc.customize.Menus.MenuControl.prototype */{
 		/**
 		 * Set up the control.
 		 */
@@ -2893,7 +2893,7 @@
 				section.collapse({
 					completeCallback: function() {
 						removeSection();
-						wp.a11y.speak( api.Menus.data.l10n.menuDeleted );
+						zc.a11y.speak( api.Menus.data.l10n.menuDeleted );
 						api.panel( 'nav_menus' ).focus();
 					}
 				});
@@ -3002,12 +3002,12 @@
 			if ( this.isReordering ) {
 				addNewItemBtn.attr({ 'tabindex': '-1', 'aria-hidden': 'true' });
 				reorderBtn.attr( 'aria-label', api.Menus.data.l10n.reorderLabelOff );
-				wp.a11y.speak( api.Menus.data.l10n.reorderModeOn );
+				zc.a11y.speak( api.Menus.data.l10n.reorderModeOn );
 				itemsTitle.attr( 'aria-hidden', 'false' );
 			} else {
 				addNewItemBtn.removeAttr( 'tabindex aria-hidden' );
 				reorderBtn.attr( 'aria-label', api.Menus.data.l10n.reorderLabelOn );
-				wp.a11y.speak( api.Menus.data.l10n.reorderModeOff );
+				zc.a11y.speak( api.Menus.data.l10n.reorderModeOff );
 				itemsTitle.attr( 'aria-hidden', 'true' );
 			}
 
@@ -3019,7 +3019,7 @@
 		},
 
 		/**
-		 * @return {wp.customize.controlConstructor.nav_menu_item[]}
+		 * @return {zc.customize.controlConstructor.nav_menu_item[]}
 		 */
 		getMenuItemControls: function() {
 			var menuControl = this,
@@ -3124,7 +3124,7 @@
 		 * Add a new item to this menu.
 		 *
 		 * @param {Object} item - Value for the nav_menu_item setting to be created.
-		 * @return {wp.customize.Menus.controlConstructor.nav_menu_item} The newly-created nav_menu_item control instance.
+		 * @return {zc.customize.Menus.controlConstructor.nav_menu_item} The newly-created nav_menu_item control instance.
 		 */
 		addItemToMenu: function( item ) {
 			var menuControl = this, customizeId, settingArgs, setting, menuItemControl, placeholderId, position = 0, priority = 10,
@@ -3179,7 +3179,7 @@
 			setting.preview();
 			menuControl.debouncedReflowMenuItems();
 
-			wp.a11y.speak( api.Menus.data.l10n.itemAdded );
+			zc.a11y.speak( api.Menus.data.l10n.itemAdded );
 
 			return menuItemControl;
 		},
@@ -3189,7 +3189,7 @@
 		 *
 		 * @since 4.9.0
 		 *
-		 * @param {wp.customize.controlConstructor.nav_menu_item[]} optionalMenuItemControls
+		 * @param {zc.customize.controlConstructor.nav_menu_item[]} optionalMenuItemControls
 		 */
 		updateInvitationVisibility: function ( optionalMenuItemControls ) {
 			var menuItemControls = optionalMenuItemControls || this.getMenuItemControls();
@@ -3199,7 +3199,7 @@
 	} );
 
 	/**
-	 * Extends wp.customize.controlConstructor with control constructor for
+	 * Extends zc.customize.controlConstructor with control constructor for
 	 * menu_location, menu_item, nav_menu, and new_menu.
 	 */
 	$.extend( api.controlConstructor, {
@@ -3212,14 +3212,14 @@
 	});
 
 	/**
-	 * Extends wp.customize.panelConstructor with section constructor for menus.
+	 * Extends zc.customize.panelConstructor with section constructor for menus.
 	 */
 	$.extend( api.panelConstructor, {
 		nav_menus: api.Menus.MenusPanel
 	});
 
 	/**
-	 * Extends wp.customize.sectionConstructor with section constructor for menu.
+	 * Extends zc.customize.sectionConstructor with section constructor for menu.
 	 */
 	$.extend( api.sectionConstructor, {
 		nav_menu: api.Menus.MenuSection,
@@ -3261,7 +3261,7 @@
 	 * When customize_save comes back with a success, make sure any inserted
 	 * nav menus and items are properly re-added with their newly-assigned IDs.
 	 *
-	 * @alias wp.customize.Menus.applySavedData
+	 * @alias zc.customize.Menus.applySavedData
 	 *
 	 * @param {Object} data
 	 * @param {Array} data.nav_menu_updates
@@ -3359,7 +3359,7 @@
 				widgetTemplate.find( 'option[value=' + String( update.previous_term_id ) + ']' ).remove();
 
 				// Update the nav_menu_locations[...] controls to remove the placeholder menus from the dropdown options.
-				wp.customize.control.each(function( control ){
+				zc.customize.control.each(function( control ){
 					if ( /^nav_menu_locations\[/.test( control.id ) ) {
 						control.container.find( 'option[value=' + String( update.previous_term_id ) + ']' ).remove();
 					}
@@ -3493,7 +3493,7 @@
 	/**
 	 * Focus a menu item control.
 	 *
-	 * @alias wp.customize.Menus.focusMenuItemControl
+	 * @alias zc.customize.Menus.focusMenuItemControl
 	 *
 	 * @param {string} menuItemId
 	 */
@@ -3507,10 +3507,10 @@
 	/**
 	 * Get the control for a given menu.
 	 *
-	 * @alias wp.customize.Menus.getMenuControl
+	 * @alias zc.customize.Menus.getMenuControl
 	 *
 	 * @param menuId
-	 * @return {wp.customize.controlConstructor.menus[]}
+	 * @return {zc.customize.controlConstructor.menus[]}
 	 */
 	api.Menus.getMenuControl = function( menuId ) {
 		return api.control( 'nav_menu[' + menuId + ']' );
@@ -3519,7 +3519,7 @@
 	/**
 	 * Given a menu item ID, get the control associated with it.
 	 *
-	 * @alias wp.customize.Menus.getMenuItemControl
+	 * @alias zc.customize.Menus.getMenuItemControl
 	 *
 	 * @param {string} menuItemId
 	 * @return {Object|null}
@@ -3529,7 +3529,7 @@
 	};
 
 	/**
-	 * @alias wp.customize.Menus~menuItemIdToSettingId
+	 * @alias zc.customize.Menus~menuItemIdToSettingId
 	 *
 	 * @param {string} menuItemId
 	 */
@@ -3541,16 +3541,16 @@
 	 * Apply sanitize_text_field()-like logic to the supplied name, returning a
 	 * "unnammed" fallback string if the name is then empty.
 	 *
-	 * @alias wp.customize.Menus~displayNavMenuName
+	 * @alias zc.customize.Menus~displayNavMenuName
 	 *
 	 * @param {string} name
 	 * @return {string}
 	 */
 	function displayNavMenuName( name ) {
 		name = name || '';
-		name = wp.sanitize.stripTagsAndEncodeText( name ); // Remove any potential tags from name.
+		name = zc.sanitize.stripTagsAndEncodeText( name ); // Remove any potential tags from name.
 		name = name.toString().trim();
 		return name || api.Menus.data.l10n.unnamed;
 	}
 
-})( wp.customize, wp, jQuery );
+})( zc.customize, zc, jQuery );

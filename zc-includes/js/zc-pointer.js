@@ -9,7 +9,7 @@
 	var identifier = 0,
 		zindex = 9999;
 
-	$.widget('wp.pointer',/** @lends $.widget.wp.pointer.prototype */{
+	$.widget('zc.pointer',/** @lends $.widget.zc.pointer.prototype */{
 		options: {
 			pointerClass: 'zc-pointer',
 			pointerWidth: 320,
@@ -17,7 +17,7 @@
 				return $(this).text();
 			},
 			buttons: function( event, t ) {
-				var button = $('<a class="close" href="#"></a>').text( wp.i18n.__( 'Dismiss' ) );
+				var button = $('<a class="close" href="#"></a>').text( zc.i18n.__( 'Dismiss' ) );
 
 				return button.on( 'click.pointer', function(e) {
 					e.preventDefault();
@@ -42,7 +42,7 @@
 		 * @since 3.3.0
 		 * @private
 		 *
-		 * @constructs $.widget.wp.pointer
+		 * @constructs $.widget.zc.pointer
 		 */
 		_create: function() {
 			var positioning,

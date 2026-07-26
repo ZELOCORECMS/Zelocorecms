@@ -24,7 +24,7 @@
 		if ( form.length ) {
 			// Add unload confirmation to counter (frame-busting) JS redirects.
 			$( window ).on( 'beforeunload.zc-auth-check', function( event ) {
-				event.originalEvent.returnValue = window.wp.i18n.__( 'Your session has expired. You can log in again from this page or go to the login page.' );
+				event.originalEvent.returnValue = window.zc.i18n.__( 'Your session has expired. You can log in again from this page or go to the login page.' );
 			});
 
 			frame = $( '<iframe id="zc-auth-check-frame" frameborder="0">' ).attr( 'title', noframe.text() );
@@ -95,14 +95,14 @@
 	 */
 	function hide() {
 		var adminpage = window.adminpage,
-			wp        = window.wp;
+			zc        = window.zc;
 
 		$( window ).off( 'beforeunload.zc-auth-check' );
 
 		// When on the Edit Post screen, speed up heartbeat
 		// after the user logs in to quickly refresh nonces.
-		if ( ( adminpage === 'post-php' || adminpage === 'post-new-php' ) && wp && wp.heartbeat ) {
-			wp.heartbeat.connectNow();
+		if ( ( adminpage === 'post-php' || adminpage === 'post-new-php' ) && zc && zc.heartbeat ) {
+			zc.heartbeat.connectNow();
 		}
 
 		wrap.fadeOut( 200, function() {

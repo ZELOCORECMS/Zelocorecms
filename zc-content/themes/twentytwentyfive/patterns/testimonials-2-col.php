@@ -12,68 +12,68 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|60","bottom":"var:preset|spacing|60"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--60);padding-bottom:var(--zc--preset--spacing--60)">
-	<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|50"}}}} -->
+	<!-- zc:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|60","left":"var:preset|spacing|50"}}}} -->
 	<div class="zc-block-columns alignwide">
-		<!-- wp:column -->
+		<!-- zc:column -->
 		<div class="zc-block-column">
-			<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
+			<!-- zc:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 			<div class="zc-block-columns">
-				<!-- wp:column {"width":"64px"} -->
+				<!-- zc:column {"width":"64px"} -->
 				<div class="zc-block-column" style="flex-basis:64px">
-					<!-- wp:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
+					<!-- zc:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
 					<figure class="zc-block-image size-large is-resized is-style-rounded"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/nurse.webp" alt="<?php echo esc_attr_x( 'Picture of a person', 'Alt text for testimonial image.', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover;width:64px"/></figure>
-					<!-- /wp:image -->
+					<!-- /zc:image -->
 				</div>
-				<!-- /wp:column -->
+				<!-- /zc:column -->
 
-				<!-- wp:column -->
+				<!-- zc:column -->
 				<div class="zc-block-column">
-					<!-- wp:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
+					<!-- zc:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
 					<blockquote class="zc-block-quote is-style-plain has-x-large-font-size" style="font-style:normal;font-weight:400">
-						<!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
+						<!-- zc:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
 						<p style="line-height:1.1"><?php echo esc_html_x( '“Superb product and customer service!”', 'Sample testimonial.', 'twentytwentyfive' ); ?></p>
-						<!-- /wp:paragraph -->
+						<!-- /zc:paragraph -->
 						<cite><?php echo zc_kses_post( _x( 'Jo Mulligan <br /><sub>Atlanta, GA</sub>', 'Sample testimonial citation.', 'twentytwentyfive' ) ); ?></cite>
 					</blockquote>
-					<!-- /wp:quote -->
+					<!-- /zc:quote -->
 				</div>
-				<!-- /wp:column -->
+				<!-- /zc:column -->
 			</div>
-			<!-- /wp:columns -->
+			<!-- /zc:columns -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column {"width":""} -->
+		<!-- zc:column {"width":""} -->
 		<div class="zc-block-column">
-			<!-- wp:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
+			<!-- zc:columns {"style":{"spacing":{"blockGap":{"top":"var:preset|spacing|40","left":"var:preset|spacing|40"}}}} -->
 			<div class="zc-block-columns">
-				<!-- wp:column {"width":"64px"} -->
+				<!-- zc:column {"width":"64px"} -->
 				<div class="zc-block-column" style="flex-basis:64px">
-					<!-- wp:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
+					<!-- zc:image {"width":"64px","aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none","className":"is-style-rounded"} -->
 					<figure class="zc-block-image size-large is-resized is-style-rounded"><img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/nurse.webp" alt="<?php echo esc_attr_x( 'Picture of a person', 'Alt text for testimonial image.', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover;width:64px"/></figure>
-					<!-- /wp:image -->
+					<!-- /zc:image -->
 				</div>
-				<!-- /wp:column -->
+				<!-- /zc:column -->
 
-				<!-- wp:column -->
+				<!-- zc:column -->
 				<div class="zc-block-column">
-					<!-- wp:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
+					<!-- zc:quote {"className":"is-style-plain","style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|40"}},"fontSize":"x-large"} -->
 					<blockquote class="zc-block-quote is-style-plain has-x-large-font-size" style="font-style:normal;font-weight:400">
-						<!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
+						<!-- zc:paragraph {"style":{"typography":{"lineHeight":"1.1"}}} -->
 						<p style="line-height:1.1"><?php echo esc_html_x( '“Amazing quality and care. I love all your products.”', 'Sample testimonial.', 'twentytwentyfive' ); ?></p>
-						<!-- /wp:paragraph -->
+						<!-- /zc:paragraph -->
 						<cite><?php echo zc_kses_post( _x( 'Otto Reid <br><sub>Springfield, IL</sub>', 'Sample testimonial citation.', 'twentytwentyfive' ) ); ?></cite>
 					</blockquote>
-					<!-- /wp:quote -->
+					<!-- /zc:quote -->
 				</div>
-				<!-- /wp:column -->
+				<!-- /zc:column -->
 			</div>
-			<!-- /wp:columns -->
+			<!-- /zc:columns -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

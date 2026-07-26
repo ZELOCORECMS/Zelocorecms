@@ -5,80 +5,80 @@
  * Inserter: no
  */
 ?>
-<!-- wp:group {"style":{"spacing":{"blockGap":"36px","padding":{"right":"0","left":"0"}}},"layout":{"type":"default"}} -->
+<!-- zc:group {"style":{"spacing":{"blockGap":"36px","padding":{"right":"0","left":"0"}}},"layout":{"type":"default"}} -->
 <div class="zc-block-group" style="padding-right:0;padding-left:0">
-	<!-- wp:group {"style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+	<!-- zc:group {"style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 	<div class="zc-block-group" style="margin-top:0;margin-bottom:0">
-		<!-- wp:avatar {"size":80,"style":{"border":{"radius":"16px"}}} /-->
+		<!-- zc:avatar {"size":80,"style":{"border":{"radius":"16px"}}} /-->
 
-		<!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+		<!-- zc:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 		<div class="zc-block-group">
-			<!-- wp:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
+			<!-- zc:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
 			<h2 class="zc-block-heading" style="font-size:1.6rem"><?php esc_html_e( 'About the author', 'twentytwentyfour' ); ?></h2>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:post-author-biography {"fontSize":"small"} /-->
+			<!-- zc:post-author-biography {"fontSize":"small"} /-->
 		</div>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 
-	<!-- wp:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
+	<!-- zc:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
 	<hr class="zc-block-separator has-text-color has-contrast-color has-alpha-channel-opacity has-contrast-background-color has-background is-style-wide"/>
-	<!-- /wp:separator -->
+	<!-- /zc:separator -->
 
-	<!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"constrained"}} -->
+	<!-- zc:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"constrained"}} -->
 	<div class="zc-block-group">
-		<!-- wp:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
+		<!-- zc:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
 		<h2 class="zc-block-heading" style="font-size:1.6rem"><?php esc_html_e( 'Popular Categories', 'twentytwentyfour' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:categories {"showHierarchy":true,"showPostCounts":true,"fontSize":"small"} /-->
+		<!-- zc:categories {"showHierarchy":true,"showPostCounts":true,"fontSize":"small"} /-->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 
-	<!-- wp:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
+	<!-- zc:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
 	<hr class="zc-block-separator has-text-color has-contrast-color has-alpha-channel-opacity has-contrast-background-color has-background is-style-wide"/>
-	<!-- /wp:separator -->
+	<!-- /zc:separator -->
 
-	<!-- wp:group {"style":{"spacing":{"blockGap":"26px"}},"layout":{"type":"constrained"}} -->
+	<!-- zc:group {"style":{"spacing":{"blockGap":"26px"}},"layout":{"type":"constrained"}} -->
 	<div class="zc-block-group">
-		<!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+		<!-- zc:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 		<div class="zc-block-group">
-			<!-- wp:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
+			<!-- zc:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
 			<h2 class="zc-block-heading" style="font-size:1.6rem"><?php esc_html_e( 'Useful Links', 'twentytwentyfour' ); ?></h2>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"small"} -->
+			<!-- zc:paragraph {"fontSize":"small"} -->
 			<p class="has-small-font-size"><?php esc_html_e( 'Links I found useful and wanted to share.', 'twentytwentyfour' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 		</div>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 
-		<!-- wp:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|10"}},"fontSize":"small"} -->
-		<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Latest inflation report', 'twentytwentyfour' ); ?>","url":"#","className":"is-style-arrow-link","style":{"typography":{"textDecoration":"underline"}}} /-->
-		<!-- wp:navigation-link {"label":"<?php esc_html_e( 'Financial apps for families', 'twentytwentyfour' ); ?>","url":"#","className":"is-style-arrow-link","style":{"typography":{"textDecoration":"underline"}}} /-->
-		<!-- /wp:navigation -->
+		<!-- zc:navigation {"overlayMenu":"never","layout":{"type":"flex","orientation":"vertical"},"style":{"typography":{"fontStyle":"normal","fontWeight":"400"},"spacing":{"blockGap":"var:preset|spacing|10"}},"fontSize":"small"} -->
+		<!-- zc:navigation-link {"label":"<?php esc_html_e( 'Latest inflation report', 'twentytwentyfour' ); ?>","url":"#","className":"is-style-arrow-link","style":{"typography":{"textDecoration":"underline"}}} /-->
+		<!-- zc:navigation-link {"label":"<?php esc_html_e( 'Financial apps for families', 'twentytwentyfour' ); ?>","url":"#","className":"is-style-arrow-link","style":{"typography":{"textDecoration":"underline"}}} /-->
+		<!-- /zc:navigation -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 
-	<!-- wp:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
+	<!-- zc:separator {"backgroundColor":"contrast","className":"is-style-wide"} -->
 	<hr class="zc-block-separator has-text-color has-contrast-color has-alpha-channel-opacity has-contrast-background-color has-background is-style-wide"/>
-	<!-- /wp:separator -->
+	<!-- /zc:separator -->
 
-	<!-- wp:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
+	<!-- zc:group {"style":{"spacing":{"blockGap":"16px"}},"layout":{"type":"flex","orientation":"vertical","justifyContent":"stretch"}} -->
 	<div class="zc-block-group">
-		<!-- wp:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
+		<!-- zc:heading {"style":{"typography":{"fontSize":"1.6rem"}}} -->
 		<h2 class="zc-block-heading" style="font-size:1.6rem"><?php esc_html_e( 'Search the website', 'twentytwentyfour' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:search {"label":"<?php echo esc_attr_x( 'Search', 'search form label', 'twentytwentyfour' ); ?>","showLabel":false,"placeholder":"<?php echo esc_attr_x( 'Search...', 'search form placeholder', 'twentytwentyfour' ); ?>","width":100,"widthUnit":"%","buttonText":"<?php echo esc_attr_x( 'Search', 'search form label', 'twentytwentyfour' ); ?>"} /-->
+		<!-- zc:search {"label":"<?php echo esc_attr_x( 'Search', 'search form label', 'twentytwentyfour' ); ?>","showLabel":false,"placeholder":"<?php echo esc_attr_x( 'Search...', 'search form placeholder', 'twentytwentyfour' ); ?>","width":100,"widthUnit":"%","buttonText":"<?php echo esc_attr_x( 'Search', 'search form label', 'twentytwentyfour' ); ?>"} /-->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 
-	<!-- wp:spacer {"height":"var:preset|spacing|10"} -->
+	<!-- zc:spacer {"height":"var:preset|spacing|10"} -->
 	<div style="height:var(--zc--preset--spacing--10)" aria-hidden="true" class="zc-block-spacer">
 	</div>
-	<!-- /wp:spacer -->
+	<!-- /zc:spacer -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

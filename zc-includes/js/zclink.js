@@ -4,7 +4,7 @@
 
  /* global wpLink */
 
-( function( $, wpLinkL10n, wp ) {
+( function( $, wpLinkL10n, zc ) {
 	var editor, searchTimer, River, Query, correctedURL,
 		emailRegexp = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,63}$/i,
 		urlRegexp = /^(https?|ftp):\/\/[A-Z0-9.-]+\.[A-Z]{2,63}[^ "]*$/i,
@@ -401,7 +401,7 @@
 			$( textarea ).trigger( 'change' );
 
 			// Audible confirmation message when a link has been inserted in the Editor.
-			wp.a11y.speak( wpLinkL10n.linkInserted );
+			zc.a11y.speak( wpLinkL10n.linkInserted );
 		},
 
 		mceUpdate: function() {
@@ -463,7 +463,7 @@
 			editor.nodeChanged();
 
 			// Audible confirmation message when a link has been inserted in the Editor.
-			wp.a11y.speak( wpLinkL10n.linkInserted );
+			zc.a11y.speak( wpLinkL10n.linkInserted );
 		},
 
 		updateFields: function( e, li ) {
@@ -801,4 +801,4 @@
 	});
 
 	$( wpLink.init );
-})( jQuery, window.wpLinkL10n, window.wp );
+})( jQuery, window.wpLinkL10n, window.zc );

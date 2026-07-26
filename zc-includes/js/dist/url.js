@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).url = (() => {
+var zc;
+(zc ||= {}).url = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;

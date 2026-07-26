@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).dataControls = (() => {
+var zc;
+(zc ||= {}).dataControls = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,21 +35,21 @@ var wp;
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 

@@ -225,9 +225,9 @@ class ZC_Network_Query {
 		 * @since 5.6.0 The returned array of network data is assigned to the `networks` property
 		 *              of the current ZC_Network_Query instance.
 		 *
-		 * @param array|int|null   $network_data Return an array of network data to short-circuit WP's network query,
+		 * @param array|int|null   $network_data Return an array of network data to short-circuit ZC's network query,
 		 *                                       the network count as an integer if `$this->query_vars['count']` is set,
-		 *                                       or null to allow WP to run its normal queries.
+		 *                                       or null to allow ZC to run its normal queries.
 		 * @param ZC_Network_Query $query        The ZC_Network_Query instance, passed by reference.
 		 */
 		$network_data = apply_filters_ref_array( 'networks_pre_query', array( $network_data, &$this ) );

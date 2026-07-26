@@ -22,7 +22,7 @@ class ZC_REST_Post_Types_Controller extends ZC_REST_Controller {
 	 * @since 4.7.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'types';
 	}
 
@@ -192,7 +192,7 @@ class ZC_REST_Post_Types_Controller extends ZC_REST_Controller {
 		$taxonomies = zc_list_filter( get_object_taxonomies( $post_type->name, 'objects' ), array( 'show_in_rest' => true ) );
 		$taxonomies = zc_list_pluck( $taxonomies, 'name' );
 		$base       = ! empty( $post_type->rest_base ) ? $post_type->rest_base : $post_type->name;
-		$namespace  = ! empty( $post_type->rest_namespace ) ? $post_type->rest_namespace : 'wp/v2';
+		$namespace  = ! empty( $post_type->rest_namespace ) ? $post_type->rest_namespace : 'zc/v2';
 		$supports   = get_all_post_type_supports( $post_type->name );
 
 		$fields = $this->get_fields_for_response( $request );

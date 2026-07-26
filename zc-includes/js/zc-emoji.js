@@ -164,7 +164,7 @@
 		 *
 		 * @since 4.3.0
 		 *
-		 * @memberOf wp.emoji
+		 * @memberOf zc.emoji
 		 *
 		 * @param {string} text The string to test.
 		 *
@@ -192,7 +192,7 @@
 		 *
 		 * @since 4.2.0
 		 *
-		 * @memberOf wp.emoji
+		 * @memberOf zc.emoji
 		 *
 		 * @param {HTMLElement|string} object The element or string to parse.
 		 * @param {Object}             args   Additional options for Twemoji.
@@ -285,11 +285,11 @@
 		};
 	}
 
-	window.wp = window.wp || {};
+	window.zc = window.zc || {};
 
 	/**
-	 * @namespace wp.emoji
+	 * @namespace zc.emoji
 	 */
-	window.wp.emoji = new wpEmoji();
+	window.zc.emoji = new wpEmoji();
 
 } )( window, window._wpemojiSettings );

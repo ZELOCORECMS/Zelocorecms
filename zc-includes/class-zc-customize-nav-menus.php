@@ -663,7 +663,7 @@ final class ZC_Customize_Nav_Menus {
 			$description .= '<p>' . sprintf(
 				/* translators: %s: URL to the Widgets panel of the Customizer. */
 				__( 'Menus can be displayed in locations defined by your theme or in <a href="%s">widget areas</a> by adding a &#8220;Navigation Menu&#8221; widget.' ),
-				"javascript:wp.customize.panel( 'widgets' ).focus();"
+				"javascript:zc.customize.panel( 'widgets' ).focus();"
 			) . '</p>';
 		} else {
 			$description .= '<p>' . __( 'Menus can be displayed in locations defined by your theme.' ) . '</p>';
@@ -699,7 +699,7 @@ final class ZC_Customize_Nav_Menus {
 
 		if ( current_theme_supports( 'widgets' ) ) {
 			/* translators: URL to the Widgets panel of the Customizer. */
-			$description .= '<p>' . sprintf( __( 'If your theme has widget areas, you can also add menus there. Visit the <a href="%s">Widgets panel</a> and add a &#8220;Navigation Menu widget&#8221; to display a menu in a sidebar or footer.' ), "javascript:wp.customize.panel( 'widgets' ).focus();" ) . '</p>';
+			$description .= '<p>' . sprintf( __( 'If your theme has widget areas, you can also add menus there. Visit the <a href="%s">Widgets panel</a> and add a &#8220;Navigation Menu widget&#8221; to display a menu in a sidebar or footer.' ), "javascript:zc.customize.panel( 'widgets' ).focus();" ) . '</p>';
 		}
 
 		$this->manager->add_section(
@@ -1067,7 +1067,7 @@ final class ZC_Customize_Nav_Menus {
 	/**
 	 * Prints the JavaScript templates used to render Menu Customizer components.
 	 *
-	 * Templates are imported into the JS use wp.template.
+	 * Templates are imported into the JS use zc.template.
 	 *
 	 * @since 4.3.0
 	 */
@@ -1079,13 +1079,13 @@ final class ZC_Customize_Nav_Menus {
 					<div class="menu-item-handle">
 						<span class="item-type" aria-hidden="true">{{ data.type_label }}</span>
 						<span class="item-title" aria-hidden="true">
-							<span class="menu-item-title<# if ( ! data.title ) { #> no-title<# } #>">{{ data.title || wp.customize.Menus.data.l10n.untitled }}</span>
+							<span class="menu-item-title<# if ( ! data.title ) { #> no-title<# } #>">{{ data.title || zc.customize.Menus.data.l10n.untitled }}</span>
 						</span>
 						<button type="button" class="button-link item-add">
 							<span class="screen-reader-text">
 							<?php
 								/* translators: Hidden accessibility text. 1: Title of a menu item, 2: Type of a menu item. */
-								printf( __( 'Add to menu: %1$s (%2$s)' ), '{{ data.title || wp.customize.Menus.data.l10n.untitled }}', '{{ data.type_label }}' );
+								printf( __( 'Add to menu: %1$s (%2$s)' ), '{{ data.title || zc.customize.Menus.data.l10n.untitled }}', '{{ data.type_label }}' );
 							?>
 							</span>
 						</button>

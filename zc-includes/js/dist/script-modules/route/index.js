@@ -203,7 +203,7 @@ var require_react_dom = __commonJS({
 // package-external:@zelocorecms/private-apis
 var require_private_apis = __commonJS({
   "package-external:@zelocorecms/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
+    module.exports = window.zc.privateApis;
   }
 });
 

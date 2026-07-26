@@ -16,9 +16,9 @@
 
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfive/hero-book"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-book-links"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/banner-about-book"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-book-locations"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/text-faqs"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/hero-book"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-book-links"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/banner-about-book"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-book-locations"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/text-faqs"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->

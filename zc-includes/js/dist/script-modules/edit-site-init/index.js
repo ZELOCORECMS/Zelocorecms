@@ -27,7 +27,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/primitives
 var require_primitives = __commonJS({
   "package-external:@zelocorecms/primitives"(exports, module) {
-    module.exports = window.wp.primitives;
+    module.exports = window.zc.primitives;
   }
 });
 
@@ -41,7 +41,7 @@ var require_jsx_runtime = __commonJS({
 // package-external:@zelocorecms/data
 var require_data = __commonJS({
   "package-external:@zelocorecms/data"(exports, module) {
-    module.exports = window.wp.data;
+    module.exports = window.zc.data;
   }
 });
 

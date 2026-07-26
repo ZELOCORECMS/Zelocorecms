@@ -255,7 +255,7 @@ class ZC_REST_Response extends ZC_HTTP_Response {
 	public function get_curies() {
 		$curies = array(
 			array(
-				'name'      => 'wp',
+				'name'      => 'zc',
 				'href'      => 'https://api.w.org/{rel}',
 				'templated' => true,
 			),

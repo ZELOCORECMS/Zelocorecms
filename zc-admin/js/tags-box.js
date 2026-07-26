@@ -6,7 +6,7 @@
 /* global ajaxurl, tagBox, array_unique_noempty */
 
 ( function( $ ) {
-	var tagDelimiter = wp.i18n._x( ',', 'tag delimiter' ) || ',';
+	var tagDelimiter = zc.i18n._x( ',', 'tag delimiter' ) || ',';
 
 	/**
 	 * Filters unique items and returns a new array.
@@ -167,7 +167,7 @@
 					 */
 					xbutton = $( '<button type="button" id="' + id + '-check-num-' + key + '" class="ntdelbutton">' +
 						'<span class="remove-tag-icon" aria-hidden="true"></span>' +
-						'<span class="screen-reader-text">' + wp.i18n.__( 'Remove term:' ) + ' ' + listItem.html() + '</span>' +
+						'<span class="screen-reader-text">' + zc.i18n.__( 'Remove term:' ) + ' ' + listItem.html() + '</span>' +
 						'</button>' );
 
 					/**
@@ -337,18 +337,18 @@
 
 			switch ( this.userAction ) {
 				case 'remove':
-					message = wp.i18n.__( 'Term removed.' );
+					message = zc.i18n.__( 'Term removed.' );
 					break;
 
 				case 'add':
-					message = wp.i18n.__( 'Term added.' );
+					message = zc.i18n.__( 'Term added.' );
 					break;
 
 				default:
 					return;
 			}
 
-			window.wp.a11y.speak( message, 'assertive' );
+			window.zc.a11y.speak( message, 'assertive' );
 		},
 
 		/**

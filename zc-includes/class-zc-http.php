@@ -143,7 +143,7 @@ class ZC_Http {
 	 *     @type string       $sslcertificates     Absolute path to an SSL certificate .crt file.
 	 *                                             Default ABSPATH . ZCINC . '/certificates/ca-bundle.crt'.
 	 *     @type bool         $stream              Whether to stream to a file. If set to true and no filename was
-	 *                                             given, it will be dropped it in the WP temp dir and its name will
+	 *                                             given, it will be dropped it in the ZC temp dir and its name will
 	 *                                             be set using the basename of the URL. Default false.
 	 *     @type string       $filename            Filename of the file to write to when streaming. $stream must be
 	 *                                             set to true. Default null.
@@ -306,7 +306,7 @@ class ZC_Http {
 			return $response;
 		}
 
-		// If we are streaming to a file but no filename was given drop it in the WP temp dir
+		// If we are streaming to a file but no filename was given drop it in the ZC temp dir
 		// and pick its name using the basename of the $url.
 		if ( $parsed_args['stream'] ) {
 			if ( empty( $parsed_args['filename'] ) ) {
@@ -328,7 +328,7 @@ class ZC_Http {
 			$parsed_args['headers'] = array();
 		}
 
-		// WP allows passing in headers as a string, weirdly.
+		// ZC allows passing in headers as a string, weirdly.
 		if ( ! is_array( $parsed_args['headers'] ) ) {
 			$processed_headers      = self::processHeaders( $parsed_args['headers'] );
 			$parsed_args['headers'] = $processed_headers['headers'];

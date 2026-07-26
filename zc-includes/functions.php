@@ -161,7 +161,7 @@ function zc_timezone() {
  * take over the format for the date. If it isn't, then the date format string
  * will be used instead.
  *
- * Note that due to the way WP typically generates a sum of timestamp and offset
+ * Note that due to the way ZC typically generates a sum of timestamp and offset
  * with `strtotime()`, it implies offset added at a _current_ time, not at the time
  * the timestamp represents. Storing such timestamps or calculating them differently
  * will lead to invalid output.
@@ -633,7 +633,7 @@ function maybe_serialize( $data ) {
 	/*
 	 * Double serialization is required for backward compatibility.
 	 * See https://core.trac.zelocorecms.org/ticket/12930
-	 * Also the world will end. See WP 3.6.1.
+	 * Also the world will end. See ZC 3.6.1.
 	 */
 	if ( is_serialized( $data, false ) ) {
 		return serialize( $data );
@@ -1331,13 +1331,13 @@ function zc_remote_fopen( $uri ) {
  *
  * @since 2.0.0
  *
- * @global WP       $zc           Current ZelocoreCMS environment instance.
+ * @global ZC       $zc           Current ZelocoreCMS environment instance.
  * @global ZC_Query $zc_query     ZelocoreCMS Query object.
  * @global ZC_Query $zc_the_query Copy of the ZelocoreCMS Query object.
  *
  * @param string|array $query_vars Default ZC_Query arguments.
  */
-function wp( $query_vars = '' ) {
+function zc( $query_vars = '' ) {
 	global $zc, $zc_query, $zc_the_query;
 
 	$zc->main( $query_vars );
@@ -1811,7 +1811,7 @@ function is_blog_installed() {
 	$suppress = $wpdb->suppress_errors();
 
 	/*
-	 * Loop over the WP tables. If none exist, then scratch installation is allowed.
+	 * Loop over the ZC tables. If none exist, then scratch installation is allowed.
 	 * If one or more exist, suggest table repair since we got here because the
 	 * options table could not be accessed.
 	 */
@@ -2618,7 +2618,7 @@ function zc_unique_filename( $dir, $filename, $unique_filename_callback = null )
 		/*
 		 * If the extension is uppercase add an alternate file name with lowercase extension.
 		 * Both need to be tested for uniqueness as the extension will be changed to lowercase
-		 * for better compatibility with different filesystems. Fixes an inconsistency in WP < 2.9
+		 * for better compatibility with different filesystems. Fixes an inconsistency in ZC < 2.9
 		 * where uppercase extensions were allowed but image sub-sizes were created with
 		 * lowercase extensions.
 		 */
@@ -3564,7 +3564,7 @@ function zc_get_mime_types() {
 			'odb'                          => 'application/vnd.oasis.opendocument.database',
 			'odf'                          => 'application/vnd.oasis.opendocument.formula',
 			// WordPerfect formats.
-			'wp|wpd'                       => 'application/wordperfect',
+			'zc|wpd'                       => 'application/wordperfect',
 			// iWork formats.
 			'key'                          => 'application/vnd.apple.keynote',
 			'numbers'                      => 'application/vnd.apple.numbers',
@@ -3597,7 +3597,7 @@ function zc_get_ext_types() {
 			'image'       => array( 'jpg', 'jpeg', 'jpe', 'gif', 'png', 'bmp', 'tif', 'tiff', 'ico', 'heic', 'heif', 'webp', 'avif' ),
 			'audio'       => array( 'aac', 'ac3', 'aif', 'aiff', 'flac', 'm3a', 'm4a', 'm4b', 'mka', 'mp1', 'mp2', 'mp3', 'ogg', 'oga', 'ram', 'wav', 'wma' ),
 			'video'       => array( '3g2', '3gp', '3gpp', 'asf', 'avi', 'divx', 'dv', 'flv', 'm4v', 'mkv', 'mov', 'mp4', 'mpeg', 'mpg', 'mpv', 'ogm', 'ogv', 'qt', 'rm', 'vob', 'wmv' ),
-			'document'    => array( 'doc', 'docx', 'docm', 'dotm', 'odt', 'pages', 'pdf', 'xps', 'oxps', 'rtf', 'wp', 'wpd', 'psd', 'xcf' ),
+			'document'    => array( 'doc', 'docx', 'docm', 'dotm', 'odt', 'pages', 'pdf', 'xps', 'oxps', 'rtf', 'zc', 'wpd', 'psd', 'xcf' ),
 			'spreadsheet' => array( 'numbers', 'ods', 'xls', 'xlsx', 'xlsm', 'xlsb' ),
 			'interactive' => array( 'swf', 'key', 'ppt', 'pptx', 'pptm', 'pps', 'ppsx', 'ppsm', 'sldx', 'sldm', 'odp' ),
 			'text'        => array( 'asc', 'csv', 'tsv', 'txt' ),
@@ -6699,7 +6699,7 @@ function zc_timezone_choice( $selected_zone, $locale = null ) {
 		$exists[4] = ( $exists[1] && $exists[3] );
 		$exists[5] = ( $exists[2] && $exists[3] );
 
-		// phpcs:disable ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText
+		// phpcs:disable ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText
 		$zonen[] = array(
 			'continent'   => ( $exists[0] ? $zone[0] : '' ),
 			'city'        => ( $exists[1] ? $zone[1] : '' ),
@@ -6857,7 +6857,7 @@ function zc_timezone_choice( $selected_zone, $locale = null ) {
 }
 
 /**
- * Strips close comment and close php tags from file headers used by WP.
+ * Strips close comment and close php tags from file headers used by ZC.
  *
  * @since 2.8.0
  * @access private

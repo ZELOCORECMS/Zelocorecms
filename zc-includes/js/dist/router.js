@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).router = (() => {
+var zc;
+(zc ||= {}).router = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,21 +35,21 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
@@ -63,7 +63,7 @@ var wp;
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 

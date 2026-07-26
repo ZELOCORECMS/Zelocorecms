@@ -16,8 +16,8 @@
 	var $document = $( document ),
 		$window = $( window ),
 		$body = $( document.body ),
-		__ = wp.i18n.__,
-		sprintf = wp.i18n.sprintf;
+		__ = zc.i18n.__,
+		sprintf = zc.i18n.sprintf;
 
 /**
  * Throws an error for a deprecated property.
@@ -77,7 +77,7 @@ function deprecateL10nObject( name, l10nObject, version ) {
 			} } );
 		} else {
 			Object.defineProperty( deprecatedObject, key, { get: function() {
-				deprecatedProperty( propName, version, 'wp.i18n' );
+				deprecatedProperty( propName, version, 'zc.i18n' );
 				return prop;
 			} } );
 		}
@@ -86,7 +86,7 @@ function deprecateL10nObject( name, l10nObject, version ) {
 	return deprecatedObject;
 }
 
-window.wp.deprecateL10nObject = deprecateL10nObject;
+window.zc.deprecateL10nObject = deprecateL10nObject;
 
 /**
  * Removed in 5.5.0, needed for back-compatibility.
@@ -428,7 +428,7 @@ window.columns = {
 				page: pagenow
 			},
 			function() {
-				wp.a11y.speak( __( 'Screen Options updated.' ) );
+				zc.a11y.speak( __( 'Screen Options updated.' ) );
 			}
 		);
 	},
@@ -1360,7 +1360,7 @@ $( function() {
 			dismissible: true,
 		} );
 
-		wp.a11y.speak( errorMessage );
+		zc.a11y.speak( errorMessage );
 	});
 
 	/**
@@ -2186,8 +2186,8 @@ $( function( $ ) {
 			$overwrite.hide();
 			$warning.removeClass( 'hidden' );
 
-			if ( window.wp && window.wp.a11y ) {
-				window.wp.a11y.speak( $warning.text() );
+			if ( window.zc && window.zc.a11y ) {
+				window.zc.a11y.speak( $warning.text() );
 			}
 		},
 		7140000 // 119 minutes. The uploaded file is deleted after 2 hours.
@@ -2199,7 +2199,7 @@ $( function( $ ) {
 	var timeout;
 
 	/**
-	 * Triggers the WP window-resize event.
+	 * Triggers the ZC window-resize event.
 	 *
 	 * @since 3.8.0
 	 *

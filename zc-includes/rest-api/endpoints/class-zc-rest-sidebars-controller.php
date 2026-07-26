@@ -32,7 +32,7 @@ class ZC_REST_Sidebars_Controller extends ZC_REST_Controller {
 	 * @since 5.8.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'sidebars';
 	}
 
@@ -419,7 +419,7 @@ class ZC_REST_Sidebars_Controller extends ZC_REST_Controller {
 				'href' => rest_url( sprintf( '%s/%s/%s', $this->namespace, $this->rest_base, $sidebar['id'] ) ),
 			),
 			'https://api.w.org/widget' => array(
-				'href'       => add_query_arg( 'sidebar', $sidebar['id'], rest_url( '/wp/v2/widgets' ) ),
+				'href'       => add_query_arg( 'sidebar', $sidebar['id'], rest_url( '/zc/v2/widgets' ) ),
 				'embeddable' => true,
 			),
 		);

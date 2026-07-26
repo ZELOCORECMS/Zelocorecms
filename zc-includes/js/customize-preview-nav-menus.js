@@ -4,8 +4,8 @@
 
 /* global _wpCustomizePreviewNavMenusExports */
 
-/** @namespace wp.customize.navMenusPreview */
-wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function( $, _, wp, api ) {
+/** @namespace zc.customize.navMenusPreview */
+zc.customize.navMenusPreview = zc.customize.MenusCustomizerPreview = ( function( $, _, zc, api ) {
 	'use strict';
 
 	var self = {
@@ -78,14 +78,14 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		/**
 		 * Partial representing an invocation of zc_nav_menu().
 		 *
-		 * @memberOf wp.customize.navMenusPreview
-		 * @alias wp.customize.navMenusPreview.NavMenuInstancePartial
+		 * @memberOf zc.customize.navMenusPreview
+		 * @alias zc.customize.navMenusPreview.NavMenuInstancePartial
 		 *
 		 * @class
-		 * @augments wp.customize.selectiveRefresh.Partial
+		 * @augments zc.customize.selectiveRefresh.Partial
 		 * @since 4.5.0
 		 */
-		self.NavMenuInstancePartial = api.selectiveRefresh.Partial.extend(/** @lends wp.customize.navMenusPreview.NavMenuInstancePartial.prototype */{
+		self.NavMenuInstancePartial = api.selectiveRefresh.Partial.extend(/** @lends zc.customize.navMenusPreview.NavMenuInstancePartial.prototype */{
 
 			/**
 			 * Constructor.
@@ -131,7 +131,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 			 * Return whether the setting is related to this partial.
 			 *
 			 * @since 4.5.0
-			 * @param {wp.customize.Value|string} setting  - Object or ID.
+			 * @param {zc.customize.Value|string} setting  - Object or ID.
 			 * @param {number|Object|false|null}  newValue - New value, or null if the setting was just removed.
 			 * @param {number|Object|false|null}  oldValue - Old value, or null if the setting was just added.
 			 * @return {boolean}
@@ -234,7 +234,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 			 * Render content.
 			 *
 			 * @inheritdoc
-			 * @param {wp.customize.selectiveRefresh.Placement} placement
+			 * @param {zc.customize.selectiveRefresh.Placement} placement
 			 */
 			renderContent: function( placement ) {
 				var partial = this, previousContainer = placement.container;
@@ -282,7 +282,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		 *
 		 * @since 4.5.0
 		 *
-		 * @param {wp.customize.Value} setting
+		 * @param {zc.customize.Value} setting
 		 * @param {Object}             [options]
 		 * @param {boolean}            options.fire Whether to invoke the callback after binding.
 		 *                                          This is used when a dynamic setting is added.
@@ -330,7 +330,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		 *
 		 * @since 4.5.0
 		 *
-		 * @param {wp.customize.Value} setting
+		 * @param {zc.customize.Value} setting
 		 */
 		self.unbindSettingListener = function( setting ) {
 			setting.unbind( this.onChangeNavMenuSetting );
@@ -343,7 +343,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		 *
 		 * @since 4.5.0
 		 *
-		 * @this {wp.customize.Value}
+		 * @this {zc.customize.Value}
 		 */
 		self.onChangeNavMenuSetting = function() {
 			var setting = this;
@@ -372,7 +372,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		 *
 		 * @param {Object} newItem New value for nav_menu_item[] setting.
 		 * @param {Object} oldItem Old value for nav_menu_item[] setting.
-		 * @this {wp.customize.Value}
+		 * @this {zc.customize.Value}
 		 */
 		self.onChangeNavMenuItemSetting = function( newItem, oldItem ) {
 			var item = newItem || oldItem, navMenuSetting;
@@ -387,7 +387,7 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 		 *
 		 * @since 4.5.0
 		 *
-		 * @this {wp.customize.Value}
+		 * @this {zc.customize.Value}
 		 */
 		self.onChangeNavMenuLocationsSetting = function() {
 			var setting = this, hasNavMenuInstance;
@@ -443,4 +443,4 @@ wp.customize.navMenusPreview = wp.customize.MenusCustomizerPreview = ( function(
 
 	return self;
 
-}( jQuery, _, wp, wp.customize ) );
+}( jQuery, _, zc, zc.customize ) );

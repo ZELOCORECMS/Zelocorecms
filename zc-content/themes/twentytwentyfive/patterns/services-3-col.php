@@ -11,69 +11,69 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-	<!-- wp:heading {"align":"wide"} -->
+	<!-- zc:heading {"align":"wide"} -->
 	<h2 class="zc-block-heading alignwide"><?php esc_html_e( 'Our services', 'twentytwentyfive' ); ?></h2>
-	<!-- /wp:heading -->
+	<!-- /zc:heading -->
 
-	<!-- wp:columns {"align":"wide"} -->
+	<!-- zc:columns {"align":"wide"} -->
 	<div class="zc-block-columns alignwide">
-		<!-- wp:column -->
+		<!-- zc:column -->
 		<div class="zc-block-column">
 
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
+			<!-- zc:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
 			<figure class="zc-block-image size-full" style="margin-bottom:24px">
 				<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/campanula-alliariifolia-flower.webp" alt="<?php esc_attr_e( 'Image for service', 'twentytwentyfive' ); ?>" style="aspect-ratio:4/3;object-fit:cover"/>
 			</figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:heading {"level":3} -->
+			<!-- zc:heading {"level":3} -->
 			<h3 class="zc-block-heading"><?php esc_html_e( 'Collect', 'twentytwentyfive' ); ?></h3>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"medium"} -->
+			<!-- zc:paragraph {"fontSize":"medium"} -->
 			<p class="has-medium-font-size"><?php esc_html_e( 'Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column -->
+		<!-- zc:column -->
 		<div class="zc-block-column">
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
+			<!-- zc:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
 			<figure class="zc-block-image size-full" style="margin-bottom:24px">
 				<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/delphinium-flowers.webp" alt="<?php esc_attr_e( 'Image for service', 'twentytwentyfive' ); ?>" style="aspect-ratio:4/3;object-fit:cover"/>
 			</figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:heading {"level":3} -->
+			<!-- zc:heading {"level":3} -->
 			<h3 class="zc-block-heading"><?php esc_html_e( 'Assemble', 'twentytwentyfive' ); ?></h3>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"medium"} -->
+			<!-- zc:paragraph {"fontSize":"medium"} -->
 			<p class="has-medium-font-size"><?php esc_html_e( 'Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column -->
+		<!-- zc:column -->
 		<div class="zc-block-column">
-			<!-- wp:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
+			<!-- zc:image {"aspectRatio":"4/3","scale":"cover","sizeSlug":"full","style":{"spacing":{"margin":{"bottom":"24px"}}}} -->
 			<figure class="zc-block-image size-full" style="margin-bottom:24px">
 				<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/star-thristle-flower.webp" alt="<?php esc_attr_e( 'Image for service', 'twentytwentyfive' ); ?>" style="aspect-ratio:4/3;object-fit:cover"/>
 			</figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:heading {"level":3} -->
+			<!-- zc:heading {"level":3} -->
 			<h3 class="zc-block-heading"><?php esc_html_e( 'Deliver', 'twentytwentyfive' ); ?></h3>
-			<!-- /wp:heading -->
+			<!-- /zc:heading -->
 
-			<!-- wp:paragraph {"fontSize":"medium"} -->
+			<!-- zc:paragraph {"fontSize":"medium"} -->
 			<p class="has-medium-font-size"><?php esc_html_e( 'Like flowers that bloom in unexpected places, every story unfolds with beauty and resilience', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

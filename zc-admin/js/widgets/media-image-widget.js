@@ -13,8 +13,8 @@
 	 *
 	 * See ZC_Widget_Media_Image::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.modelConstructors.media_image
-	 * @augments wp.mediaWidgets.MediaWidgetModel
+	 * @class    zc.mediaWidgets.modelConstructors.media_image
+	 * @augments zc.mediaWidgets.MediaWidgetModel
 	 */
 	ImageWidgetModel = component.MediaWidgetModel.extend({});
 
@@ -23,10 +23,10 @@
 	 *
 	 * See ZC_Widget_Media_Image::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.controlConstructors.media_audio
-	 * @augments wp.mediaWidgets.MediaWidgetControl
+	 * @class    zc.mediaWidgets.controlConstructors.media_audio
+	 * @augments zc.mediaWidgets.MediaWidgetControl
 	 */
-	ImageWidgetControl = component.MediaWidgetControl.extend(/** @lends wp.mediaWidgets.controlConstructors.media_image.prototype */{
+	ImageWidgetControl = component.MediaWidgetControl.extend(/** @lends zc.mediaWidgets.controlConstructors.media_image.prototype */{
 
 		/**
 		 * View events.
@@ -49,14 +49,14 @@
 			}
 
 			previewContainer = control.$el.find( '.media-widget-preview' );
-			previewTemplate = wp.template( 'zc-media-widget-image-preview' );
+			previewTemplate = zc.template( 'zc-media-widget-image-preview' );
 			previewContainer.html( previewTemplate( control.previewTemplateProps.toJSON() ) );
 			previewContainer.addClass( 'populated' );
 
 			linkInput = control.$el.find( '.link' );
 			if ( ! linkInput.is( document.activeElement ) ) {
 				fieldsContainer = control.$el.find( '.media-widget-fields' );
-				fieldsTemplate = wp.template( 'zc-media-widget-image-fields' );
+				fieldsTemplate = zc.template( 'zc-media-widget-image-fields' );
 				fieldsContainer.html( fieldsTemplate( control.previewTemplateProps.toJSON() ) );
 			}
 		},
@@ -77,7 +77,7 @@
 			}
 
 			// Set up the media frame.
-			mediaFrame = wp.media({
+			mediaFrame = zc.media({
 				frame: 'image',
 				state: 'image-details',
 				metadata: metadata
@@ -104,13 +104,13 @@
 			mediaFrame.state( 'replace-image' ).on( 'replace', updateCallback );
 
 			// Disable syncing of attachment changes back to server. See <https://core.trac.zelocorecms.org/ticket/40403>.
-			defaultSync = wp.media.model.Attachment.prototype.sync;
-			wp.media.model.Attachment.prototype.sync = function rejectedSync() {
+			defaultSync = zc.media.model.Attachment.prototype.sync;
+			zc.media.model.Attachment.prototype.sync = function rejectedSync() {
 				return $.Deferred().rejectWith( this ).promise();
 			};
 			mediaFrame.on( 'close', function onClose() {
 				mediaFrame.detach();
-				wp.media.model.Attachment.prototype.sync = defaultSync;
+				zc.media.model.Attachment.prototype.sync = defaultSync;
 			});
 
 			mediaFrame.open();
@@ -137,7 +137,7 @@
 		 *
 		 * Prevent the image_title attribute from being initially set when adding an image from the media library.
 		 *
-		 * @param {wp.media.view.MediaFrame.Select} mediaFrame - Select frame.
+		 * @param {zc.media.view.MediaFrame.Select} mediaFrame - Select frame.
 		 * @return {Object} Props.
 		 */
 		getModelPropsFromMediaFrame: function getModelPropsFromMediaFrame( mediaFrame ) {
@@ -167,4 +167,4 @@
 	component.controlConstructors.media_image = ImageWidgetControl;
 	component.modelConstructors.media_image = ImageWidgetModel;
 
-})( wp.mediaWidgets, jQuery );
+})( zc.mediaWidgets, jQuery );

@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).coreData = (() => {
+var zc;
+(zc ||= {}).coreData = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
@@ -98,14 +98,14 @@ var wp;
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/undo-manager
   var require_undo_manager = __commonJS({
     "package-external:@zelocorecms/undo-manager"(exports, module) {
-      module.exports = window.wp.undoManager;
+      module.exports = window.zc.undoManager;
     }
   });
 
@@ -325,77 +325,77 @@ var wp;
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
@@ -409,7 +409,7 @@ var wp;
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
@@ -14515,14 +14515,14 @@ var wp;
       name: "postType",
       kind: "root",
       key: "slug",
-      baseURL: "/wp/v2/types",
+      baseURL: "/zc/v2/types",
       baseURLParams: { context: "edit" },
       plural: "postTypes"
     },
     {
       name: "media",
       kind: "root",
-      baseURL: "/wp/v2/media",
+      baseURL: "/zc/v2/media",
       baseURLParams: { context: "edit" },
       plural: "mediaItems",
       label: (0, import_i18n.__)("Media"),
@@ -14533,7 +14533,7 @@ var wp;
       name: "taxonomy",
       kind: "root",
       key: "slug",
-      baseURL: "/wp/v2/taxonomies",
+      baseURL: "/zc/v2/taxonomies",
       baseURLParams: { context: "edit" },
       plural: "taxonomies",
       label: (0, import_i18n.__)("Taxonomy")
@@ -14541,7 +14541,7 @@ var wp;
     {
       name: "sidebar",
       kind: "root",
-      baseURL: "/wp/v2/sidebars",
+      baseURL: "/zc/v2/sidebars",
       baseURLParams: { context: "edit" },
       plural: "sidebars",
       transientEdits: { blocks: true },
@@ -14550,7 +14550,7 @@ var wp;
     {
       name: "widget",
       kind: "root",
-      baseURL: "/wp/v2/widgets",
+      baseURL: "/zc/v2/widgets",
       baseURLParams: { context: "edit" },
       plural: "widgets",
       transientEdits: { blocks: true },
@@ -14559,7 +14559,7 @@ var wp;
     {
       name: "widgetType",
       kind: "root",
-      baseURL: "/wp/v2/widget-types",
+      baseURL: "/zc/v2/widget-types",
       baseURLParams: { context: "edit" },
       plural: "widgetTypes",
       label: (0, import_i18n.__)("Widget types")
@@ -14568,7 +14568,7 @@ var wp;
       label: (0, import_i18n.__)("User"),
       name: "user",
       kind: "root",
-      baseURL: "/wp/v2/users",
+      baseURL: "/zc/v2/users",
       getTitle: (record) => record?.name || record?.slug,
       baseURLParams: { context: "edit" },
       plural: "users",
@@ -14577,7 +14577,7 @@ var wp;
     {
       name: "comment",
       kind: "root",
-      baseURL: "/wp/v2/comments",
+      baseURL: "/zc/v2/comments",
       baseURLParams: { context: "edit" },
       plural: "comments",
       label: (0, import_i18n.__)("Comment"),
@@ -14587,7 +14587,7 @@ var wp;
     {
       name: "menu",
       kind: "root",
-      baseURL: "/wp/v2/menus",
+      baseURL: "/zc/v2/menus",
       baseURLParams: { context: "edit" },
       plural: "menus",
       label: (0, import_i18n.__)("Menu"),
@@ -14596,7 +14596,7 @@ var wp;
     {
       name: "menuItem",
       kind: "root",
-      baseURL: "/wp/v2/menu-items",
+      baseURL: "/zc/v2/menu-items",
       baseURLParams: { context: "edit" },
       plural: "menuItems",
       label: (0, import_i18n.__)("Menu Item"),
@@ -14606,7 +14606,7 @@ var wp;
     {
       name: "menuLocation",
       kind: "root",
-      baseURL: "/wp/v2/menu-locations",
+      baseURL: "/zc/v2/menu-locations",
       baseURLParams: { context: "edit" },
       plural: "menuLocations",
       label: (0, import_i18n.__)("Menu Location"),
@@ -14616,19 +14616,19 @@ var wp;
       label: (0, import_i18n.__)("Global Styles"),
       name: "globalStyles",
       kind: "root",
-      baseURL: "/wp/v2/global-styles",
+      baseURL: "/zc/v2/global-styles",
       baseURLParams: { context: "edit" },
       plural: "globalStylesVariations",
       // Should be different from name.
       getTitle: () => (0, import_i18n.__)("Custom Styles"),
-      getRevisionsUrl: (parentId, revisionId) => `/wp/v2/global-styles/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
+      getRevisionsUrl: (parentId, revisionId) => `/zc/v2/global-styles/${parentId}/revisions${revisionId ? "/" + revisionId : ""}`,
       supportsPagination: true
     },
     {
       label: (0, import_i18n.__)("Themes"),
       name: "theme",
       kind: "root",
-      baseURL: "/wp/v2/themes",
+      baseURL: "/zc/v2/themes",
       baseURLParams: { context: "edit" },
       plural: "themes",
       key: "stylesheet"
@@ -14637,7 +14637,7 @@ var wp;
       label: (0, import_i18n.__)("Plugins"),
       name: "plugin",
       kind: "root",
-      baseURL: "/wp/v2/plugins",
+      baseURL: "/zc/v2/plugins",
       baseURLParams: { context: "edit" },
       plural: "plugins",
       key: "plugin"
@@ -14646,7 +14646,7 @@ var wp;
       label: (0, import_i18n.__)("Status"),
       name: "status",
       kind: "root",
-      baseURL: "/wp/v2/statuses",
+      baseURL: "/zc/v2/statuses",
       baseURLParams: { context: "edit" },
       plural: "statuses",
       key: "slug"
@@ -14655,14 +14655,14 @@ var wp;
       label: (0, import_i18n.__)("Registered Templates"),
       name: "registeredTemplate",
       kind: "root",
-      baseURL: "/wp/v2/registered-templates",
+      baseURL: "/zc/v2/registered-templates",
       key: "id"
     },
     {
       label: (0, import_i18n.__)("Font Collections"),
       name: "fontCollection",
       kind: "root",
-      baseURL: "/wp/v2/font-collections",
+      baseURL: "/zc/v2/font-collections",
       baseURLParams: { context: "view" },
       plural: "fontCollections",
       key: "slug"
@@ -14671,7 +14671,7 @@ var wp;
       label: (0, import_i18n.__)("Icons"),
       name: "icon",
       kind: "root",
-      baseURL: "/wp/v2/icons",
+      baseURL: "/zc/v2/icons",
       baseURLParams: { context: "view" },
       plural: "icons",
       key: "name"
@@ -14725,8 +14725,8 @@ var wp;
     return newEdits;
   };
   async function loadPostTypeEntities() {
-    const postTypesPromise = (0, import_api_fetch2.default)({ path: "/wp/v2/types?context=view" });
-    const taxonomiesPromise = window._wpCollaborationEnabled ? (0, import_api_fetch2.default)({ path: "/wp/v2/taxonomies?context=view" }) : Promise.resolve({});
+    const postTypesPromise = (0, import_api_fetch2.default)({ path: "/zc/v2/types?context=view" });
+    const taxonomiesPromise = window._wpCollaborationEnabled ? (0, import_api_fetch2.default)({ path: "/zc/v2/taxonomies?context=view" }) : Promise.resolve({});
     const [postTypes, taxonomies] = await Promise.all([
       postTypesPromise,
       taxonomiesPromise
@@ -14735,7 +14735,7 @@ var wp;
       const isTemplate = ["zc_template", "zc_template_part"].includes(
         name
       );
-      const namespace = postType?.rest_namespace ?? "wp/v2";
+      const namespace = postType?.rest_namespace ?? "zc/v2";
       const syncedProperties = /* @__PURE__ */ new Set([
         "author",
         "blocks",
@@ -14824,10 +14824,10 @@ var wp;
   }
   async function loadTaxonomyEntities() {
     const taxonomies = await (0, import_api_fetch2.default)({
-      path: "/wp/v2/taxonomies?context=view"
+      path: "/zc/v2/taxonomies?context=view"
     });
     return Object.entries(taxonomies ?? {}).map(([name, taxonomy]) => {
-      const namespace = taxonomy?.rest_namespace ?? "wp/v2";
+      const namespace = taxonomy?.rest_namespace ?? "zc/v2";
       const entity2 = {
         kind: "taxonomy",
         baseURL: `/${namespace}/${taxonomy.rest_base}`,
@@ -14847,7 +14847,7 @@ var wp;
       name: "site",
       kind: "root",
       key: false,
-      baseURL: "/wp/v2/settings",
+      baseURL: "/zc/v2/settings",
       meta: {}
     };
     const site = await (0, import_api_fetch2.default)({
@@ -15788,7 +15788,7 @@ var wp;
       alternative: "select( 'core' ).getUsers({ who: 'authors' })"
     });
     const path = (0, import_url2.addQueryArgs)(
-      "/wp/v2/users/?who=authors&per_page=100",
+      "/zc/v2/users/?who=authors&per_page=100",
       query
     );
     return getUserQueryResults(state, path);
@@ -15807,9 +15807,9 @@ var wp;
     ]
   );
   function getEntitiesByKind(state, kind) {
-    (0, import_deprecated2.default)("wp.data.select( 'core' ).getEntitiesByKind()", {
+    (0, import_deprecated2.default)("zc.data.select( 'core' ).getEntitiesByKind()", {
       since: "6.0",
-      alternative: "wp.data.select( 'core' ).getEntitiesConfig()"
+      alternative: "zc.data.select( 'core' ).getEntitiesConfig()"
     });
     return getEntitiesConfig(state, kind);
   }
@@ -15820,9 +15820,9 @@ var wp;
     /* eslint-enable @typescript-eslint/no-unused-vars */
   );
   function getEntity(state, kind, name) {
-    (0, import_deprecated2.default)("wp.data.select( 'core' ).getEntity()", {
+    (0, import_deprecated2.default)("zc.data.select( 'core' ).getEntity()", {
       since: "6.0",
-      alternative: "wp.data.select( 'core' ).getEntityConfig()"
+      alternative: "zc.data.select( 'core' ).getEntityConfig()"
     });
     return getEntityConfig(state, kind, name);
   }
@@ -16175,9 +16175,9 @@ var wp;
     return state.userPermissions[key];
   }
   function canUserEditEntityRecord(state, kind, name, recordId) {
-    (0, import_deprecated2.default)(`wp.data.select( 'core' ).canUserEditEntityRecord()`, {
+    (0, import_deprecated2.default)(`zc.data.select( 'core' ).canUserEditEntityRecord()`, {
       since: "6.7",
-      alternative: `wp.data.select( 'core' ).canUser( 'update', { kind, name, id } )`
+      alternative: `zc.data.select( 'core' ).canUser( 'update', { kind, name, id } )`
     });
     return canUser(state, "update", { kind, name, id: recordId });
   }
@@ -16574,7 +16574,7 @@ var wp;
     };
   }
   function receiveThemeSupports() {
-    (0, import_deprecated3.default)("wp.data.dispatch( 'core' ).receiveThemeSupports", {
+    (0, import_deprecated3.default)("zc.data.dispatch( 'core' ).receiveThemeSupports", {
       since: "5.9"
     });
     return {
@@ -16583,10 +16583,10 @@ var wp;
   }
   function receiveThemeGlobalStyleRevisions(currentId, revisions) {
     (0, import_deprecated3.default)(
-      "wp.data.dispatch( 'core' ).receiveThemeGlobalStyleRevisions()",
+      "zc.data.dispatch( 'core' ).receiveThemeGlobalStyleRevisions()",
       {
         since: "6.5.0",
-        alternative: "wp.data.dispatch( 'core' ).receiveRevisions"
+        alternative: "zc.data.dispatch( 'core' ).receiveRevisions"
       }
     );
     return {
@@ -17057,7 +17057,7 @@ var wp;
     );
   };
   function receiveUploadPermissions(hasUploadPermissions) {
-    (0, import_deprecated3.default)("wp.data.dispatch( 'core' ).receiveUploadPermissions", {
+    (0, import_deprecated3.default)("zc.data.dispatch( 'core' ).receiveUploadPermissions", {
       since: "5.9",
       alternative: "receiveUserPermission"
     });
@@ -17297,7 +17297,7 @@ var wp;
     if (!type || type === "post") {
       queries2.push(
         (0, import_api_fetch6.default)({
-          path: (0, import_url4.addQueryArgs)("/wp/v2/search", {
+          path: (0, import_url4.addQueryArgs)("/zc/v2/search", {
             search,
             page,
             per_page: perPage,
@@ -17321,7 +17321,7 @@ var wp;
     if (!type || type === "term") {
       queries2.push(
         (0, import_api_fetch6.default)({
-          path: (0, import_url4.addQueryArgs)("/wp/v2/search", {
+          path: (0, import_url4.addQueryArgs)("/zc/v2/search", {
             search,
             page,
             per_page: perPage,
@@ -17345,7 +17345,7 @@ var wp;
     if (!disablePostFormats && (!type || type === "post-format")) {
       queries2.push(
         (0, import_api_fetch6.default)({
-          path: (0, import_url4.addQueryArgs)("/wp/v2/search", {
+          path: (0, import_url4.addQueryArgs)("/zc/v2/search", {
             search,
             page,
             per_page: perPage,
@@ -17369,7 +17369,7 @@ var wp;
     if (!type || type === "attachment") {
       queries2.push(
         (0, import_api_fetch6.default)({
-          path: (0, import_url4.addQueryArgs)("/wp/v2/media", {
+          path: (0, import_url4.addQueryArgs)("/zc/v2/media", {
             search,
             page,
             per_page: perPage
@@ -17458,7 +17458,7 @@ var wp;
   // packages/core-data/build-module/fetch/index.mjs
   async function fetchBlockPatterns() {
     const restPatterns = await (0, import_api_fetch8.default)({
-      path: "/wp/v2/block-patterns/patterns"
+      path: "/zc/v2/block-patterns/patterns"
     });
     if (!restPatterns) {
       return [];
@@ -17476,14 +17476,14 @@ var wp;
   // packages/core-data/build-module/resolvers.mjs
   var getAuthors2 = (query) => async ({ dispatch: dispatch3 }) => {
     const path = (0, import_url6.addQueryArgs)(
-      "/wp/v2/users/?who=authors&per_page=100",
+      "/zc/v2/users/?who=authors&per_page=100",
       query
     );
     const users2 = await (0, import_api_fetch9.default)({ path });
     dispatch3.receiveUserQuery(path, users2);
   };
   var getCurrentUser2 = () => async ({ dispatch: dispatch3 }) => {
-    const currentUser2 = await (0, import_api_fetch9.default)({ path: "/wp/v2/users/me" });
+    const currentUser2 = await (0, import_api_fetch9.default)({ path: "/zc/v2/users/me" });
     dispatch3.receiveCurrentUser(currentUser2);
   };
   var getEntityRecord2 = (kind, name, key = "", query) => async ({ select: select5, dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
@@ -17911,7 +17911,7 @@ var wp;
       }
       resourcePath = entityConfig.baseURL + (resource.id ? "/" + resource.id : "");
     } else {
-      resourcePath = `/wp/v2/${resource}` + (id2 ? "/" + id2 : "");
+      resourcePath = `/zc/v2/${resource}` + (id2 ? "/" + id2 : "");
     }
     let response;
     try {
@@ -17946,7 +17946,7 @@ var wp;
   var getAutosaves2 = (postType, postId) => async ({ dispatch: dispatch3, resolveSelect: resolveSelect2 }) => {
     const {
       rest_base: restBase,
-      rest_namespace: restNamespace = "wp/v2",
+      rest_namespace: restNamespace = "zc/v2",
       supports
     } = await resolveSelect2.getPostType(postType);
     if (!supports?.autosave) {
@@ -17968,7 +17968,7 @@ var wp;
       "theme",
       { status: "active" }
     );
-    const globalStylesURL = activeThemes?.[0]?._links?.["wp:user-global-styles"]?.[0]?.href;
+    const globalStylesURL = activeThemes?.[0]?._links?.["zc:user-global-styles"]?.[0]?.href;
     if (!globalStylesURL) {
       return;
     }
@@ -17981,7 +17981,7 @@ var wp;
   var __experimentalGetCurrentThemeBaseGlobalStyles2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
     const currentTheme2 = await resolveSelect2.getCurrentTheme();
     const themeGlobalStyles = await (0, import_api_fetch9.default)({
-      path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}?context=view`
+      path: `/zc/v2/global-styles/themes/${currentTheme2.stylesheet}?context=view`
     });
     dispatch3.__experimentalReceiveThemeBaseGlobalStyles(
       currentTheme2.stylesheet,
@@ -17991,7 +17991,7 @@ var wp;
   var __experimentalGetCurrentThemeGlobalStylesVariations2 = () => async ({ resolveSelect: resolveSelect2, dispatch: dispatch3 }) => {
     const currentTheme2 = await resolveSelect2.getCurrentTheme();
     const variations = await (0, import_api_fetch9.default)({
-      path: `/wp/v2/global-styles/themes/${currentTheme2.stylesheet}/variations?context=view`
+      path: `/zc/v2/global-styles/themes/${currentTheme2.stylesheet}/variations?context=view`
     });
     dispatch3.__experimentalReceiveThemeGlobalStyleVariations(
       currentTheme2.stylesheet,
@@ -18033,7 +18033,7 @@ var wp;
   };
   var getBlockPatternCategories2 = () => async ({ dispatch: dispatch3 }) => {
     const categories = await (0, import_api_fetch9.default)({
-      path: "/wp/v2/block-patterns/categories"
+      path: "/zc/v2/block-patterns/categories"
     });
     dispatch3({ type: "RECEIVE_BLOCK_PATTERN_CATEGORIES", categories });
   };
@@ -18091,7 +18091,7 @@ var wp;
   };
   var getDefaultTemplateId2 = (query) => async ({ dispatch: dispatch3, registry, resolveSelect: resolveSelect2 }) => {
     const template = await (0, import_api_fetch9.default)({
-      path: (0, import_url6.addQueryArgs)("/wp/v2/templates/lookup", query)
+      path: (0, import_url6.addQueryArgs)("/zc/v2/templates/lookup", query)
     });
     await resolveSelect2.getEntitiesConfig("postType");
     const id2 = window?.__experimentalTemplateActivate ? template?.zc_id || template?.id : template?.id;
@@ -18229,7 +18229,7 @@ var wp;
     let options;
     try {
       const {
-        rest_namespace: restNamespace = "wp/v2",
+        rest_namespace: restNamespace = "zc/v2",
         rest_base: restBase
       } = await resolveSelect2.getPostType(postType) || {};
       options = await (0, import_api_fetch9.default)({
@@ -18695,8 +18695,8 @@ var wp;
     };
   }
   function __experimentalUseEntityRecord(kind, name, recordId, options) {
-    (0, import_deprecated4.default)(`wp.data.__experimentalUseEntityRecord`, {
-      alternative: "wp.data.useEntityRecord",
+    (0, import_deprecated4.default)(`zc.data.__experimentalUseEntityRecord`, {
+      alternative: "zc.data.useEntityRecord",
       since: "6.1"
     });
     return useEntityRecord(kind, name, recordId, options);
@@ -18753,8 +18753,8 @@ var wp;
     };
   }
   function __experimentalUseEntityRecords(kind, name, queryArgs, options) {
-    (0, import_deprecated5.default)(`wp.data.__experimentalUseEntityRecords`, {
-      alternative: "wp.data.useEntityRecords",
+    (0, import_deprecated5.default)(`zc.data.__experimentalUseEntityRecords`, {
+      alternative: "zc.data.useEntityRecords",
       since: "6.1"
     });
     return useEntityRecords(kind, name, queryArgs, options);
@@ -18873,8 +18873,8 @@ var wp;
   }
   var use_resource_permissions_default = useResourcePermissions;
   function __experimentalUseResourcePermissions(resource, id2) {
-    (0, import_deprecated6.default)(`wp.data.__experimentalUseResourcePermissions`, {
-      alternative: "wp.data.useResourcePermissions",
+    (0, import_deprecated6.default)(`zc.data.__experimentalUseResourcePermissions`, {
+      alternative: "zc.data.useResourcePermissions",
       since: "6.1"
     });
     return useResourcePermissions(resource, id2);

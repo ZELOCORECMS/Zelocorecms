@@ -763,7 +763,7 @@ class ZC_Scripts extends ZC_Dependencies {
 ( function( domain, translations ) {
 	var localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
 	localeData[""].domain = domain;
-	wp.i18n.setLocaleData( localeData, domain );
+	zc.i18n.setLocaleData( localeData, domain );
 } )( "{$domain}", {$json_translations} );
 JS;
 

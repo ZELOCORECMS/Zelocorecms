@@ -27,35 +27,35 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/data
 var require_data = __commonJS({
   "package-external:@zelocorecms/data"(exports, module) {
-    module.exports = window.wp.data;
+    module.exports = window.zc.data;
   }
 });
 
 // package-external:@zelocorecms/private-apis
 var require_private_apis = __commonJS({
   "package-external:@zelocorecms/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
+    module.exports = window.zc.privateApis;
   }
 });
 
 // package-external:@zelocorecms/components
 var require_components = __commonJS({
   "package-external:@zelocorecms/components"(exports, module) {
-    module.exports = window.wp.components;
+    module.exports = window.zc.components;
   }
 });
 
 // package-external:@zelocorecms/element
 var require_element = __commonJS({
   "package-external:@zelocorecms/element"(exports, module) {
-    module.exports = window.wp.element;
+    module.exports = window.zc.element;
   }
 });
 
 // package-external:@zelocorecms/i18n
 var require_i18n = __commonJS({
   "package-external:@zelocorecms/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
+    module.exports = window.zc.i18n;
   }
 });
 

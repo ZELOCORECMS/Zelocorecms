@@ -2834,7 +2834,7 @@ function _zc_block_editor_posts_page_notice() {
 	zc_add_inline_script(
 		'zc-notices',
 		sprintf(
-			'wp.data.dispatch( "core/notices" ).createWarningNotice( "%s", { isDismissible: false } )',
+			'zc.data.dispatch( "core/notices" ).createWarningNotice( "%s", { isDismissible: false } )',
 			__( 'You are currently editing the page that shows your latest posts.' )
 		),
 		'after'

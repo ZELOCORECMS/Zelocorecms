@@ -8,35 +8,35 @@
  * Description: Left-aligned text with a CTA button and a separator.
  */
 ?>
-<!-- wp:columns {"align":"wide"} -->
+<!-- zc:columns {"align":"wide"} -->
 <div class="zc-block-columns alignwide">
-	<!-- wp:column -->
+	<!-- zc:column -->
 	<div class="zc-block-column">
-		<!-- wp:paragraph {"style":{"typography":{"lineHeight":"1.2"}},"fontSize":"x-large"} -->
+		<!-- zc:paragraph {"style":{"typography":{"lineHeight":"1.2"}},"fontSize":"x-large"} -->
 		<p class="has-x-large-font-size" style="line-height:1.2"><?php echo esc_html_x( 'Got any book recommendations?', 'sample content for call to action', 'twentytwentythree' ); ?>
 		</p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:buttons -->
+		<!-- zc:buttons -->
 		<div class="zc-block-buttons">
-			<!-- wp:button {"fontSize":"small"} -->
+			<!-- zc:button {"fontSize":"small"} -->
 			<div class="zc-block-button has-custom-font-size has-small-font-size">
 				<a class="zc-block-button__link zc-element-button">
 				<?php echo esc_html_x( 'Get In Touch', 'sample content for call to action button', 'twentytwentythree' ); ?>
 				</a>
 			</div>
-			<!-- /wp:button -->
+			<!-- /zc:button -->
 		</div>
-		<!-- /wp:buttons -->
+		<!-- /zc:buttons -->
 	</div>
-	<!-- /wp:column -->
+	<!-- /zc:column -->
 
-	<!-- wp:column -->
+	<!-- zc:column -->
 	<div class="zc-block-column">
-		<!-- wp:separator {"className":"is-style-wide"} -->
+		<!-- zc:separator {"className":"is-style-wide"} -->
 		<hr class="zc-block-separator has-alpha-channel-opacity is-style-wide"/>
-		<!-- /wp:separator -->
+		<!-- /zc:separator -->
 	</div>
-	<!-- /wp:column -->
+	<!-- /zc:column -->
 </div>
-<!-- /wp:columns -->
+<!-- /zc:columns -->

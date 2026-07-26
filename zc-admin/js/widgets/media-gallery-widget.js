@@ -12,10 +12,10 @@
 	 * Custom gallery details frame.
 	 *
 	 * @since 4.9.0
-	 * @class    wp.mediaWidgets~GalleryDetailsMediaFrame
-	 * @augments wp.media.view.MediaFrame.Post
+	 * @class    zc.mediaWidgets~GalleryDetailsMediaFrame
+	 * @augments zc.media.view.MediaFrame.Post
 	 */
-	GalleryDetailsMediaFrame = wp.media.view.MediaFrame.Post.extend(/** @lends wp.mediaWidgets~GalleryDetailsMediaFrame.prototype */{
+	GalleryDetailsMediaFrame = zc.media.view.MediaFrame.Post.extend(/** @lends zc.mediaWidgets~GalleryDetailsMediaFrame.prototype */{
 
 		/**
 		 * Create the default states.
@@ -25,28 +25,28 @@
 		 */
 		createStates: function createStates() {
 			this.states.add([
-				new wp.media.controller.Library({
+				new zc.media.controller.Library({
 					id:         'gallery',
-					title:      wp.media.view.l10n.createGalleryTitle,
+					title:      zc.media.view.l10n.createGalleryTitle,
 					priority:   40,
 					toolbar:    'main-gallery',
 					filterable: 'uploaded',
 					multiple:   'add',
 					editable:   true,
 
-					library:  wp.media.query( _.defaults({
+					library:  zc.media.query( _.defaults({
 						type: 'image'
 					}, this.options.library ) )
 				}),
 
 				// Gallery states.
-				new wp.media.controller.GalleryEdit({
+				new zc.media.controller.GalleryEdit({
 					library: this.options.selection,
 					editing: this.options.editing,
 					menu:    'gallery'
 				}),
 
-				new wp.media.controller.GalleryAdd()
+				new zc.media.controller.GalleryAdd()
 			]);
 		}
 	} );
@@ -58,12 +58,12 @@
 	 *
 	 * @since 4.9.0
 	 *
-	 * @class    wp.mediaWidgets.modelConstructors.media_gallery
-	 * @augments wp.mediaWidgets.MediaWidgetModel
+	 * @class    zc.mediaWidgets.modelConstructors.media_gallery
+	 * @augments zc.mediaWidgets.MediaWidgetModel
 	 */
-	GalleryWidgetModel = component.MediaWidgetModel.extend(/** @lends wp.mediaWidgets.modelConstructors.media_gallery.prototype */{} );
+	GalleryWidgetModel = component.MediaWidgetModel.extend(/** @lends zc.mediaWidgets.modelConstructors.media_gallery.prototype */{} );
 
-	GalleryWidgetControl = component.MediaWidgetControl.extend(/** @lends wp.mediaWidgets.controlConstructors.media_gallery.prototype */{
+	GalleryWidgetControl = component.MediaWidgetControl.extend(/** @lends zc.mediaWidgets.controlConstructors.media_gallery.prototype */{
 
 		/**
 		 * View events.
@@ -80,8 +80,8 @@
 		 *
 		 * See ZC_Widget_Gallery::enqueue_admin_scripts() for amending prototype from PHP exports.
 		 *
-		 * @constructs wp.mediaWidgets.controlConstructors.media_gallery
-		 * @augments   wp.mediaWidgets.MediaWidgetControl
+		 * @constructs zc.mediaWidgets.controlConstructors.media_gallery
+		 * @augments   zc.mediaWidgets.MediaWidgetControl
 		 *
 		 * @since 4.9.0
 		 * @param {Object}         options - Options.
@@ -96,7 +96,7 @@
 			component.MediaWidgetControl.prototype.initialize.call( control, options );
 
 			_.bindAll( control, 'updateSelectedAttachments', 'handleAttachmentDestroy' );
-			control.selectedAttachments = new wp.media.model.Attachments();
+			control.selectedAttachments = new zc.media.model.Attachments();
 			control.model.on( 'change:ids', control.updateSelectedAttachments );
 			control.selectedAttachments.on( 'change', control.renderPreview );
 			control.selectedAttachments.on( 'reset', control.renderPreview );
@@ -111,9 +111,9 @@
 			 * changeset itself is published. Attachments are a current exception to this rule.
 			 * For a proposal to include attachments in the customized state, see #37887.
 			 */
-			if ( wp.customize && wp.customize.previewer ) {
+			if ( zc.customize && zc.customize.previewer ) {
 				control.selectedAttachments.on( 'change', function() {
-					wp.customize.previewer.send( 'refresh-widget-partial', control.model.get( 'widget_id' ) );
+					zc.customize.previewer.send( 'refresh-widget-partial', control.model.get( 'widget_id' ) );
 				} );
 			}
 		},
@@ -137,7 +137,7 @@
 
 			addedIds = _.difference( newIds, oldIds );
 			if ( addedIds.length ) {
-				addedQuery = wp.media.query({
+				addedQuery = zc.media.query({
 					order: 'ASC',
 					orderby: 'post__in',
 					perPage: -1,
@@ -161,7 +161,7 @@
 			var control = this, previewContainer, previewTemplate, data;
 
 			previewContainer = control.$el.find( '.media-widget-preview' );
-			previewTemplate = wp.template( 'zc-media-widget-gallery-preview' );
+			previewTemplate = zc.template( 'zc-media-widget-gallery-preview' );
 
 			data = control.previewTemplateProps.toJSON();
 			data.attachments = {};
@@ -197,7 +197,7 @@
 		editMedia: function editMedia() {
 			var control = this, selection, mediaFrame, mediaFrameProps;
 
-			selection = new wp.media.model.Selection( control.selectedAttachments.models, {
+			selection = new zc.media.model.Selection( control.selectedAttachments.models, {
 				multiple: true
 			});
 
@@ -218,7 +218,7 @@
 				multiple:  true,
 				state: 'gallery-edit'
 			});
-			wp.media.frame = mediaFrame; // See wp.media().
+			zc.media.frame = mediaFrame; // See zc.media().
 
 			// Handle selection of a media item.
 			mediaFrame.on( 'update', function onUpdate( newSelection ) {
@@ -259,7 +259,7 @@
 		 */
 		selectMedia: function selectMedia() {
 			var control = this, selection, mediaFrame, mediaFrameProps;
-			selection = new wp.media.model.Selection( control.selectedAttachments.models, {
+			selection = new zc.media.model.Selection( control.selectedAttachments.models, {
 				multiple: true
 			});
 
@@ -277,7 +277,7 @@
 				metadata: mediaFrameProps,
 				state: 'gallery'
 			});
-			wp.media.frame = mediaFrame; // See wp.media().
+			zc.media.frame = mediaFrame; // See zc.media().
 
 			// Handle selection of a media item.
 			mediaFrame.on( 'update', function onUpdate( newSelection ) {
@@ -320,7 +320,7 @@
 		 * Clear the selected attachment when it is deleted in the media select frame.
 		 *
 		 * @since 4.9.0
-		 * @param {wp.media.models.Attachment} attachment - Attachment.
+		 * @param {zc.media.models.Attachment} attachment - Attachment.
 		 * @return {void}
 		 */
 		handleAttachmentDestroy: function handleAttachmentDestroy( attachment ) {
@@ -338,4 +338,4 @@
 	component.controlConstructors.media_gallery = GalleryWidgetControl;
 	component.modelConstructors.media_gallery = GalleryWidgetModel;
 
-})( wp.mediaWidgets );
+})( zc.mediaWidgets );

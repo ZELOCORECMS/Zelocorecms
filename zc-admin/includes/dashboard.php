@@ -1387,7 +1387,7 @@ function zc_print_community_events_markup() {
 
 	/*
 	 * Hide the main element when the page first loads, because the content
-	 * won't be ready until wp.communityEvents.renderEventsTemplate() has run.
+	 * won't be ready until zc.communityEvents.renderEventsTemplate() has run.
 	 */
 	?>
 	<div id="community-events" class="community-events" aria-hidden="true">

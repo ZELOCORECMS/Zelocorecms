@@ -59,7 +59,7 @@ class ZC_REST_Template_Revisions_Controller extends ZC_REST_Revisions_Controller
 		$this->parent_controller = $parent_controller;
 		$this->rest_base         = 'revisions';
 		$this->parent_base       = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		$this->namespace         = ! empty( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'wp/v2';
+		$this->namespace         = ! empty( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'zc/v2';
 	}
 
 	/**

@@ -8,7 +8,7 @@
  /* global ajaxurl, confirm */
 
 (function($) {
-	var __ = wp.i18n.__;
+	var __ = zc.i18n.__;
 
 	/**
 	 * Contains all the methods to initialize and control the image editor.
@@ -626,7 +626,7 @@
 				var successMessage = __( 'Image updated.' );
 
 				t.toggleEditor(postid, 0);
-				wp.a11y.speak( successMessage, 'assertive' );
+				zc.a11y.speak( successMessage, 'assertive' );
 			})
 			.on( 'error', function() {
 				var errorMessage = __( 'Could not load the preview image. Please reload the page and try again.' );
@@ -636,7 +636,7 @@
 					.append( '<div class="notice notice-error" tabindex="-1" role="alert"><p>' + errorMessage + '</p></div>' );
 
 				t.toggleEditor( postid, 0, true );
-				wp.a11y.speak( errorMessage, 'assertive' );
+				zc.a11y.speak( errorMessage, 'assertive' );
 			} )
 			.attr('src', ajaxurl + '?' + $.param(data));
 	},
@@ -708,12 +708,12 @@
 		} ).done( function( response ) {
 			// Whether the executed action was `scale` or `restore`, the response does have a message.
 			if ( response && response.data.message.msg ) {
-				wp.a11y.speak( response.data.message.msg );
+				zc.a11y.speak( response.data.message.msg );
 				return;
 			}
 
 			if ( response && response.data.message.error ) {
-				wp.a11y.speak( response.data.message.error );
+				zc.a11y.speak( response.data.message.error );
 			}
 		} );
 	},
@@ -760,7 +760,7 @@
 					.html( '<div class="notice notice-error" tabindex="-1" role="alert"><p>' + response.data.error + '</p></div>' );
 
 				imageEdit.close(postid);
-				wp.a11y.speak( response.data.error );
+				zc.a11y.speak( response.data.error );
 				return;
 			}
 
@@ -776,7 +776,7 @@
 				$( '#imgedit-response-' + postid )
 					.html( '<div class="notice notice-success" tabindex="-1" role="alert"><p>' + response.data.msg + '</p></div>' );
 
-				wp.a11y.speak( response.data.msg );
+				zc.a11y.speak( response.data.msg );
 			}
 
 			if ( self._view ) {
@@ -1475,7 +1475,7 @@
 					$( '#imgedit-crop-' + postid )
 						.prepend( '<div class="notice notice-error" tabindex="-1" role="alert"><p>' + errorMessage + '</p></div>' );
 
-					wp.a11y.speak( errorMessage, 'assertive' );
+					zc.a11y.speak( errorMessage, 'assertive' );
 					if ( n ) {
 						$('#imgedit-crop-height-' + postid).val( '' );
 					} else {

@@ -346,7 +346,7 @@ final class ZC_Privacy_Policy_Content {
 			zc_add_inline_script(
 				'zc-notices',
 				sprintf(
-					'wp.data.dispatch( "core/notices" ).createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
+					'zc.data.dispatch( "core/notices" ).createWarningNotice( "%s", { actions: [ %s ], isDismissible: false } )',
 					$message,
 					zc_json_encode( $action, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 				),
@@ -660,11 +660,11 @@ final class ZC_Privacy_Policy_Content {
 		if ( $blocks ) {
 			foreach ( $strings as $key => $string ) {
 				if ( str_starts_with( $string, '<p>' ) ) {
-					$strings[ $key ] = "<!-- wp:paragraph -->\n" . $string . "\n<!-- /wp:paragraph -->\n";
+					$strings[ $key ] = "<!-- zc:paragraph -->\n" . $string . "\n<!-- /zc:paragraph -->\n";
 				}
 
 				if ( str_starts_with( $string, '<h2 ' ) ) {
-					$strings[ $key ] = "<!-- wp:heading -->\n" . $string . "\n<!-- /wp:heading -->\n";
+					$strings[ $key ] = "<!-- zc:heading -->\n" . $string . "\n<!-- /zc:heading -->\n";
 				}
 			}
 		}

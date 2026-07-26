@@ -994,7 +994,7 @@ function zc_admin_bar_command_palette_menu( ZC_Admin_Bar $zc_admin_bar ): void {
 			'href'  => '#',
 			'meta'  => array(
 				'class'   => 'hide-if-no-js',
-				'onclick' => 'wp.data.dispatch( "core/commands" ).open(); return false;',
+				'onclick' => 'zc.data.dispatch( "core/commands" ).open(); return false;',
 				'html'    => zc_get_inline_script_tag( $script ),
 			),
 		)

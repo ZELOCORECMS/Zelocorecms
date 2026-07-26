@@ -11,12 +11,12 @@
 	/**
 	 * Custom video details frame that removes the replace-video state.
 	 *
-	 * @class    wp.mediaWidgets.controlConstructors~VideoDetailsMediaFrame
-	 * @augments wp.media.view.MediaFrame.VideoDetails
+	 * @class    zc.mediaWidgets.controlConstructors~VideoDetailsMediaFrame
+	 * @augments zc.media.view.MediaFrame.VideoDetails
 	 *
 	 * @private
 	 */
-	VideoDetailsMediaFrame = wp.media.view.MediaFrame.VideoDetails.extend(/** @lends wp.mediaWidgets.controlConstructors~VideoDetailsMediaFrame.prototype */{
+	VideoDetailsMediaFrame = zc.media.view.MediaFrame.VideoDetails.extend(/** @lends zc.mediaWidgets.controlConstructors~VideoDetailsMediaFrame.prototype */{
 
 		/**
 		 * Create the default states.
@@ -25,23 +25,23 @@
 		 */
 		createStates: function createStates() {
 			this.states.add([
-				new wp.media.controller.VideoDetails({
+				new zc.media.controller.VideoDetails({
 					media: this.media
 				}),
 
-				new wp.media.controller.MediaLibrary({
+				new zc.media.controller.MediaLibrary({
 					type: 'video',
 					id: 'add-video-source',
-					title: wp.media.view.l10n.videoAddSourceTitle,
+					title: zc.media.view.l10n.videoAddSourceTitle,
 					toolbar: 'add-video-source',
 					media: this.media,
 					menu: false
 				}),
 
-				new wp.media.controller.MediaLibrary({
+				new zc.media.controller.MediaLibrary({
 					type: 'text',
 					id: 'add-track',
-					title: wp.media.view.l10n.videoAddTrackTitle,
+					title: zc.media.view.l10n.videoAddTrackTitle,
 					toolbar: 'add-track',
 					media: this.media,
 					menu: 'video-details'
@@ -55,8 +55,8 @@
 	 *
 	 * See ZC_Widget_Video::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.modelConstructors.media_video
-	 * @augments wp.mediaWidgets.MediaWidgetModel
+	 * @class    zc.mediaWidgets.modelConstructors.media_video
+	 * @augments zc.mediaWidgets.MediaWidgetModel
 	 */
 	VideoWidgetModel = component.MediaWidgetModel.extend({});
 
@@ -65,10 +65,10 @@
 	 *
 	 * See ZC_Widget_Video::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.controlConstructors.media_video
-	 * @augments wp.mediaWidgets.MediaWidgetControl
+	 * @class    zc.mediaWidgets.controlConstructors.media_video
+	 * @augments zc.mediaWidgets.MediaWidgetControl
 	 */
-	VideoWidgetControl = component.MediaWidgetControl.extend(/** @lends wp.mediaWidgets.controlConstructors.media_video.prototype */{
+	VideoWidgetControl = component.MediaWidgetControl.extend(/** @lends zc.mediaWidgets.controlConstructors.media_video.prototype */{
 
 		/**
 		 * Show display settings.
@@ -116,8 +116,8 @@
 				control.fetchEmbedDfd.abort();
 			}
 
-			control.fetchEmbedDfd = wp.apiRequest({
-				url: wp.media.view.settings.oEmbedProxyUrl,
+			control.fetchEmbedDfd = zc.apiRequest({
+				url: zc.media.view.settings.oEmbedProxyUrl,
 				data: {
 					url: control.model.get( 'url' ),
 					maxwidth: control.model.get( 'width' ),
@@ -168,7 +168,7 @@
 			// Verify the selected attachment mime is supported.
 			mime = control.selectedAttachment.get( 'mime' );
 			if ( mime && attachmentId ) {
-				if ( ! _.contains( _.values( wp.media.view.settings.embedMimes ), mime ) ) {
+				if ( ! _.contains( _.values( zc.media.view.settings.embedMimes ), mime ) ) {
 					error = 'unsupported_file_type';
 				}
 			} else if ( ! attachmentId ) {
@@ -176,7 +176,7 @@
 				urlParser.href = attachmentUrl;
 				matches = urlParser.pathname.toLowerCase().match( /\.(\w+)$/ );
 				if ( matches ) {
-					if ( ! _.contains( _.keys( wp.media.view.settings.embedMimes ), matches[1] ) ) {
+					if ( ! _.contains( _.keys( zc.media.view.settings.embedMimes ), matches[1] ) ) {
 						error = 'unsupported_file_type';
 					}
 				} else {
@@ -193,7 +193,7 @@
 			}
 
 			previewContainer = control.$el.find( '.media-widget-preview' );
-			previewTemplate = wp.template( 'zc-media-widget-video-preview' );
+			previewTemplate = zc.template( 'zc-media-widget-video-preview' );
 
 			previewContainer.html( previewTemplate({
 				model: {
@@ -205,7 +205,7 @@
 				is_oembed: isOEmbed,
 				error: error
 			}));
-			wp.mediaelement.initialize();
+			zc.mediaelement.initialize();
 		},
 
 		/**
@@ -224,7 +224,7 @@
 				state: 'video-details',
 				metadata: metadata
 			});
-			wp.media.frame = mediaFrame;
+			zc.media.frame = mediaFrame;
 			mediaFrame.$el.addClass( 'media-widget' );
 
 			updateCallback = function( mediaFrameProps ) {
@@ -253,4 +253,4 @@
 	component.controlConstructors.media_video = VideoWidgetControl;
 	component.modelConstructors.media_video = VideoWidgetModel;
 
-})( wp.mediaWidgets );
+})( zc.mediaWidgets );

@@ -403,7 +403,7 @@ add_action( 'atom_head', 'atom_site_icon' );
 add_action( 'rss2_head', 'rss2_site_icon' );
 
 
-// WP Cron.
+// ZC Cron.
 if ( ! defined( 'DOING_CRON' ) ) {
 	add_action( 'init', 'zc_cron' );
 }

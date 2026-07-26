@@ -813,8 +813,8 @@ class ZC_User_Query {
 		 *
 		 * @since 5.1.0
 		 *
-		 * @param array|null    $results Return an array of user data to short-circuit WP's user query
-		 *                               or null to allow WP to run its normal queries.
+		 * @param array|null    $results Return an array of user data to short-circuit ZC's user query
+		 *                               or null to allow ZC to run its normal queries.
 		 * @param ZC_User_Query $query   The ZC_User_Query instance (passed by reference).
 		 */
 		$this->results = apply_filters_ref_array( 'users_pre_query', array( null, &$this ) );

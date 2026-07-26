@@ -222,10 +222,10 @@ class ZC_Application_Passwords_List_Table extends ZC_List_Table {
 					break;
 				case 'created':
 					// JSON encoding automatically doubles backslashes to ensure they don't get lost when printing the inline JS.
-					echo '<# print( wp.date.dateI18n( ' . zc_json_encode( __( 'F j, Y' ) ) . ', data.created ) ) #>';
+					echo '<# print( zc.date.dateI18n( ' . zc_json_encode( __( 'F j, Y' ) ) . ', data.created ) ) #>';
 					break;
 				case 'last_used':
-					echo '<# print( data.last_used !== null ? wp.date.dateI18n( ' . zc_json_encode( __( 'F j, Y' ) ) . ", data.last_used ) : '—' ) #>";
+					echo '<# print( data.last_used !== null ? zc.date.dateI18n( ' . zc_json_encode( __( 'F j, Y' ) ) . ", data.last_used ) : '—' ) #>";
 					break;
 				case 'last_ip':
 					echo "{{ data.last_ip || '—' }}";

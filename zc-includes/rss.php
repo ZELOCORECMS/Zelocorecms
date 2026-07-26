@@ -537,7 +537,7 @@ function fetch_rss ($url) {
 endif;
 
 /**
- * Retrieve URL headers and content using WP HTTP Request API.
+ * Retrieve URL headers and content using ZC HTTP Request API.
  *
  * @since 1.5.0
  * @package External

@@ -538,7 +538,7 @@ class ZC_Dependencies {
 		 */
 		global $zc_version;
 
-		$etag = "WP:{$zc_version};";
+		$etag = "ZC:{$zc_version};";
 
 		foreach ( $load as $handle ) {
 			if ( ! array_key_exists( $handle, $this->registered ) ) {

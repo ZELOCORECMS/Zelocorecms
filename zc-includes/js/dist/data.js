@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).data = (() => {
+var zc;
+(zc ||= {}).data = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
@@ -255,21 +255,21 @@ var wp;
   // package-external:@zelocorecms/redux-routine
   var require_redux_routine = __commonJS({
     "package-external:@zelocorecms/redux-routine"(exports, module) {
-      module.exports = window.wp.reduxRoutine;
+      module.exports = window.zc.reduxRoutine;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
@@ -379,21 +379,21 @@ var wp;
   // package-external:@zelocorecms/priority-queue
   var require_priority_queue = __commonJS({
     "package-external:@zelocorecms/priority-queue"(exports, module) {
-      module.exports = window.wp.priorityQueue;
+      module.exports = window.zc.priorityQueue;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 
@@ -1091,10 +1091,10 @@ var wp;
     return map.get(selectorArgsToStateKey(args));
   }
   function getIsResolving(state, selectorName, args) {
-    (0, import_deprecated.default)("wp.data.select( store ).getIsResolving", {
+    (0, import_deprecated.default)("zc.data.select( store ).getIsResolving", {
       since: "6.6",
       version: "6.8",
-      alternative: "wp.data.select( store ).getResolutionState"
+      alternative: "zc.data.select( store ).getResolutionState"
     });
     const resolutionState = getResolutionState(state, selectorName, args);
     return resolutionState && resolutionState.status === "resolving";
@@ -1901,9 +1901,9 @@ var wp;
       );
     }
     function registerGenericStore2(name, store) {
-      (0, import_deprecated2.default)("wp.data.registerGenericStore", {
+      (0, import_deprecated2.default)("zc.data.registerGenericStore", {
         since: "5.9",
-        alternative: "wp.data.register( storeDescriptor )"
+        alternative: "zc.data.register( storeDescriptor )"
       });
       registerStoreInstance(name, () => store);
     }
@@ -2121,7 +2121,7 @@ var wp;
         const persistedState = persistence.get()[storeName];
         if (persistedState !== void 0) {
           let initialState = options.reducer(options.initialState, {
-            type: "@@WP/PERSISTENCE_RESTORE"
+            type: "@@ZC/PERSISTENCE_RESTORE"
           });
           if (isPlainObject2(initialState) && isPlainObject2(persistedState)) {
             initialState = (0, import_deepmerge.default)(initialState, persistedState, {

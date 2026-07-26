@@ -326,7 +326,7 @@ function _zc_scrub_utf8_fallback( string $bytes ): string {
  *
  *     4  === _zc_utf8_codepoint_count( 'text' );
  *
- *     // Groups are 'test', "\x90" as '�', 'wp', "\xE2\x80" as '�', "\xC0" as '�', and 'test'.
+ *     // Groups are 'test', "\x90" as '�', 'zc', "\xE2\x80" as '�', "\xC0" as '�', and 'test'.
  *     13 === _zc_utf8_codepoint_count( "test\x90wp\xE2\x80\xC0test" );
  *
  * @since 6.9.0

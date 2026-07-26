@@ -2,10 +2,10 @@
  * @output zc-admin/js/editor.js
  */
 
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
-( function( $, wp ) {
-	wp.editor = wp.editor || {};
+( function( $, zc ) {
+	zc.editor = zc.editor || {};
 
 	/**
 	 * Utility functions for the editor.
@@ -299,7 +299,7 @@ window.wp = window.wp || {};
 				return [];
 			}
 
-			var shortcodeDetailsRegexp = wp.shortcode.regexp( allShortcodes.join( '|' ) ),
+			var shortcodeDetailsRegexp = zc.shortcode.regexp( allShortcodes.join( '|' ) ),
 				shortcodeMatch, // Define local scope for the variable to be used in the loop below.
 				shortcodesDetails = [];
 
@@ -1179,8 +1179,8 @@ window.wp = window.wp || {};
 			} );
 		}
 
-		wp.editor.autop = wpautop;
-		wp.editor.removep = pre_wpautop;
+		zc.editor.autop = wpautop;
+		zc.editor.removep = pre_wpautop;
 
 		exports = {
 			go: switchEditor,
@@ -1229,15 +1229,15 @@ window.wp = window.wp || {};
 	 *    }
 	 * }
 	 */
-	wp.editor.initialize = function( id, settings ) {
+	zc.editor.initialize = function( id, settings ) {
 		var init;
 		var defaults;
 
-		if ( ! $ || ! id || ! wp.editor.getDefaultSettings ) {
+		if ( ! $ || ! id || ! zc.editor.getDefaultSettings ) {
 			return;
 		}
 
-		defaults = wp.editor.getDefaultSettings();
+		defaults = zc.editor.getDefaultSettings();
 
 		// Initialize TinyMCE by default.
 		if ( ! settings ) {
@@ -1337,13 +1337,13 @@ window.wp = window.wp || {};
 	/**
 	 * Remove one editor instance.
 	 *
-	 * Intended for use with editors that were initialized with wp.editor.initialize().
+	 * Intended for use with editors that were initialized with zc.editor.initialize().
 	 *
 	 * @since 4.8.0
 	 *
 	 * @param {string} id The HTML id of the editor textarea.
 	 */
-	wp.editor.remove = function( id ) {
+	zc.editor.remove = function( id ) {
 		var mceInstance, qtInstance,
 			$wrap = $( '#zc-' + id + '-wrap' );
 
@@ -1376,14 +1376,14 @@ window.wp = window.wp || {};
 	/**
 	 * Get the editor content.
 	 *
-	 * Intended for use with editors that were initialized with wp.editor.initialize().
+	 * Intended for use with editors that were initialized with zc.editor.initialize().
 	 *
 	 * @since 4.8.0
 	 *
 	 * @param {string} id The HTML id of the editor textarea.
 	 * @return The editor content.
 	 */
-	wp.editor.getContent = function( id ) {
+	zc.editor.getContent = function( id ) {
 		var editor;
 
 		if ( ! $ || ! id ) {
@@ -1401,4 +1401,4 @@ window.wp = window.wp || {};
 		return $( '#' + id ).val();
 	};
 
-}( window.jQuery, window.wp ));
+}( window.jQuery, window.zc ));

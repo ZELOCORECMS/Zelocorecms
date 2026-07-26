@@ -30,7 +30,7 @@ class ZC_REST_Comments_Controller extends ZC_REST_Controller {
 	 * @since 4.7.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'comments';
 
 		$this->meta = new ZC_REST_Comment_Meta_Fields();
@@ -1257,7 +1257,7 @@ class ZC_REST_Comments_Controller extends ZC_REST_Controller {
 
 		if ( 0 !== (int) $comment->user_id ) {
 			$links['author'] = array(
-				'href'       => rest_url( 'wp/v2/users/' . $comment->user_id ),
+				'href'       => rest_url( 'zc/v2/users/' . $comment->user_id ),
 				'embeddable' => true,
 			);
 		}

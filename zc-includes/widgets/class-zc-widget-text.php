@@ -435,8 +435,8 @@ class ZC_Widget_Text extends ZC_Widget {
 		zc_enqueue_editor();
 		zc_enqueue_media();
 		zc_enqueue_script( 'text-widgets' );
-		zc_add_inline_script( 'text-widgets', sprintf( 'wp.textWidgets.idBases.push( %s );', zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
-		zc_add_inline_script( 'text-widgets', 'wp.textWidgets.init();', 'after' );
+		zc_add_inline_script( 'text-widgets', sprintf( 'zc.textWidgets.idBases.push( %s );', zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
+		zc_add_inline_script( 'text-widgets', 'zc.textWidgets.init();', 'after' );
 	}
 
 	/**

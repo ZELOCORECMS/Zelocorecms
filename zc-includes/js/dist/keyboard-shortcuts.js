@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).keyboardShortcuts = (() => {
+var zc;
+(zc ||= {}).keyboardShortcuts = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,21 +34,21 @@ var wp;
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 

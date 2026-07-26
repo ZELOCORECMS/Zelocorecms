@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).components = (() => {
+var zc;
+(zc ||= {}).components = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -38,28 +38,28 @@ var wp;
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
@@ -163,7 +163,7 @@ var wp;
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
@@ -616,7 +616,7 @@ var wp;
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
@@ -1275,28 +1275,28 @@ var wp;
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/a11y
   var require_a11y = __commonJS({
     "package-external:@zelocorecms/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
+      module.exports = window.zc.a11y;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 
@@ -1825,28 +1825,28 @@ var wp;
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
   // package-external:@zelocorecms/date
   var require_date = __commonJS({
     "package-external:@zelocorecms/date"(exports, module) {
-      module.exports = window.wp.date;
+      module.exports = window.zc.date;
     }
   });
 
   // package-external:@zelocorecms/escape-html
   var require_escape_html = __commonJS({
     "package-external:@zelocorecms/escape-html"(exports, module) {
-      module.exports = window.wp.escapeHtml;
+      module.exports = window.zc.escapeHtml;
     }
   });
 
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
@@ -1953,14 +1953,14 @@ var wp;
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
@@ -22813,7 +22813,7 @@ If there's a particular need for this, please submit a feature request at https:
       computedPlacement = placement;
     } else if (position2 !== void 0) {
       computedPlacement = positionToPlacement(position2);
-      (0, import_deprecated.default)("`position` prop in wp.components.tooltip", {
+      (0, import_deprecated.default)("`position` prop in zc.components.tooltip", {
         since: "6.4",
         alternative: "`placement` prop"
       });
@@ -26745,7 +26745,7 @@ This message will only show in development mode. It won't appear in production. 
     if (__shouldNotWarnDeprecated36pxSize || __next40pxDefaultSize || size3 !== void 0 && size3 !== "default") {
       return;
     }
-    (0, import_deprecated3.default)(`36px default size for wp.components.${componentName}`, {
+    (0, import_deprecated3.default)(`36px default size for zc.components.${componentName}`, {
       since: "6.8",
       version: "7.1",
       hint: "Set the `__next40pxDefaultSize` prop to true to start opting into the new default size, which will become the default in a future version."
@@ -26970,7 +26970,7 @@ This message will only show in development mode. It won't appear in production. 
       computedVariant ??= "secondary";
     }
     if (isDefault) {
-      (0, import_deprecated4.default)("wp.components.Button `isDefault` prop", {
+      (0, import_deprecated4.default)("zc.components.Button `isDefault` prop", {
         since: "5.4",
         alternative: 'variant="secondary"'
       });
@@ -27402,7 +27402,7 @@ This message will only show in development mode. It won't appear in production. 
       __shouldNotWarnDeprecated36pxSize
     });
     if (hideHTMLArrows) {
-      (0, import_deprecated5.default)("wp.components.NumberControl hideHTMLArrows prop ", {
+      (0, import_deprecated5.default)("zc.components.NumberControl hideHTMLArrows prop ", {
         alternative: 'spinControls="none"',
         since: "6.2",
         version: "6.3"
@@ -28670,7 +28670,7 @@ This message will only show in development mode. It won't appear in production. 
     let computedFlipProp = flip3;
     let computedResizeProp = resize;
     if (__unstableForcePosition !== void 0) {
-      (0, import_deprecated6.default)("`__unstableForcePosition` prop in wp.components.Popover", {
+      (0, import_deprecated6.default)("`__unstableForcePosition` prop in zc.components.Popover", {
         since: "6.1",
         version: "6.3",
         alternative: "`flip={ false }` and  `resize={ false }`"
@@ -28679,26 +28679,26 @@ This message will only show in development mode. It won't appear in production. 
       computedResizeProp = !__unstableForcePosition;
     }
     if (anchorRef !== void 0) {
-      (0, import_deprecated6.default)("`anchorRef` prop in wp.components.Popover", {
+      (0, import_deprecated6.default)("`anchorRef` prop in zc.components.Popover", {
         since: "6.1",
         alternative: "`anchor` prop"
       });
     }
     if (anchorRect !== void 0) {
-      (0, import_deprecated6.default)("`anchorRect` prop in wp.components.Popover", {
+      (0, import_deprecated6.default)("`anchorRect` prop in zc.components.Popover", {
         since: "6.1",
         alternative: "`anchor` prop"
       });
     }
     if (getAnchorRect !== void 0) {
-      (0, import_deprecated6.default)("`getAnchorRect` prop in wp.components.Popover", {
+      (0, import_deprecated6.default)("`getAnchorRect` prop in zc.components.Popover", {
         since: "6.1",
         alternative: "`anchor` prop"
       });
     }
     const computedVariant = isAlternate ? "toolbar" : variant;
     if (isAlternate !== void 0) {
-      (0, import_deprecated6.default)("`isAlternate` prop in wp.components.Popover", {
+      (0, import_deprecated6.default)("`isAlternate` prop in zc.components.Popover", {
         since: "6.2",
         alternative: "`variant` prop with the `'toolbar'` value"
       });
@@ -30256,7 +30256,7 @@ This message will only show in development mode. It won't appear in production. 
       variant
     } = useContextSystem(props, "Dropdown");
     if (position2 !== void 0) {
-      (0, import_deprecated7.default)("`position` prop in wp.components.Dropdown", {
+      (0, import_deprecated7.default)("`position` prop in zc.components.Dropdown", {
         since: "6.2",
         alternative: "`popoverProps.placement` prop",
         hint: "Note that the `position` prop will override any values passed through the `popoverProps.placement` prop."
@@ -35084,7 +35084,7 @@ This message will only show in development mode. It won't appear in production. 
     if (presets && !presetKey || !presets && presetKey) {
       const definedProp = presets ? "presets" : "presetKey";
       const missingProp = presets ? "presetKey" : "presets";
-      true ? (0, import_warning5.default)(`wp.components.BoxControl: the '${missingProp}' prop is required when the '${definedProp}' prop is defined.`) : void 0;
+      true ? (0, import_warning5.default)(`zc.components.BoxControl: the '${missingProp}' prop is required when the '${definedProp}' prop is defined.`) : void 0;
     }
     return /* @__PURE__ */ (0, import_jsx_runtime157.jsxs)(component_default22, {
       id: id3,
@@ -35143,9 +35143,9 @@ This message will only show in development mode. It won't appear in production. 
     } = props;
     const classes = clsx_default("components-button-group", className2);
     if (!__shouldNotWarnDeprecated) {
-      (0, import_deprecated10.default)("wp.components.ButtonGroup", {
+      (0, import_deprecated10.default)("zc.components.ButtonGroup", {
         since: "6.8",
-        alternative: "wp.components.__experimentalToggleGroupControl"
+        alternative: "zc.components.__experimentalToggleGroupControl"
       });
     }
     return /* @__PURE__ */ (0, import_jsx_runtime158.jsx)("div", {
@@ -36016,9 +36016,9 @@ This message will only show in development mode. It won't appear in production. 
     text,
     ...buttonProps
   }) {
-    (0, import_deprecated13.default)("wp.components.ClipboardButton", {
+    (0, import_deprecated13.default)("zc.components.ClipboardButton", {
       since: "5.8",
-      alternative: "wp.compose.useCopyToClipboard"
+      alternative: "zc.compose.useCopyToClipboard"
     });
     const timeoutIdRef = (0, import_element106.useRef)(void 0);
     const ref = (0, import_compose40.useCopyToClipboard)(text, () => {
@@ -36799,7 +36799,7 @@ This message will only show in development mode. It won't appear in production. 
     try {
       gradientAST = import_gradient_parser.default.parse(valueToParse)[0];
     } catch (error) {
-      console.warn("wp.components.CustomGradientPicker failed to parse the gradient with error", error);
+      console.warn("zc.components.CustomGradientPicker failed to parse the gradient with error", error);
       gradientAST = import_gradient_parser.default.parse(DEFAULT_GRADIENT)[0];
       hasGradient = false;
     }
@@ -38495,7 +38495,7 @@ This message will only show in development mode. It won't appear in production. 
   function proxyComposite(ProxiedComponent, propMap = {}) {
     const displayName = ProxiedComponent.displayName ?? "";
     const Component9 = (legacyProps) => {
-      (0, import_deprecated14.default)(`wp.components.${displayName}`, {
+      (0, import_deprecated14.default)(`zc.components.${displayName}`, {
         since: "6.7",
         alternative: LEGACY_TO_NEW_DISPLAY_NAME.hasOwnProperty(displayName) ? LEGACY_TO_NEW_DISPLAY_NAME[displayName] : void 0
       });
@@ -38550,7 +38550,7 @@ This message will only show in development mode. It won't appear in production. 
     focusable: "accessibleWhenDisabled"
   });
   function useCompositeState(legacyStateOptions = {}) {
-    (0, import_deprecated14.default)(`wp.components.__unstableUseCompositeState`, {
+    (0, import_deprecated14.default)(`zc.components.__unstableUseCompositeState`, {
       since: "6.7",
       alternative: LEGACY_TO_NEW_DISPLAY_NAME.__unstableUseCompositeState
     });
@@ -38637,7 +38637,7 @@ This message will only show in development mode. It won't appear in production. 
         return;
       }
       if (!frameEl) {
-        true ? (0, import_warning6.default)("wp.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element.") : void 0;
+        true ? (0, import_warning6.default)("zc.components.Modal: the Modal component can't be closed with an exit animation because of a missing reference to the modal frame element.") : void 0;
         closeModalResolve();
         return;
       }
@@ -41108,9 +41108,9 @@ This message will only show in development mode. It won't appear in production. 
   function DropZoneProvider({
     children
   }) {
-    (0, import_deprecated15.default)("wp.components.DropZoneProvider", {
+    (0, import_deprecated15.default)("zc.components.DropZoneProvider", {
       since: "5.8",
-      hint: "wp.component.DropZone no longer needs a provider. wp.components.DropZoneProvider is safe to remove from your code."
+      hint: "zc.component.DropZone no longer needs a provider. zc.components.DropZoneProvider is safe to remove from your code."
     });
     return children;
   }
@@ -41954,9 +41954,9 @@ This message will only show in development mode. It won't appear in production. 
     ...props
   }) {
     const ref = (0, import_compose55.useMergeRefs)([iframeRef, (0, import_compose55.useFocusableIframe)()]);
-    (0, import_deprecated16.default)("wp.components.FocusableIframe", {
+    (0, import_deprecated16.default)("zc.components.FocusableIframe", {
       since: "5.9",
-      alternative: "wp.compose.useFocusableIframe"
+      alternative: "zc.compose.useFocusableIframe"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime212.jsx)("iframe", {
       ref,
@@ -43214,9 +43214,9 @@ This message will only show in development mode. It won't appear in production. 
     tooltip,
     ...props
   }, ref) {
-    (0, import_deprecated19.default)("wp.components.IconButton", {
+    (0, import_deprecated19.default)("zc.components.IconButton", {
       since: "5.4",
-      alternative: "wp.components.Button",
+      alternative: "zc.components.Button",
       version: "6.2"
     });
     return (
@@ -43671,10 +43671,10 @@ This message will only show in development mode. It won't appear in production. 
     const [slideOrigin, setSlideOrigin] = (0, import_element154.useState)();
     const navigationTree = useCreateNavigationTree();
     const defaultSlideOrigin = (0, import_i18n61.isRTL)() ? "right" : "left";
-    (0, import_deprecated20.default)("wp.components.Navigation (and all subcomponents)", {
+    (0, import_deprecated20.default)("zc.components.Navigation (and all subcomponents)", {
       since: "6.8",
       version: "7.1",
-      alternative: "wp.components.Navigator"
+      alternative: "zc.components.Navigator"
     });
     const setActiveMenu = (menuId, slideInOrigin = defaultSlideOrigin) => {
       if (!navigationTree.getMenu(menuId)) {
@@ -44084,7 +44084,7 @@ This message will only show in development mode. It won't appear in production. 
       return null;
     }
     if (onClose) {
-      (0, import_deprecated21.default)("`onClose` prop in wp.components.SearchControl", {
+      (0, import_deprecated21.default)("`onClose` prop in zc.components.SearchControl", {
         since: "6.8"
       });
     }
@@ -45005,9 +45005,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
         options: options2
       }),
       goToParent: (options2) => {
-        (0, import_deprecated22.default)(`wp.components.useNavigator().goToParent`, {
+        (0, import_deprecated22.default)(`zc.components.useNavigator().goToParent`, {
           since: "6.7",
-          alternative: "wp.components.useNavigator().goBack"
+          alternative: "zc.components.useNavigator().goBack"
         });
         dispatch({
           type: "gotoparent",
@@ -45134,7 +45134,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_jsx_runtime242 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorScreen(props, forwardedRef) {
     if (!/^\//.test(props.path)) {
-      true ? (0, import_warning8.default)("wp.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
+      true ? (0, import_warning8.default)("zc.components.Navigator.Screen: the `path` should follow a URL-like scheme; it should start with and be separated by the `/` character.") : void 0;
     }
     const screenId = (0, import_element169.useId)();
     const {
@@ -45315,9 +45315,9 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var import_deprecated23 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime245 = __toESM(require_jsx_runtime(), 1);
   function UnconnectedNavigatorToParentButton(props, forwardedRef) {
-    (0, import_deprecated23.default)("wp.components.NavigatorToParentButton", {
+    (0, import_deprecated23.default)("zc.components.NavigatorToParentButton", {
       since: "6.7",
-      alternative: "wp.components.Navigator.BackButton"
+      alternative: "zc.components.Navigator.BackButton"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime245.jsx)(NavigatorBackButton, {
       ref: forwardedRef,
@@ -46212,8 +46212,8 @@ The screen with id ${screen.id} will not be added.`) : void 0;
       store: radioStore,
       disabled
     }), [radioStore, disabled]);
-    (0, import_deprecated24.default)("wp.components.__experimentalRadioGroup", {
-      alternative: "wp.components.RadioControl or wp.components.__experimentalToggleGroupControl",
+    (0, import_deprecated24.default)("zc.components.__experimentalRadioGroup", {
+      alternative: "zc.components.RadioControl or zc.components.__experimentalToggleGroupControl",
       since: "6.8"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime259.jsx)(RadioGroupContext.Provider, {
@@ -49757,7 +49757,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
     event.stopPropagation();
   }
   var IsolatedEventContainer = (0, import_element216.forwardRef)((props, ref) => {
-    (0, import_deprecated26.default)("wp.components.IsolatedEventContainer", {
+    (0, import_deprecated26.default)("zc.components.IsolatedEventContainer", {
       since: "5.7"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime292.jsx)("div", {
@@ -50093,7 +50093,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   var Provider3 = ({
     children
   }) => {
-    (0, import_deprecated27.default)("wp.components.FocusReturnProvider component", {
+    (0, import_deprecated27.default)("zc.components.FocusReturnProvider component", {
       since: "5.7",
       hint: "This provider is not used anymore. You can just remove it from your codebase"
     });
@@ -50787,7 +50787,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function validateInputs(inputs) {
     for (const [key, value] of Object.entries(inputs)) {
       if (typeof value !== "undefined" && !w(value).isValid()) {
-        true ? (0, import_warning11.default)(`wp.components.Theme: "${value}" is not a valid color value for the '${key}' prop.`) : void 0;
+        true ? (0, import_warning11.default)(`zc.components.Theme: "${value}" is not a valid color value for the '${key}' prop.`) : void 0;
       }
     }
   }
@@ -50805,7 +50805,7 @@ The screen with id ${screen.id} will not be added.`) : void 0;
   function warnContrastIssues(issues) {
     for (const error of Object.values(issues)) {
       if (error) {
-        true ? (0, import_warning11.default)("wp.components.Theme: " + error) : void 0;
+        true ? (0, import_warning11.default)("zc.components.Theme: " + error) : void 0;
       }
     }
   }

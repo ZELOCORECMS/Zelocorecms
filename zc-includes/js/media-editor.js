@@ -8,7 +8,7 @@
 // -----------------------------
 (function($, _){
 	/**
-	 * Stores the editors' `wp.media.controller.Frame` instances.
+	 * Stores the editors' `zc.media.controller.Frame` instances.
 	 *
 	 * @static
 	 */
@@ -23,7 +23,7 @@
 	 * @param {string} key The key within the passed map to check for a value.
 	 * @return {mixed|undefined} The original or coerced value of key within attrs.
 	 */
-	wp.media.coerce = function ( attrs, key ) {
+	zc.media.coerce = function ( attrs, key ) {
 		if ( _.isUndefined( attrs[ key ] ) && ! _.isUndefined( this.defaults[ key ] ) ) {
 			attrs[ key ] = this.defaults[ key ];
 		} else if ( 'true' === attrs[ key ] ) {
@@ -34,8 +34,8 @@
 		return attrs[ key ];
 	};
 
-	/** @namespace wp.media.string */
-	wp.media.string = {
+	/** @namespace zc.media.string */
+	zc.media.string = {
 		/**
 		 * Joins the `props` and `attachment` objects,
 		 * outputting the proper object format based on the
@@ -47,7 +47,7 @@
 		 */
 		props: function( props, attachment ) {
 			var link, linkUrl, size, sizes,
-				defaultProps = wp.media.view.settings.defaultProps;
+				defaultProps = zc.media.view.settings.defaultProps;
 
 			props = props ? _.clone( props ) : {};
 
@@ -114,7 +114,7 @@
 		link: function( props, attachment ) {
 			var options;
 
-			props = wp.media.string.props( props, attachment );
+			props = zc.media.string.props( props, attachment );
 
 			options = {
 				tag:     'a',
@@ -128,7 +128,7 @@
 				options.attrs.rel = props.rel;
 			}
 
-			return wp.html.string( options );
+			return zc.html.string( options );
 		},
 		/**
 		 * Create an Audio shortcode string that is suitable for passing to the editor
@@ -138,7 +138,7 @@
 		 * @return {string} The audio shortcode
 		 */
 		audio: function( props, attachment ) {
-			return wp.media.string._audioVideo( 'audio', props, attachment );
+			return zc.media.string._audioVideo( 'audio', props, attachment );
 		},
 		/**
 		 * Create a Video shortcode string that is suitable for passing to the editor
@@ -148,7 +148,7 @@
 		 * @return {string} The video shortcode
 		 */
 		video: function( props, attachment ) {
-			return wp.media.string._audioVideo( 'video', props, attachment );
+			return zc.media.string._audioVideo( 'video', props, attachment );
 		},
 		/**
 		 * Helper function to create a media shortcode string
@@ -163,9 +163,9 @@
 		_audioVideo: function( type, props, attachment ) {
 			var shortcode, html, extension;
 
-			props = wp.media.string.props( props, attachment );
+			props = zc.media.string.props( props, attachment );
 			if ( props.link !== 'embed' ) {
-				return wp.media.string.link( props );
+				return zc.media.string.link( props );
 			}
 
 			shortcode = {};
@@ -186,14 +186,14 @@
 
 			extension = attachment.filename.split('.').pop();
 
-			if ( _.contains( wp.media.view.settings.embedExts, extension ) ) {
+			if ( _.contains( zc.media.view.settings.embedExts, extension ) ) {
 				shortcode[extension] = attachment.url;
 			} else {
 				// Render unsupported audio and video files as links.
-				return wp.media.string.link( props );
+				return zc.media.string.link( props );
 			}
 
-			html = wp.shortcode.string({
+			html = zc.shortcode.string({
 				tag:     type,
 				attrs:   shortcode
 			});
@@ -213,7 +213,7 @@
 				options, classes, shortcode, html;
 
 			props.type = 'image';
-			props = wp.media.string.props( props, attachment );
+			props = zc.media.string.props( props, attachment );
 			classes = props.classes || [];
 
 			img.src = ! _.isUndefined( attachment ) ? attachment.url : props.url;
@@ -249,7 +249,7 @@
 				};
 			}
 
-			html = wp.html.string( options );
+			html = zc.html.string( options );
 
 			// Generate the caption shortcode.
 			if ( props.caption ) {
@@ -267,7 +267,7 @@
 					shortcode.align = 'align' + props.align;
 				}
 
-				html = wp.shortcode.string({
+				html = zc.shortcode.string({
 					tag:     'caption',
 					attrs:   shortcode,
 					content: html + ' ' + props.caption
@@ -278,8 +278,8 @@
 		}
 	};
 
-	wp.media.embed = {
-		coerce : wp.media.coerce,
+	zc.media.embed = {
+		coerce : zc.media.coerce,
 
 		defaults : {
 			url : '',
@@ -293,7 +293,7 @@
 			if ( isURL ) {
 				props.url = data.replace(/<[^>]+>/g, '');
 			} else {
-				shortcode = wp.shortcode.next( 'embed', data ).shortcode;
+				shortcode = zc.shortcode.next( 'embed', data ).shortcode;
 
 				props = _.defaults( shortcode.attrs.named, this.defaults );
 				if ( shortcode.content ) {
@@ -301,7 +301,7 @@
 				}
 			}
 
-			frame = wp.media({
+			frame = zc.media({
 				frame: 'post',
 				state: 'embed',
 				metadata: props
@@ -324,7 +324,7 @@
 			content = model.url;
 			delete model.url;
 
-			return new wp.shortcode({
+			return new zc.shortcode({
 				tag: 'embed',
 				attrs: model,
 				content: content
@@ -333,20 +333,20 @@
 	};
 
 	/**
-	 * @class wp.media.collection
+	 * @class zc.media.collection
 	 *
 	 * @param {Object} attributes
 	 */
-	wp.media.collection = function(attributes) {
+	zc.media.collection = function(attributes) {
 		var collections = {};
 
-		return _.extend(/** @lends wp.media.collection.prototype */{
-			coerce : wp.media.coerce,
+		return _.extend(/** @lends zc.media.collection.prototype */{
+			coerce : zc.media.coerce,
 			/**
 			 * Retrieve attachments based on the properties of the passed shortcode
 			 *
-			 * @param {wp.shortcode} shortcode An instance of wp.shortcode().
-			 * @return {wp.media.model.Attachments} A Backbone.Collection containing
+			 * @param {zc.shortcode} shortcode An instance of zc.shortcode().
+			 * @return {zc.media.model.Attachments} A Backbone.Collection containing
 			 *                                      the media items belonging to a collection.
 			 *                                      The query[ this.tag ] property is a Backbone.Model
 			 *                                      containing the 'props' for the collection.
@@ -404,18 +404,18 @@
 					others[ key ] = self.coerce( others, key );
 				});
 
-				query = wp.media.query( args );
+				query = zc.media.query( args );
 				query[ this.tag ] = new Backbone.Model( others );
 				return query;
 			},
 			/**
 			 * Triggered when clicking 'Insert {label}' or 'Update {label}'
 			 *
-			 * @param {wp.media.model.Attachments} attachments A Backbone.Collection containing
+			 * @param {zc.media.model.Attachments} attachments A Backbone.Collection containing
 			 *      the media items belonging to a collection.
 			 *      The query[ this.tag ] property is a Backbone.Model
 			 *          containing the 'props' for the collection.
-			 * @return {wp.shortcode}
+			 * @return {zc.shortcode}
 			 */
 			shortcode: function( attachments ) {
 				var props = attachments.props.toJSON(),
@@ -462,14 +462,14 @@
 
 				attrs = this.setDefaults( attrs );
 
-				shortcode = new wp.shortcode({
+				shortcode = new zc.shortcode({
 					tag:    this.tag,
 					attrs:  attrs,
 					type:   'single'
 				});
 
 				// Use a cloned version of the gallery.
-				clone = new wp.media.model.Attachments( attachments.models, {
+				clone = new zc.media.model.Attachments( attachments.models, {
 					props: props
 				});
 				clone[ this.tag ] = attachments[ this.tag ];
@@ -484,12 +484,12 @@
 			 * @param {string} content Content that is searched for possible
 			 *    shortcode markup matching the passed tag name,
 			 *
-			 * @this wp.media.{prop}
+			 * @this zc.media.{prop}
 			 *
-			 * @return {wp.media.view.MediaFrame.Select} A media workflow.
+			 * @return {zc.media.view.MediaFrame.Select} A media workflow.
 			 */
 			edit: function( content ) {
-				var shortcode = wp.shortcode.next( this.tag, content ),
+				var shortcode = zc.shortcode.next( this.tag, content ),
 					defaultPostId = this.defaults.id,
 					attachments, selection, state;
 
@@ -507,7 +507,7 @@
 
 				attachments = this.attachments( shortcode );
 
-				selection = new wp.media.model.Selection( attachments.models, {
+				selection = new zc.media.model.Selection( attachments.models, {
 					props:    attachments.props.toJSON(),
 					multiple: true
 				});
@@ -535,7 +535,7 @@
 				}
 
 				// Store the current frame.
-				this.frame = wp.media({
+				this.frame = zc.media({
 					frame:     'post',
 					state:     state,
 					title:     this.editTitle,
@@ -562,7 +562,7 @@
 		}, attributes );
 	};
 
-	wp.media._galleryDefaults = {
+	zc.media._galleryDefaults = {
 		itemtag: 'dl',
 		icontag: 'dt',
 		captiontag: 'dd',
@@ -570,27 +570,27 @@
 		link: 'post',
 		size: 'thumbnail',
 		order: 'ASC',
-		id: wp.media.view.settings.post && wp.media.view.settings.post.id,
+		id: zc.media.view.settings.post && zc.media.view.settings.post.id,
 		orderby : 'menu_order ID'
 	};
 
-	if ( wp.media.view.settings.galleryDefaults ) {
-		wp.media.galleryDefaults = _.extend( {}, wp.media._galleryDefaults, wp.media.view.settings.galleryDefaults );
+	if ( zc.media.view.settings.galleryDefaults ) {
+		zc.media.galleryDefaults = _.extend( {}, zc.media._galleryDefaults, zc.media.view.settings.galleryDefaults );
 	} else {
-		wp.media.galleryDefaults = wp.media._galleryDefaults;
+		zc.media.galleryDefaults = zc.media._galleryDefaults;
 	}
 
-	wp.media.gallery = new wp.media.collection({
+	zc.media.gallery = new zc.media.collection({
 		tag: 'gallery',
 		type : 'image',
-		editTitle : wp.media.view.l10n.editGalleryTitle,
-		defaults : wp.media.galleryDefaults,
+		editTitle : zc.media.view.l10n.editGalleryTitle,
+		defaults : zc.media.galleryDefaults,
 
 		setDefaults: function( attrs ) {
-			var self = this, changed = ! _.isEqual( wp.media.galleryDefaults, wp.media._galleryDefaults );
+			var self = this, changed = ! _.isEqual( zc.media.galleryDefaults, zc.media._galleryDefaults );
 			_.each( this.defaults, function( value, key ) {
 				attrs[ key ] = self.coerce( attrs, key );
-				if ( value === attrs[ key ] && ( ! changed || value === wp.media._galleryDefaults[ key ] ) ) {
+				if ( value === attrs[ key ] && ( ! changed || value === zc.media._galleryDefaults[ key ] ) ) {
 					delete attrs[ key ];
 				}
 			} );
@@ -599,17 +599,17 @@
 	});
 
 	/**
-	 * @namespace wp.media.featuredImage
-	 * @memberOf wp.media
+	 * @namespace zc.media.featuredImage
+	 * @memberOf zc.media
 	 */
-	wp.media.featuredImage = {
+	zc.media.featuredImage = {
 		/**
 		 * Get the featured image post ID
 		 *
-		 * @return {wp.media.view.settings.post.featuredImageId|number}
+		 * @return {zc.media.view.settings.post.featuredImageId|number}
 		 */
 		get: function() {
-			return wp.media.view.settings.post.featuredImageId;
+			return zc.media.view.settings.post.featuredImageId;
 		},
 		/**
 		 * Sets the featured image ID property and sets the HTML in the post meta box to the new featured image.
@@ -617,17 +617,17 @@
 		 * @param {number} id The post ID of the featured image, or -1 to unset it.
 		 */
 		set: function( id ) {
-			var settings = wp.media.view.settings;
+			var settings = zc.media.view.settings;
 
 			settings.post.featuredImageId = id;
 
-			wp.media.post( 'get-post-thumbnail-html', {
+			zc.media.post( 'get-post-thumbnail-html', {
 				post_id:      settings.post.id,
 				thumbnail_id: settings.post.featuredImageId,
 				_wpnonce:     settings.post.nonce
 			}).done( function( html ) {
 				if ( '0' === html ) {
-					window.alert( wp.i18n.__( 'Could not set that as the thumbnail image. Try a different attachment.' ) );
+					window.alert( zc.i18n.__( 'Could not set that as the thumbnail image. Try a different attachment.' ) );
 					return;
 				}
 				$( '.inside', '#postimagediv' ).html( html );
@@ -638,38 +638,38 @@
 		 * set the HTML in the post meta box to no featured image.
 		 */
 		remove: function() {
-			wp.media.featuredImage.set( -1 );
+			zc.media.featuredImage.set( -1 );
 		},
 		/**
 		 * The Featured Image workflow
 		 *
-		 * @this wp.media.featuredImage
+		 * @this zc.media.featuredImage
 		 *
-		 * @return {wp.media.view.MediaFrame.Select} A media workflow.
+		 * @return {zc.media.view.MediaFrame.Select} A media workflow.
 		 */
 		frame: function() {
 			if ( this._frame ) {
-				wp.media.frame = this._frame;
+				zc.media.frame = this._frame;
 				return this._frame;
 			}
 
-			this._frame = wp.media({
+			this._frame = zc.media({
 				state: 'featured-image',
-				states: [ new wp.media.controller.FeaturedImage() , new wp.media.controller.EditImage() ]
+				states: [ new zc.media.controller.FeaturedImage() , new zc.media.controller.EditImage() ]
 			});
 
 			this._frame.on( 'toolbar:create:featured-image', function( toolbar ) {
 				/**
-				 * @this wp.media.view.MediaFrame.Select
+				 * @this zc.media.view.MediaFrame.Select
 				 */
 				this.createSelectToolbar( toolbar, {
-					text: wp.media.view.l10n.setFeaturedImage
+					text: zc.media.view.l10n.setFeaturedImage
 				});
 			}, this._frame );
 
 			this._frame.on( 'content:render:edit-image', function() {
 				var selection = this.state('featured-image').get('selection'),
-					view = new wp.media.view.EditImage( { model: selection.single(), controller: this } ).render();
+					view = new zc.media.view.EditImage( { model: selection.single(), controller: this } ).render();
 
 				this.content.set( view );
 
@@ -685,16 +685,16 @@
 		 * 'select' callback for Featured Image workflow, triggered when
 		 *  the 'Set Featured Image' button is clicked in the media modal.
 		 *
-		 * @this wp.media.controller.FeaturedImage
+		 * @this zc.media.controller.FeaturedImage
 		 */
 		select: function() {
 			var selection = this.get('selection').single();
 
-			if ( ! wp.media.view.settings.post.featuredImageId ) {
+			if ( ! zc.media.view.settings.post.featuredImageId ) {
 				return;
 			}
 
-			wp.media.featuredImage.set( selection ? selection.id : -1 );
+			zc.media.featuredImage.set( selection ? selection.id : -1 );
 		},
 		/**
 		 * Open the content media manager to the 'featured image' tab when
@@ -709,21 +709,21 @@
 					// Stop propagation to prevent thickbox from activating.
 					event.stopPropagation();
 
-					wp.media.featuredImage.frame().open();
+					zc.media.featuredImage.frame().open();
 				}
 			}).on( 'click keyup keydown', '#remove-post-thumbnail', function( event ) {
 				if ( ( event.type === 'keyup' && event.key === ' ' ) || ( event.type === 'keydown' && event.key === 'Enter' ) || event.type === 'click' ) {
-					wp.media.featuredImage.remove();
+					zc.media.featuredImage.remove();
 					return false;
 				}
 			});
 		}
 	};
 
-	$( wp.media.featuredImage.init );
+	$( zc.media.featuredImage.init );
 
-	/** @namespace wp.media.editor */
-	wp.media.editor = {
+	/** @namespace zc.media.editor */
+	zc.media.editor = {
 		/**
 		 * Send content to the editor
 		 *
@@ -782,9 +782,9 @@
 		 * @param {string} id A slug used to identify the workflow.
 		 * @param {Object} [options={}]
 		 *
-		 * @this wp.media.editor
+		 * @this zc.media.editor
 		 *
-		 * @return {wp.media.view.MediaFrame.Select} A media workflow.
+		 * @return {zc.media.view.MediaFrame.Select} A media workflow.
 		 */
 		add: function( id, options ) {
 			var workflow = this.get( id );
@@ -794,10 +794,10 @@
 				return workflow;
 			}
 
-			workflow = workflows[ id ] = wp.media( _.defaults( options || {}, {
+			workflow = workflows[ id ] = zc.media( _.defaults( options || {}, {
 				frame:    'post',
 				state:    'insert',
-				title:    wp.media.view.l10n.addMedia,
+				title:    zc.media.view.l10n.addMedia,
 				multiple: true
 			} ) );
 
@@ -813,38 +813,38 @@
 				$.when.apply( $, selection.map( function( attachment ) {
 					var display = state.display( attachment ).toJSON();
 					/**
-					 * @this wp.media.editor
+					 * @this zc.media.editor
 					 */
 					return this.send.attachment( display, attachment.toJSON() );
 				}, this ) ).done( function() {
-					wp.media.editor.insert( _.toArray( arguments ).join('\n\n') );
+					zc.media.editor.insert( _.toArray( arguments ).join('\n\n') );
 				});
 			}, this );
 
 			workflow.state('gallery-edit').on( 'update', function( selection ) {
 				/**
-				 * @this wp.media.editor
+				 * @this zc.media.editor
 				 */
-				this.insert( wp.media.gallery.shortcode( selection ).string() );
+				this.insert( zc.media.gallery.shortcode( selection ).string() );
 			}, this );
 
 			workflow.state('playlist-edit').on( 'update', function( selection ) {
 				/**
-				 * @this wp.media.editor
+				 * @this zc.media.editor
 				 */
-				this.insert( wp.media.playlist.shortcode( selection ).string() );
+				this.insert( zc.media.playlist.shortcode( selection ).string() );
 			}, this );
 
 			workflow.state('video-playlist-edit').on( 'update', function( selection ) {
 				/**
-				 * @this wp.media.editor
+				 * @this zc.media.editor
 				 */
-				this.insert( wp.media.playlist.shortcode( selection ).string() );
+				this.insert( zc.media.playlist.shortcode( selection ).string() );
 			}, this );
 
 			workflow.state('embed').on( 'select', function() {
 				/**
-				 * @this wp.media.editor
+				 * @this zc.media.editor
 				 */
 				var state = workflow.state(),
 					type = state.get('type'),
@@ -859,7 +859,7 @@
 					});
 
 					this.send.link( embed ).done( function( resp ) {
-						wp.media.editor.insert( resp );
+						zc.media.editor.insert( resp );
 					});
 
 				} else if ( 'image' === type ) {
@@ -876,11 +876,11 @@
 						embed.linkUrl = embed.url;
 					}
 
-					this.insert( wp.media.string.image( embed ) );
+					this.insert( zc.media.string.image( embed ) );
 				}
 			}, this );
 
-			workflow.state('featured-image').on( 'select', wp.media.featuredImage.select );
+			workflow.state('featured-image').on( 'select', zc.media.featuredImage.select );
 			workflow.setState( workflow.options.state );
 			return workflow;
 		},
@@ -913,9 +913,9 @@
 		 *
 		 * @param {string} id A slug used to identify the workflow.
 		 *
-		 * @this wp.media.editor
+		 * @this zc.media.editor
 		 *
-		 * @return {wp.media.view.MediaFrame} A media workflow.
+		 * @return {zc.media.view.MediaFrame} A media workflow.
 		 */
 		get: function( id ) {
 			id = this.id( id );
@@ -926,13 +926,13 @@
 		 *
 		 * @param {string} id A slug used to identify the workflow.
 		 *
-		 * @this wp.media.editor
+		 * @this zc.media.editor
 		 */
 		remove: function( id ) {
 			id = this.id( id );
 			delete workflows[ id ];
 		},
-		/** @namespace wp.media.editor.send */
+		/** @namespace zc.media.editor.send */
 		send: {
 			/**
 			 * Called when sending an attachment to the editor
@@ -947,11 +947,11 @@
 					options, html;
 
 				// If captions are disabled, clear the caption.
-				if ( ! wp.media.view.settings.captions ) {
+				if ( ! zc.media.view.settings.captions ) {
 					delete attachment.caption;
 				}
 
-				props = wp.media.string.props( props, attachment );
+				props = zc.media.string.props( props, attachment );
 
 				options = {
 					id:           attachment.id,
@@ -964,7 +964,7 @@
 				}
 
 				if ( 'image' === attachment.type ) {
-					html = wp.media.string.image( props );
+					html = zc.media.string.image( props );
 
 					_.each({
 						align: 'align',
@@ -976,19 +976,19 @@
 						}
 					});
 				} else if ( 'video' === attachment.type ) {
-					html = wp.media.string.video( props, attachment );
+					html = zc.media.string.video( props, attachment );
 				} else if ( 'audio' === attachment.type ) {
-					html = wp.media.string.audio( props, attachment );
+					html = zc.media.string.audio( props, attachment );
 				} else {
-					html = wp.media.string.link( props );
+					html = zc.media.string.link( props );
 					options.post_title = props.title;
 				}
 
-				return wp.media.post( 'send-attachment-to-editor', {
-					nonce:      wp.media.view.settings.nonce.sendToEditor,
+				return zc.media.post( 'send-attachment-to-editor', {
+					nonce:      zc.media.view.settings.nonce.sendToEditor,
 					attachment: options,
 					html:       html,
-					post_id:    wp.media.view.settings.post.id
+					post_id:    zc.media.view.settings.post.id
 				});
 			},
 			/**
@@ -998,12 +998,12 @@
 			 * @return {Promise}
 			 */
 			link: function( embed ) {
-				return wp.media.post( 'send-link-to-editor', {
-					nonce:     wp.media.view.settings.nonce.sendToEditor,
+				return zc.media.post( 'send-link-to-editor', {
+					nonce:     zc.media.view.settings.nonce.sendToEditor,
 					src:       embed.linkUrl,
 					link_text: embed.linkText,
-					html:      wp.media.string.link( embed ),
-					post_id:   wp.media.view.settings.post.id
+					html:      zc.media.string.link( embed ),
+					post_id:   zc.media.view.settings.post.id
 				});
 			}
 		},
@@ -1013,9 +1013,9 @@
 		 * @param {string} [id=undefined] Optional. A slug used to identify the workflow.
 		 * @param {Object} [options={}]
 		 *
-		 * @this wp.media.editor
+		 * @this zc.media.editor
 		 *
-		 * @return {wp.media.view.MediaFrame}
+		 * @return {zc.media.view.MediaFrame}
 		 */
 		open: function( id, options ) {
 			var workflow;
@@ -1032,7 +1032,7 @@
 				workflow = this.add( id, options );
 			}
 
-			wp.media.frame = workflow;
+			zc.media.frame = workflow;
 
 			return workflow.open();
 		},
@@ -1048,7 +1048,7 @@
 						options = {
 							frame:    'post',
 							state:    'insert',
-							title:    wp.media.view.l10n.addMedia,
+							title:    zc.media.view.l10n.addMedia,
 							multiple: true
 						};
 
@@ -1056,17 +1056,17 @@
 
 					if ( elem.hasClass( 'gallery' ) ) {
 						options.state = 'gallery';
-						options.title = wp.media.view.l10n.createGalleryTitle;
+						options.title = zc.media.view.l10n.createGalleryTitle;
 					}
 
-					wp.media.editor.open( editor, options );
+					zc.media.editor.open( editor, options );
 				});
 
 			// Initialize and render the Editor drag-and-drop uploader.
-			new wp.media.view.EditorUploader().render();
+			new zc.media.view.EditorUploader().render();
 		}
 	};
 
-	_.bindAll( wp.media.editor, 'open' );
-	$( wp.media.editor.init );
+	_.bindAll( zc.media.editor, 'open' );
+	$( zc.media.editor.init );
 }(jQuery, _));

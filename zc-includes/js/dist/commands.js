@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).commands = (() => {
+var zc;
+(zc ||= {}).commands = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -55,49 +55,49 @@ var wp;
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 

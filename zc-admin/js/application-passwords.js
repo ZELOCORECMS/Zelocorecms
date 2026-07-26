@@ -11,8 +11,8 @@
 		$appPassTbody = $appPassSection.find( 'tbody' ),
 		$appPassTrNoItems = $appPassTbody.find( '.no-items' ),
 		$removeAllBtn = $( '#revoke-all-application-passwords' ),
-		tmplNewAppPass = wp.template( 'new-application-password' ),
-		tmplAppPassRow = wp.template( 'application-password-row' ),
+		tmplNewAppPass = zc.template( 'new-application-password' ),
+		tmplAppPassRow = zc.template( 'application-password-row' ),
 		userId = $( '#user_id' ).val();
 
 	$newAppPassButton.on( 'click', function( e ) {
@@ -44,10 +44,10 @@
 		 * @param {Object} request The request data.
 		 * @param {number} userId  The id of the user the password is added for.
 		 */
-		request = wp.hooks.applyFilters( 'zc_application_passwords_new_password_request', request, userId );
+		request = zc.hooks.applyFilters( 'zc_application_passwords_new_password_request', request, userId );
 
-		wp.apiRequest( {
-			path: '/wp/v2/users/' + userId + '/application-passwords?_locale=user',
+		zc.apiRequest( {
+			path: '/zc/v2/users/' + userId + '/application-passwords?_locale=user',
 			method: 'POST',
 			data: request
 		} ).always( function() {
@@ -75,14 +75,14 @@
 			 * @param {Object} response The response data from the REST API.
 			 * @param {Object} request  The request data used to create the password.
 			 */
-			wp.hooks.doAction( 'zc_application_passwords_created_password', response, request );
+			zc.hooks.doAction( 'zc_application_passwords_created_password', response, request );
 		} ).fail( handleErrorResponse );
 	} );
 
 	$appPassTbody.on( 'click', '.delete', function( e ) {
 		e.preventDefault();
 
-		if ( ! window.confirm( wp.i18n.__( 'Are you sure you want to revoke this password? This action cannot be undone.' ) ) ) {
+		if ( ! window.confirm( zc.i18n.__( 'Are you sure you want to revoke this password? This action cannot be undone.' ) ) ) {
 			return;
 		}
 
@@ -93,8 +93,8 @@
 		clearNotices();
 		$submitButton.prop( 'disabled', true );
 
-		wp.apiRequest( {
-			path: '/wp/v2/users/' + userId + '/application-passwords/' + uuid + '?_locale=user',
+		zc.apiRequest( {
+			path: '/zc/v2/users/' + userId + '/application-passwords/' + uuid + '?_locale=user',
 			method: 'DELETE'
 		} ).always( function() {
 			$submitButton.prop( 'disabled', false );
@@ -105,7 +105,7 @@
 				}
 				$tr.remove();
 
-				addNotice( wp.i18n.__( 'Application password revoked.' ), 'success' ).trigger( 'focus' );
+				addNotice( zc.i18n.__( 'Application password revoked.' ), 'success' ).trigger( 'focus' );
 			}
 		} ).fail( handleErrorResponse );
 	} );
@@ -113,7 +113,7 @@
 	$removeAllBtn.on( 'click', function( e ) {
 		e.preventDefault();
 
-		if ( ! window.confirm( wp.i18n.__( 'Are you sure you want to revoke all passwords? This action cannot be undone.' ) ) ) {
+		if ( ! window.confirm( zc.i18n.__( 'Are you sure you want to revoke all passwords? This action cannot be undone.' ) ) ) {
 			return;
 		}
 
@@ -122,8 +122,8 @@
 		clearNotices();
 		$submitButton.prop( 'disabled', true );
 
-		wp.apiRequest( {
-			path: '/wp/v2/users/' + userId + '/application-passwords?_locale=user',
+		zc.apiRequest( {
+			path: '/zc/v2/users/' + userId + '/application-passwords?_locale=user',
 			method: 'DELETE'
 		} ).always( function() {
 			$submitButton.prop( 'disabled', false );
@@ -133,7 +133,7 @@
 				$appPassSection.children( '.new-application-password' ).remove();
 				$appPassTwrapper.hide();
 
-				addNotice( wp.i18n.__( 'All application passwords revoked.' ), 'success' ).trigger( 'focus' );
+				addNotice( zc.i18n.__( 'All application passwords revoked.' ), 'success' ).trigger( 'focus' );
 			}
 		} ).fail( handleErrorResponse );
 	} );
@@ -200,7 +200,7 @@
 				$( '<button></button>' )
 					.attr( 'type', 'button' )
 					.addClass( 'notice-dismiss' )
-					.append( $( '<span></span>' ).addClass( 'screen-reader-text' ).text( wp.i18n.__( 'Dismiss this notice.' ) ) )
+					.append( $( '<span></span>' ).addClass( 'screen-reader-text' ).text( zc.i18n.__( 'Dismiss this notice.' ) ) )
 			);
 
 		$newAppPassForm.after( $notice );

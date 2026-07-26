@@ -27,14 +27,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/api-fetch
 var require_api_fetch = __commonJS({
   "package-external:@zelocorecms/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
+    module.exports = window.zc.apiFetch;
   }
 });
 
 // package-external:@zelocorecms/url
 var require_url = __commonJS({
   "package-external:@zelocorecms/url"(exports, module) {
-    module.exports = window.wp.url;
+    module.exports = window.zc.url;
   }
 });
 

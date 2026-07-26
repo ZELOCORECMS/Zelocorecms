@@ -2,8 +2,8 @@
  * @output zc-includes/js/customize-base.js
  */
 
-/** @namespace wp */
-window.wp = window.wp || {};
+/** @namespace zc */
+window.zc = window.zc || {};
 
 (function( exports, $ ){
 	var api = {}, ctor, inherits,
@@ -180,12 +180,12 @@ window.wp = window.wp || {};
 	/**
 	 * Observable values that support two-way binding.
 	 *
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Value
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Value
 	 *
 	 * @constructor
 	 */
-	api.Value = api.Class.extend(/** @lends wp.customize.Value.prototype */{
+	api.Value = api.Class.extend(/** @lends zc.customize.Value.prototype */{
 		/**
 		 * @param {mixed}  initial The initial value.
 		 * @param {Object} options
@@ -322,14 +322,14 @@ window.wp = window.wp || {};
 	/**
 	 * A collection of observable values.
 	 *
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Values
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Values
 	 *
 	 * @constructor
-	 * @augments wp.customize.Class
-	 * @mixes wp.customize.Events
+	 * @augments zc.customize.Class
+	 * @mixes zc.customize.Events
 	 */
-	api.Values = api.Class.extend(/** @lends wp.customize.Values.prototype */{
+	api.Values = api.Class.extend(/** @lends zc.customize.Values.prototype */{
 
 		/**
 		 * The default constructor for items of the collection.
@@ -391,10 +391,10 @@ window.wp = window.wp || {};
 		/**
 		 * Add an item to the collection.
 		 *
-		 * @param {string|wp.customize.Class} item         - The item instance to add, or the ID for the instance to add.
+		 * @param {string|zc.customize.Class} item         - The item instance to add, or the ID for the instance to add.
 		 *                                                   When an ID string is supplied, then itemObject must be provided.
-		 * @param {wp.customize.Class}        [itemObject] - The item instance when the first argument is an ID string.
-		 * @return {wp.customize.Class} The new item's instance, or an existing instance if already added.
+		 * @param {zc.customize.Class}        [itemObject] - The item instance when the first argument is an ID string.
+		 * @return {zc.customize.Class} The new item's instance, or an existing instance if already added.
 		 */
 		add: function( item, itemObject ) {
 			var collection = this, id, instance;
@@ -568,14 +568,14 @@ window.wp = window.wp || {};
 	 *
 	 * Handles inputs, selects, and textareas by default.
 	 *
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Element
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Element
 	 *
 	 * @constructor
-	 * @augments wp.customize.Value
-	 * @augments wp.customize.Class
+	 * @augments zc.customize.Value
+	 * @augments zc.customize.Class
 	 */
-	api.Element = api.Value.extend(/** @lends wp.customize.Element */{
+	api.Element = api.Value.extend(/** @lends zc.customize.Element */{
 		initialize: function( element, options ) {
 			var self = this,
 				synchronizer = api.Element.synchronizer.html,
@@ -660,14 +660,14 @@ window.wp = window.wp || {};
 	/**
 	 * A communicator for sending data from one window to another over postMessage.
 	 *
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Messenger
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Messenger
 	 *
 	 * @constructor
-	 * @augments wp.customize.Class
-	 * @mixes wp.customize.Events
+	 * @augments zc.customize.Class
+	 * @mixes zc.customize.Events
 	 */
-	api.Messenger = api.Class.extend(/** @lends wp.customize.Messenger.prototype */{
+	api.Messenger = api.Class.extend(/** @lends zc.customize.Messenger.prototype */{
 		/**
 		 * Create a new Value.
 		 *
@@ -815,11 +815,11 @@ window.wp = window.wp || {};
 	 * Notification.
 	 *
 	 * @class
-	 * @augments wp.customize.Class
+	 * @augments zc.customize.Class
 	 * @since 4.6.0
 	 *
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Notification
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Notification
 	 *
 	 * @param {string}  code - The error code.
 	 * @param {object}  params - Params.
@@ -829,7 +829,7 @@ window.wp = window.wp || {};
 	 * @param {string}  [params.setting=null] - The setting ID that the notification is related to.
 	 * @param {*}       [params.data=null] - Any additional data.
 	 */
-	api.Notification = api.Class.extend(/** @lends wp.customize.Notification.prototype */{
+	api.Notification = api.Class.extend(/** @lends zc.customize.Notification.prototype */{
 
 		/**
 		 * Template function for rendering the notification.
@@ -902,7 +902,7 @@ window.wp = window.wp || {};
 		render: function() {
 			var notification = this, container, data;
 			if ( ! notification.template ) {
-				notification.template = wp.template( notification.templateId );
+				notification.template = zc.template( notification.templateId );
 			}
 			data = _.extend( {}, notification, {
 				alt: notification.parent && notification.parent.alt
@@ -933,7 +933,7 @@ window.wp = window.wp || {};
 	/**
 	 * Get all customize settings.
 	 *
-	 * @alias wp.customize.get
+	 * @alias zc.customize.get
 	 *
 	 * @return {Object}
 	 */
@@ -950,7 +950,7 @@ window.wp = window.wp || {};
 	/**
 	 * Utility function namespace
 	 *
-	 * @namespace wp.customize.utils
+	 * @namespace zc.customize.utils
 	 */
 	api.utils = {};
 
@@ -960,7 +960,7 @@ window.wp = window.wp || {};
 	 * @since 4.7.0
 	 * @access public
 	 *
-	 * @alias wp.customize.utils.parseQueryString
+	 * @alias zc.customize.utils.parseQueryString
 	 *
 	 * @param {string} queryString Query string.
 	 * @return {Object} Parsed query string.
@@ -986,9 +986,9 @@ window.wp = window.wp || {};
 	};
 
 	/**
-	 * Expose the API publicly on window.wp.customize
+	 * Expose the API publicly on window.zc.customize
 	 *
-	 * @namespace wp.customize
+	 * @namespace zc.customize
 	 */
 	exports.customize = api;
-})( wp, jQuery );
+})( zc, jQuery );

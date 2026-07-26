@@ -11,5 +11,5 @@
  */
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfour/hidden-portfolio-hero"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfour/gallery-offset-images-grid-4-col"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/hidden-portfolio-hero"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/gallery-offset-images-grid-4-col"} /-->

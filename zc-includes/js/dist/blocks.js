@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).blocks = (() => {
+var zc;
+(zc ||= {}).blocks = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,56 +34,56 @@ var wp;
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
@@ -766,28 +766,28 @@ var wp;
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/block-serialization-default-parser
   var require_block_serialization_default_parser = __commonJS({
     "package-external:@zelocorecms/block-serialization-default-parser"(exports, module) {
-      module.exports = window.wp.blockSerializationDefaultParser;
+      module.exports = window.zc.blockSerializationDefaultParser;
     }
   });
 
   // package-external:@zelocorecms/autop
   var require_autop = __commonJS({
     "package-external:@zelocorecms/autop"(exports, module) {
-      module.exports = window.wp.autop;
+      module.exports = window.zc.autop;
     }
   });
 
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 
@@ -857,21 +857,21 @@ var wp;
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
   // package-external:@zelocorecms/shortcode
   var require_shortcode = __commonJS({
     "package-external:@zelocorecms/shortcode"(exports, module) {
-      module.exports = window.wp.shortcode;
+      module.exports = window.zc.shortcode;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
@@ -6586,7 +6586,7 @@ var wp;
   }
   function __experimentalReapplyBlockFilters() {
     (0, import_deprecated5.default)(
-      'wp.data.dispatch( "core/blocks" ).__experimentalReapplyBlockFilters',
+      'zc.data.dispatch( "core/blocks" ).__experimentalReapplyBlockFilters',
       {
         since: "6.4",
         alternative: "reapplyBlockFilters"
@@ -7223,11 +7223,11 @@ var wp;
     const serializedAttributes = attributes && Object.entries(attributes).length ? serializeAttributes(attributes) + " " : "";
     const blockName = rawBlockName?.startsWith("core/") ? rawBlockName.slice(5) : rawBlockName;
     if (!content) {
-      return `<!-- wp:${blockName} ${serializedAttributes}/-->`;
+      return `<!-- zc:${blockName} ${serializedAttributes}/-->`;
     }
-    return `<!-- wp:${blockName} ${serializedAttributes}-->
+    return `<!-- zc:${blockName} ${serializedAttributes}-->
 ` + content + `
-<!-- /wp:${blockName} -->`;
+<!-- /zc:${blockName} -->`;
   }
   function serializeBlock(block, { isInnerBlocks = false } = {}) {
     if (!block.isValid && block.__unstableBlockSource) {
@@ -8656,7 +8656,7 @@ var wp;
     return children;
   }
   function getChildrenArray(children) {
-    (0, import_deprecated8.default)("wp.blocks.children.getChildrenArray", {
+    (0, import_deprecated8.default)("zc.blocks.children.getChildrenArray", {
       since: "6.1",
       version: "6.3",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
@@ -8664,10 +8664,10 @@ var wp;
     return children;
   }
   function concat(...blockNodes) {
-    (0, import_deprecated8.default)("wp.blocks.children.concat", {
+    (0, import_deprecated8.default)("zc.blocks.children.concat", {
       since: "6.1",
       version: "6.3",
-      alternative: "wp.richText.concat",
+      alternative: "zc.richText.concat",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
     });
     const result = [];
@@ -8686,10 +8686,10 @@ var wp;
     return result;
   }
   function fromDOM22(domNodes) {
-    (0, import_deprecated8.default)("wp.blocks.children.fromDOM", {
+    (0, import_deprecated8.default)("zc.blocks.children.fromDOM", {
       since: "6.1",
       version: "6.3",
-      alternative: "wp.richText.create",
+      alternative: "zc.richText.create",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
     });
     const result = [];
@@ -8702,17 +8702,17 @@ var wp;
     return result;
   }
   function toHTML(children) {
-    (0, import_deprecated8.default)("wp.blocks.children.toHTML", {
+    (0, import_deprecated8.default)("zc.blocks.children.toHTML", {
       since: "6.1",
       version: "6.3",
-      alternative: "wp.richText.toHTMLString",
+      alternative: "zc.richText.toHTMLString",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
     });
     const element = getSerializeCapableElement(children);
     return (0, import_element3.renderToString)(element);
   }
   function matcher(selector) {
-    (0, import_deprecated8.default)("wp.blocks.children.matcher", {
+    (0, import_deprecated8.default)("zc.blocks.children.matcher", {
       since: "6.1",
       version: "6.3",
       alternative: "html source",
@@ -8739,7 +8739,7 @@ var wp;
 
   // packages/blocks/build-module/api/node.mjs
   function isNodeOfType(node, type) {
-    (0, import_deprecated9.default)("wp.blocks.node.isNodeOfType", {
+    (0, import_deprecated9.default)("zc.blocks.node.isNodeOfType", {
       since: "6.1",
       version: "6.3",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
@@ -8755,10 +8755,10 @@ var wp;
     return result;
   }
   function fromDOM2(domNode) {
-    (0, import_deprecated9.default)("wp.blocks.node.fromDOM", {
+    (0, import_deprecated9.default)("zc.blocks.node.fromDOM", {
       since: "6.1",
       version: "6.3",
-      alternative: "wp.richText.create",
+      alternative: "zc.richText.create",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
     });
     if (domNode.nodeType === domNode.TEXT_NODE) {
@@ -8778,16 +8778,16 @@ var wp;
     };
   }
   function toHTML2(node) {
-    (0, import_deprecated9.default)("wp.blocks.node.toHTML", {
+    (0, import_deprecated9.default)("zc.blocks.node.toHTML", {
       since: "6.1",
       version: "6.3",
-      alternative: "wp.richText.toHTMLString",
+      alternative: "zc.richText.toHTMLString",
       link: "https://developer.zelocorecms.org/block-editor/how-to-guides/block-tutorial/introducing-attributes-and-editable-fields/"
     });
     return toHTML([node]);
   }
   function matcher2(selector) {
-    (0, import_deprecated9.default)("wp.blocks.node.matcher", {
+    (0, import_deprecated9.default)("zc.blocks.node.matcher", {
       since: "6.1",
       version: "6.3",
       alternative: "html source",
@@ -9288,7 +9288,7 @@ var wp;
       if (!rawTransform) {
         if (import_element4.Platform.isNative) {
           return parse2(
-            `<!-- wp:html -->${node.outerHTML}<!-- /wp:html -->`
+            `<!-- zc:html -->${node.outerHTML}<!-- /zc:html -->`
           );
         }
         return createBlock(
@@ -10145,7 +10145,7 @@ ${p3}`
     );
     if (mode !== "INLINE") {
       const content = HTML ? HTML : plainText;
-      if (content.indexOf("<!-- wp:") !== -1) {
+      if (content.indexOf("<!-- zc:") !== -1) {
         const parseResult = parse2(content);
         const isSingleFreeFormBlock = parseResult.length === 1 && parseResult[0].name === "core/freeform";
         if (!isSingleFreeFormBlock) {
@@ -10232,14 +10232,14 @@ ${p3}`
 
   // packages/blocks/build-module/api/raw-handling/index.mjs
   function deprecatedGetPhrasingContentSchema(context) {
-    (0, import_deprecated10.default)("wp.blocks.getPhrasingContentSchema", {
+    (0, import_deprecated10.default)("zc.blocks.getPhrasingContentSchema", {
       since: "5.6",
-      alternative: "wp.dom.getPhrasingContentSchema"
+      alternative: "zc.dom.getPhrasingContentSchema"
     });
     return (0, import_dom12.getPhrasingContentSchema)(context);
   }
   function rawHandler({ HTML = "" }) {
-    if (HTML.indexOf("<!-- wp:") !== -1) {
+    if (HTML.indexOf("<!-- zc:") !== -1) {
       const parseResult = parse2(HTML);
       const isSingleFreeFormBlock = parseResult.length === 1 && parseResult[0].name === "core/freeform";
       if (!isSingleFreeFormBlock) {
@@ -10359,7 +10359,7 @@ ${p3}`
   // packages/blocks/build-module/deprecated.mjs
   var import_deprecated11 = __toESM(require_deprecated(), 1);
   function withBlockContentContext(OriginalComponent) {
-    (0, import_deprecated11.default)("wp.blocks.withBlockContentContext", {
+    (0, import_deprecated11.default)("zc.blocks.withBlockContentContext", {
       since: "6.1"
     });
     return OriginalComponent;

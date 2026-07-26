@@ -44,7 +44,7 @@
 | PHP-only architecture (legacy) | 🟠 High | Developers |
 | No headless-first support | 🟠 High | Modern dev teams |
 | Constant maintenance overhead | 🟡 Medium | SMBs |
-| Pricing model confusion (free vs WP.com) | 🟡 Medium | Non-tech users |
+| Pricing model confusion (free vs ZC.com) | 🟡 Medium | Non-tech users |
 | No built-in AI content assistance | 🟡 Medium | Content teams |
 | Multi-site management is painful | 🟡 Medium | Agencies |
 
@@ -150,7 +150,7 @@
 
 **Opportunity:** Be the first CMS to offer a native ZelocoreCMS migration tool that imports posts, pages, users, plugins → ZELOCORECMS modules.
 
-**ZELOCORECMS Answer:** ZeloMigrate — one-click ZelocoreCMS importer that converts WP databases, attachments, custom post types, and plugins into ZELOCORECMS equivalents.
+**ZELOCORECMS Answer:** ZeloMigrate — one-click ZelocoreCMS importer that converts ZC databases, attachments, custom post types, and plugins into ZELOCORECMS equivalents.
 
 ---
 
@@ -194,7 +194,7 @@
 |-----|------------|---------------------|----------------------|----------------------|----------|
 | Visual Editing + Headless | 🔴 Huge | 🔴 None solve it well | 🟡 Medium | ⭐⭐⭐⭐⭐ | P0 |
 | True Open-Source Enterprise | 🟠 Large | 🔴 All bait-and-switch | 🟢 High | ⭐⭐⭐⭐⭐ | P0 |
-| WP Security Redesign | 🔴 Huge | 🔴 Structural limitation | 🟢 High | ⭐⭐⭐⭐⭐ | P0 |
+| ZC Security Redesign | 🔴 Huge | 🔴 Structural limitation | 🟢 High | ⭐⭐⭐⭐⭐ | P0 |
 | AI-Native CMS | 🔴 Huge | 🟡 Superficial features | 🟢 High | ⭐⭐⭐⭐ | P1 |
 | Self-Host + Enterprise Polish | 🟠 Large | 🟡 Rough UX | 🟢 High | ⭐⭐⭐⭐ | P1 |
 | ZelocoreCMS Migration | 🔴 Huge | 🔴 None provide this | 🟡 Medium | ⭐⭐⭐⭐⭐ | P1 |

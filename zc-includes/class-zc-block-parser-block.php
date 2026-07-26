@@ -46,7 +46,7 @@ class ZC_Block_Parser_Block {
 	 * Resultant HTML from inside block comment delimiters
 	 * after removing inner blocks
 	 *
-	 * @example "...Just <!-- wp:test /--> testing..." -> "Just testing..."
+	 * @example "...Just <!-- zc:test /--> testing..." -> "Just testing..."
 	 *
 	 * @since 5.0.0
 	 * @var string

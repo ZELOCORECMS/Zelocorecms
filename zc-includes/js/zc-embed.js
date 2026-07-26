@@ -17,11 +17,11 @@
 		return;
 	}
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
+	/** @namespace zc */
+	window.zc = window.zc || {};
 
 	/* Abort if script was already executed. */
-	if ( !! window.wp.receiveEmbedMessage ) {
+	if ( !! window.zc.receiveEmbedMessage ) {
 		return;
 	}
 
@@ -30,7 +30,7 @@
 	 *
 	 * @param {MessageEvent} e
 	 */
-	window.wp.receiveEmbedMessage = function( e ) {
+	window.zc.receiveEmbedMessage = function( e ) {
 		var data = e.data;
 
 		/* Verify shape of message. */
@@ -113,6 +113,6 @@
 		}
 	}
 
-	window.addEventListener( 'message', window.wp.receiveEmbedMessage, false );
+	window.addEventListener( 'message', window.zc.receiveEmbedMessage, false );
 	document.addEventListener( 'DOMContentLoaded', onLoad, false );
 })( window, document );

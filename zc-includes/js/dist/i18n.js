@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).i18n = (() => {
+var zc;
+(zc ||= {}).i18n = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 

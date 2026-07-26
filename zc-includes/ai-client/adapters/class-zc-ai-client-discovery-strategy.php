@@ -1,6 +1,6 @@
 <?php
 /**
- * WP AI Client: ZC_AI_Client_Discovery_Strategy class
+ * ZC AI Client: ZC_AI_Client_Discovery_Strategy class
  *
  * @package ZelocoreCMS
  * @subpackage AI

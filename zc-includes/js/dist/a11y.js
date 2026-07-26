@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).a11y = (() => {
+var zc;
+(zc ||= {}).a11y = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,14 +35,14 @@ var wp;
   // package-external:@zelocorecms/dom-ready
   var require_dom_ready = __commonJS({
     "package-external:@zelocorecms/dom-ready"(exports, module) {
-      module.exports = window.wp.domReady;
+      module.exports = window.zc.domReady;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 

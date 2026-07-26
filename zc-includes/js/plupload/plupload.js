@@ -83,7 +83,7 @@ function normalizeCaps(settings) {
 		});
 	}
 
-	// WP: only html runtimes.
+	// ZC: only html runtimes.
 	settings.runtimes = 'html5,html4';
 
 	return caps;

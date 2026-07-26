@@ -12,18 +12,18 @@
  */
 
 ?>
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- zc:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <main class="zc-block-group" style="margin-top:var(--zc--preset--spacing--60)">
-	<!-- wp:query-title {"type":"search","textAlign":"center","align":"wide"} /-->
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:query-title {"type":"search","textAlign":"center","align":"wide"} /-->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+		<!-- zc:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
 	</div>
-	<!-- /wp:group -->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop-photo-blog"} /-->
+	<!-- /zc:group -->
+	<!-- zc:pattern {"slug":"twentytwentyfive/template-query-loop-photo-blog"} /-->
 </main>
-<!-- /wp:group -->
+<!-- /zc:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- zc:template-part {"slug":"footer"} /-->

@@ -31,14 +31,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/i18n
 var require_i18n = __commonJS({
   "package-external:@zelocorecms/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
+    module.exports = window.zc.i18n;
   }
 });
 
 // package-external:@zelocorecms/components
 var require_components = __commonJS({
   "package-external:@zelocorecms/components"(exports, module) {
-    module.exports = window.wp.components;
+    module.exports = window.zc.components;
   }
 });
 
@@ -52,7 +52,7 @@ var require_jsx_runtime = __commonJS({
 // package-external:@zelocorecms/element
 var require_element = __commonJS({
   "package-external:@zelocorecms/element"(exports, module) {
-    module.exports = window.wp.element;
+    module.exports = window.zc.element;
   }
 });
 
@@ -66,42 +66,42 @@ var require_react = __commonJS({
 // package-external:@zelocorecms/primitives
 var require_primitives = __commonJS({
   "package-external:@zelocorecms/primitives"(exports, module) {
-    module.exports = window.wp.primitives;
+    module.exports = window.zc.primitives;
   }
 });
 
 // package-external:@zelocorecms/private-apis
 var require_private_apis = __commonJS({
   "package-external:@zelocorecms/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
+    module.exports = window.zc.privateApis;
   }
 });
 
 // package-external:@zelocorecms/data
 var require_data = __commonJS({
   "package-external:@zelocorecms/data"(exports, module) {
-    module.exports = window.wp.data;
+    module.exports = window.zc.data;
   }
 });
 
 // package-external:@zelocorecms/core-data
 var require_core_data = __commonJS({
   "package-external:@zelocorecms/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
+    module.exports = window.zc.coreData;
   }
 });
 
 // package-external:@zelocorecms/notices
 var require_notices = __commonJS({
   "package-external:@zelocorecms/notices"(exports, module) {
-    module.exports = window.wp.notices;
+    module.exports = window.zc.notices;
   }
 });
 
 // package-external:@zelocorecms/url
 var require_url = __commonJS({
   "package-external:@zelocorecms/url"(exports, module) {
-    module.exports = window.wp.url;
+    module.exports = window.zc.url;
   }
 });
 

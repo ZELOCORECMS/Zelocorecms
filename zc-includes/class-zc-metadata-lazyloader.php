@@ -21,7 +21,7 @@
  * cache in the comments section of a post until the first time get_comment_meta() is called in the
  * context of the comment loop.
  *
- * WP uses the ZC_Metadata_Lazyloader class to queue objects for metadata cache priming. The class
+ * ZC uses the ZC_Metadata_Lazyloader class to queue objects for metadata cache priming. The class
  * then detects the relevant get_*_meta() function call, and queries the metadata of all queued objects.
  *
  * Do not access this class directly. Use the zc_metadata_lazyloader() function.

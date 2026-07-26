@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).blockSerializationDefaultParser = (() => {
+var zc;
+(zc ||= {}).blockSerializationDefaultParser = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -28,7 +28,7 @@ var wp;
   var offset;
   var output;
   var stack;
-  var tokenizer = /<!--\s+(\/)?wp:([a-z][a-z0-9_-]*\/)?([a-z][a-z0-9_-]*)\s+({(?:(?=([^}]+|}+(?=})|(?!}\s+\/?-->)[^])*)\5|[^]*?)}\s+)?(\/)?-->/g;
+  var tokenizer = /<!--\s+(\/)?zc:([a-z][a-z0-9_-]*\/)?([a-z][a-z0-9_-]*)\s+({(?:(?=([^}]+|}+(?=})|(?!}\s+\/?-->)[^])*)\5|[^]*?)}\s+)?(\/)?-->/g;
   function Block(blockName, attrs, innerBlocks, innerHTML, innerContent) {
     return {
       blockName,

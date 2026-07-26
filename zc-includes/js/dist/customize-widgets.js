@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).customizeWidgets = (() => {
+var zc;
+(zc ||= {}).customizeWidgets = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,77 +34,77 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/block-library
   var require_block_library = __commonJS({
     "package-external:@zelocorecms/block-library"(exports, module) {
-      module.exports = window.wp.blockLibrary;
+      module.exports = window.zc.blockLibrary;
     }
   });
 
   // package-external:@zelocorecms/widgets
   var require_widgets = __commonJS({
     "package-external:@zelocorecms/widgets"(exports, module) {
-      module.exports = window.wp.widgets;
+      module.exports = window.zc.widgets;
     }
   });
 
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/preferences
   var require_preferences = __commonJS({
     "package-external:@zelocorecms/preferences"(exports, module) {
-      module.exports = window.wp.preferences;
+      module.exports = window.zc.preferences;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
@@ -118,35 +118,35 @@ var wp;
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/media-utils
   var require_media_utils = __commonJS({
     "package-external:@zelocorecms/media-utils"(exports, module) {
-      module.exports = window.wp.mediaUtils;
+      module.exports = window.zc.mediaUtils;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
@@ -209,21 +209,21 @@ var wp;
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
@@ -1755,7 +1755,7 @@ var wp;
   // packages/customize-widgets/build-module/controls/inspector-section.mjs
   function getInspectorSection() {
     const {
-      wp: { customize }
+      zc: { customize }
     } = window;
     return class InspectorSection extends customize.Section {
       constructor(id, options) {
@@ -1826,7 +1826,7 @@ var wp;
   var getInspectorSectionId = (sidebarId) => `widgets-inspector-${sidebarId}`;
   function getSidebarSection() {
     const {
-      wp: { customize }
+      zc: { customize }
     } = window;
     const reduceMotionMediaQuery = window.matchMedia(
       "(prefers-reduced-motion: reduce)"
@@ -1905,7 +1905,7 @@ var wp;
   var import_data15 = __toESM(require_data(), 1);
 
   // packages/customize-widgets/build-module/components/sidebar-block-editor/sidebar-adapter.mjs
-  var { wp } = window;
+  var { zc } = window;
   function parseWidgetId(widgetId) {
     const matches = widgetId.match(/^(.+)-(\d+)$/);
     if (matches) {
@@ -2022,7 +2022,7 @@ var wp;
       this._emit(prevWidgets, this.getWidgets());
     }
     _createWidget(widget) {
-      const widgetModel = wp.customize.Widgets.availableWidgets.findWhere({
+      const widgetModel = zc.customize.Widgets.availableWidgets.findWhere({
         id_base: widget.idBase
       });
       let number = widget.number;
@@ -2035,7 +2035,7 @@ var wp;
       }
       const settingId = number ? `widget_${widget.idBase}[${number}]` : `widget_${widget.idBase}`;
       const settingArgs = {
-        transport: wp.customize.Widgets.data.selectiveRefreshableWidgets[widgetModel.get("id_base")] ? "postMessage" : "refresh",
+        transport: zc.customize.Widgets.data.selectiveRefreshableWidgets[widgetModel.get("id_base")] ? "postMessage" : "refresh",
         previewer: this.setting.previewer
       };
       const setting = this.api.create(
@@ -2165,7 +2165,7 @@ var wp;
   var import_data14 = __toESM(require_data(), 1);
   function getInserterOuterSection() {
     const {
-      wp: { customize }
+      zc: { customize }
     } = window;
     const OuterSection = customize.OuterSection;
     customize.OuterSection = class extends OuterSection {
@@ -2252,7 +2252,7 @@ var wp;
   var getInserterId = (controlId) => `widgets-inserter-${controlId}`;
   function getSidebarControl() {
     const {
-      wp: { customize }
+      zc: { customize }
     } = window;
     return class SidebarControl extends customize.Control {
       constructor(...args) {
@@ -2381,7 +2381,7 @@ var wp;
   var import_compose5 = __toESM(require_compose(), 1);
   var import_hooks4 = __toESM(require_hooks(), 1);
   var import_jsx_runtime23 = __toESM(require_jsx_runtime(), 1);
-  var { wp: wp2 } = window;
+  var { zc: wp2 } = window;
   var withWideWidgetDisplay = (0, import_compose5.createHigherOrderComponent)(
     (BlockEdit) => (props) => {
       const { idBase } = props.attributes;
@@ -2400,7 +2400,7 @@ var wp;
 
   // packages/customize-widgets/build-module/index.mjs
   var import_jsx_runtime24 = __toESM(require_jsx_runtime(), 1);
-  var { wp: wp3 } = window;
+  var { zc: wp3 } = window;
   var DISABLED_BLOCKS = [
     "core/more",
     "core/block",

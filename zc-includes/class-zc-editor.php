@@ -979,9 +979,9 @@ final class _ZC_Editors {
 
 		?>
 		<script>
-		window.wp = window.wp || {};
-		window.wp.editor = window.wp.editor || {};
-		window.wp.editor.getDefaultSettings = function() {
+		window.zc = window.zc || {};
+		window.zc.editor = window.zc.editor || {};
+		window.zc.editor.getDefaultSettings = function() {
 			return {
 				tinymce: <?php echo $settings; ?>,
 				quicktags: {

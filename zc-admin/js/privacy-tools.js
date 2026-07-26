@@ -6,7 +6,7 @@
 
 // Privacy request action handling.
 jQuery( function( $ ) {
-	var __ = wp.i18n.__,
+	var __ = zc.i18n.__,
 		copiedNoticeTimeout;
 
 	function setActionState( $action, state ) {
@@ -314,7 +314,7 @@ jQuery( function( $ ) {
 
 					// Display and speak notice to indicate action complete.
 					copiedNotice.addClass( 'visible' );
-					wp.a11y.speak( __( 'The suggested policy text has been copied to your clipboard.' ) );
+					zc.a11y.speak( __( 'The suggested policy text has been copied to your clipboard.' ) );
 
 					// Delay notice dismissal.
 					copiedNoticeTimeout = setTimeout( function() {

@@ -1002,7 +1002,7 @@ function validate_theme_requirements( $stylesheet ) {
 	/**
 	 * Filters the theme requirement validation response.
 	 *
-	 * If a theme fails due to a Core-provided validation (incompatible WP, PHP versions), this
+	 * If a theme fails due to a Core-provided validation (incompatible ZC, PHP versions), this
 	 * filter will not fire. A ZC_Error response will already be returned.
 	 *
 	 * This filter is intended to add additional validation steps by site administrators.
@@ -2439,7 +2439,7 @@ function get_theme_starter_content() {
 				'post_type'    => 'page',
 				'post_title'   => _x( 'Home', 'Theme starter content' ),
 				'post_content' => sprintf(
-					"<!-- wp:paragraph -->\n<p>%s</p>\n<!-- /wp:paragraph -->",
+					"<!-- zc:paragraph -->\n<p>%s</p>\n<!-- /zc:paragraph -->",
 					_x( 'Welcome to your site! This is your homepage, which is what most visitors will see when they come to your site for the first time.', 'Theme starter content' )
 				),
 			),
@@ -2447,7 +2447,7 @@ function get_theme_starter_content() {
 				'post_type'    => 'page',
 				'post_title'   => _x( 'About', 'Theme starter content' ),
 				'post_content' => sprintf(
-					"<!-- wp:paragraph -->\n<p>%s</p>\n<!-- /wp:paragraph -->",
+					"<!-- zc:paragraph -->\n<p>%s</p>\n<!-- /zc:paragraph -->",
 					_x( 'You might be an artist who would like to introduce yourself and your work here or maybe you are a business with a mission to describe.', 'Theme starter content' )
 				),
 			),
@@ -2455,7 +2455,7 @@ function get_theme_starter_content() {
 				'post_type'    => 'page',
 				'post_title'   => _x( 'Contact', 'Theme starter content' ),
 				'post_content' => sprintf(
-					"<!-- wp:paragraph -->\n<p>%s</p>\n<!-- /wp:paragraph -->",
+					"<!-- zc:paragraph -->\n<p>%s</p>\n<!-- /zc:paragraph -->",
 					_x( 'This is a page with some basic contact information, such as an address and phone number. You might also try a plugin to add a contact form.', 'Theme starter content' )
 				),
 			),
@@ -2472,7 +2472,7 @@ function get_theme_starter_content() {
 				'post_type'    => 'page',
 				'post_title'   => _x( 'A homepage section', 'Theme starter content' ),
 				'post_content' => sprintf(
-					"<!-- wp:paragraph -->\n<p>%s</p>\n<!-- /wp:paragraph -->",
+					"<!-- zc:paragraph -->\n<p>%s</p>\n<!-- /zc:paragraph -->",
 					_x( 'This is an example of a homepage section. Homepage sections can be any page other than the homepage itself, including the page that shows your latest blog posts.', 'Theme starter content' )
 				),
 			),
@@ -3465,7 +3465,7 @@ function _delete_attachment_theme_mod( $id ) {
 }
 
 /**
- * Checks if a theme has been changed and runs 'after_switch_theme' hook on the next WP load.
+ * Checks if a theme has been changed and runs 'after_switch_theme' hook on the next ZC load.
  *
  * See {@see 'after_switch_theme'}.
  *
@@ -3486,7 +3486,7 @@ function check_theme_switched() {
 
 		if ( $old_theme->exists() ) {
 			/**
-			 * Fires on the next WP load after the theme has been switched.
+			 * Fires on the next ZC load after the theme has been switched.
 			 *
 			 * The parameters differ according to whether the old theme exists or not.
 			 * If the old theme is missing, the old name will instead be the slug
@@ -3598,7 +3598,7 @@ function _zc_customize_include() {
 	 * Note that settings must be previewed even outside the customizer preview
 	 * and also in the customizer pane itself. This is to enable loading an existing
 	 * changeset into the customizer. Previewing the settings only has to be prevented
-	 * here in the case of a customize_save action because this will cause WP to think
+	 * here in the case of a customize_save action because this will cause ZC to think
 	 * there is nothing changed that needs to be saved.
 	 */
 	$is_customize_save_action = (
@@ -3878,7 +3878,7 @@ function _zc_keep_alive_customize_changeset_dependent_auto_drafts( $new_status, 
 	 * Actually, in lieu of keeping alive, trash any customization drafts here if the changeset itself is
 	 * getting trashed. This is needed because when a changeset transitions to a draft, then any of the
 	 * dependent auto-draft post/page stubs will also get transitioned to customization drafts which
-	 * are then visible in the WP Admin. We cannot wait for the deletion of the changeset in which
+	 * are then visible in the ZC Admin. We cannot wait for the deletion of the changeset in which
 	 * _zc_delete_customize_changeset_dependent_auto_drafts() will be called, since they need to be
 	 * trashed to remove from visibility immediately.
 	 */

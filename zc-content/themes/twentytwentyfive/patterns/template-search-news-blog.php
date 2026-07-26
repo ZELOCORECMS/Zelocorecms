@@ -12,28 +12,28 @@
  */
 
 ?>
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- zc:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","layout":{"type":"constrained"}} -->
+<!-- zc:group {"tagName":"main","layout":{"type":"constrained"}} -->
 <main class="zc-block-group">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:spacer {"height":"var:preset|spacing|80"} -->
+		<!-- zc:spacer {"height":"var:preset|spacing|80"} -->
 		<div style="height:var(--zc--preset--spacing--80)" aria-hidden="true" class="zc-block-spacer"></div>
-		<!-- /wp:spacer -->
-		<!-- wp:query-title {"type":"search"} /-->
-		<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
-		<!-- wp:spacer {"height":"var:preset|spacing|40"} -->
+		<!-- /zc:spacer -->
+		<!-- zc:query-title {"type":"search"} /-->
+		<!-- zc:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+		<!-- zc:spacer {"height":"var:preset|spacing|40"} -->
 		<div style="height:var(--zc--preset--spacing--40)" aria-hidden="true" class="zc-block-spacer"></div>
-		<!-- /wp:spacer -->
+		<!-- /zc:spacer -->
 	</div>
-	<!-- /wp:group -->
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- /zc:group -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop-news-blog"} /-->
+		<!-- zc:pattern {"slug":"twentytwentyfive/template-query-loop-news-blog"} /-->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </main>
-<!-- /wp:group -->
+<!-- /zc:group -->
 
-<!-- wp:template-part {"slug":"footer-newsletter"} /-->
+<!-- zc:template-part {"slug":"footer-newsletter"} /-->

@@ -1312,7 +1312,7 @@ function zc_edit_posts_query( $q = false ) {
 		$query['post__in'] = (array) get_option( 'sticky_posts' );
 	}
 
-	wp( $query );
+	zc( $query );
 
 	return $avail_post_stati;
 }
@@ -1400,7 +1400,7 @@ function zc_edit_attachments_query_vars( $q = false ) {
  * }
  */
 function zc_edit_attachments_query( $q = false ) {
-	wp( zc_edit_attachments_query_vars( $q ) );
+	zc( zc_edit_attachments_query_vars( $q ) );
 
 	$post_mime_types       = get_post_mime_types();
 	$avail_post_mime_types = get_available_post_mime_types( 'attachment' );
@@ -2445,7 +2445,7 @@ function the_block_editor_meta_boxes() {
 	 * our editor instance.
 	 */
 	$script = 'window._wpLoadBlockEditor.then( function() {
-		wp.data.dispatch( \'core/edit-post\' ).setAvailableMetaBoxesPerLocation( ' . zc_json_encode( $meta_boxes_per_location, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ' );
+		zc.data.dispatch( \'core/edit-post\' ).setAvailableMetaBoxesPerLocation( ' . zc_json_encode( $meta_boxes_per_location, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ' );
 	} );';
 
 	zc_add_inline_script( 'zc-edit-post', $script );
@@ -2512,8 +2512,8 @@ function the_block_editor_meta_boxes() {
 
 			if ( nonces ) {
 				if ( nonces.replace ) {
-					if ( nonces.replace.metabox_loader_nonce && window._wpMetaBoxUrl && wp.url ) {
-						window._wpMetaBoxUrl= wp.url.addQueryArgs( window._wpMetaBoxUrl, { 'meta-box-loader-nonce': nonces.replace.metabox_loader_nonce } );
+					if ( nonces.replace.metabox_loader_nonce && window._wpMetaBoxUrl && zc.url ) {
+						window._wpMetaBoxUrl= zc.url.addQueryArgs( window._wpMetaBoxUrl, { 'meta-box-loader-nonce': nonces.replace.metabox_loader_nonce } );
 					}
 
 					if ( nonces.replace._wpnonce ) {

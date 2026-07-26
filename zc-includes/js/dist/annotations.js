@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).annotations = (() => {
+var zc;
+(zc ||= {}).annotations = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,28 +34,28 @@ var wp;
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 

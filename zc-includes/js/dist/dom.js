@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).dom = (() => {
+var zc;
+(zc ||= {}).dom = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,7 +35,7 @@ var wp;
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
@@ -640,7 +640,7 @@ var wp;
   // packages/dom/build-module/dom/is-number-input.mjs
   var import_deprecated = __toESM(require_deprecated(), 1);
   function isNumberInput(node) {
-    (0, import_deprecated.default)("wp.dom.isNumberInput", {
+    (0, import_deprecated.default)("zc.dom.isNumberInput", {
       since: "6.1",
       version: "6.5"
     });

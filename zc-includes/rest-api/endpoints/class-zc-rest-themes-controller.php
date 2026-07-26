@@ -28,7 +28,7 @@ class ZC_REST_Themes_Controller extends ZC_REST_Controller {
 	 * @since 5.0.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'themes';
 	}
 
@@ -414,7 +414,7 @@ class ZC_REST_Themes_Controller extends ZC_REST_Controller {
 
 		if ( $id ) {
 			$links['https://api.w.org/user-global-styles'] = array(
-				'href' => rest_url( 'wp/v2/global-styles/' . $id ),
+				'href' => rest_url( 'zc/v2/global-styles/' . $id ),
 			);
 		}
 

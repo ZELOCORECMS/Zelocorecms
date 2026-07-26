@@ -215,14 +215,14 @@ class ZC_Widget_Custom_HTML extends ZC_Widget {
 		);
 
 		zc_enqueue_script( 'custom-html-widgets' );
-		zc_add_inline_script( 'custom-html-widgets', sprintf( 'wp.customHtmlWidgets.idBases.push( %s );', zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
+		zc_add_inline_script( 'custom-html-widgets', sprintf( 'zc.customHtmlWidgets.idBases.push( %s );', zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
 
 		if ( empty( $settings ) ) {
 			$settings = array(
 				'disabled' => true,
 			);
 		}
-		zc_add_inline_script( 'custom-html-widgets', sprintf( 'wp.customHtmlWidgets.init( %s );', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ), 'after' );
+		zc_add_inline_script( 'custom-html-widgets', sprintf( 'zc.customHtmlWidgets.init( %s );', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ), 'after' );
 
 		$l10n = array(
 			'errorNotice' => array(
@@ -233,7 +233,7 @@ class ZC_Widget_Custom_HTML extends ZC_Widget {
 				// @todo This is lacking, as some languages have a dedicated dual form. For proper handling of plurals in JS, see #20491.
 			),
 		);
-		zc_add_inline_script( 'custom-html-widgets', sprintf( 'jQuery.extend( wp.customHtmlWidgets.l10n, %s );', zc_json_encode( $l10n, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ), 'after' );
+		zc_add_inline_script( 'custom-html-widgets', sprintf( 'jQuery.extend( zc.customHtmlWidgets.l10n, %s );', zc_json_encode( $l10n, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ), 'after' );
 	}
 
 	/**

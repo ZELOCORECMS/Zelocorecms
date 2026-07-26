@@ -53,7 +53,7 @@ function _zc_post_revision_fields( $post = array(), $deprecated = false ) {
 	 */
 	$fields = apply_filters( '_zc_post_revision_fields', $fields, $post );
 
-	// WP uses these internally either in versioning or elsewhere - they cannot be versioned.
+	// ZC uses these internally either in versioning or elsewhere - they cannot be versioned.
 	foreach ( array( 'ID', 'post_name', 'post_parent', 'post_date', 'post_date_gmt', 'post_status', 'post_type', 'comment_count', 'post_author' ) as $protect ) {
 		unset( $fields[ $protect ] );
 	}

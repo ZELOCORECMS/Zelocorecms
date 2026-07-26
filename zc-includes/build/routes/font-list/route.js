@@ -27,7 +27,7 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/i18n
 var require_i18n = __commonJS({
   "package-external:@zelocorecms/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
+    module.exports = window.zc.i18n;
   }
 });
 

@@ -19,9 +19,9 @@ $block_editor_context = new ZC_Block_Editor_Context( array( 'name' => 'core/edit
 
 $preload_paths = array(
 	array( rest_get_route_for_post_type_items( 'attachment' ), 'OPTIONS' ),
-	'/wp/v2/widget-types?context=edit&per_page=-1',
-	'/wp/v2/sidebars?context=edit&per_page=-1',
-	'/wp/v2/widgets?context=edit&per_page=-1&_embed=about',
+	'/zc/v2/widget-types?context=edit&per_page=-1',
+	'/zc/v2/sidebars?context=edit&per_page=-1',
+	'/zc/v2/widgets?context=edit&per_page=-1&_embed=about',
 );
 block_editor_rest_api_preload( $preload_paths, $block_editor_context );
 
@@ -32,14 +32,14 @@ $editor_settings = get_block_editor_settings(
 
 // The widgets editor does not support the Block Directory, so don't load any of
 // its assets. This also prevents 'zc-editor' from being enqueued which we
-// cannot load in the widgets screen because many widget scripts rely on `wp.editor`.
+// cannot load in the widgets screen because many widget scripts rely on `zc.editor`.
 remove_action( 'enqueue_block_editor_assets', 'zc_enqueue_editor_block_directory_assets' );
 
 zc_add_inline_script(
 	'zc-edit-widgets',
 	sprintf(
-		'wp.domReady( function() {
-			wp.editWidgets.initialize( "widgets-editor", %s );
+		'zc.domReady( function() {
+			zc.editWidgets.initialize( "widgets-editor", %s );
 		} );',
 		zc_json_encode( $editor_settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 	)
@@ -48,7 +48,7 @@ zc_add_inline_script(
 // Preload server-registered block schemas.
 zc_add_inline_script(
 	'zc-blocks',
-	'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
+	'zc.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
 );
 
 // Preload server-registered block bindings sources.
@@ -62,7 +62,7 @@ if ( ! empty( $registered_sources ) ) {
 			'usesContext' => $source->uses_context,
 		);
 	}
-	$script = sprintf( 'for ( const source of %s ) { wp.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
+	$script = sprintf( 'for ( const source of %s ) { zc.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
 	zc_add_inline_script(
 		'zc-blocks',
 		$script
@@ -71,7 +71,7 @@ if ( ! empty( $registered_sources ) ) {
 
 zc_add_inline_script(
 	'zc-blocks',
-	sprintf( 'wp.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $block_editor_context ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
+	sprintf( 'zc.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $block_editor_context ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
 	'after'
 );
 

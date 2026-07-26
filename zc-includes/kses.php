@@ -1624,7 +1624,7 @@ function zc_kses_hair( $attr, $allowed_protocols ) {
 	$attributes = array();
 	$uris       = zc_kses_uri_attributes();
 
-	$processor = new ZC_HTML_Tag_Processor( "<wp {$attr}>" );
+	$processor = new ZC_HTML_Tag_Processor( "<zc {$attr}>" );
 	$processor->next_token();
 
 	$attribute_names = $processor->get_attribute_names_with_prefix( '' );

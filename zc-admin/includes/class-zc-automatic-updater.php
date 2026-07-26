@@ -965,7 +965,7 @@ class ZC_Automatic_Updater {
 				return;
 		}
 
-		// If the auto-update is not to the latest version, say that the current version of WP is available instead.
+		// If the auto-update is not to the latest version, say that the current version of ZC is available instead.
 		$version = 'success' === $type ? $core_update->current : $next_user_core_update->current;
 		$subject = sprintf( $subject, zc_specialchars_decode( get_option( 'blogname' ), ENT_QUOTES ), $version );
 

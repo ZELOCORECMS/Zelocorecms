@@ -16,8 +16,8 @@
 
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfive/hero-podcast"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/heading-and-paragraph-with-image"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/logos"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/grid-videos"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/hero-podcast"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/heading-and-paragraph-with-image"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/logos"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/grid-videos"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->

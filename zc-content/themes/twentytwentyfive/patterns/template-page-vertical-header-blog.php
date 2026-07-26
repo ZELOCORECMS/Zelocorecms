@@ -11,53 +11,53 @@
  */
 
 ?>
-<!-- wp:columns {"isStackedOnMobile":false,"style":{"spacing":{"padding":{"right":"0","left":"0","top":"0","bottom":"0"},"blockGap":{"left":"0"}}}} -->
+<!-- zc:columns {"isStackedOnMobile":false,"style":{"spacing":{"padding":{"right":"0","left":"0","top":"0","bottom":"0"},"blockGap":{"left":"0"}}}} -->
 <div class="zc-block-columns is-not-stacked-on-mobile" style="padding-top:0;padding-right:0;padding-bottom:0;padding-left:0">
-	<!-- wp:column {"width":"8rem"} -->
+	<!-- zc:column {"width":"8rem"} -->
 	<div class="zc-block-column" style="flex-basis:8rem">
-		<!-- wp:template-part {"slug":"vertical-header"} /-->
+		<!-- zc:template-part {"slug":"vertical-header"} /-->
 	</div>
-	<!-- /wp:column -->
-	<!-- wp:column {"width":"90%","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|50","left":"0","right":"0"}}},"layout":{"type":"default"}} -->
+	<!-- /zc:column -->
+	<!-- zc:column {"width":"90%","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|50","left":"0","right":"0"}}},"layout":{"type":"default"}} -->
 	<div class="zc-block-column" style="padding-right:0;padding-bottom:var(--zc--preset--spacing--50);padding-left:0;flex-basis:90%">
-		<!-- wp:group {"tagName":"main","layout":{"type":"default"}} -->
+		<!-- zc:group {"tagName":"main","layout":{"type":"default"}} -->
 		<main class="zc-block-group">
-			<!-- wp:post-featured-image {"aspectRatio":"16/9","height":""} /-->
-			<!-- wp:group {"style":{"spacing":{"padding":{"right":"var:preset|spacing|50","left":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
+			<!-- zc:post-featured-image {"aspectRatio":"16/9","height":""} /-->
+			<!-- zc:group {"style":{"spacing":{"padding":{"right":"var:preset|spacing|50","left":"var:preset|spacing|50"}}},"layout":{"type":"default"}} -->
 			<div class="zc-block-group" style="padding-right:var(--zc--preset--spacing--50);padding-left:var(--zc--preset--spacing--50)">
-				<!-- wp:spacer {"height":"var:preset|spacing|50"} -->
+				<!-- zc:spacer {"height":"var:preset|spacing|50"} -->
 				<div style="height:var(--zc--preset--spacing--50)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
-				<!-- wp:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
+				<!-- /zc:spacer -->
+				<!-- zc:group {"layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between","verticalAlignment":"top"}} -->
 				<div class="zc-block-group">
-					<!-- wp:post-title {"level":1,"style":{"layout":{"selfStretch":"fixed","flexSize":"70vw"}},"fontSize":"xx-large"} /-->
+					<!-- zc:post-title {"level":1,"style":{"layout":{"selfStretch":"fixed","flexSize":"70vw"}},"fontSize":"xx-large"} /-->
 				</div>
-				<!-- /wp:group -->
-				<!-- wp:spacer {"height":"var:preset|spacing|30"} -->
+				<!-- /zc:group -->
+				<!-- zc:spacer {"height":"var:preset|spacing|30"} -->
 				<div style="height:var(--zc--preset--spacing--30)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
+				<!-- /zc:spacer -->
 
-				<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
+				<!-- zc:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|70"}}}} -->
 				<div class="zc-block-columns">
-					<!-- wp:column {"width":"75%","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|60"}}}} -->
+					<!-- zc:column {"width":"75%","style":{"spacing":{"padding":{"bottom":"var:preset|spacing|60"}}}} -->
 					<div class="zc-block-column" style="padding-bottom:var(--zc--preset--spacing--60);flex-basis:75%">
-						<!-- wp:post-content {"layout":{"type":"default"}} /-->
+						<!-- zc:post-content {"layout":{"type":"default"}} /-->
 					</div>
-					<!-- /wp:column -->
-					<!-- wp:column {"width":"25%"} -->
+					<!-- /zc:column -->
+					<!-- zc:column {"width":"25%"} -->
 					<div class="zc-block-column" style="flex-basis:25%">
-					<!-- wp:template-part {"slug":"sidebar"} /-->
+					<!-- zc:template-part {"slug":"sidebar"} /-->
 					</div>
-					<!-- /wp:column -->
+					<!-- /zc:column -->
 				</div>
-				<!-- /wp:columns -->
+				<!-- /zc:columns -->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</main>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 	</div>
-	<!-- /wp:column -->
+	<!-- /zc:column -->
 </div>
-<!-- /wp:columns -->
+<!-- /zc:columns -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- zc:template-part {"slug":"footer"} /-->

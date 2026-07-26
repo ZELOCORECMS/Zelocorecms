@@ -299,7 +299,7 @@ function _load_remote_block_patterns( $deprecated = null ) {
 	$should_load_remote = apply_filters( 'should_load_remote_block_patterns', true );
 
 	if ( $supports_core_patterns && $should_load_remote ) {
-		$request         = new ZC_REST_Request( 'GET', '/wp/v2/pattern-directory/patterns' );
+		$request         = new ZC_REST_Request( 'GET', '/zc/v2/pattern-directory/patterns' );
 		$core_keyword_id = 11; // 11 is the ID for "core".
 		$request->set_param( 'keyword', $core_keyword_id );
 		$response = rest_do_request( $request );
@@ -335,7 +335,7 @@ function _load_remote_featured_patterns() {
 		return;
 	}
 
-	$request         = new ZC_REST_Request( 'GET', '/wp/v2/pattern-directory/patterns' );
+	$request         = new ZC_REST_Request( 'GET', '/zc/v2/pattern-directory/patterns' );
 	$featured_cat_id = 26; // This is the `Featured` category id from pattern directory.
 	$request->set_param( 'category', $featured_cat_id );
 	$response = rest_do_request( $request );
@@ -381,7 +381,7 @@ function _register_remote_theme_patterns() {
 		return;
 	}
 
-	$request         = new ZC_REST_Request( 'GET', '/wp/v2/pattern-directory/patterns' );
+	$request         = new ZC_REST_Request( 'GET', '/zc/v2/pattern-directory/patterns' );
 	$request['slug'] = $pattern_settings;
 	$response        = rest_do_request( $request );
 	if ( $response->is_error() ) {
@@ -464,10 +464,10 @@ function _register_theme_block_patterns() {
 			$pattern_data['filePath'] = $file_path;
 
 			// Translate the pattern metadata.
-			// phpcs:ignore ZelocoreCMS.WP.I18n.NonSingularStringLiteralText,ZelocoreCMS.WP.I18n.NonSingularStringLiteralDomain,ZelocoreCMS.WP.I18n.LowLevelTranslationFunction
+			// phpcs:ignore ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralDomain,ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction
 			$pattern_data['title'] = translate_with_gettext_context( $pattern_data['title'], 'Pattern title', $text_domain );
 			if ( ! empty( $pattern_data['description'] ) ) {
-				// phpcs:ignore ZelocoreCMS.WP.I18n.NonSingularStringLiteralText,ZelocoreCMS.WP.I18n.NonSingularStringLiteralDomain,ZelocoreCMS.WP.I18n.LowLevelTranslationFunction
+				// phpcs:ignore ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralDomain,ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction
 				$pattern_data['description'] = translate_with_gettext_context( $pattern_data['description'], 'Pattern description', $text_domain );
 			}
 

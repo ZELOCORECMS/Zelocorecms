@@ -8,12 +8,12 @@
  * Expose a public API that allows the customizer to be
  * loaded on any page.
  *
- * @namespace wp
+ * @namespace zc
  */
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 (function( exports, $ ){
-	var api = wp.customize,
+	var api = zc.customize,
 		Loader;
 
 	$.extend( $.support, {
@@ -29,12 +29,12 @@ window.wp = window.wp || {};
 	 *
 	 *     e.g. <a class="load-customize" href="<?php echo zc_customize_url(); ?>">Open Customizer</a>
 	 *
-	 * @memberOf wp.customize
+	 * @memberOf zc.customize
 	 *
 	 * @class
-	 * @augments wp.customize.Events
+	 * @augments zc.customize.Events
 	 */
-	Loader = $.extend( {}, api.Events,/** @lends wp.customize.Loader.prototype */{
+	Loader = $.extend( {}, api.Events,/** @lends zc.customize.Loader.prototype */{
 		/**
 		 * Setup the Loader; triggered on document#ready.
 		 */
@@ -286,6 +286,6 @@ window.wp = window.wp || {};
 		Loader.initialize();
 	});
 
-	// Expose the API publicly on window.wp.customize.Loader.
+	// Expose the API publicly on window.zc.customize.Loader.
 	api.Loader = Loader;
-})( wp, jQuery );
+})( zc, jQuery );

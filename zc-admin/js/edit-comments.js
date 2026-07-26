@@ -14,7 +14,7 @@ var getCount, updateCount, updateCountText, updatePending, updateApproved,
 	updateHtmlTitle, updateDashboardText, updateInModerationText, adminTitle = document.title,
 	isDashboard = $('#dashboard_right_now').length,
 	titleDiv, titleRegEx,
-	__ = wp.i18n.__, _x = wp.i18n._x;
+	__ = zc.i18n.__, _x = zc.i18n._x;
 
 	/**
 	 * Extracts a number from the content of a jQuery element.
@@ -1202,7 +1202,7 @@ window.commentReply = {
 		if ( er ) {
 			$errorNotice.removeClass( 'hidden' );
 			$error.html( er );
-			wp.a11y.speak( er );
+			zc.a11y.speak( er );
 		}
 	},
 

@@ -153,7 +153,7 @@ function add_rewrite_rule( $regex, $query, $after = 'bottom' ) {
  * @since 2.1.0
  *
  * @global ZC_Rewrite $zc_rewrite ZelocoreCMS rewrite component.
- * @global WP         $zc         Current ZelocoreCMS environment instance.
+ * @global ZC         $zc         Current ZelocoreCMS environment instance.
  *
  * @param string $tag   Name of the new rewrite tag.
  * @param string $regex Regular expression to substitute the tag for in rewrite rules.
@@ -375,7 +375,7 @@ function _zc_filter_taxonomy_base( $base ) {
  * @since 4.3.0
  *
  * @param array $query_vars Optional. Query variables for setting up the loop, as determined in
- *                          WP::parse_request(). Default empty array.
+ *                          ZC::parse_request(). Default empty array.
  * @return array Returns the original array of query vars, with date/post conflicts resolved.
  */
 function zc_resolve_numeric_slug_conflicts( $query_vars = array() ) {
@@ -482,7 +482,7 @@ function zc_resolve_numeric_slug_conflicts( $query_vars = array() ) {
  * @since 1.0.0
  *
  * @global ZC_Rewrite $zc_rewrite ZelocoreCMS rewrite component.
- * @global WP         $zc         Current ZelocoreCMS environment instance.
+ * @global ZC         $zc         Current ZelocoreCMS environment instance.
  *
  * @param string $url Permalink to check.
  * @return int Post ID, or 0 on failure.

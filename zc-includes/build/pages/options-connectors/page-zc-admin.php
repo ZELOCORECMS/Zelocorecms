@@ -7,7 +7,7 @@
  * This version integrates with the standard ZelocoreCMS admin interface,
  * keeping the zc-admin sidebar and scripts/styles intact.
  *
- * @package wp
+ * @package zc
  */
 
 // Global storage for options-connectors routes and menu items
@@ -90,7 +90,7 @@ function zc_options_connectors_zc_admin_preload_data() {
 	// Please also change packages/core-data/src/entities.js when changing this.
 	$preload_paths = array(
 		'/?_fields=description,gmt_offset,home,image_sizes,image_size_threshold,image_output_formats,jpeg_interlaced,png_interlaced,gif_interlaced,name,site_icon,site_icon_url,site_logo,timezone_string,url,page_for_posts,page_on_front,show_on_front',
-		array( '/wp/v2/settings', 'OPTIONS' ),
+		array( '/zc/v2/settings', 'OPTIONS' ),
 	);
 
 	// Use rest_preload_api_request to gather the preloaded data
@@ -104,7 +104,7 @@ function zc_options_connectors_zc_admin_preload_data() {
 	zc_add_inline_script(
 		'zc-api-fetch',
 		sprintf(
-			'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
+			'zc.apiFetch.use( zc.apiFetch.createPreloadingMiddleware( %s ) );',
 			zc_json_encode( $preload_data )
 		),
 		'after'
@@ -160,7 +160,7 @@ function zc_options_connectors_zc_admin_enqueue_scripts( $hook_suffix ) {
 		 * zc-theme, etc.) have finished parsing and executing before the boot module
 		 * evaluates. Otherwise, a modulepreloaded @zelocorecms/boot can win the race
 		 * against the classic-script-printing pass on fast CDN-fronted hosts in
-		 * Chrome, evaluating before wp.theme.privateApis is defined and throwing
+		 * Chrome, evaluating before zc.theme.privateApis is defined and throwing
 		 * "Cannot unlock an undefined object". See <https://core.trac.zelocorecms.org/ticket/65103>.
 		 */
 		$init_js_function = <<<'JS'

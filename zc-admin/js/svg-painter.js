@@ -4,16 +4,16 @@
  * @output zc-admin/js/svg-painter.js
  */
 
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
-wp.svgPainter = ( function( $, window, document, undefined ) {
+zc.svgPainter = ( function( $, window, document, undefined ) {
 	'use strict';
 	var selector, painter,
 		colorscheme = {},
 		elements = [];
 
 	$( function() {
-		wp.svgPainter.init();
+		zc.svgPainter.init();
 	});
 
 	return {

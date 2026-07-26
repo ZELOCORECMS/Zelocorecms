@@ -2210,7 +2210,7 @@ class ZC_Site_Health {
 			$headers['Authorization'] = 'Basic ' . base64_encode( zc_unslash( $_SERVER['PHP_AUTH_USER'] ) . ':' . zc_unslash( $_SERVER['PHP_AUTH_PW'] ) );
 		}
 
-		$url = rest_url( 'wp/v2/types/post' );
+		$url = rest_url( 'zc/v2/types/post' );
 
 		// The context for this is editing with the new block editor.
 		$url = add_query_arg(
@@ -3503,7 +3503,7 @@ class ZC_Site_Health {
 			 * test in the AMP plugin. They were copied into the Performance Lab plugin's Site Health test before they
 			 * were merged into core.
 			 *
-			 * @link https://github.com/ampproject/amp-wp/pull/6849
+			 * @link https://github.com/ampproject/amp-zc/pull/6849
 			 * @link https://github.com/ZelocoreCMS/performance/pull/263
 			 * @link https://core.trac.zelocorecms.org/changeset/54043
 			 */
@@ -3617,7 +3617,7 @@ class ZC_Site_Health {
 
 		/*
 		 * Include basic auth in loopback requests. Note that this will only pass along basic auth when user is
-		 * initiating the test. If a site requires basic auth, the test will fail when it runs in WP Cron as part of
+		 * initiating the test. If a site requires basic auth, the test will fail when it runs in ZC Cron as part of
 		 * zc_site_health_scheduled_check. This logic is copied from ZC_Site_Health::can_perform_loopback().
 		 */
 		if ( isset( $_SERVER['PHP_AUTH_USER'] ) && isset( $_SERVER['PHP_AUTH_PW'] ) ) {

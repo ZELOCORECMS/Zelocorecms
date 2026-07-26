@@ -6,9 +6,9 @@
 		function noop () {}
 
 		// Set this here as zc-tinymce.js may be loaded too early.
-		var wp = window.wp;
+		var zc = window.zc;
 
-		if ( ! wp || ! wp.mce || ! wp.mce.views ) {
+		if ( ! zc || ! zc.mce || ! zc.mce.views ) {
 			return {
 				getView: noop
 			};
@@ -68,7 +68,7 @@
 			var node;
 
 			if ( ! event.selection ) {
-				wp.mce.views.unbind();
+				zc.mce.views.unbind();
 			}
 
 			if ( ! event.content ) {
@@ -91,12 +91,12 @@
 				}
 			}
 
-			event.content = wp.mce.views.setMarkers( event.content, editor );
+			event.content = zc.mce.views.setMarkers( event.content, editor );
 		} );
 
 		// Replace any new markers nodes with views.
 		editor.on( 'setcontent', function() {
-			wp.mce.views.render();
+			zc.mce.views.render();
 		} );
 
 		// Empty view nodes for easier processing.
@@ -184,7 +184,7 @@
 				var node = editor.selection.getNode();
 
 				if ( isView( node ) ) {
-					wp.mce.views.edit( editor, node );
+					zc.mce.views.edit( editor, node );
 				}
 			}
 		} );
@@ -200,8 +200,8 @@
 		editor.once( 'preinit', function() {
 			var toolbar;
 
-			if ( editor.wp && editor.wp._createToolbar ) {
-				toolbar = editor.wp._createToolbar( [
+			if ( editor.zc && editor.zc._createToolbar ) {
+				toolbar = editor.zc._createToolbar( [
 					'zc_view_edit',
 					'zc_view_remove'
 				] );
@@ -214,9 +214,9 @@
 			}
 		} );
 
-		editor.wp = editor.wp || {};
-		editor.wp.getView = noop;
-		editor.wp.setViewCursor = noop;
+		editor.zc = editor.zc || {};
+		editor.zc.getView = noop;
+		editor.zc.setViewCursor = noop;
 
 		return {
 			getView: noop

@@ -582,9 +582,9 @@ final class ZC_Post_Type {
 			$args['embeddable'] = $args['public'];
 		}
 
-		// If not set, default rest_namespace to wp/v2 if show_in_rest is true.
+		// If not set, default rest_namespace to zc/v2 if show_in_rest is true.
 		if ( false === $args['rest_namespace'] && ! empty( $args['show_in_rest'] ) ) {
-			$args['rest_namespace'] = 'wp/v2';
+			$args['rest_namespace'] = 'zc/v2';
 		}
 
 		// If not set, default to the setting for 'show_ui'.
@@ -706,7 +706,7 @@ final class ZC_Post_Type {
 	 * @since 4.6.0
 	 *
 	 * @global ZC_Rewrite $zc_rewrite ZelocoreCMS rewrite component.
-	 * @global WP         $zc         Current ZelocoreCMS environment instance.
+	 * @global ZC         $zc         Current ZelocoreCMS environment instance.
 	 */
 	public function add_rewrite_rules() {
 		global $zc_rewrite, $zc;
@@ -797,7 +797,7 @@ final class ZC_Post_Type {
 	 * @since 4.6.0
 	 *
 	 * @global ZC_Rewrite $zc_rewrite          ZelocoreCMS rewrite component.
-	 * @global WP         $zc                  Current ZelocoreCMS environment instance.
+	 * @global ZC         $zc                  Current ZelocoreCMS environment instance.
 	 * @global array      $post_type_meta_caps Used to remove meta capabilities.
 	 */
 	public function remove_rewrite_rules() {

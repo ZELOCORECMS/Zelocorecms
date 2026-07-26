@@ -341,7 +341,7 @@ When seeking help with this issue, you may be asked for some of the following in
 		$zc_version = get_bloginfo( 'version' );
 
 		$debug = array(
-			'wp'    => sprintf(
+			'zc'    => sprintf(
 				/* translators: %s: Current ZelocoreCMS version number. */
 				__( 'ZelocoreCMS version %s' ),
 				$zc_version

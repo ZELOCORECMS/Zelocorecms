@@ -881,7 +881,7 @@ function zc_generate_tag_cloud( $tags, $args = '' ) {
 		}
 	} elseif ( isset( $args['single_text'] ) && isset( $args['multiple_text'] ) ) {
 		// If no callback exists, look for the old-style single_text and multiple_text arguments.
-		// phpcs:ignore ZelocoreCMS.WP.I18n.NonSingularStringLiteralSingular,ZelocoreCMS.WP.I18n.NonSingularStringLiteralPlural
+		// phpcs:ignore ZelocoreCMS.ZC.I18n.NonSingularStringLiteralSingular,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralPlural
 		$translate_nooped_plural = _n_noop( $args['single_text'], $args['multiple_text'] );
 	} else {
 		// This is the default for when no callback, plural, or argument is passed in.

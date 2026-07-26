@@ -147,7 +147,7 @@ class ZC_Widget_Media_Gallery extends ZC_Widget_Media {
 		zc_add_inline_script(
 			$handle,
 			sprintf(
-				'wp.mediaWidgets.modelConstructors[ %s ].prototype.schema = %s;',
+				'zc.mediaWidgets.modelConstructors[ %s ].prototype.schema = %s;',
 				zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ),
 				zc_json_encode( $exported_schema, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 			)
@@ -157,8 +157,8 @@ class ZC_Widget_Media_Gallery extends ZC_Widget_Media {
 			$handle,
 			sprintf(
 				'
-					wp.mediaWidgets.controlConstructors[ %1$s ].prototype.mime_type = %2$s;
-					_.extend( wp.mediaWidgets.controlConstructors[ %1$s ].prototype.l10n, %3$s );
+					zc.mediaWidgets.controlConstructors[ %1$s ].prototype.mime_type = %2$s;
+					_.extend( zc.mediaWidgets.controlConstructors[ %1$s ].prototype.l10n, %3$s );
 				',
 				zc_json_encode( $this->id_base, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ),
 				zc_json_encode( $this->widget_options['mime_type'], JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ),

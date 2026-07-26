@@ -391,7 +391,7 @@ function copyAttachmentUploadURLClipboard() {
 			successElement.addClass( 'hidden' );
 		}, 3000 );
 		// Handle success audible feedback.
-		wp.a11y.speak( pluploadL10n.file_url_copied );
+		zc.a11y.speak( pluploadL10n.file_url_copied );
 	} );
 }
 

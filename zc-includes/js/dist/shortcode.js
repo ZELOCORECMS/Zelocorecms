@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).shortcode = (() => {
+var zc;
+(zc ||= {}).shortcode = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -292,4 +292,4 @@ var wp;
   var index_default = Shortcode;
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.shortcode === 'object' && wp.shortcode.default) { wp.shortcode = wp.shortcode.default; }
+if (typeof zc.shortcode === 'object' && zc.shortcode.default) { zc.shortcode = zc.shortcode.default; }

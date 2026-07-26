@@ -124,12 +124,12 @@
 				spinner.removeClass( 'is-active' );
 			}).done( function( x ) {
 				if ( ! x.success ) {
-					$( '#find-posts-response' ).text( wp.i18n.__( 'An error has occurred. Please reload the page and try again.' ) );
+					$( '#find-posts-response' ).text( zc.i18n.__( 'An error has occurred. Please reload the page and try again.' ) );
 				}
 
 				$( '#find-posts-response' ).html( x.data );
 			}).fail( function() {
-				$( '#find-posts-response' ).text( wp.i18n.__( 'An error has occurred. Please reload the page and try again.' ) );
+				$( '#find-posts-response' ).text( zc.i18n.__( 'An error has occurred. Please reload the page and try again.' ) );
 			});
 		}
 	};
@@ -148,10 +148,10 @@
 			previousSuccessElement = null;
 
 		// Opens a manage media frame into the grid.
-		if ( $mediaGridWrap.length && window.wp && window.wp.media ) {
+		if ( $mediaGridWrap.length && window.zc && window.zc.media ) {
 			settings = _wpMediaGridSettings;
 
-			var frame = window.wp.media({
+			var frame = window.zc.media({
 				frame: 'manage',
 				container: $mediaGridWrap,
 				library: settings.queryVars
@@ -244,7 +244,7 @@
 			previousSuccessElement = successElement;
 
 			// Handle success audible feedback.
-			wp.a11y.speak( wp.i18n.__( 'The file URL has been copied to your clipboard' ) );
+			zc.a11y.speak( zc.i18n.__( 'The file URL has been copied to your clipboard' ) );
 		} );
 	});
 })( jQuery );

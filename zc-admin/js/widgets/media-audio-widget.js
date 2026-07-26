@@ -11,10 +11,10 @@
 	/**
 	 * Custom audio details frame that removes the replace-audio state.
 	 *
-	 * @class    wp.mediaWidgets.controlConstructors~AudioDetailsMediaFrame
-	 * @augments wp.media.view.MediaFrame.AudioDetails
+	 * @class    zc.mediaWidgets.controlConstructors~AudioDetailsMediaFrame
+	 * @augments zc.media.view.MediaFrame.AudioDetails
 	 */
-	AudioDetailsMediaFrame = wp.media.view.MediaFrame.AudioDetails.extend(/** @lends wp.mediaWidgets.controlConstructors~AudioDetailsMediaFrame.prototype */{
+	AudioDetailsMediaFrame = zc.media.view.MediaFrame.AudioDetails.extend(/** @lends zc.mediaWidgets.controlConstructors~AudioDetailsMediaFrame.prototype */{
 
 		/**
 		 * Create the default states.
@@ -23,14 +23,14 @@
 		 */
 		createStates: function createStates() {
 			this.states.add([
-				new wp.media.controller.AudioDetails({
+				new zc.media.controller.AudioDetails({
 					media: this.media
 				}),
 
-				new wp.media.controller.MediaLibrary({
+				new zc.media.controller.MediaLibrary({
 					type: 'audio',
 					id: 'add-audio-source',
-					title: wp.media.view.l10n.audioAddSourceTitle,
+					title: zc.media.view.l10n.audioAddSourceTitle,
 					toolbar: 'add-audio-source',
 					media: this.media,
 					menu: false
@@ -44,8 +44,8 @@
 	 *
 	 * See ZC_Widget_Audio::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.modelConstructors.media_audio
-	 * @augments wp.mediaWidgets.MediaWidgetModel
+	 * @class    zc.mediaWidgets.modelConstructors.media_audio
+	 * @augments zc.mediaWidgets.MediaWidgetModel
 	 */
 	AudioWidgetModel = component.MediaWidgetModel.extend({});
 
@@ -54,10 +54,10 @@
 	 *
 	 * See ZC_Widget_Audio::enqueue_admin_scripts() for amending prototype from PHP exports.
 	 *
-	 * @class    wp.mediaWidgets.controlConstructors.media_audio
-	 * @augments wp.mediaWidgets.MediaWidgetControl
+	 * @class    zc.mediaWidgets.controlConstructors.media_audio
+	 * @augments zc.mediaWidgets.MediaWidgetControl
 	 */
-	AudioWidgetControl = component.MediaWidgetControl.extend(/** @lends wp.mediaWidgets.controlConstructors.media_audio.prototype */{
+	AudioWidgetControl = component.MediaWidgetControl.extend(/** @lends zc.mediaWidgets.controlConstructors.media_audio.prototype */{
 
 		/**
 		 * Show display settings.
@@ -94,7 +94,7 @@
 			}
 
 			previewContainer = control.$el.find( '.media-widget-preview' );
-			previewTemplate = wp.template( 'zc-media-widget-audio-preview' );
+			previewTemplate = zc.template( 'zc-media-widget-audio-preview' );
 
 			previewContainer.html( previewTemplate({
 				model: {
@@ -103,7 +103,7 @@
 				},
 				error: control.model.get( 'error' )
 			}));
-			wp.mediaelement.initialize();
+			zc.mediaelement.initialize();
 		},
 
 		/**
@@ -122,7 +122,7 @@
 				state: 'audio-details',
 				metadata: metadata
 			});
-			wp.media.frame = mediaFrame;
+			zc.media.frame = mediaFrame;
 			mediaFrame.$el.addClass( 'media-widget' );
 
 			updateCallback = function( mediaFrameProps ) {
@@ -151,4 +151,4 @@
 	component.controlConstructors.media_audio = AudioWidgetControl;
 	component.modelConstructors.media_audio = AudioWidgetModel;
 
-})( wp.mediaWidgets );
+})( zc.mediaWidgets );

@@ -69,56 +69,56 @@ class zc_xmlrpc_server extends IXR_Server {
 	public function __construct() {
 		$this->methods = array(
 			// ZelocoreCMS API.
-			'wp.getUsersBlogs'                 => 'this:zc_getUsersBlogs',
-			'wp.newPost'                       => 'this:zc_newPost',
-			'wp.editPost'                      => 'this:zc_editPost',
-			'wp.deletePost'                    => 'this:zc_deletePost',
-			'wp.getPost'                       => 'this:zc_getPost',
-			'wp.getPosts'                      => 'this:zc_getPosts',
-			'wp.newTerm'                       => 'this:zc_newTerm',
-			'wp.editTerm'                      => 'this:zc_editTerm',
-			'wp.deleteTerm'                    => 'this:zc_deleteTerm',
-			'wp.getTerm'                       => 'this:zc_getTerm',
-			'wp.getTerms'                      => 'this:zc_getTerms',
-			'wp.getTaxonomy'                   => 'this:zc_getTaxonomy',
-			'wp.getTaxonomies'                 => 'this:zc_getTaxonomies',
-			'wp.getUser'                       => 'this:zc_getUser',
-			'wp.getUsers'                      => 'this:zc_getUsers',
-			'wp.getProfile'                    => 'this:zc_getProfile',
-			'wp.editProfile'                   => 'this:zc_editProfile',
-			'wp.getPage'                       => 'this:zc_getPage',
-			'wp.getPages'                      => 'this:zc_getPages',
-			'wp.newPage'                       => 'this:zc_newPage',
-			'wp.deletePage'                    => 'this:zc_deletePage',
-			'wp.editPage'                      => 'this:zc_editPage',
-			'wp.getPageList'                   => 'this:zc_getPageList',
-			'wp.getAuthors'                    => 'this:zc_getAuthors',
-			'wp.getCategories'                 => 'this:mw_getCategories',     // Alias.
-			'wp.getTags'                       => 'this:zc_getTags',
-			'wp.newCategory'                   => 'this:zc_newCategory',
-			'wp.deleteCategory'                => 'this:zc_deleteCategory',
-			'wp.suggestCategories'             => 'this:zc_suggestCategories',
-			'wp.uploadFile'                    => 'this:mw_newMediaObject',    // Alias.
-			'wp.deleteFile'                    => 'this:zc_deletePost',        // Alias.
-			'wp.getCommentCount'               => 'this:zc_getCommentCount',
-			'wp.getPostStatusList'             => 'this:zc_getPostStatusList',
-			'wp.getPageStatusList'             => 'this:zc_getPageStatusList',
-			'wp.getPageTemplates'              => 'this:zc_getPageTemplates',
-			'wp.getOptions'                    => 'this:zc_getOptions',
-			'wp.setOptions'                    => 'this:zc_setOptions',
-			'wp.getComment'                    => 'this:zc_getComment',
-			'wp.getComments'                   => 'this:zc_getComments',
-			'wp.deleteComment'                 => 'this:zc_deleteComment',
-			'wp.editComment'                   => 'this:zc_editComment',
-			'wp.newComment'                    => 'this:zc_newComment',
-			'wp.getCommentStatusList'          => 'this:zc_getCommentStatusList',
-			'wp.getMediaItem'                  => 'this:zc_getMediaItem',
-			'wp.getMediaLibrary'               => 'this:zc_getMediaLibrary',
-			'wp.getPostFormats'                => 'this:zc_getPostFormats',
-			'wp.getPostType'                   => 'this:zc_getPostType',
-			'wp.getPostTypes'                  => 'this:zc_getPostTypes',
-			'wp.getRevisions'                  => 'this:zc_getRevisions',
-			'wp.restoreRevision'               => 'this:zc_restoreRevision',
+			'zc.getUsersBlogs'                 => 'this:zc_getUsersBlogs',
+			'zc.newPost'                       => 'this:zc_newPost',
+			'zc.editPost'                      => 'this:zc_editPost',
+			'zc.deletePost'                    => 'this:zc_deletePost',
+			'zc.getPost'                       => 'this:zc_getPost',
+			'zc.getPosts'                      => 'this:zc_getPosts',
+			'zc.newTerm'                       => 'this:zc_newTerm',
+			'zc.editTerm'                      => 'this:zc_editTerm',
+			'zc.deleteTerm'                    => 'this:zc_deleteTerm',
+			'zc.getTerm'                       => 'this:zc_getTerm',
+			'zc.getTerms'                      => 'this:zc_getTerms',
+			'zc.getTaxonomy'                   => 'this:zc_getTaxonomy',
+			'zc.getTaxonomies'                 => 'this:zc_getTaxonomies',
+			'zc.getUser'                       => 'this:zc_getUser',
+			'zc.getUsers'                      => 'this:zc_getUsers',
+			'zc.getProfile'                    => 'this:zc_getProfile',
+			'zc.editProfile'                   => 'this:zc_editProfile',
+			'zc.getPage'                       => 'this:zc_getPage',
+			'zc.getPages'                      => 'this:zc_getPages',
+			'zc.newPage'                       => 'this:zc_newPage',
+			'zc.deletePage'                    => 'this:zc_deletePage',
+			'zc.editPage'                      => 'this:zc_editPage',
+			'zc.getPageList'                   => 'this:zc_getPageList',
+			'zc.getAuthors'                    => 'this:zc_getAuthors',
+			'zc.getCategories'                 => 'this:mw_getCategories',     // Alias.
+			'zc.getTags'                       => 'this:zc_getTags',
+			'zc.newCategory'                   => 'this:zc_newCategory',
+			'zc.deleteCategory'                => 'this:zc_deleteCategory',
+			'zc.suggestCategories'             => 'this:zc_suggestCategories',
+			'zc.uploadFile'                    => 'this:mw_newMediaObject',    // Alias.
+			'zc.deleteFile'                    => 'this:zc_deletePost',        // Alias.
+			'zc.getCommentCount'               => 'this:zc_getCommentCount',
+			'zc.getPostStatusList'             => 'this:zc_getPostStatusList',
+			'zc.getPageStatusList'             => 'this:zc_getPageStatusList',
+			'zc.getPageTemplates'              => 'this:zc_getPageTemplates',
+			'zc.getOptions'                    => 'this:zc_getOptions',
+			'zc.setOptions'                    => 'this:zc_setOptions',
+			'zc.getComment'                    => 'this:zc_getComment',
+			'zc.getComments'                   => 'this:zc_getComments',
+			'zc.deleteComment'                 => 'this:zc_deleteComment',
+			'zc.editComment'                   => 'this:zc_editComment',
+			'zc.newComment'                    => 'this:zc_newComment',
+			'zc.getCommentStatusList'          => 'this:zc_getCommentStatusList',
+			'zc.getMediaItem'                  => 'this:zc_getMediaItem',
+			'zc.getMediaLibrary'               => 'this:zc_getMediaLibrary',
+			'zc.getPostFormats'                => 'this:zc_getPostFormats',
+			'zc.getPostType'                   => 'this:zc_getPostType',
+			'zc.getPostTypes'                  => 'this:zc_getPostTypes',
+			'zc.getRevisions'                  => 'this:zc_getRevisions',
+			'zc.restoreRevision'               => 'this:zc_restoreRevision',
 
 			// Blogger API.
 			'blogger.getUsersBlogs'            => 'this:blogger_getUsersBlogs',
@@ -737,7 +737,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		 * the method logic begins.
 		 *
 		 * All built-in XML-RPC methods use the action xmlrpc_call, with a parameter
-		 * equal to the method's name, e.g., wp.getUsersBlogs, wp.newPost, etc.
+		 * equal to the method's name, e.g., zc.getUsersBlogs, zc.newPost, etc.
 		 *
 		 * @since 2.5.0
 		 * @since 5.7.0 Added the `$args` and `$server` parameters.
@@ -746,7 +746,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		 * @param array|string     $args   The escaped arguments passed to the method.
 		 * @param zc_xmlrpc_server $server The XML-RPC server instance.
 		 */
-		do_action( 'xmlrpc_call', 'wp.getUsersBlogs', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getUsersBlogs', $args, $this );
 
 		$blogs  = (array) get_blogs_of_user( $user->ID );
 		$struct = array();
@@ -1360,7 +1360,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.newPost', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.newPost', $args, $this );
 
 		unset( $content_struct['ID'] );
 
@@ -1761,7 +1761,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.editPost', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.editPost', $args, $this );
 
 		$post = get_post( $post_id, ARRAY_A );
 
@@ -1844,7 +1844,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.deletePost', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.deletePost', $args, $this );
 
 		$post = get_post( $post_id, ARRAY_A );
 		if ( empty( $post['ID'] ) ) {
@@ -1936,7 +1936,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			 *                       contains 'post', 'terms', and 'custom_fields'.
 			 * @param string $method Method name.
 			 */
-			$fields = apply_filters( 'xmlrpc_default_post_fields', array( 'post', 'terms', 'custom_fields' ), 'wp.getPost' );
+			$fields = apply_filters( 'xmlrpc_default_post_fields', array( 'post', 'terms', 'custom_fields' ), 'zc.getPost' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -1945,7 +1945,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPost', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPost', $args, $this );
 
 		$post = get_post( $post_id, ARRAY_A );
 
@@ -1997,7 +1997,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			$fields = $args[4];
 		} else {
 			/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-			$fields = apply_filters( 'xmlrpc_default_post_fields', array( 'post', 'terms', 'custom_fields' ), 'wp.getPosts' );
+			$fields = apply_filters( 'xmlrpc_default_post_fields', array( 'post', 'terms', 'custom_fields' ), 'zc.getPosts' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2006,7 +2006,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPosts', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPosts', $args, $this );
 
 		$query = array();
 
@@ -2105,7 +2105,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.newTerm', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.newTerm', $args, $this );
 
 		if ( ! taxonomy_exists( $content_struct['taxonomy'] ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2210,7 +2210,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.editTerm', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.editTerm', $args, $this );
 
 		if ( ! taxonomy_exists( $content_struct['taxonomy'] ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2326,7 +2326,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.deleteTerm', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.deleteTerm', $args, $this );
 
 		if ( ! taxonomy_exists( $taxonomy ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2405,7 +2405,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getTerm', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getTerm', $args, $this );
 
 		if ( ! taxonomy_exists( $taxonomy ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2470,7 +2470,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getTerms', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getTerms', $args, $this );
 
 		if ( ! taxonomy_exists( $taxonomy ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2568,7 +2568,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			 *                       contains 'labels', 'cap', and 'object_type'.
 			 * @param string $method The method name.
 			 */
-			$fields = apply_filters( 'xmlrpc_default_taxonomy_fields', array( 'labels', 'cap', 'object_type' ), 'wp.getTaxonomy' );
+			$fields = apply_filters( 'xmlrpc_default_taxonomy_fields', array( 'labels', 'cap', 'object_type' ), 'zc.getTaxonomy' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2577,7 +2577,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getTaxonomy', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getTaxonomy', $args, $this );
 
 		if ( ! taxonomy_exists( $taxonomy ) ) {
 			return new IXR_Error( 403, __( 'Invalid taxonomy.' ) );
@@ -2626,7 +2626,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			$fields = $args[4];
 		} else {
 			/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-			$fields = apply_filters( 'xmlrpc_default_taxonomy_fields', array( 'labels', 'cap', 'object_type' ), 'wp.getTaxonomies' );
+			$fields = apply_filters( 'xmlrpc_default_taxonomy_fields', array( 'labels', 'cap', 'object_type' ), 'zc.getTaxonomies' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2635,7 +2635,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getTaxonomies', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getTaxonomies', $args, $this );
 
 		$taxonomies = get_taxonomies( $filter, 'objects' );
 
@@ -2712,7 +2712,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			 * @param array  $fields An array of user fields to retrieve. By default, contains 'all'.
 			 * @param string $method The method name.
 			 */
-			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'wp.getUser' );
+			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'zc.getUser' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2721,7 +2721,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getUser', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getUser', $args, $this );
 
 		if ( ! current_user_can( 'edit_user', $user_id ) ) {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to edit this user.' ) );
@@ -2775,7 +2775,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			$fields = $args[4];
 		} else {
 			/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'wp.getUsers' );
+			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'zc.getUsers' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2784,7 +2784,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getUsers', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getUsers', $args, $this );
 
 		if ( ! current_user_can( 'list_users' ) ) {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to list users.' ) );
@@ -2855,7 +2855,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			$fields = $args[3];
 		} else {
 			/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'wp.getProfile' );
+			$fields = apply_filters( 'xmlrpc_default_user_fields', array( 'all' ), 'zc.getProfile' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -2864,7 +2864,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getProfile', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getProfile', $args, $this );
 
 		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to edit your profile.' ) );
@@ -2914,7 +2914,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.editProfile', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.editProfile', $args, $this );
 
 		if ( ! current_user_can( 'edit_user', $user->ID ) ) {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to edit your profile.' ) );
@@ -3003,7 +3003,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPage', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPage', $args, $this );
 
 		// If we found the page then format the data.
 		if ( $page->ID && ( 'page' === $page->post_type ) ) {
@@ -3046,7 +3046,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPages', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPages', $args, $this );
 
 		$pages     = get_posts(
 			array(
@@ -3101,7 +3101,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.newPage', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.newPage', $args, $this );
 
 		// Mark this as content for a page.
 		$args[3]['post_type'] = 'page';
@@ -3138,7 +3138,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.deletePage', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.deletePage', $args, $this );
 
 		/*
 		 * Get the current page based on the 'page_id' and
@@ -3207,7 +3207,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.editPage', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.editPage', $args, $this );
 
 		// Get the page data and make sure it is a page.
 		$actual_page = get_post( $page_id, ARRAY_A );
@@ -3270,7 +3270,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPageList', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPageList', $args, $this );
 
 		// Get list of page IDs and titles.
 		$page_list = $wpdb->get_results(
@@ -3331,7 +3331,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getAuthors', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getAuthors', $args, $this );
 
 		$authors = array();
 		foreach ( get_users( array( 'fields' => array( 'ID', 'user_login', 'display_name' ) ) ) as $user ) {
@@ -3375,7 +3375,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getKeywords', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getKeywords', $args, $this );
 
 		$tags = array();
 
@@ -3425,7 +3425,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.newCategory', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.newCategory', $args, $this );
 
 		// Make sure the user is allowed to add a category.
 		if ( ! current_user_can( 'manage_categories' ) ) {
@@ -3512,7 +3512,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.deleteCategory', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.deleteCategory', $args, $this );
 
 		if ( ! current_user_can( 'delete_term', $category_id ) ) {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to delete this category.' ) );
@@ -3569,7 +3569,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.suggestCategories', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.suggestCategories', $args, $this );
 
 		$category_suggestions = array();
 		$args                 = array(
@@ -3615,7 +3615,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getComment', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getComment', $args, $this );
 
 		$comment = get_comment( $comment_id );
 		if ( ! $comment ) {
@@ -3671,7 +3671,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getComments', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getComments', $args, $this );
 
 		$status = $struct['status'] ?? '';
 
@@ -3762,7 +3762,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.deleteComment', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.deleteComment', $args, $this );
 
 		$status = zc_delete_comment( $comment_id );
 
@@ -3830,7 +3830,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.editComment', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.editComment', $args, $this );
 		$comment = array(
 			'comment_ID' => $comment_id,
 		);
@@ -4024,7 +4024,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.newComment', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.newComment', $args, $this );
 
 		$comment_id = zc_new_comment( $comment, true );
 		if ( is_zc_error( $comment_id ) ) {
@@ -4078,7 +4078,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getCommentStatusList', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getCommentStatusList', $args, $this );
 
 		return get_comment_statuses();
 	}
@@ -4120,7 +4120,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getCommentCount', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getCommentCount', $args, $this );
 
 		$count = zc_count_comments( $post_id );
 
@@ -4162,7 +4162,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPostStatusList', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPostStatusList', $args, $this );
 
 		return get_post_statuses();
 	}
@@ -4197,7 +4197,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPageStatusList', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPageStatusList', $args, $this );
 
 		return get_page_statuses();
 	}
@@ -4390,7 +4390,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getMediaItem', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getMediaItem', $args, $this );
 
 		$attachment = get_post( $attachment_id );
 		if ( ! $attachment || 'attachment' !== $attachment->post_type ) {
@@ -4446,7 +4446,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getMediaLibrary', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getMediaLibrary', $args, $this );
 
 		$parent_id = ( isset( $struct['parent_id'] ) ) ? absint( $struct['parent_id'] ) : '';
 		$mime_type = $struct['mime_type'] ?? '';
@@ -4502,7 +4502,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPostFormats', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPostFormats', $args, $this );
 
 		$formats = get_post_format_strings();
 
@@ -4574,7 +4574,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			 *                       contains 'labels', 'cap', and 'taxonomies'.
 			 * @param string $method The method name.
 			 */
-			$fields = apply_filters( 'xmlrpc_default_posttype_fields', array( 'labels', 'cap', 'taxonomies' ), 'wp.getPostType' );
+			$fields = apply_filters( 'xmlrpc_default_posttype_fields', array( 'labels', 'cap', 'taxonomies' ), 'zc.getPostType' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -4583,7 +4583,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPostType', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPostType', $args, $this );
 
 		if ( ! post_type_exists( $post_type_name ) ) {
 			return new IXR_Error( 403, __( 'Invalid post type.' ) );
@@ -4631,7 +4631,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			$fields = $args[4];
 		} else {
 			/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-			$fields = apply_filters( 'xmlrpc_default_posttype_fields', array( 'labels', 'cap', 'taxonomies' ), 'wp.getPostTypes' );
+			$fields = apply_filters( 'xmlrpc_default_posttype_fields', array( 'labels', 'cap', 'taxonomies' ), 'zc.getPostTypes' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -4640,7 +4640,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getPostTypes', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getPostTypes', $args, $this );
 
 		$post_types = get_post_types( $filter, 'objects' );
 
@@ -4702,7 +4702,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			 *                       contains 'post_date' and 'post_date_gmt'.
 			 * @param string $method The method name.
 			 */
-			$fields = apply_filters( 'xmlrpc_default_revision_fields', array( 'post_date', 'post_date_gmt' ), 'wp.getRevisions' );
+			$fields = apply_filters( 'xmlrpc_default_revision_fields', array( 'post_date', 'post_date_gmt' ), 'zc.getRevisions' );
 		}
 
 		$user = $this->login( $username, $password );
@@ -4711,7 +4711,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.getRevisions', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.getRevisions', $args, $this );
 
 		$post = get_post( $post_id );
 		if ( ! $post ) {
@@ -4785,7 +4785,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
-		do_action( 'xmlrpc_call', 'wp.restoreRevision', $args, $this );
+		do_action( 'xmlrpc_call', 'zc.restoreRevision', $args, $this );
 
 		$revision = zc_get_post_revision( $revision_id );
 		if ( ! $revision ) {
@@ -5796,7 +5796,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			return new IXR_Error( 401, __( 'Sorry, you are not allowed to edit this post.' ) );
 		}
 
-		// Use wp.editPost to edit post types other than post and page.
+		// Use zc.editPost to edit post types other than post and page.
 		if ( ! in_array( $postdata['post_type'], array( 'post', 'page' ), true ) ) {
 			return new IXR_Error( 401, __( 'Invalid post type.' ) );
 		}

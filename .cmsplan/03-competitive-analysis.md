@@ -41,7 +41,7 @@
 | **Multi-site** | ZelocoreCMS Multisite (fragile) | Native multi-tenant architecture |
 | **AI Integration** | Third-party plugins only | ZeloAI built into core |
 | **Self-hosting** | ✅ Yes | ✅ Yes |
-| **Migration from WP** | ❌ N/A | ✅ ZeloMigrate tool |
+| **Migration from ZC** | ❌ N/A | ✅ ZeloMigrate tool |
 | **Learning Curve** | Medium (but familiar) | Low (modern patterns) |
 | **Ecosystem Size** | 60,000+ plugins | Growing (curated quality) |
 | **Cost** | Free (but hosting + plugins $$) | Free (hosting optional) |
@@ -152,7 +152,7 @@ This is how we defeat each competitor in their own territory:
 
 | Competitor | Their Strength | Our Counter | Target Migration Tool |
 |-----------|---------------|-------------|----------------------|
-| ZelocoreCMS | Plugin ecosystem, familiarity | ZelocoreCMS hooks API compatibility + ZeloMigrate | ZeloMigrate WP |
+| ZelocoreCMS | Plugin ecosystem, familiarity | ZelocoreCMS hooks API compatibility + ZeloMigrate | ZeloMigrate ZC |
 | Strapi | Developer-first headless | All enterprise features free + ZeloBuilder | ZeloMigrate Strapi |
 | Contentful | UX polish + reliability | Same polish, self-hosted, 10x cheaper | ZeloMigrate CF |
 | Sanity | Real-time collab | Open standard (no GROQ lock-in) + ZeloBuilder | ZeloMigrate Sanity |

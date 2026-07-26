@@ -74,7 +74,7 @@ class IXR_Client
         $r = "\r\n";
         $request  = "POST {$this->path} HTTP/1.0$r";
 
-        // Merged from WP #8145 - allow custom headers
+        // Merged from ZC #8145 - allow custom headers
         $this->headers['Host']          = $this->server;
         $this->headers['Content-Type']  = 'text/xml';
         $this->headers['User-Agent']    = $this->useragent;
@@ -120,7 +120,7 @@ class IXR_Client
                 $gettingHeaders = false;
             }
             if (!$gettingHeaders) {
-            	// merged from WP #12559 - remove trim
+            	// merged from ZC #12559 - remove trim
                 $contents .= $line;
             }
             if ($this->debug) {

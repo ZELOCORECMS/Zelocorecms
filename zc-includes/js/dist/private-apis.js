@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).privateApis = (() => {
+var zc;
+(zc ||= {}).privateApis = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;

@@ -219,7 +219,7 @@ function get_theme_update_available( $theme ) {
 				'height'    => 800,
 			),
 			$update['url']
-		); // Theme browser inside WP? Replace this. Also, theme preview JS will override this on the available list.
+		); // Theme browser inside ZC? Replace this. Also, theme preview JS will override this on the available list.
 		$update_url  = zc_nonce_url( admin_url( 'update.php?action=upgrade-theme&amp;theme=' . urlencode( $stylesheet ) ), 'upgrade-theme_' . $stylesheet );
 
 		if ( ! is_multisite() ) {
@@ -391,7 +391,7 @@ function get_theme_feature_list( $api = true ) {
 
 	$wporg_features = array();
 
-	// Loop over the wp.org canonical list and apply translations.
+	// Loop over the zc.org canonical list and apply translations.
 	foreach ( (array) $feature_list as $feature_category => $feature_items ) {
 		if ( isset( $category_translations[ $feature_category ] ) ) {
 			$feature_category = $category_translations[ $feature_category ];

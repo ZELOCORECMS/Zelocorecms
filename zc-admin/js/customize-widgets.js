@@ -3,16 +3,16 @@
  */
 
 /* global _wpCustomizeWidgetsSettings */
-(function( wp, $ ){
+(function( zc, $ ){
 
-	if ( ! wp || ! wp.customize ) { return; }
+	if ( ! zc || ! zc.customize ) { return; }
 
 	// Set up our namespace...
-	var api = wp.customize,
+	var api = zc.customize,
 		l10n;
 
 	/**
-	 * @namespace wp.customize.Widgets
+	 * @namespace zc.customize.Widgets
 	 */
 	api.Widgets = api.Widgets || {};
 	api.Widgets.savedWidgetIds = {};
@@ -22,14 +22,14 @@
 	l10n = api.Widgets.data.l10n;
 
 	/**
-	 * wp.customize.Widgets.WidgetModel
+	 * zc.customize.Widgets.WidgetModel
 	 *
 	 * A single widget model.
 	 *
-	 * @class    wp.customize.Widgets.WidgetModel
+	 * @class    zc.customize.Widgets.WidgetModel
 	 * @augments Backbone.Model
 	 */
-	api.Widgets.WidgetModel = Backbone.Model.extend(/** @lends wp.customize.Widgets.WidgetModel.prototype */{
+	api.Widgets.WidgetModel = Backbone.Model.extend(/** @lends zc.customize.Widgets.WidgetModel.prototype */{
 		id: null,
 		temp_id: null,
 		classname: null,
@@ -48,14 +48,14 @@
 	});
 
 	/**
-	 * wp.customize.Widgets.WidgetCollection
+	 * zc.customize.Widgets.WidgetCollection
 	 *
 	 * Collection for widget models.
 	 *
-	 * @class    wp.customize.Widgets.WidgetCollection
+	 * @class    zc.customize.Widgets.WidgetCollection
 	 * @augments Backbone.Collection
 	 */
-	api.Widgets.WidgetCollection = Backbone.Collection.extend(/** @lends wp.customize.Widgets.WidgetCollection.prototype */{
+	api.Widgets.WidgetCollection = Backbone.Collection.extend(/** @lends zc.customize.Widgets.WidgetCollection.prototype */{
 		model: api.Widgets.WidgetModel,
 
 		// Controls searching on the current widget collection
@@ -106,14 +106,14 @@
 	api.Widgets.availableWidgets = new api.Widgets.WidgetCollection( api.Widgets.data.availableWidgets );
 
 	/**
-	 * wp.customize.Widgets.SidebarModel
+	 * zc.customize.Widgets.SidebarModel
 	 *
 	 * A single sidebar model.
 	 *
-	 * @class    wp.customize.Widgets.SidebarModel
+	 * @class    zc.customize.Widgets.SidebarModel
 	 * @augments Backbone.Model
 	 */
-	api.Widgets.SidebarModel = Backbone.Model.extend(/** @lends wp.customize.Widgets.SidebarModel.prototype */{
+	api.Widgets.SidebarModel = Backbone.Model.extend(/** @lends zc.customize.Widgets.SidebarModel.prototype */{
 		after_title: null,
 		after_widget: null,
 		before_title: null,
@@ -126,19 +126,19 @@
 	});
 
 	/**
-	 * wp.customize.Widgets.SidebarCollection
+	 * zc.customize.Widgets.SidebarCollection
 	 *
 	 * Collection for sidebar models.
 	 *
-	 * @class    wp.customize.Widgets.SidebarCollection
+	 * @class    zc.customize.Widgets.SidebarCollection
 	 * @augments Backbone.Collection
 	 */
-	api.Widgets.SidebarCollection = Backbone.Collection.extend(/** @lends wp.customize.Widgets.SidebarCollection.prototype */{
+	api.Widgets.SidebarCollection = Backbone.Collection.extend(/** @lends zc.customize.Widgets.SidebarCollection.prototype */{
 		model: api.Widgets.SidebarModel
 	});
 	api.Widgets.registeredSidebars = new api.Widgets.SidebarCollection( api.Widgets.data.registeredSidebars );
 
-	api.Widgets.AvailableWidgetsPanelView = wp.Backbone.View.extend(/** @lends wp.customize.Widgets.AvailableWidgetsPanelView.prototype */{
+	api.Widgets.AvailableWidgetsPanelView = zc.Backbone.View.extend(/** @lends zc.customize.Widgets.AvailableWidgetsPanelView.prototype */{
 
 		el: '#available-widgets',
 
@@ -162,8 +162,8 @@
 		/**
 		 * View class for the available widgets panel.
 		 *
-		 * @constructs wp.customize.Widgets.AvailableWidgetsPanelView
-		 * @augments   wp.Backbone.View
+		 * @constructs zc.customize.Widgets.AvailableWidgetsPanelView
+		 * @augments   zc.Backbone.View
 		 */
 		initialize: function() {
 			var self = this;
@@ -266,7 +266,7 @@
 				message = l10n.noWidgetsFound;
 			}
 
-			wp.a11y.speak( message );
+			zc.a11y.speak( message );
 		},
 
 		/**
@@ -452,7 +452,7 @@
 	 * Other widgets may provide their own update handlers by adding
 	 * listeners for the widget-synced event.
 	 *
-	 * @alias    wp.customize.Widgets.formSyncHandlers
+	 * @alias    zc.customize.Widgets.formSyncHandlers
 	 */
 	api.Widgets.formSyncHandlers = {
 
@@ -475,22 +475,22 @@
 		}
 	};
 
-	api.Widgets.WidgetControl = api.Control.extend(/** @lends wp.customize.Widgets.WidgetControl.prototype */{
+	api.Widgets.WidgetControl = api.Control.extend(/** @lends zc.customize.Widgets.WidgetControl.prototype */{
 		defaultExpandedArguments: {
 			duration: 'fast',
 			completeCallback: $.noop
 		},
 
 		/**
-		 * wp.customize.Widgets.WidgetControl
+		 * zc.customize.Widgets.WidgetControl
 		 *
 		 * Customizer control for widgets.
 		 * Note that 'widget_form' must match the ZC_Widget_Form_Customize_Control::$type
 		 *
 		 * @since 4.1.0
 		 *
-		 * @constructs wp.customize.Widgets.WidgetControl
-		 * @augments   wp.customize.Control
+		 * @constructs zc.customize.Widgets.WidgetControl
+		 * @augments   zc.customize.Control
 		 */
 		initialize: function( id, options ) {
 			var control = this;
@@ -833,10 +833,10 @@
 
 					if ( isMoveUp ) {
 						self.moveUp();
-						wp.a11y.speak( l10n.widgetMovedUp );
+						zc.a11y.speak( l10n.widgetMovedUp );
 					} else {
 						self.moveDown();
-						wp.a11y.speak( l10n.widgetMovedDown );
+						zc.a11y.speak( l10n.widgetMovedDown );
 					}
 
 					$( this ).trigger( 'focus' ); // Re-focus after the container was moved.
@@ -1124,7 +1124,7 @@
 		 **********************************************************************/
 
 		/**
-		 * @return {wp.customize.controlConstructor.sidebar_widgets[]}
+		 * @return {zc.customize.controlConstructor.sidebar_widgets[]}
 		 */
 		getSidebarWidgetsControl: function() {
 			var settingId, sidebarWidgetsControl;
@@ -1187,7 +1187,7 @@
 			params.zc_customize = 'on';
 			params.nonce = api.settings.nonce['update-widget'];
 			params.customize_theme = api.settings.theme.stylesheet;
-			params.customized = wp.customize.previewer.query().customized;
+			params.customized = zc.customize.previewer.query().customized;
 
 			data = $.param( params );
 			$inputs = this._getInputs( $widgetContent );
@@ -1211,7 +1211,7 @@
 			if ( this._previousUpdateRequest ) {
 				this._previousUpdateRequest.abort();
 			}
-			jqxhr = $.post( wp.ajax.settings.url, data );
+			jqxhr = $.post( zc.ajax.settings.url, data );
 			this._previousUpdateRequest = jqxhr;
 
 			jqxhr.done( function( r ) {
@@ -1596,16 +1596,16 @@
 	} );
 
 	/**
-	 * wp.customize.Widgets.WidgetsPanel
+	 * zc.customize.Widgets.WidgetsPanel
 	 *
 	 * Customizer panel containing the widget area sections.
 	 *
 	 * @since 4.4.0
 	 *
-	 * @class    wp.customize.Widgets.WidgetsPanel
-	 * @augments wp.customize.Panel
+	 * @class    zc.customize.Widgets.WidgetsPanel
+	 * @augments zc.customize.Panel
 	 */
-	api.Widgets.WidgetsPanel = api.Panel.extend(/** @lends wp.customize.Widgets.WigetsPanel.prototype */{
+	api.Widgets.WidgetsPanel = api.Panel.extend(/** @lends zc.customize.Widgets.WigetsPanel.prototype */{
 
 		/**
 		 * Add and manage the display of the no-rendered-areas notice.
@@ -1721,16 +1721,16 @@
 	});
 
 	/**
-	 * wp.customize.Widgets.SidebarSection
+	 * zc.customize.Widgets.SidebarSection
 	 *
 	 * Customizer section representing a widget area widget
 	 *
 	 * @since 4.1.0
 	 *
-	 * @class    wp.customize.Widgets.SidebarSection
-	 * @augments wp.customize.Section
+	 * @class    zc.customize.Widgets.SidebarSection
+	 * @augments zc.customize.Section
 	 */
-	api.Widgets.SidebarSection = api.Section.extend(/** @lends wp.customize.Widgets.SidebarSection.prototype */{
+	api.Widgets.SidebarSection = api.Section.extend(/** @lends zc.customize.Widgets.SidebarSection.prototype */{
 
 		/**
 		 * Sync the section's active state back to the Backbone model's is_rendered attribute
@@ -1749,17 +1749,17 @@
 	});
 
 	/**
-	 * wp.customize.Widgets.SidebarControl
+	 * zc.customize.Widgets.SidebarControl
 	 *
 	 * Customizer control for widgets.
 	 * Note that 'sidebar_widgets' must match the ZC_Widget_Area_Customize_Control::$type
 	 *
 	 * @since 3.9.0
 	 *
-	 * @class    wp.customize.Widgets.SidebarControl
-	 * @augments wp.customize.Control
+	 * @class    zc.customize.Widgets.SidebarControl
+	 * @augments zc.customize.Control
 	 */
-	api.Widgets.SidebarControl = api.Control.extend(/** @lends wp.customize.Widgets.SidebarControl.prototype */{
+	api.Widgets.SidebarControl = api.Control.extend(/** @lends zc.customize.Widgets.SidebarControl.prototype */{
 
 		/**
 		 * Set up the control
@@ -2033,13 +2033,13 @@
 
 				addNewWidgetBtn.attr({ 'tabindex': '-1', 'aria-hidden': 'true' });
 				reorderBtn.attr( 'aria-label', l10n.reorderLabelOff );
-				wp.a11y.speak( l10n.reorderModeOn );
+				zc.a11y.speak( l10n.reorderModeOn );
 				// Hide widget titles while reordering: title is already in the reorder controls.
 				widgetsTitle.attr( 'aria-hidden', 'true' );
 			} else {
 				addNewWidgetBtn.removeAttr( 'tabindex aria-hidden' );
 				reorderBtn.attr( 'aria-label', l10n.reorderLabelOn );
-				wp.a11y.speak( l10n.reorderModeOff );
+				zc.a11y.speak( l10n.reorderModeOff );
 				widgetsTitle.attr( 'aria-hidden', 'false' );
 			}
 		},
@@ -2048,7 +2048,7 @@
 		 * Get the widget_form Customize controls associated with the current sidebar.
 		 *
 		 * @since 3.9.0
-		 * @return {wp.customize.controlConstructor.widget_form[]}
+		 * @return {zc.customize.controlConstructor.widget_form[]}
 		 */
 		getWidgetFormControls: function() {
 			var formControls = [];
@@ -2252,7 +2252,7 @@
 	api.Widgets.getSidebarWidgetControlContainingWidget = function( widgetId ) {
 		var foundControl = null;
 
-		// @todo This can use widgetIdToSettingId(), then pass into wp.customize.control( x ).getSidebarWidgetsControl().
+		// @todo This can use widgetIdToSettingId(), then pass into zc.customize.control( x ).getSidebarWidgetsControl().
 		api.control.each( function( control ) {
 			if ( control.params.type === 'sidebar_widgets' && -1 !== _.indexOf( control.setting(), widgetId ) ) {
 				foundControl = control;
@@ -2319,8 +2319,8 @@
 	 *
 	 * This overrides the back button to serve the purpose of breadcrumb navigation.
 	 *
-	 * @param {wp.customize.Section|wp.customize.Panel|wp.customize.Control} focusConstruct - The object to initially focus.
-	 * @param {wp.customize.Section|wp.customize.Panel|wp.customize.Control} returnConstruct - The object to return focus.
+	 * @param {zc.customize.Section|zc.customize.Panel|zc.customize.Control} focusConstruct - The object to initially focus.
+	 * @param {zc.customize.Section|zc.customize.Panel|zc.customize.Control} returnConstruct - The object to return focus.
 	 */
 	function focusConstructWithBreadcrumb( focusConstruct, returnConstruct ) {
 		focusConstruct.focus();
@@ -2370,4 +2370,4 @@
 		return settingId;
 	}
 
-})( window.wp, jQuery );
+})( window.zc, jQuery );

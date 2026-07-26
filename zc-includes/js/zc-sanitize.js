@@ -6,14 +6,14 @@
 
 ( function () {
 
-	window.wp = window.wp || {};
+	window.zc = window.zc || {};
 
 	/**
-	 * wp.sanitize
+	 * zc.sanitize
 	 *
 	 * Helper functions to sanitize strings.
 	 */
-	wp.sanitize = {
+	zc.sanitize = {
 
 		/**
 		 * Strip HTML tags.
@@ -56,12 +56,12 @@
 		 * @return {string} Sanitized text.
 		 */
 		stripTagsAndEncodeText: function( text ) {
-			let _text = wp.sanitize.stripTags( text ),
+			let _text = zc.sanitize.stripTags( text ),
 				textarea = document.createElement( 'textarea' );
 
 			try {
 				textarea.textContent = _text;
-				_text = wp.sanitize.stripTags( textarea.value );
+				_text = zc.sanitize.stripTags( textarea.value );
 			} catch ( er ) {}
 
 			return _text;

@@ -4,13 +4,13 @@
  * @output zc-admin/js/site-health.js
  */
 
-/* global ajaxurl, ClipboardJS, SiteHealth, wp */
+/* global ajaxurl, ClipboardJS, SiteHealth, zc */
 
 jQuery( function( $ ) {
 
-	var __ = wp.i18n.__,
-		_n = wp.i18n._n,
-		sprintf = wp.i18n.sprintf,
+	var __ = zc.i18n.__,
+		_n = zc.i18n._n,
+		sprintf = zc.i18n.sprintf,
 		clipboard = new ClipboardJS( '.site-health-copy-buttons .copy-button' ),
 		isStatusTab = $( '.health-check-body.health-check-status-tab' ).length,
 		isDebugTab = $( '.health-check-body.health-check-debug-tab' ).length,
@@ -37,7 +37,7 @@ jQuery( function( $ ) {
 		}, 3000 );
 
 		// Handle success audible feedback.
-		wp.a11y.speak( __( 'Site information has been copied to your clipboard.' ) );
+		zc.a11y.speak( __( 'Site information has been copied to your clipboard.' ) );
 	} );
 
 	// Accordion handling in various areas.
@@ -58,7 +58,7 @@ jQuery( function( $ ) {
 	} );
 
 	/* global setTimeout */
-	wp.domReady( function() {
+	zc.domReady( function() {
 		// Get hash from query string and open the related accordion.
 		var hash = window.location.hash;
 
@@ -139,7 +139,7 @@ jQuery( function( $ ) {
 	 * @param {Object} issue The issue data.
 	 */
 	function appendIssue( issue ) {
-		var template = wp.template( 'health-check-issue' ),
+		var template = zc.template( 'health-check-issue' ),
 			issueWrapper = $( '#health-check-issues-' + issue.status ),
 			heading,
 			count;
@@ -290,13 +290,13 @@ jQuery( function( $ ) {
 				this.completed = true;
 
 				if ( 'undefined' !== typeof( this.has_rest ) && this.has_rest ) {
-					wp.apiRequest( {
-						url: wp.url.addQueryArgs( this.test, { _locale: 'user' } ),
+					zc.apiRequest( {
+						url: zc.url.addQueryArgs( this.test, { _locale: 'user' } ),
 						headers: this.headers
 					} )
 						.done( function( response ) {
 							/** This filter is documented in zc-admin/includes/class-zc-site-health.php */
-							appendIssue( wp.hooks.applyFilters( 'site_status_test_result', response ) );
+							appendIssue( zc.hooks.applyFilters( 'site_status_test_result', response ) );
 						} )
 						.fail( function( response ) {
 							var description;
@@ -318,7 +318,7 @@ jQuery( function( $ ) {
 						data
 					).done( function( response ) {
 						/** This filter is documented in zc-admin/includes/class-zc-site-health.php */
-						appendIssue( wp.hooks.applyFilters( 'site_status_test_result', response.data ) );
+						appendIssue( zc.hooks.applyFilters( 'site_status_test_result', response.data ) );
 					} ).fail( function( response ) {
 						var description;
 
@@ -363,7 +363,7 @@ jQuery( function( $ ) {
 		};
 
 		/** This filter is documented in zc-admin/includes/class-zc-site-health.php */
-		appendIssue( wp.hooks.applyFilters( 'site_status_test_result', issue ) );
+		appendIssue( zc.hooks.applyFilters( 'site_status_test_result', issue ) );
 	}
 
 	if ( 'undefined' !== typeof SiteHealth ) {
@@ -398,7 +398,7 @@ jQuery( function( $ ) {
 			announceTestsProgression( 'waiting-for-directory-sizes' );
 		}, 3000 );
 
-		wp.apiRequest( {
+		zc.apiRequest( {
 			path: '/zc-site-health/v1/directory-sizes'
 		} ).done( function( response ) {
 			updateDirSizes( response || {} );
@@ -485,13 +485,13 @@ jQuery( function( $ ) {
 
 		switch ( type ) {
 			case 'good':
-				wp.a11y.speak( __( 'All site health tests have finished running. Your site is looking good.' ) );
+				zc.a11y.speak( __( 'All site health tests have finished running. Your site is looking good.' ) );
 				break;
 			case 'improvable':
-				wp.a11y.speak( __( 'All site health tests have finished running. There are items that should be addressed.' ) );
+				zc.a11y.speak( __( 'All site health tests have finished running. There are items that should be addressed.' ) );
 				break;
 			case 'waiting-for-directory-sizes':
-				wp.a11y.speak( __( 'Running additional tests... please wait.' ) );
+				zc.a11y.speak( __( 'Running additional tests... please wait.' ) );
 				break;
 			default:
 				return;

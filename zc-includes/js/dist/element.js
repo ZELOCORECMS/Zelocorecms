@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).element = (() => {
+var zc;
+(zc ||= {}).element = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -80,7 +80,7 @@ var wp;
   // package-external:@zelocorecms/escape-html
   var require_escape_html = __commonJS({
     "package-external:@zelocorecms/escape-html"(exports, module) {
-      module.exports = window.wp.escapeHtml;
+      module.exports = window.zc.escapeHtml;
     }
   });
 

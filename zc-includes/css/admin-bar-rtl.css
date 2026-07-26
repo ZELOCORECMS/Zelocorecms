@@ -493,7 +493,7 @@ html:lang(he-il) .rtl #wpadminbar * {
 }
 
 /**
- * WP Logo
+ * ZC Logo
  */
 #wpadminbar #zc-admin-bar-zc-logo > .ab-item .ab-icon {
 	width: 15px;
@@ -855,7 +855,7 @@ html:lang(he-il) .rtl #wpadminbar * {
 		display: none;
 	}
 
-	/* WP logo */
+	/* ZC logo */
 	#wpadminbar #zc-admin-bar-zc-logo > .ab-item {
 		padding: 0;
 	}

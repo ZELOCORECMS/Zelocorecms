@@ -369,7 +369,7 @@ class ZC_Script_Modules {
 	/**
 	 * Prints translations for all enqueued script modules.
 	 *
-	 * Outputs inline `<script>` tags that call `wp.i18n.setLocaleData()` with
+	 * Outputs inline `<script>` tags that call `zc.i18n.setLocaleData()` with
 	 * the translated strings for each script module. This must run before
 	 * the script modules execute.
 	 *
@@ -388,7 +388,7 @@ class ZC_Script_Modules {
 		( domain, translations ) => {
 			const localeData = translations.locale_data[ domain ] || translations.locale_data.messages;
 			localeData[""].domain = domain;
-			wp.i18n.setLocaleData( localeData, domain );
+			zc.i18n.setLocaleData( localeData, domain );
 		}
 		JS;
 
@@ -411,7 +411,7 @@ class ZC_Script_Modules {
 			$script_id = "zc-script-module-translation-data-{$id}";
 			$output   .= "\n//# sourceURL=" . rawurlencode( $script_id );
 
-			// Ensure zc-i18n is printed; the inline script below relies on wp.i18n.setLocaleData().
+			// Ensure zc-i18n is printed; the inline script below relies on zc.i18n.setLocaleData().
 			if ( ! zc_script_is( 'zc-i18n', 'done' ) ) {
 				zc_scripts()->do_items( array( 'zc-i18n' ) );
 			}

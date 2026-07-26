@@ -3,13 +3,13 @@
  */
 
 /* global _wpThemeSettings, confirm, tb_position */
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 ( function($) {
 
 // Set up our namespace...
 var themes, l10n;
-themes = wp.themes = wp.themes || {};
+themes = zc.themes = zc.themes || {};
 
 // Store the theme data and settings for organized and quick access.
 // themes.data.settings, themes.data.themes, themes.data.l10n.
@@ -20,7 +20,7 @@ l10n = themes.data.l10n;
 themes.isInstall = !! themes.data.settings.isInstall;
 
 // Setup app structure.
-_.extend( themes, { model: {}, view: {}, routes: {}, router: {}, template: wp.template });
+_.extend( themes, { model: {}, view: {}, routes: {}, router: {}, template: zc.template });
 
 themes.Model = Backbone.Model.extend({
 	// Adds attributes to the default data coming through the .org themes api.
@@ -57,7 +57,7 @@ themes.Model = Backbone.Model.extend({
 
 // Main view controller for themes.php.
 // Unifies and renders all available views.
-themes.view.Appearance = wp.Backbone.View.extend({
+themes.view.Appearance = zc.Backbone.View.extend({
 
 	el: '#wpbody-content .wrap .theme-browser',
 
@@ -351,7 +351,7 @@ themes.Collection = Backbone.Collection.extend({
 
 	// Send request to api.zelocorecms.org/themes.
 	apiCall: function( request, paginated ) {
-		return wp.ajax.send( 'query-themes', {
+		return zc.ajax.send( 'query-themes', {
 			data: {
 				// Request data.
 				request: _.extend({
@@ -374,7 +374,7 @@ themes.Collection = Backbone.Collection.extend({
 
 // This is the view that controls each theme item
 // that will be displayed on the screen.
-themes.view.Theme = wp.Backbone.View.extend({
+themes.view.Theme = zc.Backbone.View.extend({
 
 	// Wrap theme data on a div.theme element.
 	className: 'theme',
@@ -618,7 +618,7 @@ themes.view.Theme = wp.Backbone.View.extend({
 
 		event.preventDefault();
 
-		wp.updates.maybeRequestFilesystemCredentials( event );
+		zc.updates.maybeRequestFilesystemCredentials( event );
 
 		$( document ).on( 'zc-theme-install-success', function( event, response ) {
 			if ( _this.model.get( 'id' ) === response.slug ) {
@@ -629,7 +629,7 @@ themes.view.Theme = wp.Backbone.View.extend({
 			}
 		} );
 
-		wp.updates.installTheme( {
+		zc.updates.installTheme( {
 			slug: $( event.target ).data( 'slug' )
 		} );
 	},
@@ -643,7 +643,7 @@ themes.view.Theme = wp.Backbone.View.extend({
 
 		event.preventDefault();
 
-		wp.updates.maybeRequestFilesystemCredentials( event );
+		zc.updates.maybeRequestFilesystemCredentials( event );
 
 		$( document ).on( 'zc-theme-update-success', function( event, response ) {
 			_this.model.off( 'change', _this.render, _this );
@@ -656,7 +656,7 @@ themes.view.Theme = wp.Backbone.View.extend({
 			_this.model.on( 'change', _this.render, _this );
 		} );
 
-		wp.updates.updateTheme( {
+		zc.updates.updateTheme( {
 			slug: $( event.target ).parents( 'div.theme' ).first().data( 'slug' )
 		} );
 	}
@@ -664,7 +664,7 @@ themes.view.Theme = wp.Backbone.View.extend({
 
 // Theme Details view.
 // Sets up a modal overlay with the expanded theme data.
-themes.view.Details = wp.Backbone.View.extend({
+themes.view.Details = zc.Backbone.View.extend({
 
 	// Wrap theme data on a div.theme element.
 	className: 'theme-overlay',
@@ -820,7 +820,7 @@ themes.view.Details = wp.Backbone.View.extend({
 		var _this = this;
 		event.preventDefault();
 
-		wp.updates.maybeRequestFilesystemCredentials( event );
+		zc.updates.maybeRequestFilesystemCredentials( event );
 
 		$( document ).on( 'zc-theme-update-success', function( event, response ) {
 			if ( _this.model.get( 'id' ) === response.slug ) {
@@ -832,7 +832,7 @@ themes.view.Details = wp.Backbone.View.extend({
 			_this.render();
 		} );
 
-		wp.updates.updateTheme( {
+		zc.updates.updateTheme( {
 			slug: $( event.target ).data( 'slug' )
 		} );
 	},
@@ -844,11 +844,11 @@ themes.view.Details = wp.Backbone.View.extend({
 		event.preventDefault();
 
 		// Confirmation dialog for deleting a theme.
-		if ( ! window.confirm( wp.themes.data.settings.confirmDelete ) ) {
+		if ( ! window.confirm( zc.themes.data.settings.confirmDelete ) ) {
 			return;
 		}
 
-		wp.updates.maybeRequestFilesystemCredentials( event );
+		zc.updates.maybeRequestFilesystemCredentials( event );
 
 		$( document ).one( 'zc-theme-delete-success', function( event, response ) {
 			_this.$el.find( '.close' ).trigger( 'click' );
@@ -863,7 +863,7 @@ themes.view.Details = wp.Backbone.View.extend({
 			} );
 		} );
 
-		wp.updates.deleteTheme( {
+		zc.updates.deleteTheme( {
 			slug: this.model.get( 'id' )
 		} );
 	},
@@ -1037,13 +1037,13 @@ themes.view.Preview = themes.view.Details.extend({
 			return;
 		}
 
-		wp.updates.maybeRequestFilesystemCredentials( event );
+		zc.updates.maybeRequestFilesystemCredentials( event );
 
 		$( document ).on( 'zc-theme-install-success', function() {
 			_this.model.set( { 'installed': true } );
 		} );
 
-		wp.updates.installTheme( {
+		zc.updates.installTheme( {
 			slug: $target.data( 'slug' )
 		} );
 	}
@@ -1051,7 +1051,7 @@ themes.view.Preview = themes.view.Details.extend({
 
 // Controls the rendering of div.themes,
 // a wrapper that will hold all the theme elements.
-themes.view.Themes = wp.Backbone.View.extend({
+themes.view.Themes = zc.Backbone.View.extend({
 
 	className: 'themes zc-clearfix',
 	$overlay: $( 'div.theme-overlay' ),
@@ -1277,7 +1277,7 @@ themes.view.Themes = wp.Backbone.View.extend({
 				$modal.find( '.notice-warning' )
 					.removeClass( 'notice-large' )
 					.addClass( 'updating-message' )
-					.find( 'p' ).text( wp.updates.l10n.updating );
+					.find( 'p' ).text( zc.updates.l10n.updating );
 			} else if ( $card.find( '.notice-error' ).length ) {
 				$modal.find( '.notice-warning' ).remove();
 			}
@@ -1356,15 +1356,15 @@ themes.view.Themes = wp.Backbone.View.extend({
 	// Dispatch audible search results feedback message.
 	announceSearchResults: function( count ) {
 		if ( 0 === count ) {
-			wp.a11y.speak( l10n.noThemesFound );
+			zc.a11y.speak( l10n.noThemesFound );
 		} else {
-			wp.a11y.speak( l10n.themesFound.replace( '%d', count ) );
+			zc.a11y.speak( l10n.themesFound.replace( '%d', count ) );
 		}
 	}
 });
 
 // Search input view controller.
-themes.view.Search = wp.Backbone.View.extend({
+themes.view.Search = zc.Backbone.View.extend({
 
 	tagName: 'input',
 	className: 'zc-filter-search',
@@ -1808,7 +1808,7 @@ themes.view.Installer = themes.view.Appearance.extend({
 		}
 
 		if ( ! tags ) {
-			wp.a11y.speak( l10n.selectFeatureFilter );
+			zc.a11y.speak( l10n.selectFeatureFilter );
 			return;
 		}
 
@@ -1845,7 +1845,7 @@ themes.view.Installer = themes.view.Appearance.extend({
 			return;
 		}
 
-		return wp.ajax.send( 'save-wporg-username', {
+		return zc.ajax.send( 'save-wporg-username', {
 			data: {
 				_wpnonce: nonce,
 				username: username
@@ -2013,7 +2013,7 @@ themes.RunInstaller = {
 		var self = this,
 			request = {};
 
-		// Bind to our global `wp.themes` object
+		// Bind to our global `zc.themes` object
 		// so that the router is available to sub-views.
 		themes.router = new themes.InstallerRouter();
 
@@ -2090,7 +2090,7 @@ $( function() {
 		var link = $( this ), urlParser = document.createElement( 'a' );
 		urlParser.href = link.prop( 'href' );
 		urlParser.search = $.param( _.extend(
-			wp.customize.utils.parseQueryString( urlParser.search.substr( 1 ) ),
+			zc.customize.utils.parseQueryString( urlParser.search.substr( 1 ) ),
 			{
 				'return': window.location.href
 			}

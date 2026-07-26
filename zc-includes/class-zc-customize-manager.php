@@ -476,7 +476,7 @@ final class ZC_Customize_Manager {
 			( function( api, settings ) {
 				var preview = new api.Messenger( settings.messengerArgs );
 				preview.send( 'iframe-loading-error', settings.error );
-			} )( wp.customize, <?php echo zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ); ?> );
+			} )( zc.customize, <?php echo zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ); ?> );
 			</script>
 			<?php
 			$message .= zc_get_inline_script_tag( zc_remove_surrounding_empty_script_tags( ob_get_clean() ) . "\n//# sourceURL=" . rawurlencode( __METHOD__ ) );
@@ -2398,14 +2398,14 @@ final class ZC_Customize_Manager {
 	 * Prepares setting validity for exporting to the client (JS).
 	 *
 	 * Converts `ZC_Error` instance into array suitable for passing into the
-	 * `wp.customize.Notification` JS model.
+	 * `zc.customize.Notification` JS model.
 	 *
 	 * @since 4.6.0
 	 *
 	 * @param true|ZC_Error $validity Setting validity.
 	 * @return true|array If `$validity` was a ZC_Error, the error codes will be array-mapped
 	 *                    to their respective `message` and `data` to pass into the
-	 *                    `wp.customize.Notification` JS model.
+	 *                    `zc.customize.Notification` JS model.
 	 */
 	public function prepare_setting_validity_for_js( $validity ) {
 		if ( is_zc_error( $validity ) ) {
@@ -2423,7 +2423,7 @@ final class ZC_Customize_Manager {
 	}
 
 	/**
-	 * Handles customize_save WP Ajax request to save/update a changeset.
+	 * Handles customize_save ZC Ajax request to save/update a changeset.
 	 *
 	 * @since 3.4.0
 	 * @since 4.7.0 The semantics of this method have changed to update a changeset, optionally to also change the status and other attributes.
@@ -2485,7 +2485,7 @@ final class ZC_Customize_Manager {
 
 		/*
 		 * Validate changeset date param. Date is assumed to be in local time for
-		 * the WP if in MySQL format (YYYY-MM-DD HH:MM:SS). Otherwise, the date
+		 * the ZC if in MySQL format (YYYY-MM-DD HH:MM:SS). Otherwise, the date
 		 * is parsed with strtotime() so that ISO date format may be supplied
 		 * or a string like "+10 minutes".
 		 */
@@ -2606,7 +2606,7 @@ final class ZC_Customize_Manager {
 		 * @since 4.2.0
 		 *
 		 * @param array                $response Additional information passed back to the 'saved'
-		 *                                       event on `wp.customize`.
+		 *                                       event on `zc.customize`.
 		 * @param ZC_Customize_Manager $manager  ZC_Customize_Manager instance.
 		 */
 		$response = apply_filters( 'customize_save_response', $response, $this );
@@ -2716,7 +2716,7 @@ final class ZC_Customize_Manager {
 			}
 		}
 
-		// The request was made via wp.customize.previewer.save().
+		// The request was made via zc.customize.previewer.save().
 		$update_transactionally = (bool) $args['status'];
 		$allow_revision         = (bool) $args['status'];
 
@@ -3575,7 +3575,7 @@ final class ZC_Customize_Manager {
 				 * the changeset so that any filters that apply during the save
 				 * process will respect the original user's capabilities. This
 				 * will ensure, for example, that KSES won't strip unsafe HTML
-				 * when a scheduled changeset publishes via WP Cron.
+				 * when a scheduled changeset publishes via ZC Cron.
 				 */
 				if ( isset( $setting_user_ids[ $setting_id ] ) ) {
 					zc_set_current_user( $setting_user_ids[ $setting_id ] );
@@ -3801,7 +3801,7 @@ final class ZC_Customize_Manager {
 	 * that have no corresponding setting created.
 	 *
 	 * This is a mechanism to "wake up" settings that have been dynamically created
-	 * on the front end and have been sent to ZelocoreCMS in `$_POST['customized']`. When WP
+	 * on the front end and have been sent to ZelocoreCMS in `$_POST['customized']`. When ZC
 	 * loads, the dynamically-created settings then will get created and previewed
 	 * even though they are not directly created statically with code.
 	 *

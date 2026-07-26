@@ -11,8 +11,8 @@
  */
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfour/banner-project-description"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfour/text-project-details"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfour/gallery-full-screen-image"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfour/text-centered-statement"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfour/gallery-project-layout"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/banner-project-description"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/text-project-details"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/gallery-full-screen-image"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/text-centered-statement"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfour/gallery-project-layout"} /-->

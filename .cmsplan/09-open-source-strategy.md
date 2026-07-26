@@ -17,7 +17,7 @@ This is **identical to ZelocoreCMS's license** and is the industry standard for 
 
 | Reason | Explanation |
 |--------|-------------|
-| **ZelocoreCMS Compatibility** | GPL v2+ matches ZelocoreCMS core. Plugins/themes can be GPL-compatible, enabling WP ecosystem crossover. |
+| **ZelocoreCMS Compatibility** | GPL v2+ matches ZelocoreCMS core. Plugins/themes can be GPL-compatible, enabling ZC ecosystem crossover. |
 | **Ecosystem Familiarity** | Every ZelocoreCMS developer already knows GPL. Zero friction in understanding ZELOCORECMS's licensing. |
 | **Copyleft Protection** | Anyone who distributes ZELOCORECMS (including modified versions) must also share their source code. Prevents proprietary forks. |
 | **Patent Protection (v3 clause)** | The "or later" option means anyone can use GPL v3 provisions (explicit patent rights) if they prefer. |

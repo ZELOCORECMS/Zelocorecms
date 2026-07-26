@@ -528,10 +528,10 @@ if ( defined( 'RELOCATE' ) && RELOCATE ) { // Move flag is set.
 
 // Set a cookie now to see if they are supported by the browser.
 $secure = ( 'https' === parse_url( zc_login_url(), PHP_URL_SCHEME ) );
-setcookie( TEST_COOKIE, 'WP Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
+setcookie( TEST_COOKIE, 'ZC Cookie check', 0, COOKIEPATH, COOKIE_DOMAIN, $secure, true );
 
 if ( SITECOOKIEPATH !== COOKIEPATH ) {
-	setcookie( TEST_COOKIE, 'WP Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure, true );
+	setcookie( TEST_COOKIE, 'ZC Cookie check', 0, SITECOOKIEPATH, COOKIE_DOMAIN, $secure, true );
 }
 
 if ( isset( $_GET['zc_lang'] ) ) {
@@ -993,7 +993,7 @@ switch ( $action ) {
 		 *
 		 * @since 3.5.0
 		 *
-		 * @param ZC_Error         $errors WP Error object.
+		 * @param ZC_Error         $errors ZC Error object.
 		 * @param ZC_User|ZC_Error $user   ZC_User object if the login and reset key match. ZC_Error object otherwise.
 		 */
 		do_action( 'validate_password_reset', $errors, $user );
@@ -1374,7 +1374,7 @@ switch ( $action ) {
 				if ( $customize_login ) {
 					ob_start();
 					?>
-					<script>setTimeout( function(){ new wp.customize.Messenger({ url: '<?php echo zc_customize_url(); ?>', channel: 'login' }).send('login') }, 1000 );</script>
+					<script>setTimeout( function(){ new zc.customize.Messenger({ url: '<?php echo zc_customize_url(); ?>', channel: 'login' }).send('login') }, 1000 );</script>
 					<?php
 					zc_print_inline_script_tag( zc_remove_surrounding_empty_script_tags( ob_get_clean() ) );
 				}
@@ -1476,7 +1476,7 @@ switch ( $action ) {
 		 *
 		 * @since 3.6.0
 		 *
-		 * @param ZC_Error $errors      WP Error object.
+		 * @param ZC_Error $errors      ZC Error object.
 		 * @param string   $redirect_to Redirect destination URL.
 		 */
 		$errors = apply_filters( 'zc_login_errors', $errors, $redirect_to );

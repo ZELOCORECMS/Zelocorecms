@@ -7,7 +7,7 @@
 
 /* global ajaxurl, typenow, inlineEditPost */
 
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 /**
  * Manages the quick edit and bulk edit windows for editing posts or pages.
@@ -22,7 +22,7 @@ window.wp = window.wp || {};
  * @property {string} what The prefix before the post ID.
  *
  */
-( function( $, wp ) {
+( function( $, zc ) {
 
 	window.inlineEditPost = {
 
@@ -213,10 +213,10 @@ window.wp = window.wp || {};
 			if ( $(this).prop('checked') ) {
 				c = false;
 				var id = $( this ).val(),
-					theTitle = $( '#inline_' + id + ' .post_title' ).html() || wp.i18n.__( '(no title)' ),
-					buttonVisuallyHiddenText = wp.i18n.sprintf(
+					theTitle = $( '#inline_' + id + ' .post_title' ).html() || zc.i18n.__( '(no title)' ),
+					buttonVisuallyHiddenText = zc.i18n.sprintf(
 						/* translators: %s: Post title. */
-						wp.i18n.__( 'Remove &#8220;%s&#8221; from Bulk Edit' ),
+						zc.i18n.__( 'Remove &#8220;%s&#8221; from Bulk Edit' ),
 						theTitle
 					);
 
@@ -256,7 +256,7 @@ window.wp = window.wp || {};
 					// Get the term label text.
 					var label = $( this ).parent().text();
 					// Set indeterminate states for the backend. Add accessible text for indeterminate inputs.
-					$( this ).after( '<input type="hidden" name="indeterminate_post_category[]" value="' + $( this ).val() + '">' ).attr( 'aria-label', label.trim() + ': ' + wp.i18n.__( 'Some selected posts have this category' ) );
+					$( this ).after( '<input type="hidden" name="indeterminate_post_category[]" value="' + $( this ).val() + '">' ).attr( 'aria-label', label.trim() + ': ' + zc.i18n.__( 'Some selected posts have this category' ) );
 				}
 			}
 		} );
@@ -284,7 +284,7 @@ window.wp = window.wp || {};
 			$( 'input#cb-select-all-1, input#cb-select-all-2' ).prop( 'checked', false );
 			$( 'table.widefat input[value="' + id + '"]' ).prop( 'checked', false );
 			$( '#_' + id ).parent().remove();
-			wp.a11y.speak( wp.i18n.__( 'Item removed.' ), 'assertive' );
+			zc.a11y.speak( zc.i18n.__( 'Item removed.' ), 'assertive' );
 
 			// Move focus to a proper place when items are removed.
 			if ( $next.length ) {
@@ -294,7 +294,7 @@ window.wp = window.wp || {};
 			} else {
 				$( '#bulk-titles-list' ).remove();
 				inlineEditPost.revert();
-				wp.a11y.speak( wp.i18n.__( 'All selected items have been removed. Select new items to use Bulk Actions.' ) );
+				zc.a11y.speak( zc.i18n.__( 'All selected items have been removed. Select new items to use Bulk Actions.' ) );
 			}
 		});
 
@@ -409,7 +409,7 @@ window.wp = window.wp || {};
 			var terms = $(this),
 				taxname = $(this).attr('id').replace('_' + id, ''),
 				textarea = $('textarea.tax_input_' + taxname, editRow),
-				comma = wp.i18n._x( ',', 'tag delimiter' ).trim();
+				comma = zc.i18n._x( ',', 'tag delimiter' ).trim();
 
 			// Ensure the textarea exists.
 			if ( ! textarea.length ) {
@@ -522,18 +522,18 @@ window.wp = window.wp || {};
 							$( this ).find( '.editinline' )
 								.attr( 'aria-expanded', 'false' )
 								.trigger( 'focus' );
-							wp.a11y.speak( wp.i18n.__( 'Changes saved.' ) );
+							zc.a11y.speak( zc.i18n.__( 'Changes saved.' ) );
 						});
 					} else {
 						r = r.replace( /<.[^<>]*?>/g, '' );
 						$errorNotice.removeClass( 'hidden' );
 						$error.html( r );
-						wp.a11y.speak( $error.text() );
+						zc.a11y.speak( $error.text() );
 					}
 				} else {
 					$errorNotice.removeClass( 'hidden' );
-					$error.text( wp.i18n.__( 'Error while saving the changes.' ) );
-					wp.a11y.speak( wp.i18n.__( 'Error while saving the changes.' ) );
+					$error.text( zc.i18n.__( 'Error while saving the changes.' ) );
+					zc.a11y.speak( zc.i18n.__( 'Error while saving the changes.' ) );
 				}
 			},
 		'html');
@@ -609,8 +609,8 @@ $( function() { inlineEditPost.init(); } );
 $( function() {
 
 	// Set the heartbeat interval to 10 seconds.
-	if ( typeof wp !== 'undefined' && wp.heartbeat ) {
-		wp.heartbeat.interval( 10 );
+	if ( typeof zc !== 'undefined' && zc.heartbeat ) {
+		zc.heartbeat.interval( 10 );
 	}
 }).on( 'heartbeat-tick.zc-check-locked-posts', function( e, data ) {
 	var locked = data['zc-check-locked-posts'] || {},
@@ -656,4 +656,4 @@ $( function() {
 	}
 });
 
-})( jQuery, window.wp );
+})( jQuery, window.zc );

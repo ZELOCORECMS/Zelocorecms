@@ -1,5 +1,5 @@
 /*!
- * jQuery serializeObject - v0.2-wp - 1/20/2010
+ * jQuery serializeObject - v0.2-zc - 1/20/2010
  * http://benalman.com/projects/jquery-misc-plugins/
  *
  * Copyright (c) 2010 "Cowboy" Ben Alman

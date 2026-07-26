@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).editWidgets = (() => {
+var zc;
+(zc ||= {}).editWidgets = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -34,91 +34,91 @@ var wp;
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/block-library
   var require_block_library = __commonJS({
     "package-external:@zelocorecms/block-library"(exports, module) {
-      module.exports = window.wp.blockLibrary;
+      module.exports = window.zc.blockLibrary;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/widgets
   var require_widgets = __commonJS({
     "package-external:@zelocorecms/widgets"(exports, module) {
-      module.exports = window.wp.widgets;
+      module.exports = window.zc.widgets;
     }
   });
 
   // package-external:@zelocorecms/preferences
   var require_preferences = __commonJS({
     "package-external:@zelocorecms/preferences"(exports, module) {
-      module.exports = window.wp.preferences;
+      module.exports = window.zc.preferences;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
@@ -132,84 +132,84 @@ var wp;
   // package-external:@zelocorecms/viewport
   var require_viewport = __commonJS({
     "package-external:@zelocorecms/viewport"(exports, module) {
-      module.exports = window.wp.viewport;
+      module.exports = window.zc.viewport;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/plugins
   var require_plugins = __commonJS({
     "package-external:@zelocorecms/plugins"(exports, module) {
-      module.exports = window.wp.plugins;
+      module.exports = window.zc.plugins;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/media-utils
   var require_media_utils = __commonJS({
     "package-external:@zelocorecms/media-utils"(exports, module) {
-      module.exports = window.wp.mediaUtils;
+      module.exports = window.zc.mediaUtils;
     }
   });
 
   // package-external:@zelocorecms/patterns
   var require_patterns = __commonJS({
     "package-external:@zelocorecms/patterns"(exports, module) {
-      module.exports = window.wp.patterns;
+      module.exports = window.zc.patterns;
     }
   });
 
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
@@ -1985,7 +1985,7 @@ var wp;
   var store2 = (0, import_data8.createReduxStore)(STORE_NAME2, storeConfig);
   (0, import_data8.register)(store2);
   import_api_fetch.default.use(function(options, next) {
-    if (options.path?.indexOf("/wp/v2/types/widget-area") === 0) {
+    if (options.path?.indexOf("/zc/v2/types/widget-area") === 0) {
       return Promise.resolve({});
     }
     return next(options);
@@ -2066,7 +2066,7 @@ var wp;
 
   // packages/edit-widgets/build-module/blocks/widget-area/block.json
   var block_default = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/widget-area",
     title: "Widget Area",
@@ -4073,7 +4073,7 @@ var wp;
   }
   var initialize = initializeEditor;
   function reinitializeEditor() {
-    (0, import_deprecated6.default)("wp.editWidgets.reinitializeEditor", {
+    (0, import_deprecated6.default)("zc.editWidgets.reinitializeEditor", {
       since: "6.2",
       version: "6.3"
     });

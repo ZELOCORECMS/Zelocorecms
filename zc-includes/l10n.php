@@ -1297,7 +1297,7 @@ function _load_script_textdomain_from_src( string $handle, string $src, string $
 		if ( ! isset( $site_url['path'] ) ) {
 			$relative = trim( $src_url['path'], '/' );
 		} elseif ( str_starts_with( $src_url['path'], trailingslashit( $site_url['path'] ) ) ) {
-			// Make the src relative to the WP root.
+			// Make the src relative to the ZC root.
 			$relative = substr( $src_url['path'], strlen( $site_url['path'] ) );
 			$relative = trim( $relative, '/' );
 		}
@@ -1315,7 +1315,7 @@ function _load_script_textdomain_from_src( string $handle, string $src, string $
 	 */
 	$relative = apply_filters( 'load_script_textdomain_relative_path', $relative, $src, $is_module );
 
-	// If the source is not from WP.
+	// If the source is not from ZC.
 	if ( ! is_string( $relative ) ) {
 		return load_script_translations( false, $handle, $domain );
 	}

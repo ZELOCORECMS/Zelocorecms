@@ -6,7 +6,7 @@
  * @since 2.0.0
  */
 #[AllowDynamicProperties]
-class WP {
+class ZC {
 	/**
 	 * Public query variables.
 	 *
@@ -142,7 +142,7 @@ class WP {
 		 * @since 3.5.0
 		 *
 		 * @param bool         $bool             Whether or not to parse the request. Default true.
-		 * @param WP           $zc               Current ZelocoreCMS environment instance.
+		 * @param ZC           $zc               Current ZelocoreCMS environment instance.
 		 * @param array|string $extra_query_vars Extra passed query variables.
 		 */
 		if ( ! apply_filters( 'do_parse_request', true, $this, $extra_query_vars ) ) {
@@ -413,7 +413,7 @@ class WP {
 		 *
 		 * @since 2.1.0
 		 *
-		 * @param WP $zc Current ZelocoreCMS environment instance (passed by reference).
+		 * @param ZC $zc Current ZelocoreCMS environment instance (passed by reference).
 		 */
 		do_action_ref_array( 'parse_request', array( &$this ) );
 
@@ -475,7 +475,7 @@ class WP {
 
 			$headers['Content-Type'] = feed_content_type( $type ) . '; charset=' . get_option( 'blog_charset' );
 
-			// We're showing a feed, so WP is indeed the only thing that last changed.
+			// We're showing a feed, so ZC is indeed the only thing that last changed.
 			if ( ! empty( $this->query_vars['withcomments'] )
 				|| str_contains( $this->query_vars['feed'], 'comments-' )
 				|| ( empty( $this->query_vars['withoutcomments'] )
@@ -558,7 +558,7 @@ class WP {
 		 * @since 2.8.0
 		 *
 		 * @param string[] $headers Associative array of headers to be sent.
-		 * @param WP       $zc      Current ZelocoreCMS environment instance.
+		 * @param ZC       $zc      Current ZelocoreCMS environment instance.
 		 */
 		$headers = apply_filters( 'zc_headers', $headers, $this );
 
@@ -593,7 +593,7 @@ class WP {
 		 *
 		 * @since 2.1.0
 		 *
-		 * @param WP $zc Current ZelocoreCMS environment instance (passed by reference).
+		 * @param ZC $zc Current ZelocoreCMS environment instance (passed by reference).
 		 */
 		do_action_ref_array( 'send_headers', array( &$this ) );
 	}
@@ -807,7 +807,7 @@ class WP {
 	/**
 	 * Sets up all of the variables required by the ZelocoreCMS environment.
 	 *
-	 * The action {@see 'wp'} has one parameter that references the WP object. It
+	 * The action {@see 'zc'} has one parameter that references the ZC object. It
 	 * allows for accessing the properties and methods to further manipulate the
 	 * object.
 	 *
@@ -833,8 +833,8 @@ class WP {
 		 *
 		 * @since 2.1.0
 		 *
-		 * @param WP $zc Current ZelocoreCMS environment instance (passed by reference).
+		 * @param ZC $zc Current ZelocoreCMS environment instance (passed by reference).
 		 */
-		do_action_ref_array( 'wp', array( &$this ) );
+		do_action_ref_array( 'zc', array( &$this ) );
 	}
 }

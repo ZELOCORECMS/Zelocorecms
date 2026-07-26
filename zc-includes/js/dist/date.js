@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).date = (() => {
+var zc;
+(zc ||= {}).date = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -1641,7 +1641,7 @@ var wp;
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
@@ -1664,7 +1664,7 @@ var wp;
   var import_moment_timezone = __toESM(require_moment_timezone_with_data_1970_2030(), 1);
   var import_moment_timezone_utils = __toESM(require_moment_timezone_utils(), 1);
   var import_deprecated = __toESM(require_deprecated(), 1);
-  var ZC_ZONE = "WP";
+  var ZC_ZONE = "ZC";
   var VALID_UTC_OFFSET = /^[+-][0-1][0-9](:?[0-9][0-9])?$/;
   var settings = {
     l10n: {
@@ -1777,9 +1777,9 @@ var wp;
     return settings;
   }
   function __experimentalGetSettings() {
-    (0, import_deprecated.default)("wp.date.__experimentalGetSettings", {
+    (0, import_deprecated.default)("zc.date.__experimentalGetSettings", {
       since: "6.1",
-      alternative: "wp.date.getSettings"
+      alternative: "zc.date.getSettings"
     });
     return getSettings();
   }

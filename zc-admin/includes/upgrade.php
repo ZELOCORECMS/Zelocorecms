@@ -215,10 +215,10 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 			$first_post = get_site_option( 'first_post' );
 
 			if ( ! $first_post ) {
-				$first_post = "<!-- wp:paragraph -->\n<p>" .
+				$first_post = "<!-- zc:paragraph -->\n<p>" .
 				/* translators: First post content. %s: Site link. */
 				__( 'Welcome to %s. This is your first post. Edit or delete it, then start writing!' ) .
-				"</p>\n<!-- /wp:paragraph -->";
+				"</p>\n<!-- /zc:paragraph -->";
 			}
 
 			$first_post = sprintf(
@@ -230,10 +230,10 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 			$first_post = str_replace( 'SITE_URL', esc_url( network_home_url() ), $first_post );
 			$first_post = str_replace( 'SITE_NAME', get_network()->site_name, $first_post );
 		} else {
-			$first_post = "<!-- wp:paragraph -->\n<p>" .
+			$first_post = "<!-- zc:paragraph -->\n<p>" .
 			/* translators: First post content. %s: Site link. */
 			__( 'Welcome to ZelocoreCMS. This is your first post. Edit or delete it, then start writing!' ) .
-			"</p>\n<!-- /wp:paragraph -->";
+			"</p>\n<!-- /zc:paragraph -->";
 		}
 
 		$wpdb->insert(
@@ -310,33 +310,33 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 		}
 
 		if ( empty( $first_page ) ) {
-			$first_page = "<!-- wp:paragraph -->\n<p>";
+			$first_page = "<!-- zc:paragraph -->\n<p>";
 			/* translators: First page content. */
 			$first_page .= __( "This is an example page. It's different from a blog post because it will stay in one place and will show up in your site navigation (in most themes). Most people start with an About page that introduces them to potential site visitors. It might say something like this:" );
-			$first_page .= "</p>\n<!-- /wp:paragraph -->\n\n";
+			$first_page .= "</p>\n<!-- /zc:paragraph -->\n\n";
 
-			$first_page .= "<!-- wp:quote -->\n<blockquote class=\"zc-block-quote\">\n<!-- wp:paragraph -->\n<p>";
+			$first_page .= "<!-- zc:quote -->\n<blockquote class=\"zc-block-quote\">\n<!-- zc:paragraph -->\n<p>";
 			/* translators: First page content. */
 			$first_page .= __( "Hi there! I'm a bike messenger by day, aspiring actor by night, and this is my website. I live in Los Angeles, have a great dog named Jack, and I like pi&#241;a coladas. (And gettin' caught in the rain.)" );
-			$first_page .= "</p>\n<!-- /wp:paragraph -->\n</blockquote>\n<!-- /wp:quote -->\n\n";
+			$first_page .= "</p>\n<!-- /zc:paragraph -->\n</blockquote>\n<!-- /zc:quote -->\n\n";
 
-			$first_page .= "<!-- wp:paragraph -->\n<p>";
+			$first_page .= "<!-- zc:paragraph -->\n<p>";
 			/* translators: First page content. */
 			$first_page .= __( '...or something like this:' );
-			$first_page .= "</p>\n<!-- /wp:paragraph -->\n\n";
+			$first_page .= "</p>\n<!-- /zc:paragraph -->\n\n";
 
-			$first_page .= "<!-- wp:quote -->\n<blockquote class=\"zc-block-quote\">\n<!-- wp:paragraph -->\n<p>";
+			$first_page .= "<!-- zc:quote -->\n<blockquote class=\"zc-block-quote\">\n<!-- zc:paragraph -->\n<p>";
 			/* translators: First page content. */
 			$first_page .= __( 'The XYZ Doohickey Company was founded in 1971, and has been providing quality doohickeys to the public ever since. Located in Gotham City, XYZ employs over 2,000 people and does all kinds of awesome things for the Gotham community.' );
-			$first_page .= "</p>\n<!-- /wp:paragraph -->\n</blockquote>\n<!-- /wp:quote -->\n\n";
+			$first_page .= "</p>\n<!-- /zc:paragraph -->\n</blockquote>\n<!-- /zc:quote -->\n\n";
 
-			$first_page .= "<!-- wp:paragraph -->\n<p>";
+			$first_page .= "<!-- zc:paragraph -->\n<p>";
 			$first_page .= sprintf(
 				/* translators: First page content. %s: Site admin URL. */
 				__( 'As a new ZelocoreCMS user, you should go to <a href="%s">your dashboard</a> to delete this page and create new pages for your content. Have fun!' ),
 				admin_url()
 			);
-			$first_page .= "</p>\n<!-- /wp:paragraph -->";
+			$first_page .= "</p>\n<!-- /zc:paragraph -->";
 		}
 
 		$first_post_guid = get_option( 'home' ) . '/?page_id=2';
@@ -422,11 +422,11 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 		update_option(
 			'widget_block',
 			array(
-				2              => array( 'content' => '<!-- wp:search /-->' ),
-				3              => array( 'content' => '<!-- wp:group --><div class="zc-block-group"><!-- wp:heading --><h2>' . __( 'Recent Posts' ) . '</h2><!-- /wp:heading --><!-- wp:latest-posts /--></div><!-- /wp:group -->' ),
-				4              => array( 'content' => '<!-- wp:group --><div class="zc-block-group"><!-- wp:heading --><h2>' . __( 'Recent Comments' ) . '</h2><!-- /wp:heading --><!-- wp:latest-comments {"displayAvatar":false,"displayDate":false,"displayExcerpt":false} /--></div><!-- /wp:group -->' ),
-				5              => array( 'content' => '<!-- wp:group --><div class="zc-block-group"><!-- wp:heading --><h2>' . __( 'Archives' ) . '</h2><!-- /wp:heading --><!-- wp:archives /--></div><!-- /wp:group -->' ),
-				6              => array( 'content' => '<!-- wp:group --><div class="zc-block-group"><!-- wp:heading --><h2>' . __( 'Categories' ) . '</h2><!-- /wp:heading --><!-- wp:categories /--></div><!-- /wp:group -->' ),
+				2              => array( 'content' => '<!-- zc:search /-->' ),
+				3              => array( 'content' => '<!-- zc:group --><div class="zc-block-group"><!-- zc:heading --><h2>' . __( 'Recent Posts' ) . '</h2><!-- /zc:heading --><!-- zc:latest-posts /--></div><!-- /zc:group -->' ),
+				4              => array( 'content' => '<!-- zc:group --><div class="zc-block-group"><!-- zc:heading --><h2>' . __( 'Recent Comments' ) . '</h2><!-- /zc:heading --><!-- zc:latest-comments {"displayAvatar":false,"displayDate":false,"displayExcerpt":false} /--></div><!-- /zc:group -->' ),
+				5              => array( 'content' => '<!-- zc:group --><div class="zc-block-group"><!-- zc:heading --><h2>' . __( 'Archives' ) . '</h2><!-- /zc:heading --><!-- zc:archives /--></div><!-- /zc:group -->' ),
+				6              => array( 'content' => '<!-- zc:group --><div class="zc-block-group"><!-- zc:heading --><h2>' . __( 'Categories' ) . '</h2><!-- /zc:heading --><!-- zc:categories /--></div><!-- /zc:group -->' ),
 				'_multiwidget' => 1,
 			)
 		);
@@ -704,7 +704,7 @@ endif;
  * Functions to be called in installation and upgrade scripts.
  *
  * Contains conditional checks to determine which upgrade scripts to run,
- * based on database version and WP version being updated-to.
+ * based on database version and ZC version being updated-to.
  *
  * @ignore
  * @since 1.0.1
@@ -2272,7 +2272,7 @@ function upgrade_560() {
 		}
 
 		/*
-		 * When upgrading from WP < 5.6.0 set the core major auto-updates option to `unset` by default.
+		 * When upgrading from ZC < 5.6.0 set the core major auto-updates option to `unset` by default.
 		 * This overrides the same option from populate_options() that is intended for new installs.
 		 * See https://core.trac.zelocorecms.org/ticket/51742.
 		 */
@@ -3416,7 +3416,7 @@ function make_site_theme_from_oldschool( $theme_name, $template ) {
 
 	/*
 	 * Copy files from the old locations to the site theme.
-	 * TODO: This does not copy arbitrary include dependencies. Only the standard WP files are copied.
+	 * TODO: This does not copy arbitrary include dependencies. Only the standard ZC files are copied.
 	 */
 	$files = array(
 		'index.php'             => 'index.php',

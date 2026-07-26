@@ -62,7 +62,7 @@ if ( $zc_customize->changeset_post_id() ) {
 		?>
 		<?php zc_print_scripts( array( 'zc-util' ) ); ?>
 		<script>
-			wp.ajax.post( 'customize_save', <?php echo zc_json_encode( $request_args, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ); ?> );
+			zc.ajax.post( 'customize_save', <?php echo zc_json_encode( $request_args, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ); ?> );
 		</script>
 		<?php
 		$script = ob_get_clean();

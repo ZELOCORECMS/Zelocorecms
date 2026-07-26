@@ -7,12 +7,12 @@
  * Description: Footer with site title and powered by ZelocoreCMS.
  */
 ?>
-<!-- wp:group {"layout":{"type":"constrained"}} -->
+<!-- zc:group {"layout":{"type":"constrained"}} -->
 <div class="zc-block-group">
-	<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|40"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
+	<!-- zc:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|40"}}},"layout":{"type":"flex","justifyContent":"space-between"}} -->
 	<div class="zc-block-group alignwide" style="padding-top:var(--zc--preset--spacing--40)">
-		<!-- wp:site-title {"level":0} /-->
-		<!-- wp:paragraph {"align":"right"} -->
+		<!-- zc:site-title {"level":0} /-->
+		<!-- zc:paragraph {"align":"right"} -->
 		<p class="has-text-align-right">
 		<?php
 		printf(
@@ -22,8 +22,8 @@
 		)
 		?>
 		</p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

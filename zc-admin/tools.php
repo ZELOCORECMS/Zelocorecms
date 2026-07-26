@@ -18,13 +18,13 @@ if ( isset( $_GET['page'] ) && ! empty( $_POST ) ) {
 	}
 }
 
-// The privacy policy guide used to be outputted from here. Since WP 5.3 it is in zc-admin/privacy-policy-guide.php.
+// The privacy policy guide used to be outputted from here. Since ZC 5.3 it is in zc-admin/privacy-policy-guide.php.
 if ( isset( $_GET['zc-privacy-policy-guide'] ) ) {
 	require_once dirname( __DIR__ ) . '/zc-load.php';
 	zc_redirect( admin_url( 'options-privacy.php?tab=policyguide' ), 301 );
 	exit;
 } elseif ( isset( $_GET['page'] ) ) {
-	// These were also moved to files in WP 5.3.
+	// These were also moved to files in ZC 5.3.
 	if ( 'export_personal_data' === $_GET['page'] ) {
 		require_once dirname( __DIR__ ) . '/zc-load.php';
 		zc_redirect( admin_url( 'export-personal-data.php' ), 301 );

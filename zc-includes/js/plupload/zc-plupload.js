@@ -1,9 +1,9 @@
 /* global pluploadL10n, plupload, _wpPluploadSettings */
 
 /**
- * @namespace wp
+ * @namespace zc
  */
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 ( function( exports, $ ) {
 	var Uploader;
@@ -20,8 +20,8 @@ window.wp = window.wp || {};
 	 * ZelocoreCMS back end and the ZelocoreCMS media experience.
 	 *
 	 * @class
-	 * @memberOf wp
-	 * @alias wp.Uploader
+	 * @memberOf zc
+	 * @alias zc.Uploader
 	 *
 	 * @param {object} options           The options passed to the new plupload instance.
 	 * @param {object} options.container The id of uploader container.
@@ -201,7 +201,7 @@ window.wp = window.wp || {};
 		 * Custom error callback.
 		 *
 		 * Add a new error to the errors collection, so other modules can track
-		 * and display errors. @see wp.Uploader.errors.
+		 * and display errors. @see zc.Uploader.errors.
 		 *
 		 * @param {string}        message Error message.
 		 * @param {object}        data    Error data from Plupload.
@@ -248,7 +248,7 @@ window.wp = window.wp || {};
 
 			file.attachment.set( _.extend( response.data, { uploading: false } ) );
 
-			wp.media.model.Attachment.get( response.data.id, file.attachment );
+			zc.media.model.Attachment.get( response.data.id, file.attachment );
 
 			complete = Uploader.queue.all( function( attachment ) {
 				return ! attachment.get( 'uploading' );
@@ -377,7 +377,7 @@ window.wp = window.wp || {};
 					date:      new Date(),
 					filename:  file.name,
 					menuOrder: 0,
-					uploadedTo: wp.media.model.settings.post.id
+					uploadedTo: zc.media.model.settings.post.id
 				}, _.pick( file, 'loaded', 'size', 'percent' ) );
 
 				// Handle early mime type scanning for images.
@@ -394,7 +394,7 @@ window.wp = window.wp || {};
 
 				// Create a model for the attachment, and add it to the Upload queue collection
 				// so listeners to the upload queue can track and display upload progress.
-				file.attachment = wp.media.model.Attachment.create( attributes );
+				file.attachment = zc.media.model.Attachment.create( attributes );
 				Uploader.queue.add( file.attachment );
 
 				self.added( file.attachment );
@@ -493,7 +493,7 @@ window.wp = window.wp || {};
 		},
 	};
 
-	$.extend( Uploader.prototype, /** @lends wp.Uploader.prototype */{
+	$.extend( Uploader.prototype, /** @lends zc.Uploader.prototype */{
 		/**
 		 * Acts as a shortcut to extending the uploader's multipart_params object.
 		 *
@@ -519,7 +519,7 @@ window.wp = window.wp || {};
 		},
 
 		/**
-		 * Make a few internal event callbacks available on the wp.Uploader object
+		 * Make a few internal event callbacks available on the zc.Uploader object
 		 * to change the Uploader internals if absolutely necessary.
 		 */
 		init:     function() {},
@@ -572,10 +572,10 @@ window.wp = window.wp || {};
 
 	// Create a collection of attachments in the upload queue,
 	// so that other modules can track and display upload progress.
-	Uploader.queue = new wp.media.model.Attachments( [], { query: false });
+	Uploader.queue = new zc.media.model.Attachments( [], { query: false });
 
 	// Create a collection to collect errors incurred while attempting upload.
 	Uploader.errors = new Backbone.Collection();
 
 	exports.Uploader = Uploader;
-})( wp, jQuery );
+})( zc, jQuery );

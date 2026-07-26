@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).priorityQueue = (() => {
+var zc;
+(zc ||= {}).priorityQueue = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;

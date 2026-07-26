@@ -11,6 +11,6 @@
  */
 
 ?>
-<!-- wp:heading {"textAlign":"left","level":1} -->
+<!-- zc:heading {"textAlign":"left","level":1} -->
 <h1 class="zc-block-heading has-text-align-left"><?php esc_html_e( 'Blog', 'twentytwentyfive' ); ?></h1>
-<!-- /wp:heading -->
+<!-- /zc:heading -->

@@ -720,7 +720,7 @@ function zc_allow_comment( $commentdata, $zc_error = false ) {
 	/**
 	 * Filters the ID, if any, of the duplicate comment found when creating a new comment.
 	 *
-	 * Return an empty value from this filter to allow what WP considers a duplicate comment.
+	 * Return an empty value from this filter to allow what ZC considers a duplicate comment.
 	 *
 	 * @since 4.4.0
 	 *
@@ -817,7 +817,7 @@ function zc_allow_comment( $commentdata, $zc_error = false ) {
 }
 
 /**
- * Hooks WP's native database-based comment-flood check.
+ * Hooks ZC's native database-based comment-flood check.
  *
  * This wrapper maintains backward compatibility with plugins that expect to
  * be able to unhook the legacy check_comment_flood_db() function from

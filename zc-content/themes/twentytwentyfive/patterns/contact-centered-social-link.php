@@ -13,27 +13,27 @@
 
 ?>
 
-<!-- wp:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"blockGap":"var:preset|spacing|50","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"padding":{"top":"var:preset|spacing|80","bottom":"var:preset|spacing|80"},"blockGap":"var:preset|spacing|50","margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--80);padding-bottom:var(--zc--preset--spacing--80)">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:paragraph {"align":"center","className":"is-style-text-display","style":{"typography":{"fontStyle":"normal","fontWeight":"400"}}} -->
+		<!-- zc:paragraph {"align":"center","className":"is-style-text-display","style":{"typography":{"fontStyle":"normal","fontWeight":"400"}}} -->
 		<p class="has-text-align-center is-style-text-display" style="font-style:normal;font-weight:400"><?php echo zc_kses_post( _x( 'Got questions? <br><a href="#" rel="nofollow">Feel free to reach out.</a>', 'Heading of the Contact social link pattern', 'twentytwentyfive' ) ); ?></p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:spacer {"height":"var:preset|spacing|40"} -->
+		<!-- zc:spacer {"height":"var:preset|spacing|40"} -->
 		<div style="height:var(--zc--preset--spacing--40)" aria-hidden="true" class="zc-block-spacer"></div>
-		<!-- /wp:spacer -->
+		<!-- /zc:spacer -->
 
-		<!-- wp:social-links {"iconColor":"contrast","className":"has-icon-color is-style-logos-only","layout":{"type":"flex","justifyContent":"center"}} -->
+		<!-- zc:social-links {"iconColor":"contrast","className":"has-icon-color is-style-logos-only","layout":{"type":"flex","justifyContent":"center"}} -->
 		<ul class="zc-block-social-links has-icon-color is-style-logos-only">
-			<!-- wp:social-link {"url":"#","service":"twitter"} /-->
-			<!-- wp:social-link {"url":"#","service":"facebook"} /-->
-			<!-- wp:social-link {"url":"#","service":"instagram"} /-->
-			<!-- wp:social-link {"url":"#","service":"pinterest"} /-->
+			<!-- zc:social-link {"url":"#","service":"twitter"} /-->
+			<!-- zc:social-link {"url":"#","service":"facebook"} /-->
+			<!-- zc:social-link {"url":"#","service":"instagram"} /-->
+			<!-- zc:social-link {"url":"#","service":"pinterest"} /-->
 		</ul>
-		<!-- /wp:social-links -->
+		<!-- /zc:social-links -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

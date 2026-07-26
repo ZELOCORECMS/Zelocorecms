@@ -354,7 +354,7 @@ final class ZC_Customize_Widgets {
 		if ( is_admin() ) {
 			$this->customize_register();
 		} else {
-			add_action( 'wp', array( $this, 'customize_register' ) );
+			add_action( 'zc', array( $this, 'customize_register' ) );
 		}
 	}
 
@@ -857,8 +857,8 @@ final class ZC_Customize_Widgets {
 			zc_add_inline_script(
 				'zc-customize-widgets',
 				sprintf(
-					'wp.domReady( function() {
-					   wp.customizeWidgets.initialize( "widgets-customizer", %s );
+					'zc.domReady( function() {
+					   zc.customizeWidgets.initialize( "widgets-customizer", %s );
 					} );',
 					zc_json_encode( $editor_settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 				)
@@ -867,7 +867,7 @@ final class ZC_Customize_Widgets {
 			// Preload server-registered block schemas.
 			zc_add_inline_script(
 				'zc-blocks',
-				'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
+				'zc.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
 			);
 
 			// Preload server-registered block bindings sources.
@@ -881,7 +881,7 @@ final class ZC_Customize_Widgets {
 						'usesContext' => $source->uses_context,
 					);
 				}
-				$script = sprintf( 'for ( const source of %s ) { wp.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
+				$script = sprintf( 'for ( const source of %s ) { zc.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
 				zc_add_inline_script(
 					'zc-blocks',
 					$script
@@ -890,7 +890,7 @@ final class ZC_Customize_Widgets {
 
 			zc_add_inline_script(
 				'zc-blocks',
-				sprintf( 'wp.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $block_editor_context ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
+				sprintf( 'zc.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $block_editor_context ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
 				'after'
 			);
 

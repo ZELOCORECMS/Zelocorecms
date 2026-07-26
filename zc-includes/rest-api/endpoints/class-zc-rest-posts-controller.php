@@ -58,7 +58,7 @@ class ZC_REST_Posts_Controller extends ZC_REST_Controller {
 		$this->post_type = $post_type;
 		$obj             = get_post_type_object( $post_type );
 		$this->rest_base = ! empty( $obj->rest_base ) ? $obj->rest_base : $obj->name;
-		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'wp/v2';
+		$this->namespace = ! empty( $obj->rest_namespace ) ? $obj->rest_namespace : 'zc/v2';
 
 		$this->meta = new ZC_REST_Post_Meta_Fields( $this->post_type );
 	}
@@ -1657,7 +1657,7 @@ class ZC_REST_Posts_Controller extends ZC_REST_Controller {
 			return true;
 		}
 
-		// If this is a create request, get_post() will return null and wp theme will fallback to the passed post type.
+		// If this is a create request, get_post() will return null and zc theme will fallback to the passed post type.
 		$allowed_templates = zc_get_theme()->get_page_templates( $post, $this->post_type );
 
 		if ( isset( $allowed_templates[ $template ] ) ) {
@@ -2243,20 +2243,20 @@ class ZC_REST_Posts_Controller extends ZC_REST_Controller {
 				'href' => rest_url( rest_get_route_for_post_type_items( $this->post_type ) ),
 			),
 			'about'      => array(
-				'href' => rest_url( 'wp/v2/types/' . $this->post_type ),
+				'href' => rest_url( 'zc/v2/types/' . $this->post_type ),
 			),
 		);
 
 		if ( ( in_array( $post->post_type, array( 'post', 'page' ), true ) || post_type_supports( $post->post_type, 'author' ) )
 			&& ! empty( $post->post_author ) ) {
 			$links['author'] = array(
-				'href'       => rest_url( 'wp/v2/users/' . $post->post_author ),
+				'href'       => rest_url( 'zc/v2/users/' . $post->post_author ),
 				'embeddable' => true,
 			);
 		}
 
 		if ( in_array( $post->post_type, array( 'post', 'page' ), true ) || post_type_supports( $post->post_type, 'comments' ) ) {
-			$replies_url = rest_url( 'wp/v2/comments' );
+			$replies_url = rest_url( 'zc/v2/comments' );
 			$replies_url = add_query_arg( 'post', $post->ID, $replies_url );
 
 			$links['replies'] = array(

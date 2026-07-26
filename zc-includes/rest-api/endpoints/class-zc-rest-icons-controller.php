@@ -24,7 +24,7 @@ class ZC_REST_Icons_Controller extends ZC_REST_Controller {
 	 * Constructs the controller.
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'icons';
 	}
 

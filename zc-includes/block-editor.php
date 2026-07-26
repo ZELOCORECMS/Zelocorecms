@@ -749,7 +749,7 @@ function block_editor_rest_api_preload( array $preload_paths, $block_editor_cont
 	zc_add_inline_script(
 		'zc-api-fetch',
 		sprintf(
-			'wp.apiFetch.use( wp.apiFetch.createPreloadingMiddleware( %s ) );',
+			'zc.apiFetch.use( zc.apiFetch.createPreloadingMiddleware( %s ) );',
 			zc_json_encode( $preload_data, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		),
 		'after'

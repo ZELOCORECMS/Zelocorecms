@@ -2,38 +2,38 @@
  * @output zc-includes/js/zc-backbone.js
  */
 
-/** @namespace wp */
-window.wp = window.wp || {};
+/** @namespace zc */
+window.zc = window.zc || {};
 
 (function ($) {
 	/**
 	 * Create the ZelocoreCMS Backbone namespace.
 	 *
-	 * @namespace wp.Backbone
+	 * @namespace zc.Backbone
 	 */
-	wp.Backbone = {};
+	zc.Backbone = {};
 
 	/**
 	 * A backbone subview manager.
 	 *
 	 * @since 3.5.0
-	 * @since 3.6.0 Moved wp.media.Views to wp.Backbone.Subviews.
+	 * @since 3.6.0 Moved zc.media.Views to zc.Backbone.Subviews.
 	 *
-	 * @memberOf wp.Backbone
+	 * @memberOf zc.Backbone
 	 *
 	 * @class
 	 *
-	 * @param {wp.Backbone.View} view  The main view.
+	 * @param {zc.Backbone.View} view  The main view.
 	 * @param {Array|Object}     views The subviews for the main view.
 	 */
-	wp.Backbone.Subviews = function( view, views ) {
+	zc.Backbone.Subviews = function( view, views ) {
 		this.view = view;
 		this._views = _.isArray( views ) ? { '': views } : views || {};
 	};
 
-	wp.Backbone.Subviews.extend = Backbone.Model.extend;
+	zc.Backbone.Subviews.extend = Backbone.Model.extend;
 
-	_.extend( wp.Backbone.Subviews.prototype, {
+	_.extend( zc.Backbone.Subviews.prototype, {
 		/**
 		 * Fetches all of the subviews.
 		 *
@@ -121,7 +121,7 @@ window.wp = window.wp || {};
 		 *                                the existing views. When adding, to insert
 		 *                                `views` at a specific index, use `options.at`.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		set: function( selector, views, options ) {
 			var existing, next;
@@ -166,7 +166,7 @@ window.wp = window.wp || {};
 			this._views[ selector ] = next;
 
 			_.each( views, function( subview ) {
-				var constructor = subview.Views || wp.Backbone.Subviews,
+				var constructor = subview.Views || zc.Backbone.Subviews,
 					subviews = subview.views = subview.views || new constructor( subview );
 				subviews.parent   = this.view;
 				subviews.selector = selector;
@@ -207,7 +207,7 @@ window.wp = window.wp || {};
 		 *                                `options.silent` is true, no DOM modifications
 		 *                                will be made.
 		 *
-		 * @return {wp.Backbone.Subviews} The current subviews instance.
+		 * @return {zc.Backbone.Subviews} The current subviews instance.
 		 */
 		add: function( selector, views, options ) {
 			if ( ! _.isString( selector ) ) {
@@ -237,7 +237,7 @@ window.wp = window.wp || {};
 		 *                                `remove` will *not* be triggered on the
 		 *                                unregistered views.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		unset: function( selector, views, options ) {
 			var existing;
@@ -269,7 +269,7 @@ window.wp = window.wp || {};
 		 *
 		 * @since 3.5.0
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		detach: function() {
 			$( _.pluck( this.all(), 'el' ) ).detach();
@@ -283,7 +283,7 @@ window.wp = window.wp || {};
 		 *
 		 * @since 3.5.0
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		*/
 		render: function() {
 			var options = {
@@ -313,7 +313,7 @@ window.wp = window.wp || {};
 		 * @param {boolean} options.silent If true, `unset` will *not* be triggered on
 		 *                                 the master views' parent.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		*/
 		remove: function( options ) {
 			if ( ! options || ! options.silent ) {
@@ -340,7 +340,7 @@ window.wp = window.wp || {};
 		 * @param {string} $target Selector where to put the elements.
 		 * @param {*} els HTML or elements to put into the selector's HTML.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		replace: function( $target, els ) {
 			$target.html( els );
@@ -364,7 +364,7 @@ window.wp = window.wp || {};
 		 * @param {?Object} options    Options for call.
 		 * @param {?number} options.at At which index to put the elements.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		insert: function( $target, els, options ) {
 			var at = options && options.at,
@@ -413,7 +413,7 @@ window.wp = window.wp || {};
 		 * @param {Object}       options     Options for call.
 		 * @param {boolean}      options.add If true the provided views will be added.
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		_attach: function( selector, views, options ) {
 			var $selector = selector ? this.view.$( selector ) : this.view.$el,
@@ -472,10 +472,10 @@ window.wp = window.wp || {};
 		}
 	});
 
-	wp.Backbone.View = Backbone.View.extend({
+	zc.Backbone.View = Backbone.View.extend({
 
 		// The constructor for the `Views` manager.
-		Subviews: wp.Backbone.Subviews,
+		Subviews: zc.Backbone.Subviews,
 
 		/**
 		 * The base view class.
@@ -484,12 +484,12 @@ window.wp = window.wp || {};
 		 * makes it easier to have nested views.
 		 *
 		 * @since 3.5.0
-		 * @since 3.6.0 Moved wp.media.View to wp.Backbone.View
+		 * @since 3.6.0 Moved zc.media.View to zc.Backbone.View
 		 *
 		 * @constructs
 		 * @augments Backbone.View
 		 *
-		 * @memberOf wp.Backbone
+		 * @memberOf zc.Backbone
 		 *
 		 *
 		 * @param {Object} options The options for this view.
@@ -508,7 +508,7 @@ window.wp = window.wp || {};
 		 *
 		 * @since 3.5.0
 		 *
-		 * @return {wp.Backbone.Subviews} The current Subviews instance.
+		 * @return {zc.Backbone.Subviews} The current Subviews instance.
 		 */
 		remove: function() {
 			var result = Backbone.View.prototype.remove.apply( this, arguments );
@@ -525,7 +525,7 @@ window.wp = window.wp || {};
 		 *
 		 * @since 3.5.0
 		 *
-		 * @return {wp.Backbone.View} The current instance of the view.
+		 * @return {zc.Backbone.View} The current instance of the view.
 		 */
 		render: function() {
 			var options;

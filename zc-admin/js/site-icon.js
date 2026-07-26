@@ -5,7 +5,7 @@
  * @output zc-admin/js/site-icon.js
  */
 
-/* global jQuery, wp */
+/* global jQuery, zc */
 
 ( function ( $ ) {
 	var $chooseButton = $( '#choose-from-library-button' ),
@@ -75,7 +75,7 @@
 		var $el = $( this );
 
 		// Create the media frame.
-		frame = wp.media( {
+		frame = zc.media( {
 			button: {
 				// Set the text of the button.
 				text: $el.data( 'update' ),
@@ -84,14 +84,14 @@
 				close: false,
 			},
 			states: [
-				new wp.media.controller.Library( {
+				new zc.media.controller.Library( {
 					title: $el.data( 'choose-text' ),
-					library: wp.media.query( { type: 'image' } ),
+					library: zc.media.query( { type: 'image' } ),
 					date: false,
 					suggestedWidth: $el.data( 'size' ),
 					suggestedHeight: $el.data( 'size' ),
 				} ),
-				new wp.media.controller.SiteIconCropper( {
+				new zc.media.controller.SiteIconCropper( {
 					control: {
 						params: {
 							width: $el.data( 'size' ),
@@ -145,27 +145,27 @@
 		var i18nAppAlternativeString, i18nBrowserAlternativeString;
 
 		if ( attributes.alt ) {
-			i18nAppAlternativeString = wp.i18n.sprintf(
+			i18nAppAlternativeString = zc.i18n.sprintf(
 				/* translators: %s: The selected image alt text. */
-				wp.i18n.__( 'App icon preview: Current image: %s' ),
+				zc.i18n.__( 'App icon preview: Current image: %s' ),
 				attributes.alt
 			);
-			i18nBrowserAlternativeString = wp.i18n.sprintf(
+			i18nBrowserAlternativeString = zc.i18n.sprintf(
 				/* translators: %s: The selected image alt text. */
-				wp.i18n.__( 'Browser icon preview: Current image: %s' ),
+				zc.i18n.__( 'Browser icon preview: Current image: %s' ),
 				attributes.alt
 			);
 		} else {
-			i18nAppAlternativeString = wp.i18n.sprintf(
+			i18nAppAlternativeString = zc.i18n.sprintf(
 				/* translators: %s: The selected image filename. */
-				wp.i18n.__(
+				zc.i18n.__(
 					'App icon preview: The current image has no alternative text. The file name is: %s'
 				),
 				attributes.filename
 			);
-			i18nBrowserAlternativeString = wp.i18n.sprintf(
+			i18nBrowserAlternativeString = zc.i18n.sprintf(
 				/* translators: %s: The selected image filename. */
-				wp.i18n.__(
+				zc.i18n.__(
 					'Browser icon preview: The current image has no alternative text. The file name is: %s'
 				),
 				attributes.filename

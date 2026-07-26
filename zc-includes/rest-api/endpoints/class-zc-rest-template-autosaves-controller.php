@@ -73,7 +73,7 @@ class ZC_REST_Template_Autosaves_Controller extends ZC_REST_Autosaves_Controller
 		$this->revisions_controller = $revisions_controller;
 		$this->rest_base            = 'autosaves';
 		$this->parent_base          = ! empty( $post_type_object->rest_base ) ? $post_type_object->rest_base : $post_type_object->name;
-		$this->namespace            = ! empty( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'wp/v2';
+		$this->namespace            = ! empty( $post_type_object->rest_namespace ) ? $post_type_object->rest_namespace : 'zc/v2';
 	}
 
 	/**

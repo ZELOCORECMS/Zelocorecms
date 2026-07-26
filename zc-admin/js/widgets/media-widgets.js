@@ -5,10 +5,10 @@
 /* eslint consistent-this: [ "error", "control" ] */
 
 /**
- * @namespace wp.mediaWidgets
- * @memberOf  wp
+ * @namespace zc.mediaWidgets
+ * @memberOf  zc
  */
-wp.mediaWidgets = ( function( $ ) {
+zc.mediaWidgets = ( function( $ ) {
 	'use strict';
 
 	var component = {};
@@ -18,9 +18,9 @@ wp.mediaWidgets = ( function( $ ) {
 	 *
 	 * Media widgets register themselves by assigning subclasses of MediaWidgetControl onto this object by widget ID base.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
-	 * @type {Object.<string, wp.mediaWidgets.MediaWidgetModel>}
+	 * @type {Object.<string, zc.mediaWidgets.MediaWidgetModel>}
 	 */
 	component.controlConstructors = {};
 
@@ -29,19 +29,19 @@ wp.mediaWidgets = ( function( $ ) {
 	 *
 	 * Media widgets register themselves by assigning subclasses of MediaWidgetControl onto this object by widget ID base.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
-	 * @type {Object.<string, wp.mediaWidgets.MediaWidgetModel>}
+	 * @type {Object.<string, zc.mediaWidgets.MediaWidgetModel>}
 	 */
 	component.modelConstructors = {};
 
-	component.PersistentDisplaySettingsLibrary = wp.media.controller.Library.extend(/** @lends wp.mediaWidgets.PersistentDisplaySettingsLibrary.prototype */{
+	component.PersistentDisplaySettingsLibrary = zc.media.controller.Library.extend(/** @lends zc.mediaWidgets.PersistentDisplaySettingsLibrary.prototype */{
 
 		/**
 		 * Library which persists the customized display settings across selections.
 		 *
-		 * @constructs wp.mediaWidgets.PersistentDisplaySettingsLibrary
-		 * @augments   wp.media.controller.Library
+		 * @constructs zc.mediaWidgets.PersistentDisplaySettingsLibrary
+		 * @augments   zc.media.controller.Library
 		 *
 		 * @param {Object} options - Options.
 		 *
@@ -49,7 +49,7 @@ wp.mediaWidgets = ( function( $ ) {
 		 */
 		initialize: function initialize( options ) {
 			_.bindAll( this, 'handleDisplaySettingChange' );
-			wp.media.controller.Library.prototype.initialize.call( this, options );
+			zc.media.controller.Library.prototype.initialize.call( this, options );
 		},
 
 		/**
@@ -75,7 +75,7 @@ wp.mediaWidgets = ( function( $ ) {
 		 */
 		display: function getDisplaySettingsModel( model ) {
 			var display, selectedDisplaySettings = this.get( 'selectedDisplaySettings' );
-			display = wp.media.controller.Library.prototype.display.call( this, model );
+			display = zc.media.controller.Library.prototype.display.call( this, model );
 
 			display.off( 'change', this.handleDisplaySettingChange ); // Prevent duplicated event handlers.
 			display.set( selectedDisplaySettings.attributes );
@@ -90,10 +90,10 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Extended view for managing the embed UI.
 	 *
-	 * @class    wp.mediaWidgets.MediaEmbedView
-	 * @augments wp.media.view.Embed
+	 * @class    zc.mediaWidgets.MediaEmbedView
+	 * @augments zc.media.view.Embed
 	 */
-	component.MediaEmbedView = wp.media.view.Embed.extend(/** @lends wp.mediaWidgets.MediaEmbedView.prototype */{
+	component.MediaEmbedView = zc.media.view.Embed.extend(/** @lends zc.mediaWidgets.MediaEmbedView.prototype */{
 
 		/**
 		 * Initialize.
@@ -105,7 +105,7 @@ wp.mediaWidgets = ( function( $ ) {
 		 */
 		initialize: function( options ) {
 			var view = this, embedController; // eslint-disable-line consistent-this
-			wp.media.view.Embed.prototype.initialize.call( view, options );
+			zc.media.view.Embed.prototype.initialize.call( view, options );
 			if ( 'image' !== view.controller.options.mimeType ) {
 				embedController = view.controller.states.get( 'embed' );
 				embedController.off( 'scan', embedController.scanImage, embedController );
@@ -115,22 +115,22 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Refresh embed view.
 		 *
-		 * Forked override of {wp.media.view.Embed#refresh()} to suppress irrelevant "link text" field.
+		 * Forked override of {zc.media.view.Embed#refresh()} to suppress irrelevant "link text" field.
 		 *
 		 * @return {void}
 		 */
 		refresh: function refresh() {
 			/**
-			 * @class wp.mediaWidgets~Constructor
+			 * @class zc.mediaWidgets~Constructor
 			 */
 			var Constructor;
 
 			if ( 'image' === this.controller.options.mimeType ) {
-				Constructor = wp.media.view.EmbedImage;
+				Constructor = zc.media.view.EmbedImage;
 			} else {
 
 				// This should be eliminated once #40450 lands of when this is merged into core.
-				Constructor = wp.media.view.EmbedLink.extend(/** @lends wp.mediaWidgets~Constructor.prototype */{
+				Constructor = zc.media.view.EmbedLink.extend(/** @lends zc.mediaWidgets~Constructor.prototype */{
 
 					/**
 					 * Set the disabled state on the Add to Widget button.
@@ -194,7 +194,7 @@ wp.mediaWidgets = ( function( $ ) {
 							embedLinkView.setAddToWidgetButtonDisabled( true );
 						}
 
-						wp.media.view.EmbedLink.prototype.updateoEmbed.call( embedLinkView );
+						zc.media.view.EmbedLink.prototype.updateoEmbed.call( embedLinkView );
 					},
 
 					/**
@@ -227,9 +227,9 @@ wp.mediaWidgets = ( function( $ ) {
 						matches = urlParser.pathname.toLowerCase().match( /\.(\w+)$/ );
 						if ( matches ) {
 							fileExt = matches[1];
-							if ( ! wp.media.view.settings.embedMimes[ fileExt ] ) {
+							if ( ! zc.media.view.settings.embedMimes[ fileExt ] ) {
 								embedLinkView.renderFail();
-							} else if ( 0 !== wp.media.view.settings.embedMimes[ fileExt ].indexOf( embedLinkView.controller.options.mimeType ) ) {
+							} else if ( 0 !== zc.media.view.settings.embedMimes[ fileExt ].indexOf( embedLinkView.controller.options.mimeType ) ) {
 								embedLinkView.renderFail();
 							} else {
 								fetchSuccess( '<!--success-->' );
@@ -246,8 +246,8 @@ wp.mediaWidgets = ( function( $ ) {
 							embedLinkView.model.attributes.url = url;
 						}
 
-						embedLinkView.dfd = wp.apiRequest({
-							url: wp.media.view.settings.oEmbedProxyUrl,
+						embedLinkView.dfd = zc.apiRequest({
+							url: zc.media.view.settings.oEmbedProxyUrl,
 							data: {
 								url: url,
 								maxwidth: embedLinkView.model.get( 'width' ),
@@ -298,10 +298,10 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Custom media frame for selecting uploaded media or providing media by URL.
 	 *
-	 * @class    wp.mediaWidgets.MediaFrameSelect
-	 * @augments wp.media.view.MediaFrame.Post
+	 * @class    zc.mediaWidgets.MediaFrameSelect
+	 * @augments zc.media.view.MediaFrame.Post
 	 */
-	component.MediaFrameSelect = wp.media.view.MediaFrame.Post.extend(/** @lends wp.mediaWidgets.MediaFrameSelect.prototype */{
+	component.MediaFrameSelect = zc.media.view.MediaFrame.Post.extend(/** @lends zc.mediaWidgets.MediaFrameSelect.prototype */{
 
 		/**
 		 * Create the default states.
@@ -310,7 +310,7 @@ wp.mediaWidgets = ( function( $ ) {
 		 */
 		createStates: function createStates() {
 			var mime = this.options.mimeType, specificMimes = [];
-			_.each( wp.media.view.settings.embedMimes, function( embedMime ) {
+			_.each( zc.media.view.settings.embedMimes, function( embedMime ) {
 				if ( 0 === embedMime.indexOf( mime ) ) {
 					specificMimes.push( embedMime );
 				}
@@ -329,7 +329,7 @@ wp.mediaWidgets = ( function( $ ) {
 					priority:   20,
 					toolbar:    'main-insert',
 					filterable: 'dates',
-					library:    wp.media.query({
+					library:    zc.media.query({
 						type: mime
 					}),
 					multiple:   false,
@@ -340,10 +340,10 @@ wp.mediaWidgets = ( function( $ ) {
 					displayUserSettings: false // We use the display settings from the current/default widget instance props.
 				}),
 
-				new wp.media.controller.EditImage({ model: this.options.editImage }),
+				new zc.media.controller.EditImage({ model: this.options.editImage }),
 
 				// Embed states.
-				new wp.media.controller.Embed({
+				new zc.media.controller.Embed({
 					metadata: this.options.metadata,
 					type: 'image' === this.options.mimeType ? 'image' : 'link',
 					invalidEmbedTypeError: this.options.invalidEmbedTypeError
@@ -354,10 +354,10 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Main insert toolbar.
 		 *
-		 * Forked override of {wp.media.view.MediaFrame.Post#mainInsertToolbar()} to override text.
+		 * Forked override of {zc.media.view.MediaFrame.Post#mainInsertToolbar()} to override text.
 		 *
-		 * @param {wp.Backbone.View} view - Toolbar view.
-		 * @this {wp.media.controller.Library}
+		 * @param {zc.Backbone.View} view - Toolbar view.
+		 * @this {zc.media.controller.Library}
 		 * @return {void}
 		 */
 		mainInsertToolbar: function mainInsertToolbar( view ) {
@@ -373,7 +373,7 @@ wp.mediaWidgets = ( function( $ ) {
 				 *
 				 * @ignore
 				 *
-				 * @fires wp.media.controller.State#insert()
+				 * @fires zc.media.controller.State#insert()
 				 * @return {void}
 				 */
 				click: function onClick() {
@@ -389,14 +389,14 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Main embed toolbar.
 		 *
-		 * Forked override of {wp.media.view.MediaFrame.Post#mainEmbedToolbar()} to override text.
+		 * Forked override of {zc.media.view.MediaFrame.Post#mainEmbedToolbar()} to override text.
 		 *
-		 * @param {wp.Backbone.View} toolbar - Toolbar view.
-		 * @this {wp.media.controller.Library}
+		 * @param {zc.Backbone.View} toolbar - Toolbar view.
+		 * @this {zc.media.controller.Library}
 		 * @return {void}
 		 */
 		mainEmbedToolbar: function mainEmbedToolbar( toolbar ) {
-			toolbar.view = new wp.media.view.Toolbar.Embed({
+			toolbar.view = new zc.media.view.Toolbar.Embed({
 				controller: this,
 				text: this.options.text,
 				event: 'insert'
@@ -406,7 +406,7 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Embed content.
 		 *
-		 * Forked override of {wp.media.view.MediaFrame.Post#embedContent()} to suppress irrelevant "link text" field.
+		 * Forked override of {zc.media.view.MediaFrame.Post#embedContent()} to suppress irrelevant "link text" field.
 		 *
 		 * @return {void}
 		 */
@@ -420,7 +420,7 @@ wp.mediaWidgets = ( function( $ ) {
 		}
 	});
 
-	component.MediaWidgetControl = Backbone.View.extend(/** @lends wp.mediaWidgets.MediaWidgetControl.prototype */{
+	component.MediaWidgetControl = Backbone.View.extend(/** @lends zc.mediaWidgets.MediaWidgetControl.prototype */{
 
 		/**
 		 * Translation strings.
@@ -480,7 +480,7 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Media Widget Control.
 		 *
-		 * @constructs wp.mediaWidgets.MediaWidgetControl
+		 * @constructs zc.mediaWidgets.MediaWidgetControl
 		 * @augments   Backbone.View
 		 * @abstract
 		 *
@@ -530,7 +530,7 @@ wp.mediaWidgets = ( function( $ ) {
 			control.previewTemplateProps = new Backbone.Model( control.mapModelToPreviewTemplateProps() );
 
 			// Re-render the preview when the attachment changes.
-			control.selectedAttachment = new wp.media.model.Attachment();
+			control.selectedAttachment = new zc.media.model.Attachment();
 			control.renderPreview = _.debounce( control.renderPreview );
 			control.listenTo( control.previewTemplateProps, 'change', control.renderPreview );
 
@@ -586,7 +586,7 @@ wp.mediaWidgets = ( function( $ ) {
 				control.mapModelToMediaFrameProps(
 					_.extend( control.model.defaults(), control.model.toJSON() )
 				),
-				_.keys( wp.media.view.settings.defaultProps )
+				_.keys( zc.media.view.settings.defaultProps )
 			) );
 		},
 
@@ -602,7 +602,7 @@ wp.mediaWidgets = ( function( $ ) {
 				control.selectedAttachment.clear();
 				control.model.set( 'error', false );
 			} else if ( control.model.get( 'attachment_id' ) !== control.selectedAttachment.get( 'id' ) ) {
-				attachment = new wp.media.model.Attachment({
+				attachment = new zc.media.model.Attachment({
 					id: control.model.get( 'attachment_id' )
 				});
 				attachment.fetch()
@@ -666,7 +666,7 @@ wp.mediaWidgets = ( function( $ ) {
 			if ( ! $( '#tmpl-widget-media-' + control.id_base + '-control' ).length ) {
 				throw new Error( 'Missing widget control template for ' + control.id_base );
 			}
-			return wp.template( 'widget-media-' + control.id_base + '-control' );
+			return zc.template( 'widget-media-' + control.id_base + '-control' );
 		},
 
 		/**
@@ -740,7 +740,7 @@ wp.mediaWidgets = ( function( $ ) {
 				selectionModels.push( control.selectedAttachment );
 			}
 
-			selection = new wp.media.model.Selection( selectionModels, { multiple: false } );
+			selection = new zc.media.model.Selection( selectionModels, { multiple: false } );
 
 			mediaFrameProps = control.mapModelToMediaFrameProps( control.model.toJSON() );
 			if ( mediaFrameProps.size ) {
@@ -759,7 +759,7 @@ wp.mediaWidgets = ( function( $ ) {
 				state: control.isSelected() && 0 === control.model.get( 'attachment_id' ) ? 'embed' : 'insert',
 				invalidEmbedTypeError: control.l10n.unsupported_file_type
 			});
-			wp.media.frame = mediaFrame; // See wp.media().
+			zc.media.frame = mediaFrame; // See zc.media().
 
 			// Handle selection of a media item.
 			mediaFrame.on( 'insert', function onInsert() {
@@ -780,8 +780,8 @@ wp.mediaWidgets = ( function( $ ) {
 			});
 
 			// Disable syncing of attachment changes back to server (except for deletions). See <https://core.trac.zelocorecms.org/ticket/40403>.
-			defaultSync = wp.media.model.Attachment.prototype.sync;
-			wp.media.model.Attachment.prototype.sync = function( method ) {
+			defaultSync = zc.media.model.Attachment.prototype.sync;
+			zc.media.model.Attachment.prototype.sync = function( method ) {
 				if ( 'delete' === method ) {
 					return defaultSync.apply( this, arguments );
 				} else {
@@ -789,7 +789,7 @@ wp.mediaWidgets = ( function( $ ) {
 				}
 			};
 			mediaFrame.on( 'close', function onClose() {
-				wp.media.model.Attachment.prototype.sync = defaultSync;
+				zc.media.model.Attachment.prototype.sync = defaultSync;
 			});
 
 			mediaFrame.$el.addClass( 'media-widget' );
@@ -817,7 +817,7 @@ wp.mediaWidgets = ( function( $ ) {
 		/**
 		 * Get the instance props from the media selection frame.
 		 *
-		 * @param {wp.media.view.MediaFrame.Select} mediaFrame - Select frame.
+		 * @param {zc.media.view.MediaFrame.Select} mediaFrame - Select frame.
 		 * @return {Object} Props.
 		 */
 		getModelPropsFromMediaFrame: function getModelPropsFromMediaFrame( mediaFrame ) {
@@ -854,7 +854,7 @@ wp.mediaWidgets = ( function( $ ) {
 			modelProps = control.mapMediaToModelProps( mediaFrameProps );
 
 			// Clear the extension prop so sources will be reset for video and audio media.
-			_.each( wp.media.view.settings.embedExts, function( ext ) {
+			_.each( zc.media.view.settings.embedExts, function( ext ) {
 				if ( ext in control.model.schema && modelProps.url !== modelProps[ ext ] ) {
 					modelProps[ ext ] = '';
 				}
@@ -971,10 +971,10 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Media widget model.
 	 *
-	 * @class    wp.mediaWidgets.MediaWidgetModel
+	 * @class    zc.mediaWidgets.MediaWidgetModel
 	 * @augments Backbone.Model
 	 */
-	component.MediaWidgetModel = Backbone.Model.extend(/** @lends wp.mediaWidgets.MediaWidgetModel.prototype */{
+	component.MediaWidgetModel = Backbone.Model.extend(/** @lends zc.mediaWidgets.MediaWidgetModel.prototype */{
 
 		/**
 		 * Id attribute.
@@ -1029,7 +1029,7 @@ wp.mediaWidgets = ( function( $ ) {
 		 * @param {string|Object} key - Attribute name or attribute pairs.
 		 * @param {mixed|Object}  [val] - Attribute value or options object.
 		 * @param {Object}        [options] - Options when attribute name and value are passed separately.
-		 * @return {wp.mediaWidgets.MediaWidgetModel} This model.
+		 * @return {zc.mediaWidgets.MediaWidgetModel} This model.
 		 */
 		set: function set( key, val, options ) {
 			var model = this, attrs, opts, castedAttrs; // eslint-disable-line consistent-this
@@ -1095,7 +1095,7 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Collection of all widget model instances.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
 	 * @type {Backbone.Collection}
 	 */
@@ -1106,16 +1106,16 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Mapping of widget ID to instances of MediaWidgetControl subclasses.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
-	 * @type {Object.<string, wp.mediaWidgets.MediaWidgetControl>}
+	 * @type {Object.<string, zc.mediaWidgets.MediaWidgetControl>}
 	 */
 	component.widgetControls = {};
 
 	/**
 	 * Handle widget being added or initialized for the first time at the widget-added event.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -1201,7 +1201,7 @@ wp.mediaWidgets = ( function( $ ) {
 	/**
 	 * Setup widget in accessibility mode.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
 	 * @return {void}
 	 */
@@ -1252,7 +1252,7 @@ wp.mediaWidgets = ( function( $ ) {
 	 * the widgets admin screen and also via the 'widget-synced' event when making
 	 * a change to a widget in the customizer.
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -1287,9 +1287,9 @@ wp.mediaWidgets = ( function( $ ) {
 	 *
 	 * This function exists to prevent the JS file from having to boot itself.
 	 * When ZelocoreCMS enqueues this script, it should have an inline script
-	 * attached which calls wp.mediaWidgets.init().
+	 * attached which calls zc.mediaWidgets.init().
 	 *
-	 * @memberOf wp.mediaWidgets
+	 * @memberOf zc.mediaWidgets
 	 *
 	 * @return {void}
 	 */

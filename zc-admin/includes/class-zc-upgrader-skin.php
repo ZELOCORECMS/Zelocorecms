@@ -259,11 +259,11 @@ class ZC_Upgrader_Skin {
 				</script>';
 		} else {
 			echo '<script>
-					(function( wp ) {
-						if ( wp && wp.updates && wp.updates.decrementCount ) {
-							wp.updates.decrementCount( "' . $type . '" );
+					(function( zc ) {
+						if ( zc && zc.updates && zc.updates.decrementCount ) {
+							zc.updates.decrementCount( "' . $type . '" );
 						}
-					})( window.wp );
+					})( window.zc );
 				</script>';
 		}
 	}

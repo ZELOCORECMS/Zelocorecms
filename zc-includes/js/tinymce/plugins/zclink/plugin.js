@@ -96,11 +96,11 @@
 		var emailRegex = /^(mailto:)?[a-z0-9._%+-]+@[a-z0-9][a-z0-9.-]*\.[a-z]{2,63}$/i;
 		var urlRegex1 = /^https?:\/\/([^\s/?.#-][^\s\/?.#]*\.?)+(\/[^\s"]*)?$/i;
 		var urlRegex2 = /^https?:\/\/[^\/]+\.[^\/]+($|\/)/i;
-		var speak = ( typeof window.wp !== 'undefined' && window.wp.a11y && window.wp.a11y.speak ) ? window.wp.a11y.speak : function() {};
+		var speak = ( typeof window.zc !== 'undefined' && window.zc.a11y && window.zc.a11y.speak ) ? window.zc.a11y.speak : function() {};
 		var hasLinkError = false;
-		var __ = window.wp.i18n.__;
-		var _n = window.wp.i18n._n;
-		var sprintf = window.wp.i18n.sprintf;
+		var __ = window.zc.i18n.__;
+		var _n = window.zc.i18n._n;
+		var sprintf = window.zc.i18n.sprintf;
 
 		function getSelectedLink() {
 			var href, html,
@@ -174,8 +174,8 @@
 		}
 
 		editor.on( 'preinit', function() {
-			if ( editor.wp && editor.wp._createToolbar ) {
-				toolbar = editor.wp._createToolbar( [
+			if ( editor.zc && editor.zc._createToolbar ) {
+				toolbar = editor.zc._createToolbar( [
 					'zc_link_preview',
 					'zc_link_edit',
 					'zc_link_remove'
@@ -190,7 +190,7 @@
 					editButtons.push( 'zc_link_advanced' );
 				}
 
-				editToolbar = editor.wp._createToolbar( editButtons, true );
+				editToolbar = editor.zc._createToolbar( editButtons, true );
 
 				editToolbar.on( 'show', function() {
 					if ( typeof window.wpLink === 'undefined' || ! window.wpLink.modalOpen ) {
@@ -300,7 +300,7 @@
 			editor.execCommand( 'zc_link_cancel' );
 		} );
 
-		// WP default shortcuts.
+		// ZC default shortcuts.
 		editor.addShortcut( 'access+a', '', 'ZC_Link' );
 		editor.addShortcut( 'access+s', '', 'zc_unlink' );
 		// The "de-facto standard" shortcut, see #27305.

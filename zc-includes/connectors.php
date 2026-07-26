@@ -243,10 +243,10 @@ function _zc_connectors_init(): void {
 	/**
 	 * Fires when the connector registry is ready for plugins to register connectors.
 	 *
-	 * Built-in connectors and any AI providers auto-discovered from the WP AI Client
+	 * Built-in connectors and any AI providers auto-discovered from the ZC AI Client
 	 * registry have already been registered at this point and cannot be unhooked.
 	 *
-	 * AI provider plugins that register with the WP AI Client do not need to use
+	 * AI provider plugins that register with the ZC AI Client do not need to use
 	 * this action — their connectors are created automatically. This action is
 	 * primarily for registering non-AI-provider connectors or overriding metadata
 	 * on existing connectors.
@@ -470,7 +470,7 @@ function _zc_connectors_get_api_key_source( string $setting_name, string $env_va
  * @access private
  *
  * @param string $key         The API key to check.
- * @param string $provider_id The WP AI client provider ID.
+ * @param string $provider_id The ZC AI client provider ID.
  * @return bool|null True if valid, false if invalid, null if unable to determine.
  */
 function _zc_connectors_is_ai_api_key_valid( string $key, string $provider_id ): ?bool {
@@ -505,7 +505,7 @@ function _zc_connectors_is_ai_api_key_valid( string $key, string $provider_id ):
 /**
  * Masks and validates connector API keys in REST responses.
  *
- * On every `/wp/v2/settings` response, masks connector API key values so raw
+ * On every `/zc/v2/settings` response, masks connector API key values so raw
  * keys are never exposed via the REST API.
  *
  * On POST or PUT requests, validates each updated key against the provider
@@ -520,7 +520,7 @@ function _zc_connectors_is_ai_api_key_valid( string $key, string $provider_id ):
  * @return ZC_REST_Response The modified response with masked/validated keys.
  */
 function _zc_connectors_rest_settings_dispatch( ZC_REST_Response $response, ZC_REST_Server $server, ZC_REST_Request $request ): ZC_REST_Response {
-	if ( '/wp/v2/settings' !== $request->get_route() ) {
+	if ( '/zc/v2/settings' !== $request->get_route() ) {
 		return $response;
 	}
 
@@ -618,7 +618,7 @@ function _zc_register_default_connector_settings(): void {
 add_action( 'init', '_zc_register_default_connector_settings', 20 );
 
 /**
- * Passes stored connector API keys to the WP AI client.
+ * Passes stored connector API keys to the ZC AI client.
  *
  * @since 7.0.0
  * @access private

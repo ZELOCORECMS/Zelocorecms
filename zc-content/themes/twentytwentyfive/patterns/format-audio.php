@@ -11,28 +11,28 @@
  */
 
 ?>
-<!-- wp:group {"className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|30","right":"var:preset|spacing|30"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30","left":"var:preset|spacing|30","right":"var:preset|spacing|30"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group is-style-section-3" style="padding-top:var(--zc--preset--spacing--30);padding-right:var(--zc--preset--spacing--30);padding-bottom:var(--zc--preset--spacing--30);padding-left:var(--zc--preset--spacing--30)">
-	<!-- wp:columns {"isStackedOnMobile":false,"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|30"}}}} -->
+	<!-- zc:columns {"isStackedOnMobile":false,"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|30"}}}} -->
 	<div class="zc-block-columns is-not-stacked-on-mobile">
-		<!-- wp:column {"width":"100px"} -->
-		<div class="zc-block-column" style="flex-basis:100px"><!-- wp:image {"width":"100px","height":"auto","aspectRatio":"1","scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
+		<!-- zc:column {"width":"100px"} -->
+		<div class="zc-block-column" style="flex-basis:100px"><!-- zc:image {"width":"100px","height":"auto","aspectRatio":"1","scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
 		<figure class="zc-block-image size-full is-resized"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/ruins-image.webp' ); ?>" alt="<?php esc_attr_e( 'Event image', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover;width:100px;height:auto"/></figure>
-		<!-- /wp:image --></div>
-		<!-- /wp:column -->
+		<!-- /zc:image --></div>
+		<!-- /zc:column -->
 
-		<!-- wp:column {"width":""} -->
-		<div class="zc-block-column"><!-- wp:paragraph -->
+		<!-- zc:column {"width":""} -->
+		<div class="zc-block-column"><!-- zc:paragraph -->
 		<p><?php esc_html_e( 'Episode 1: Acoma Pueblo with Prof. Fiona Presley', 'twentytwentyfive' ); ?></p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:paragraph {"fontSize":"small"} -->
+		<!-- zc:paragraph {"fontSize":"small"} -->
 		<p class="has-small-font-size"><?php esc_html_e( 'Acoma Pueblo, in New Mexico, stands as a testament to the resilience and cultural heritage of the Acoma people', 'twentytwentyfive' ); ?></p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:audio -->
+		<!-- zc:audio -->
 		<figure class="zc-block-audio"><audio controls="" src="#"></audio></figure>
-		<!-- /wp:audio --></div>
-		<!-- /wp:column --></div>
-	<!-- /wp:columns --></div>
-<!-- /wp:group -->
+		<!-- /zc:audio --></div>
+		<!-- /zc:column --></div>
+	<!-- /zc:columns --></div>
+<!-- /zc:group -->

@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).warning = (() => {
+var zc;
+(zc ||= {}).warning = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -48,4 +48,4 @@ var wp;
   }
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.warning === 'object' && wp.warning.default) { wp.warning = wp.warning.default; }
+if (typeof zc.warning === 'object' && zc.warning.default) { zc.warning = zc.warning.default; }

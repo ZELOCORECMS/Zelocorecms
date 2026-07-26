@@ -21,7 +21,7 @@
 | Gutenberg | ZeloBuilder + TipTap editor | Visual overlay editing |
 | Shortcodes | Content Blocks | Component-based |
 | REST API | REST API v1 | Better designed, full coverage |
-| WP-GraphQL (plugin) | GraphQL API (native) | First-class, auto-generated |
+| ZC-GraphQL (plugin) | GraphQL API (native) | First-class, auto-generated |
 | Cron Jobs | BullMQ Job Queue | Reliable, Redis-backed |
 | Transients | Redis Cache | Predictable TTL |
 | wp_mail() | Email Service | Provider-agnostic |
@@ -327,7 +327,7 @@ async function generateSitemap(workspaceId: string): Promise<string> {
 class WordPressMigrator {
   
   async analyze(wpConfig: WPConfig): Promise<MigrationReport> {
-    // Connect to WP database
+    // Connect to ZC database
     const wpDb = await connectWPDatabase(wpConfig);
     
     return {
@@ -353,7 +353,7 @@ class WordPressMigrator {
     // Step 3: Import posts & pages
     await this.migratePosts(wpDb, session);
     
-    // Step 4: Import media (re-download from WP install)
+    // Step 4: Import media (re-download from ZC install)
     await this.migrateMedia(wpConfig.siteUrl, session);
     
     // Step 5: Import custom post types

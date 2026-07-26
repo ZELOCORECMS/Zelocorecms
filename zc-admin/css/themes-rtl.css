@@ -423,7 +423,7 @@ body.js .theme-browser.search-loading {
 	bottom: 0;
 	background: #f0f0f1;
 	background: rgba(240, 240, 241, 0.9);
-	z-index: 10000; /* Over WP Pointers. */
+	z-index: 10000; /* Over ZC Pointers. */
 	min-height: calc(100vh - var(--zc-admin--admin-bar--height, 32px));
 }
 
@@ -534,7 +534,7 @@ body.js .theme-browser.search-loading {
 	bottom: 3%;
 	background: #fff;
 	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
-	z-index: 10000; /* Over WP Pointers. */
+	z-index: 10000; /* Over ZC Pointers. */
 	box-sizing: border-box;
 	-webkit-overflow-scrolling: touch;
 }

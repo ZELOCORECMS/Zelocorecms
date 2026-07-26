@@ -333,7 +333,7 @@ class ZC_Site_Query {
 		 * @since 5.6.0 The returned array of site data is assigned to the `sites` property
 		 *              of the current ZC_Site_Query instance.
 		 *
-		 * @param ZC_Site[]|int[]|int|null $site_data Return an array of site data to short-circuit WP's site query,
+		 * @param ZC_Site[]|int[]|int|null $site_data Return an array of site data to short-circuit ZC's site query,
 		 *                                            the site count as an integer if `$this->query_vars['count']` is set,
 		 *                                            or null to run the normal queries.
 		 * @param ZC_Site_Query            $query     The ZC_Site_Query instance, passed by reference.

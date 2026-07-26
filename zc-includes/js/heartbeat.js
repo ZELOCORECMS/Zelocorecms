@@ -368,7 +368,7 @@
 				if ( trigger && ! hasConnectionError() ) {
 					settings.connectionError = true;
 					$document.trigger( 'heartbeat-connection-lost', [error, status] );
-					wp.hooks.doAction( 'heartbeat.connection-lost', error, status );
+					zc.hooks.doAction( 'heartbeat.connection-lost', error, status );
 				}
 			}
 		}
@@ -389,7 +389,7 @@
 				settings.errorcount = 0;
 				settings.connectionError = false;
 				$document.trigger( 'heartbeat-connection-restored' );
-				wp.hooks.doAction( 'heartbeat.connection-restored' );
+				zc.hooks.doAction( 'heartbeat.connection-restored' );
 			}
 		}
 
@@ -417,7 +417,7 @@
 			settings.queue = {};
 
 			$document.trigger( 'heartbeat-send', [ heartbeatData ] );
-			wp.hooks.doAction( 'heartbeat.send', heartbeatData );
+			zc.hooks.doAction( 'heartbeat.send', heartbeatData );
 
 			ajaxData = {
 				data: heartbeatData,
@@ -454,7 +454,7 @@
 
 				if ( response.nonces_expired ) {
 					$document.trigger( 'heartbeat-nonces-expired' );
-					wp.hooks.doAction( 'heartbeat.nonces-expired' );
+					zc.hooks.doAction( 'heartbeat.nonces-expired' );
 				}
 
 				// Change the interval from PHP.
@@ -477,7 +477,7 @@
 				}
 
 				$document.trigger( 'heartbeat-tick', [response, textStatus, jqXHR] );
-				wp.hooks.doAction( 'heartbeat.tick', response, textStatus, jqXHR );
+				zc.hooks.doAction( 'heartbeat.tick', response, textStatus, jqXHR );
 
 				// Do this last. Can trigger the next XHR if connection time > 5 seconds and newInterval == 'fast'.
 				if ( newInterval ) {
@@ -486,7 +486,7 @@
 			}).fail( function( jqXHR, textStatus, error ) {
 				setErrorState( textStatus || 'unknown', jqXHR.status );
 				$document.trigger( 'heartbeat-error', [jqXHR, textStatus, error] );
-				wp.hooks.doAction( 'heartbeat.error', jqXHR, textStatus, error );
+				zc.hooks.doAction( 'heartbeat.error', jqXHR, textStatus, error );
 			});
 		}
 
@@ -654,7 +654,7 @@
 		 * is active.
 		 *
 		 * @since 3.6.0
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @return {boolean} True if the window or the user is active.
 		 */
@@ -667,7 +667,7 @@
 		 *
 		 * @since 3.6.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @return {boolean} True if a connection error was found.
 		 */
@@ -683,7 +683,7 @@
 		 *
 		 * @since 3.8.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @return {void}
 		 */
@@ -702,7 +702,7 @@
 		 *
 		 * @since 3.8.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @return {void}
 		 */
@@ -720,7 +720,7 @@
 		 *
 		 * @since 3.6.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @param {string|number} speed Interval: 'fast' or integer between 1 and 3600 (seconds).
 		 *                              Fast equals 5.
@@ -791,12 +791,12 @@
 		 *			// code
 		 *		});
 		 * If the same 'handle' is used more than once, the data is not overwritten when
-		 * the third argument is 'true'. Use `wp.heartbeat.isQueued('handle')` to see if
+		 * the third argument is 'true'. Use `zc.heartbeat.isQueued('handle')` to see if
 		 * any data is already queued for that handle.
 		 *
 		 * @since 3.6.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @param {string}  handle      Unique handle for the data, used in PHP to
 		 *                              receive the data.
@@ -837,7 +837,7 @@
 		 *
 		 * @since 3.7.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @param {string} handle The handle for the data.
 		 *
@@ -854,7 +854,7 @@
 		 *
 		 * @since 3.7.0
 		 *
-		 * @memberOf wp.heartbeat.prototype
+		 * @memberOf zc.heartbeat.prototype
 		 *
 		 * @param {string} handle The handle for the data.
 		 *
@@ -883,18 +883,18 @@
 	};
 
 	/**
-	 * Ensure the global `wp` object exists.
+	 * Ensure the global `zc` object exists.
 	 *
-	 * @namespace wp
+	 * @namespace zc
 	 */
-	window.wp = window.wp || {};
+	window.zc = window.zc || {};
 
 	/**
 	 * Contains the Heartbeat API.
 	 *
-	 * @namespace wp.heartbeat
+	 * @namespace zc.heartbeat
 	 * @type {Heartbeat}
 	 */
-	window.wp.heartbeat = new Heartbeat();
+	window.zc.heartbeat = new Heartbeat();
 
 }( jQuery, window ));

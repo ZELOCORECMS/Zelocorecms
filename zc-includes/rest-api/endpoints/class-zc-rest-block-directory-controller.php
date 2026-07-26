@@ -20,7 +20,7 @@ class ZC_REST_Block_Directory_Controller extends ZC_REST_Controller {
 	 * Constructs the controller.
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'block-directory';
 	}
 
@@ -167,7 +167,7 @@ class ZC_REST_Block_Directory_Controller extends ZC_REST_Controller {
 	protected function prepare_links( $plugin ) {
 		$links = array(
 			'https://api.w.org/install-plugin' => array(
-				'href' => add_query_arg( 'slug', urlencode( $plugin['slug'] ), rest_url( 'wp/v2/plugins' ) ),
+				'href' => add_query_arg( 'slug', urlencode( $plugin['slug'] ), rest_url( 'zc/v2/plugins' ) ),
 			),
 		);
 
@@ -175,7 +175,7 @@ class ZC_REST_Block_Directory_Controller extends ZC_REST_Controller {
 
 		if ( $plugin_file ) {
 			$links['https://api.w.org/plugin'] = array(
-				'href'       => rest_url( 'wp/v2/plugins/' . substr( $plugin_file, 0, - 4 ) ),
+				'href'       => rest_url( 'zc/v2/plugins/' . substr( $plugin_file, 0, - 4 ) ),
 				'embeddable' => true,
 			);
 		}

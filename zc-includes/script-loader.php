@@ -320,15 +320,15 @@ function zc_default_packages_scripts( $scripts ) {
 
 		/*
 		 * Manually set the text direction localization after zc-i18n is printed.
-		 * This ensures that wp.i18n.isRTL() returns true in RTL languages.
+		 * This ensures that zc.i18n.isRTL() returns true in RTL languages.
 		 * We cannot use $scripts->set_translations( 'zc-i18n' ) to do this
 		 * because ZelocoreCMS prints a script's translations *before* the script,
-		 * which means, in the case of zc-i18n, that wp.i18n.setLocaleData()
-		 * is called before wp.i18n is defined.
+		 * which means, in the case of zc-i18n, that zc.i18n.setLocaleData()
+		 * is called before zc.i18n is defined.
 		 */
 		if ( 'zc-i18n' === $handle ) {
 			$ltr    = _x( 'ltr', 'text direction' );
-			$script = sprintf( "wp.i18n.setLocaleData( { 'text direction\u0004ltr': [ '%s' ] } );", $ltr );
+			$script = sprintf( "zc.i18n.setLocaleData( { 'text direction\u0004ltr': [ '%s' ] } );", $ltr );
 			$scripts->add_inline_script( $handle, $script, 'after' );
 		}
 	}
@@ -354,7 +354,7 @@ function zc_default_packages_inline_scripts( $scripts ) {
 	$scripts->add_inline_script(
 		'zc-api-fetch',
 		sprintf(
-			'wp.apiFetch.use( wp.apiFetch.createRootURLMiddleware( "%s" ) );',
+			'zc.apiFetch.use( zc.apiFetch.createRootURLMiddleware( "%s" ) );',
 			sanitize_url( get_rest_url() )
 		),
 		'after'
@@ -365,13 +365,13 @@ function zc_default_packages_inline_scripts( $scripts ) {
 			"\n",
 			array(
 				sprintf(
-					'wp.apiFetch.nonceMiddleware = wp.apiFetch.createNonceMiddleware( "%s" );',
+					'zc.apiFetch.nonceMiddleware = zc.apiFetch.createNonceMiddleware( "%s" );',
 					zc_installing() ? '' : zc_create_nonce( 'zc_rest' )
 				),
-				'wp.apiFetch.use( wp.apiFetch.nonceMiddleware );',
-				'wp.apiFetch.use( wp.apiFetch.mediaUploadMiddleware );',
+				'zc.apiFetch.use( zc.apiFetch.nonceMiddleware );',
+				'zc.apiFetch.use( zc.apiFetch.mediaUploadMiddleware );',
 				sprintf(
-					'wp.apiFetch.nonceEndpoint = "%s";',
+					'zc.apiFetch.nonceEndpoint = "%s";',
 					admin_url( 'admin-ajax.php?action=rest-nonce' )
 				),
 			)
@@ -388,9 +388,9 @@ function zc_default_packages_inline_scripts( $scripts ) {
 			'( function() {
 				var serverData = %s;
 				var userId = "%d";
-				var persistenceLayer = wp.preferencesPersistence.__unstableCreatePersistenceLayer( serverData, userId );
-				var preferencesStore = wp.preferences.store;
-				wp.data.dispatch( preferencesStore ).setPersistenceLayer( persistenceLayer );
+				var persistenceLayer = zc.preferencesPersistence.__unstableCreatePersistenceLayer( serverData, userId );
+				var preferencesStore = zc.preferences.store;
+				zc.data.dispatch( preferencesStore ).setPersistenceLayer( persistenceLayer );
 			} ) ();',
 			zc_json_encode( $preload_data, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ),
 			$user_id
@@ -406,8 +406,8 @@ function zc_default_packages_inline_scripts( $scripts ) {
 				'( function() {',
 				'	var userId = ' . get_current_user_id() . ';',
 				'	var storageKey = "ZC_DATA_USER_" + userId;',
-				'	wp.data',
-				'		.use( wp.data.plugins.persistence, { storageKey: storageKey } );',
+				'	zc.data',
+				'		.use( zc.data.plugins.persistence, { storageKey: storageKey } );',
 				'} )();',
 			)
 		)
@@ -427,7 +427,7 @@ function zc_default_packages_inline_scripts( $scripts ) {
 	$scripts->add_inline_script(
 		'zc-date',
 		sprintf(
-			'wp.date.setSettings( %s );',
+			'zc.date.setSettings( %s );',
 			zc_json_encode(
 				array(
 					'l10n'     => array(
@@ -495,19 +495,19 @@ function zc_default_packages_inline_scripts( $scripts ) {
 	// Loading the old editor and its config to ensure the classic block works as expected.
 	$scripts->add_inline_script(
 		'editor',
-		'window.wp.oldEditor = window.wp.editor;',
+		'window.zc.oldEditor = window.zc.editor;',
 		'after'
 	);
 
 	/*
-	 * zc-editor module is exposed as window.wp.editor.
-	 * Problem: there is quite some code expecting window.wp.oldEditor object available under window.wp.editor.
+	 * zc-editor module is exposed as window.zc.editor.
+	 * Problem: there is quite some code expecting window.zc.oldEditor object available under window.zc.editor.
 	 * Solution: fuse the two objects together to maintain backward compatibility.
 	 * For more context, see https://github.com/ZelocoreCMS/gutenberg/issues/33203.
 	 */
 	$scripts->add_inline_script(
 		'zc-editor',
-		'Object.assign( window.wp.editor, window.wp.oldEditor );',
+		'Object.assign( window.zc.editor, window.zc.oldEditor );',
 		'after'
 	);
 }
@@ -853,7 +853,7 @@ function zc_default_scripts( $scripts ) {
 		array(
 			'root'          => sanitize_url( get_rest_url() ),
 			'nonce'         => zc_installing() ? '' : zc_create_nonce( 'zc_rest' ),
-			'versionString' => 'wp/v2/',
+			'versionString' => 'zc/v2/',
 		)
 	);
 
@@ -972,7 +972,7 @@ function zc_default_scripts( $scripts ) {
 	$scripts->add( 'jquery-color', '/zc-includes/js/jquery/jquery.color.min.js', array( 'jquery' ), '3.0.0', 1 );
 	$scripts->add( 'schedule', '/zc-includes/js/jquery/jquery.schedule.js', array( 'jquery' ), '20m', 1 );
 	$scripts->add( 'jquery-query', '/zc-includes/js/jquery/jquery.query.js', array( 'jquery' ), '2.2.3', 1 );
-	$scripts->add( 'jquery-serialize-object', '/zc-includes/js/jquery/jquery.serialize-object.js', array( 'jquery' ), '0.2-wp', 1 );
+	$scripts->add( 'jquery-serialize-object', '/zc-includes/js/jquery/jquery.serialize-object.js', array( 'jquery' ), '0.2-zc', 1 );
 	$scripts->add( 'jquery-hotkeys', "/zc-includes/js/jquery/jquery.hotkeys$suffix.js", array( 'jquery' ), '0.0.2m', 1 );
 	$scripts->add( 'jquery-table-hotkeys', "/zc-includes/js/jquery/jquery.table-hotkeys$suffix.js", array( 'jquery', 'jquery-hotkeys' ), false, 1 );
 	$scripts->add( 'jquery-touch-punch', '/zc-includes/js/jquery/jquery.ui.touch-punch.js', array( 'jquery-ui-core', 'jquery-ui-mouse' ), '0.2.2', 1 );
@@ -1461,7 +1461,7 @@ function zc_default_scripts( $scripts ) {
 		$scripts->set_translations( 'admin-widgets' );
 
 		$scripts->add( 'media-widgets', "/zc-admin/js/widgets/media-widgets$suffix.js", array( 'jquery', 'media-models', 'media-views', 'zc-api-request' ) );
-		$scripts->add_inline_script( 'media-widgets', 'wp.mediaWidgets.init();', 'after' );
+		$scripts->add_inline_script( 'media-widgets', 'zc.mediaWidgets.init();', 'after' );
 
 		$scripts->add( 'media-audio-widget', "/zc-admin/js/widgets/media-audio-widget$suffix.js", array( 'media-widgets', 'media-audiovideo' ) );
 		$scripts->add( 'media-image-widget', "/zc-admin/js/widgets/media-image-widget$suffix.js", array( 'media-widgets' ) );
@@ -1700,7 +1700,7 @@ function zc_default_styles( $styles ) {
 	$styles->add(
 		'zc-reset-editor-styles',
 		"/zc-includes/css/dist/block-library/reset$suffix.css",
-		array( 'common', 'forms' ) // Make sure the reset is loaded after the default WP Admin styles.
+		array( 'common', 'forms' ) // Make sure the reset is loaded after the default ZC Admin styles.
 	);
 
 	$styles->add(
@@ -2568,7 +2568,7 @@ function zc_enqueue_global_styles() {
 	}
 
 	/**
-	 * The footer should only be used for classic themes when loading assets on demand is enabled. In WP 6.9 this is the
+	 * The footer should only be used for classic themes when loading assets on demand is enabled. In ZC 6.9 this is the
 	 * default with the introduction of hoisting late-printed styles (via {@see zc_load_classic_theme_block_styles_on_demand()}).
 	 * So even though the main global styles are not printed here in the HEAD for classic themes with on-demand asset
 	 * loading, a placeholder for the global styles is still enqueued. Then when {@see zc_hoist_late_printed_styles()}
@@ -2883,7 +2883,7 @@ function enqueue_editor_block_styles_assets() {
 				$block_style['isDefault'] = $style_properties['is_default'];
 			}
 			$register_script_lines[] = sprintf(
-				'	wp.blocks.registerBlockStyle( \'%s\', %s );',
+				'	zc.blocks.registerBlockStyle( \'%s\', %s );',
 				$block_name,
 				zc_json_encode( $block_style, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 			);
@@ -3607,7 +3607,7 @@ function zc_enqueue_command_palette_assets() {
 	zc_add_inline_script(
 		'zc-core-commands',
 		sprintf(
-			'wp.coreCommands.initializeCommandPalette( %s );',
+			'zc.coreCommands.initializeCommandPalette( %s );',
 			zc_json_encode( $command_palette_settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		)
 	);

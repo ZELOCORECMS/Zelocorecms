@@ -40,7 +40,7 @@ class ZC_REST_Block_Types_Controller extends ZC_REST_Controller {
 	 * @since 5.5.0
 	 */
 	public function __construct() {
-		$this->namespace      = 'wp/v2';
+		$this->namespace      = 'zc/v2';
 		$this->rest_base      = 'block-types';
 		$this->block_registry = ZC_Block_Type_Registry::get_instance();
 		$this->style_registry = ZC_Block_Styles_Registry::get_instance();
@@ -388,7 +388,7 @@ class ZC_REST_Block_Types_Controller extends ZC_REST_Controller {
 				'href' => add_query_arg(
 					'context',
 					'edit',
-					rest_url( sprintf( '%s/%s/%s', 'wp/v2', 'block-renderer', $block_type->name ) )
+					rest_url( sprintf( '%s/%s/%s', 'zc/v2', 'block-renderer', $block_type->name ) )
 				),
 			);
 		}

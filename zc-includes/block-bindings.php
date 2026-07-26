@@ -52,7 +52,7 @@
  * its arguments. Such a block will use the source to override the block
  * attribute's value. For example:
  *
- *     <!-- wp:paragraph {
+ *     <!-- zc:paragraph {
  *       "metadata": {
  *         "bindings": {
  *           "content": {
@@ -65,7 +65,7 @@
  *       }
  *     } -->
  *     <p>Fallback text that gets replaced.</p>
- *     <!-- /wp:paragraph -->
+ *     <!-- /zc:paragraph -->
  *
  * @since 6.5.0
  *

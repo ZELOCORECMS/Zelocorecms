@@ -6,7 +6,7 @@ var twemoji = (function (
 
   /*
    * Note: this file was modified in two places to add support for a doNotParse() callback.
-   * The modifications are surrounded by `// WP start` and `// WP end` comments.
+   * The modifications are surrounded by `// ZC start` and `// ZC end` comments.
    */
 
   // WARNING:   this file is generated automatically via
@@ -311,12 +311,12 @@ var twemoji = (function (
       else if (nodeType === 1 && !('ownerSVGElement' in subnode) &&
           !shouldntBeParsed.test(subnode.nodeName.toLowerCase())) {
 
-        // WP start
+        // ZC start
         // Use doNotParse() callback if set.
         if ( twemoji.doNotParse && twemoji.doNotParse( subnode ) ) {
             continue;
         }
-        // WP end
+        // ZC end
 
         grabAllTextNodes(subnode, allText);
       }
@@ -534,12 +534,12 @@ var twemoji = (function (
       how = {callback: how};
     }
 
-    // WP start
+    // ZC start
     // Allow passing of the doNotParse() callback in the settings.
     // The callback is used in `grabAllTextNodes()` (DOM mode only) as a filter
     // that allows bypassing of some of the text nodes. It gets the current subnode as argument.
     twemoji.doNotParse = how.doNotParse;
-    // WP end
+    // ZC end
 
     // if first argument is string, inject html <img> tags
     // otherwise use the DOM tree and parse text nodes only

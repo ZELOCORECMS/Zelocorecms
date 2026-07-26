@@ -319,7 +319,7 @@
 								$( '<option>', {
 									value: '0',
 									selected: currentParentID === 0,
-									text: wp.i18n._x( 'No Parent', 'menu item without a parent in navigation menu' ),
+									text: zc.i18n._x( 'No Parent', 'menu item without a parent in navigation menu' ),
 								} )
 							);
 
@@ -362,9 +362,9 @@
 								itemPosition = primaryItems.index( menuItem ) + 1;
 
 								for ( let i = 1; i < totalMenuItems + 1; i++ ) {
-									var itemString = wp.i18n.sprintf(
+									var itemString = zc.i18n.sprintf(
 										/* translators: 1: The current menu item number, 2: The total number of menu items. */
-										wp.i18n._x( '%1$s of %2$s', 'part of a total number of menu items' ),
+										zc.i18n._x( '%1$s of %2$s', 'part of a total number of menu items' ),
 										i,
 										totalMenuItems
 									);
@@ -386,9 +386,9 @@
 								itemPosition = $( subItems.parents('.menu-item').get().reverse() ).index( menuItem ) + 1;
 
 								for ( let i = 1; i < totalSubMenuItems + 1; i++ ) {
-									var submenuString = wp.i18n.sprintf(
+									var submenuString = zc.i18n.sprintf(
 										/* translators: 1: The current submenu item number, 2: The total number of submenu items. */
-										wp.i18n._x( '%1$s of %2$s', 'part of a total number of menu items' ),
+										zc.i18n._x( '%1$s of %2$s', 'part of a total number of menu items' ),
 										i,
 										totalSubMenuItems
 									);
@@ -520,7 +520,7 @@
 			thisItem.updateOrderDropdown();
 
 			if ( a11ySpeech ) {
-				wp.a11y.speak( a11ySpeech );
+				zc.a11y.speak( a11ySpeech );
 			}
 		},
 
@@ -620,7 +620,7 @@
 			api.refreshKeyboardAccessibility();
 			api.refreshAdvancedAccessibility();
 			$this.trigger( 'focus' );
-			wp.a11y.speak( menus.parentUpdated, 'polite' );
+			zc.a11y.speak( menus.parentUpdated, 'polite' );
 		},
 
 		/**
@@ -665,7 +665,7 @@
 			api.refreshKeyboardAccessibility();
 			api.refreshAdvancedAccessibility();
 			$this.trigger( 'focus' );
-			wp.a11y.speak( menus.orderUpdated, 'polite' );
+			zc.a11y.speak( menus.orderUpdated, 'polite' );
 		},
 
 		/**
@@ -838,7 +838,7 @@
 				if ( title ) {
 					titleEl.text( title ).removeClass( 'no-title' );
 				} else {
-					titleEl.text( wp.i18n._x( '(no label)', 'missing menu item navigation label' ) ).addClass( 'no-title' );
+					titleEl.text( zc.i18n._x( '(no label)', 'missing menu item navigation label' ) ).addClass( 'no-title' );
 				}
 			} );
 		},
@@ -1150,7 +1150,7 @@
 					var errorText = errorMessage.text();
 					urlWrap.addClass( 'has-error' );
 					// Announce error message via screen reader
-					wp.a11y.speak( errorText, 'assertive' );
+					zc.a11y.speak( errorText, 'assertive' );
 				}
 			});
 		},
@@ -1263,7 +1263,7 @@
 					});
 
 					deletionSpeech = menus.itemsDeleted.replace( '%s', itemsPendingDeletion );
-					wp.a11y.speak( deletionSpeech, 'polite' );
+					zc.a11y.speak( deletionSpeech, 'polite' );
 					that.disableBulkSelection();
 					$( '#menu-to-edit' ).updateParentDropdown();
 					$( '#menu-to-edit' ).updateOrderDropdown();
@@ -1424,7 +1424,7 @@
 			 */
 			if ( q.length <= minSearchLength ) {
 				pageSearchChecklist.empty();
-				wp.a11y.speak( wp.i18n.__( 'Search results cleared' ) );
+				zc.a11y.speak( zc.i18n.__( 'Search results cleared' ) );
 				return;
 			}
 
@@ -1544,7 +1544,7 @@
 			$menuMarkup.hideAdvancedMenuItemFields().appendTo( api.targetList );
 			api.refreshKeyboardAccessibility();
 			api.refreshAdvancedAccessibility();
-			wp.a11y.speak( menus.itemAdded );
+			zc.a11y.speak( menus.itemAdded );
 			$( document ).trigger( 'menu-item-added', [ $menuMarkup ] );
 		},
 
@@ -1560,7 +1560,7 @@
 			$menuMarkup.hideAdvancedMenuItemFields().prependTo( api.targetList );
 			api.refreshKeyboardAccessibility();
 			api.refreshAdvancedAccessibility();
-			wp.a11y.speak( menus.itemAdded );
+			zc.a11y.speak( menus.itemAdded );
 			$( document ).trigger( 'menu-item-added', [ $menuMarkup ] );
 		},
 
@@ -1572,7 +1572,7 @@
 			if ( 0 !== $('#menu-to-edit').length || 0 !== $('.menu-location-menus select').length ) {
 				window.onbeforeunload = function(){
 					if ( api.menusChanged )
-						return wp.i18n.__( 'The changes you made will be lost if you navigate away from this page.' );
+						return zc.i18n.__( 'The changes you made will be lost if you navigate away from this page.' );
 				};
 			} else {
 				// Make the post boxes read-only, as they can't be used yet.
@@ -1748,7 +1748,7 @@
 
 		eventOnClickMenuDelete : function() {
 			// Delete warning AYS.
-			if ( window.confirm( wp.i18n.__( 'You are about to permanently delete this menu.\n\'Cancel\' to stop, \'OK\' to delete.' ) ) ) {
+			if ( window.confirm( zc.i18n.__( 'You are about to permanently delete this menu.\n\'Cancel\' to stop, \'OK\' to delete.' ) ) ) {
 				window.onbeforeunload = null;
 				return true;
 			}
@@ -1781,14 +1781,14 @@
 			$item;
 
 			if( ! $items.length ) {
-				let noResults = wp.i18n.__( 'No results found.' );
+				let noResults = zc.i18n.__( 'No results found.' );
 				const li = $( '<li>' );
 				const p = $( '<p>', { text: noResults } );
 				li.append( p );
 				$('.categorychecklist', panel).empty().append( li );
 				$( '.spinner', panel ).removeClass( 'is-active' );
 				wrapper.addClass( 'has-no-menu-item' );
-				wp.a11y.speak( noResults, 'assertive' );
+				zc.a11y.speak( noResults, 'assertive' );
 				return;
 			}
 
@@ -1815,7 +1815,7 @@
 			});
 
 			$('.categorychecklist', panel).html( $items );
-			wp.a11y.speak( wp.i18n.sprintf( wp.i18n.__( '%d Search Results Found' ), $items.length ), 'assertive' );
+			zc.a11y.speak( zc.i18n.sprintf( zc.i18n.__( '%d Search Results Found' ), $items.length ), 'assertive' );
 			$( '.spinner', panel ).removeClass( 'is-active' );
 			wrapper.removeClass( 'has-no-menu-item' );
 
@@ -1847,7 +1847,7 @@
 						ins.removeClass( 'menu-instructions-inactive' );
 					}
 					api.refreshAdvancedAccessibility();
-					wp.a11y.speak( menus.itemRemoved );
+					zc.a11y.speak( menus.itemRemoved );
 					$( '#menu-to-edit' ).updateParentDropdown();
 					$( '#menu-to-edit' ).updateOrderDropdown();
 				});

@@ -178,7 +178,7 @@ class ZC_REST_Post_Search_Handler extends ZC_REST_Search_Handler {
 		}
 
 		$links['about'] = array(
-			'href' => rest_url( 'wp/v2/types/' . $post->post_type ),
+			'href' => rest_url( 'zc/v2/types/' . $post->post_type ),
 		);
 
 		return $links;

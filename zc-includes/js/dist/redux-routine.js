@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).reduxRoutine = (() => {
+var zc;
+(zc ||= {}).reduxRoutine = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -723,4 +723,4 @@ is-plain-object/dist/is-plain-object.mjs:
    * Released under the MIT License.
    *)
 */
-if (typeof wp.reduxRoutine === 'object' && wp.reduxRoutine.default) { wp.reduxRoutine = wp.reduxRoutine.default; }
+if (typeof zc.reduxRoutine === 'object' && zc.reduxRoutine.default) { zc.reduxRoutine = zc.reduxRoutine.default; }

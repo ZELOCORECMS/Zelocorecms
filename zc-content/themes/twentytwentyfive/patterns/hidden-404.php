@@ -10,37 +10,37 @@
  */
 
 ?>
-<!-- wp:group {"style":{"spacing":{"padding":{"right":"0","left":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"style":{"spacing":{"padding":{"right":"0","left":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group" style="padding-right:0;padding-left:0">
-	<!-- wp:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
+	<!-- zc:columns {"align":"wide","style":{"spacing":{"blockGap":{"top":"var:preset|spacing|50","left":"var:preset|spacing|50"}}}} -->
 	<div class="zc-block-columns alignwide">
-		<!-- wp:column -->
+		<!-- zc:column -->
 		<div class="zc-block-column">
-			<!-- wp:image {"scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
+			<!-- zc:image {"scale":"cover","sizeSlug":"full","linkDestination":"none"} -->
 			<figure class="zc-block-image size-full">
 				<img src="<?php echo esc_url( get_template_directory_uri() ); ?>/assets/images/404-image.webp" alt="<?php echo esc_attr_x( 'Small totara tree on ridge above Long Point', 'image description', 'twentytwentyfive' ); ?>" style="object-fit:cover"/>
 			</figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 		</div>
-		<!-- /wp:column -->
-		<!-- wp:column {"verticalAlignment":"bottom"} -->
+		<!-- /zc:column -->
+		<!-- zc:column {"verticalAlignment":"bottom"} -->
 		<div class="zc-block-column is-vertically-aligned-bottom">
-			<!-- wp:group {"layout":{"type":"default"}} -->
+			<!-- zc:group {"layout":{"type":"default"}} -->
 			<div class="zc-block-group">
-				<!-- wp:heading {"level":1} -->
+				<!-- zc:heading {"level":1} -->
 				<h1 class="zc-block-heading">
 					<?php echo esc_html_x( 'Page not found', '404 error message', 'twentytwentyfive' ); ?>
 				</h1>
-				<!-- /wp:heading -->
-				<!-- wp:paragraph -->
+				<!-- /zc:heading -->
+				<!-- zc:paragraph -->
 				<p><?php echo esc_html_x( 'The page you are looking for doesn\'t exist, or it has been moved. Please try searching using the form below.', '404 error message', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
-				<!-- wp:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
+				<!-- /zc:paragraph -->
+				<!-- zc:pattern {"slug":"twentytwentyfive/hidden-search"} /-->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

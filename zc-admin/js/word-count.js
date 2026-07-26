@@ -2,7 +2,7 @@
  * Word or character counting functionality. Count words or characters in a
  * provided text string.
  *
- * @namespace wp.utils
+ * @namespace zc.utils
  *
  * @since 2.6.0
  * @output zc-admin/js/word-count.js
@@ -12,8 +12,8 @@
 	/**
 	 * Word counting utility
 	 *
-	 * @namespace wp.utils.wordcounter
-	 * @memberof  wp.utils
+	 * @namespace zc.utils.wordcounter
+	 * @memberof  zc.utils
 	 *
 	 * @class
 	 *
@@ -146,7 +146,7 @@
 	 *
 	 * @since 2.6.0
 	 *
-	 * @memberof wp.utils.wordcounter
+	 * @memberof zc.utils.wordcounter
 	 *
 	 * @param {string}  text Text to count elements in.
 	 * @param {string}  type Optional. Specify type to use.
@@ -213,8 +213,8 @@
 		return count;
 	};
 
-	// Add the WordCounter to the WP Utils.
-	window.wp = window.wp || {};
-	window.wp.utils = window.wp.utils || {};
-	window.wp.utils.WordCounter = WordCounter;
+	// Add the WordCounter to the ZC Utils.
+	window.zc = window.zc || {};
+	window.zc.utils = window.zc.utils || {};
+	window.zc.utils.WordCounter = WordCounter;
 } )();

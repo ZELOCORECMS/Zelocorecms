@@ -116,7 +116,7 @@ ZELOCORECMS is built on **three foundational principles**:
 | **Process Manager** | Supervisor | Queue worker on VPS |
 | **Reverse Proxy** | Nginx / Apache (.htaccess) | Shared hosting uses Apache |
 | **Job Queue** | Database-backed queue (default) / Redis Queue | No Redis needed on shared hosting |
-| **Scheduled Tasks** | Cron (via cpanel or server) | ZelocoreCMS-style WP-Cron equivalent |
+| **Scheduled Tasks** | Cron (via cpanel or server) | ZelocoreCMS-style ZC-Cron equivalent |
 
 ---
 
@@ -188,7 +188,7 @@ CREATE TABLE `zc_workspaces` (
   `updated_at`  DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Content type definitions (replaces WP custom post types, but typed)
+-- Content type definitions (replaces ZC custom post types, but typed)
 CREATE TABLE `zc_content_types` (
   `id`            CHAR(36) PRIMARY KEY,
   `workspace_id`  CHAR(36) NOT NULL,

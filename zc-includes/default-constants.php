@@ -139,7 +139,7 @@ function zc_initial_constants() {
 		define( 'SHORTINIT', false );
 	}
 
-	// Constants for features added to WP that should short-circuit their plugin implementations.
+	// Constants for features added to ZC that should short-circuit their plugin implementations.
 	define( 'ZC_FEATURE_BETTER_PASSWORDS', true );
 
 	/**#@+

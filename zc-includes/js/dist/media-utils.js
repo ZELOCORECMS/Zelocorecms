@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).mediaUtils = (() => {
+var zc;
+(zc ||= {}).mediaUtils = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -35,56 +35,56 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
@@ -98,7 +98,7 @@ var wp;
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
@@ -195,14 +195,14 @@ var wp;
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
@@ -747,28 +747,28 @@ var wp;
   // package-external:@zelocorecms/date
   var require_date = __commonJS({
     "package-external:@zelocorecms/date"(exports, module) {
-      module.exports = window.wp.date;
+      module.exports = window.zc.date;
     }
   });
 
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
@@ -789,8 +789,8 @@ var wp;
   var import_i18n = __toESM(require_i18n(), 1);
   var DEFAULT_EMPTY_GALLERY = [];
   var getFeaturedImageMediaFrame = () => {
-    const { wp } = window;
-    return wp.media.view.MediaFrame.Select.extend({
+    const { zc } = window;
+    return zc.media.view.MediaFrame.Select.extend({
       /**
        * Enables the Set Featured Image Button.
        *
@@ -799,7 +799,7 @@ var wp;
        */
       featuredImageToolbar(toolbar) {
         this.createSelectToolbar(toolbar, {
-          text: wp.media.view.l10n.setFeaturedImage,
+          text: zc.media.view.l10n.setFeaturedImage,
           state: this.options.state
         });
       },
@@ -810,7 +810,7 @@ var wp;
        */
       editState() {
         const selection = this.state("featured-image").get("selection");
-        const view = new wp.media.view.EditImage({
+        const view = new zc.media.view.EditImage({
           model: selection.single(),
           controller: this
         }).render();
@@ -830,8 +830,8 @@ var wp;
         );
         this.on("content:render:edit-image", this.editState, this);
         this.states.add([
-          new wp.media.controller.FeaturedImage(),
-          new wp.media.controller.EditImage({
+          new zc.media.controller.FeaturedImage(),
+          new zc.media.controller.EditImage({
             model: this.options.editImage
           })
         ]);
@@ -839,8 +839,8 @@ var wp;
     });
   };
   var getSingleMediaFrame = () => {
-    const { wp } = window;
-    return wp.media.view.MediaFrame.Select.extend({
+    const { zc } = window;
+    return zc.media.view.MediaFrame.Select.extend({
       /**
        * Create the default states on the frame.
        */
@@ -851,15 +851,15 @@ var wp;
         }
         this.states.add([
           // Main states.
-          new wp.media.controller.Library({
-            library: wp.media.query(options.library),
+          new zc.media.controller.Library({
+            library: zc.media.query(options.library),
             multiple: options.multiple,
             title: options.title,
             priority: 20,
             filterable: "uploaded"
             // Allow filtering by uploaded images.
           }),
-          new wp.media.controller.EditImage({
+          new zc.media.controller.EditImage({
             model: options.editImage
           })
         ]);
@@ -867,8 +867,8 @@ var wp;
     });
   };
   var getGalleryDetailsMediaFrame = () => {
-    const { wp } = window;
-    return wp.media.view.MediaFrame.Post.extend({
+    const { zc } = window;
+    return zc.media.view.MediaFrame.Post.extend({
       /**
        * Set up gallery toolbar.
        *
@@ -877,16 +877,16 @@ var wp;
       galleryToolbar() {
         const editing = this.state().get("editing");
         this.toolbar.set(
-          new wp.media.view.Toolbar({
+          new zc.media.view.Toolbar({
             controller: this,
             items: {
               insert: {
                 style: "primary",
-                text: editing ? wp.media.view.l10n.updateGallery : wp.media.view.l10n.insertGallery,
+                text: editing ? zc.media.view.l10n.updateGallery : zc.media.view.l10n.insertGallery,
                 priority: 80,
                 requires: { library: true },
                 /**
-                 * @fires wp.media.controller.State#update
+                 * @fires zc.media.controller.State#update
                  */
                 click() {
                   const controller = this.controller, state = controller.state();
@@ -910,7 +910,7 @@ var wp;
        */
       editState() {
         const selection = this.state("gallery").get("selection");
-        const view = new wp.media.view.EditImage({
+        const view = new zc.media.view.EditImage({
           model: selection.single(),
           controller: this
         }).render();
@@ -926,30 +926,30 @@ var wp;
         this.on("toolbar:create:main-gallery", this.galleryToolbar, this);
         this.on("content:render:edit-image", this.editState, this);
         this.states.add([
-          new wp.media.controller.Library({
+          new zc.media.controller.Library({
             id: "gallery",
-            title: wp.media.view.l10n.createGalleryTitle,
+            title: zc.media.view.l10n.createGalleryTitle,
             priority: 40,
             toolbar: "main-gallery",
             filterable: "uploaded",
             multiple: "add",
             editable: false,
-            library: wp.media.query({
+            library: zc.media.query({
               type: "image",
               ...this.options.library
             })
           }),
-          new wp.media.controller.EditImage({
+          new zc.media.controller.EditImage({
             model: this.options.editImage
           }),
-          new wp.media.controller.GalleryEdit({
+          new zc.media.controller.GalleryEdit({
             library: this.options.selection,
             editing: this.options.editing,
             menu: "gallery",
             displaySettings: false,
             multiple: true
           }),
-          new wp.media.controller.GalleryAdd()
+          new zc.media.controller.GalleryAdd()
         ]);
       }
     });
@@ -974,8 +974,8 @@ var wp;
     }, {});
   };
   var getAttachmentsCollection = (ids) => {
-    const { wp } = window;
-    return wp.media.query({
+    const { zc } = window;
+    return zc.media.query({
       order: "ASC",
       orderby: "post__in",
       post__in: ids,
@@ -1014,7 +1014,7 @@ var wp;
       if (value === this.lastGalleryValue) {
         return;
       }
-      const { wp } = window;
+      const { zc } = window;
       this.lastGalleryValue = value;
       if (this.frame) {
         this.frame.remove();
@@ -1029,7 +1029,7 @@ var wp;
         this.GalleryDetailsMediaFrame = getGalleryDetailsMediaFrame();
       }
       const attachments = getAttachmentsCollection(value);
-      const selection = new wp.media.model.Selection(attachments.models, {
+      const selection = new zc.media.model.Selection(attachments.models, {
         props: attachments.props.toJSON(),
         multiple
       });
@@ -1040,7 +1040,7 @@ var wp;
         selection,
         editing: !!value?.length
       });
-      wp.media.frame = this.frame;
+      zc.media.frame = this.frame;
       this.initializeListeners();
     }
     /**
@@ -1049,11 +1049,11 @@ var wp;
      * @return {void}
      */
     buildAndSetFeatureImageFrame() {
-      const { wp } = window;
+      const { zc } = window;
       const { value: featuredImageId, multiple, allowedTypes } = this.props;
       const featuredImageFrame = getFeaturedImageMediaFrame();
       const attachments = getAttachmentsCollection(featuredImageId);
-      const selection = new wp.media.model.Selection(attachments.models, {
+      const selection = new zc.media.model.Selection(attachments.models, {
         props: attachments.props.toJSON()
       });
       this.frame = new featuredImageFrame({
@@ -1063,9 +1063,9 @@ var wp;
         selection,
         editing: featuredImageId
       });
-      wp.media.frame = this.frame;
-      wp.media.view.settings.post = {
-        ...wp.media.view.settings.post,
+      zc.media.frame = this.frame;
+      zc.media.view.settings.post = {
+        ...zc.media.view.settings.post,
         featuredImageId: featuredImageId || -1
       };
     }
@@ -1075,7 +1075,7 @@ var wp;
      * @return {void}
      */
     buildAndSetSingleMediaFrame() {
-      const { wp } = window;
+      const { zc } = window;
       const {
         allowedTypes,
         multiple = false,
@@ -1094,7 +1094,7 @@ var wp;
       }
       const singleImageFrame = getSingleMediaFrame();
       const attachments = getAttachmentsCollection(value);
-      const selection = new wp.media.model.Selection(attachments.models, {
+      const selection = new zc.media.model.Selection(attachments.models, {
         props: attachments.props.toJSON()
       });
       this.frame = new singleImageFrame({
@@ -1103,7 +1103,7 @@ var wp;
         selection,
         ...frameConfig
       });
-      wp.media.frame = this.frame;
+      zc.media.frame = this.frame;
     }
     componentWillUnmount() {
       this.frame?.remove();
@@ -1131,7 +1131,7 @@ var wp;
       onSelect(multiple ? attachment : attachment[0]);
     }
     onOpen() {
-      const { wp } = window;
+      const { zc } = window;
       const { value } = this.props;
       this.updateCollection();
       if (this.props.mode) {
@@ -1146,7 +1146,7 @@ var wp;
       const valueArray = Array.isArray(value) ? value : [value];
       if (!isGallery) {
         valueArray.forEach((id) => {
-          selection.add(wp.media.attachment(id));
+          selection.add(zc.media.attachment(id));
         });
       }
       const attachments = getAttachmentsCollection(valueArray);
@@ -1228,7 +1228,7 @@ var wp;
       caption: attachment.caption?.raw ?? "",
       title: attachment.title.raw,
       url: attachment.source_url,
-      poster: attachment._embedded?.["wp:featuredmedia"]?.[0]?.source_url || void 0
+      poster: attachment._embedded?.["zc:featuredmedia"]?.[0]?.source_url || void 0
     };
   }
 
@@ -1246,7 +1246,7 @@ var wp;
     return transformAttachment(
       await (0, import_api_fetch.default)({
         // This allows the video block to directly get a video's poster image.
-        path: "/wp/v2/media?_embed=wp:featuredmedia",
+        path: "/zc/v2/media?_embed=zc:featuredmedia",
         body: data,
         method: "POST",
         signal
@@ -1471,7 +1471,7 @@ var wp;
     }
     return transformAttachment(
       await (0, import_api_fetch2.default)({
-        path: `/wp/v2/media/${attachmentId}/sideload`,
+        path: `/zc/v2/media/${attachmentId}/sideload`,
         body: data,
         method: "POST",
         signal
@@ -17098,8 +17098,8 @@ If there's a particular need for this, please submit a feature request at https:
   }) {
     const [attachedPostTitle, setAttachedPostTitle] = (0, import_element55.useState)(null);
     const parentId = item.post;
-    const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
-    const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
+    const embeddedPostId = item._embedded?.["zc:attached-to"]?.[0]?.id;
+    const embeddedPostTitle = item._embedded?.["zc:attached-to"]?.[0]?.title;
     (0, import_element55.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
@@ -17125,10 +17125,10 @@ If there's a particular need for this, please submit a feature request at https:
     data,
     onChange
   }) {
-    const defaultPost = !!data.post && !!data?._embedded?.["wp:attached-to"]?.[0] ? [
+    const defaultPost = !!data.post && !!data?._embedded?.["zc:attached-to"]?.[0] ? [
       {
         label: getRenderedContent(
-          data._embedded?.["wp:attached-to"]?.[0]?.title
+          data._embedded?.["zc:attached-to"]?.[0]?.title
         ),
         value: data.post.toString()
       }
@@ -17148,7 +17148,7 @@ If there's a particular need for this, please submit a feature request at https:
     const handleDetach = () => {
       onChange({
         post: 0,
-        _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
+        _embedded: { ...data?._embedded, "zc:attached-to": void 0 }
       });
       setOptions([]);
     };
@@ -17199,7 +17199,7 @@ If there's a particular need for this, please submit a feature request at https:
             post: Number(selectedPostId),
             _embedded: {
               ...data?._embedded,
-              "wp:attached-to": [attachedTo]
+              "zc:attached-to": [attachedTo]
             }
           });
         }
@@ -17792,7 +17792,7 @@ If there's a particular need for this, please submit a feature request at https:
         order: view.sort?.direction,
         orderby: view.sort?.field,
         search: view.search,
-        _embed: "author,wp:attached-to",
+        _embed: "author,zc:attached-to",
         ...filters
       };
     }, [view, allowedTypes]);

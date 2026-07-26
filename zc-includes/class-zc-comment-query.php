@@ -426,9 +426,9 @@ class ZC_Comment_Query {
 		 * @since 5.6.0 The returned array of comment data is assigned to the `comments` property
 		 *              of the current ZC_Comment_Query instance.
 		 *
-		 * @param array|int|null   $comment_data Return an array of comment data to short-circuit WP's comment query,
+		 * @param array|int|null   $comment_data Return an array of comment data to short-circuit ZC's comment query,
 		 *                                       the comment count as an integer if `$this->query_vars['count']` is set,
-		 *                                       or null to allow WP to run its normal queries.
+		 *                                       or null to allow ZC to run its normal queries.
 		 * @param ZC_Comment_Query $query        The ZC_Comment_Query instance, passed by reference.
 		 */
 		$comment_data = apply_filters_ref_array( 'comments_pre_query', array( $comment_data, &$this ) );

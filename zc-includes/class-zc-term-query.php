@@ -763,8 +763,8 @@ class ZC_Term_Query {
 		 *
 		 * @since 5.3.0
 		 *
-		 * @param array|null    $terms Return an array of term data to short-circuit WP's term query,
-		 *                             or null to allow WP queries to run normally.
+		 * @param array|null    $terms Return an array of term data to short-circuit ZC's term query,
+		 *                             or null to allow ZC queries to run normally.
 		 * @param ZC_Term_Query $query The ZC_Term_Query instance, passed by reference.
 		 */
 		$this->terms = apply_filters_ref_array( 'terms_pre_query', array( $this->terms, &$this ) );

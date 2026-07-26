@@ -2322,7 +2322,7 @@ class ZC_Theme_JSON {
 	 * although there's nothing in the implementation
 	 * of this function that requires that format.
 	 *
-	 * For example, assuming the given prefix is '--wp'
+	 * For example, assuming the given prefix is '--zc'
 	 * and the token is '--', for this input tree:
 	 *
 	 *     {

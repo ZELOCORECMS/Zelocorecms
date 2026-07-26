@@ -122,7 +122,7 @@ while ( have_comments() ) :
 			$parent_comment = get_comment( $comment->comment_parent );
 			/*
 			 * The rel attribute below and the id tag above should be GUIDs,
-			 * but WP doesn't create them for comments (unlike posts).
+			 * but ZC doesn't create them for comments (unlike posts).
 			 * Either way, it's more important that they both use the same system.
 			 */
 			?>

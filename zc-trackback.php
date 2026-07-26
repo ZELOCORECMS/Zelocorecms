@@ -10,7 +10,7 @@
 
 if ( empty( $zc ) ) {
 	require_once __DIR__ . '/zc-load.php';
-	wp( array( 'tb' => '1' ) );
+	zc( array( 'tb' => '1' ) );
 }
 
 // Always run as an unauthenticated user.

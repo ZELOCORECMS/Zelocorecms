@@ -26,31 +26,31 @@
  * |- registered view
  * |  |- ...
  */
-( function( window, wp, shortcode, $ ) {
+( function( window, zc, shortcode, $ ) {
 	'use strict';
 
 	var views = {},
 		instances = {};
 
-	wp.mce = wp.mce || {};
+	zc.mce = zc.mce || {};
 
 	/**
-	 * wp.mce.views
+	 * zc.mce.views
 	 *
 	 * A set of utilities that simplifies adding custom UI within a TinyMCE editor.
 	 * At its core, it serves as a series of converters, transforming text to a
 	 * custom UI, and back again.
 	 */
-	wp.mce.views = {
+	zc.mce.views = {
 
 		/**
 		 * Registers a new view type.
 		 *
 		 * @param {string} type   The view type.
-		 * @param {Object} extend An object to extend wp.mce.View.prototype with.
+		 * @param {Object} extend An object to extend zc.mce.View.prototype with.
 		 */
 		register: function( type, extend ) {
-			views[ type ] = wp.mce.View.extend( _.extend( extend, { type: type } ) );
+			views[ type ] = zc.mce.View.extend( _.extend( extend, { type: type } ) );
 		},
 
 		/**
@@ -154,7 +154,7 @@
 		 * @param {Object}  options Options.
 		 * @param {boolean} force   Recreate the instance. Optional.
 		 *
-		 * @return {wp.mce.View} The view instance.
+		 * @return {zc.mce.View} The view instance.
 		 */
 		createInstance: function( type, text, options, force ) {
 			var View = this.get( type ),
@@ -192,7 +192,7 @@
 		 *
 		 * @param {(string|HTMLElement)} object The textual representation of the view or the view node.
 		 *
-		 * @return {wp.mce.View} The view instance or undefined.
+		 * @return {zc.mce.View} The view instance or undefined.
 		 */
 		getInstance: function( object ) {
 			if ( typeof object === 'string' ) {
@@ -277,14 +277,14 @@
 	 *
 	 * @param {Object} options Options.
 	 */
-	wp.mce.View = function( options ) {
+	zc.mce.View = function( options ) {
 		_.extend( this, options );
 		this.initialize();
 	};
 
-	wp.mce.View.extend = Backbone.View.extend;
+	zc.mce.View.extend = Backbone.View.extend;
 
-	_.extend( wp.mce.View.prototype, /** @lends wp.mce.View.prototype */{
+	_.extend( zc.mce.View.prototype, /** @lends zc.mce.View.prototype */{
 
 		/**
 		 * The content.
@@ -736,7 +736,7 @@
 				if ( match ) {
 					$( node ).data( 'rendered', false );
 					editor.dom.setAttrib( node, 'data-wpview-text', encodeURIComponent( text ) );
-					wp.mce.views.createInstance( type, text, match.options, force ).render();
+					zc.mce.views.createInstance( type, text, match.options, force ).render();
 
 					editor.selection.select( node );
 					editor.nodeChanged();
@@ -759,7 +759,7 @@
 			editor.focus();
 		}
 	} );
-} )( window, window.wp, window.wp.shortcode, window.jQuery );
+} )( window, window.zc, window.zc.shortcode, window.jQuery );
 
 /*
  * The ZelocoreCMS core TinyMCE views.
@@ -866,7 +866,7 @@
 				maxwidth = self.editor.getBody().clientWidth;
 			}
 
-			wp.ajax.post( this.action, {
+			zc.ajax.post( this.action, {
 				post_ID: media.view.settings.post.id,
 				type: this.shortcode.tag,
 				shortcode: this.shortcode.string(),
@@ -972,4 +972,4 @@
 			}
 		}
 	} ) );
-} )( window, window.wp.mce.views, window.wp.media, window.jQuery );
+} )( window, window.zc.mce.views, window.zc.media, window.jQuery );

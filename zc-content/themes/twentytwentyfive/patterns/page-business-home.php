@@ -16,9 +16,9 @@
 
 ?>
 
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-centered-heading"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/overlapped-images"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/services-3-col"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/testimonials-large"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/pricing-2-col"} /-->
-<!-- wp:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-centered-heading"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/overlapped-images"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/services-3-col"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/testimonials-large"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/pricing-2-col"} /-->
+<!-- zc:pattern {"slug":"twentytwentyfive/cta-newsletter"} /-->

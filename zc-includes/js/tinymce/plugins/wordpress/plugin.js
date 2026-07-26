@@ -11,8 +11,8 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 		each = tinymce.each,
 		__ = editor.editorManager.i18n.translate,
 		$ = window.jQuery,
-		wp = window.wp,
-		hasWpautop = ( wp && wp.editor && wp.editor.autop && editor.getParam( 'wpautop', true ) ),
+		zc = window.zc,
+		hasWpautop = ( zc && zc.editor && zc.editor.autop && editor.getParam( 'wpautop', true ) ),
 		wpTooltips = false;
 
 	if ( $ ) {
@@ -130,7 +130,7 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 
 			if ( event.load && event.format !== 'raw' ) {
 				if ( hasWpautop ) {
-					event.content = wp.editor.autop( event.content );
+					event.content = zc.editor.autop( event.content );
 				} else {
 					// Prevent creation of paragraphs out of multiple HTML comments.
 					event.content = event.content.replace( /-->\s+<!--/g, '--><!--' );
@@ -409,8 +409,8 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 	} );
 
 	editor.addCommand( 'ZC_Medialib', function() {
-		if ( wp && wp.media && wp.media.editor ) {
-			wp.media.editor.open( editor.id );
+		if ( zc && zc.media && zc.media.editor ) {
+			zc.media.editor.open( editor.id );
 		}
 	});
 
@@ -441,7 +441,7 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 	});
 
 	// Insert->Add Media.
-	if ( wp && wp.media && wp.media.editor ) {
+	if ( zc && zc.media && zc.media.editor ) {
 		editor.addButton( 'zc_add_media', {
 			tooltip: 'Add Media',
 			icon: 'dashicon dashicons-admin-media',
@@ -600,10 +600,10 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 		event.content = event.content.replace( /<p>(?:<br ?\/?>|\u00a0|\uFEFF| )*<\/p>/g, '<p>&nbsp;</p>' );
 
 		if ( hasWpautop ) {
-			event.content = wp.editor.removep( event.content );
+			event.content = zc.editor.removep( event.content );
 		} else {
 			// Restore formatting of block boundaries.
-			event.content = event.content.replace( /-->\s*<!-- wp:/g, '-->\n\n<!-- wp:' );
+			event.content = event.content.replace( /-->\s*<!-- zc:/g, '-->\n\n<!-- zc:' );
 		}
 	});
 
@@ -638,8 +638,8 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 		} );
 
 		editor.addShortcut( 'meta+s', '', function() {
-			if ( wp && wp.autosave ) {
-				wp.autosave.server.triggerSave();
+			if ( zc && zc.autosave ) {
+				zc.autosave.server.triggerSave();
 			}
 		} );
 
@@ -1188,8 +1188,8 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 
 		editor.on( 'blur hide', hide );
 
-		editor.wp = editor.wp || {};
-		editor.wp._createToolbar = create;
+		editor.zc = editor.zc || {};
+		editor.zc._createToolbar = create;
 	}, true );
 
 	function noop() {}

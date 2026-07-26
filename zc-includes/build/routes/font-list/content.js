@@ -33,14 +33,14 @@ var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__ge
 // package-external:@zelocorecms/i18n
 var require_i18n = __commonJS({
   "package-external:@zelocorecms/i18n"(exports, module) {
-    module.exports = window.wp.i18n;
+    module.exports = window.zc.i18n;
   }
 });
 
 // package-external:@zelocorecms/components
 var require_components = __commonJS({
   "package-external:@zelocorecms/components"(exports, module) {
-    module.exports = window.wp.components;
+    module.exports = window.zc.components;
   }
 });
 
@@ -54,7 +54,7 @@ var require_jsx_runtime = __commonJS({
 // package-external:@zelocorecms/element
 var require_element = __commonJS({
   "package-external:@zelocorecms/element"(exports, module) {
-    module.exports = window.wp.element;
+    module.exports = window.zc.element;
   }
 });
 
@@ -68,63 +68,63 @@ var require_react = __commonJS({
 // package-external:@zelocorecms/primitives
 var require_primitives = __commonJS({
   "package-external:@zelocorecms/primitives"(exports, module) {
-    module.exports = window.wp.primitives;
+    module.exports = window.zc.primitives;
   }
 });
 
 // package-external:@zelocorecms/private-apis
 var require_private_apis = __commonJS({
   "package-external:@zelocorecms/private-apis"(exports, module) {
-    module.exports = window.wp.privateApis;
+    module.exports = window.zc.privateApis;
   }
 });
 
 // package-external:@zelocorecms/compose
 var require_compose = __commonJS({
   "package-external:@zelocorecms/compose"(exports, module) {
-    module.exports = window.wp.compose;
+    module.exports = window.zc.compose;
   }
 });
 
 // package-external:@zelocorecms/editor
 var require_editor = __commonJS({
   "package-external:@zelocorecms/editor"(exports, module) {
-    module.exports = window.wp.editor;
+    module.exports = window.zc.editor;
   }
 });
 
 // package-external:@zelocorecms/core-data
 var require_core_data = __commonJS({
   "package-external:@zelocorecms/core-data"(exports, module) {
-    module.exports = window.wp.coreData;
+    module.exports = window.zc.coreData;
   }
 });
 
 // package-external:@zelocorecms/data
 var require_data = __commonJS({
   "package-external:@zelocorecms/data"(exports, module) {
-    module.exports = window.wp.data;
+    module.exports = window.zc.data;
   }
 });
 
 // package-external:@zelocorecms/blocks
 var require_blocks = __commonJS({
   "package-external:@zelocorecms/blocks"(exports, module) {
-    module.exports = window.wp.blocks;
+    module.exports = window.zc.blocks;
   }
 });
 
 // package-external:@zelocorecms/block-editor
 var require_block_editor = __commonJS({
   "package-external:@zelocorecms/block-editor"(exports, module) {
-    module.exports = window.wp.blockEditor;
+    module.exports = window.zc.blockEditor;
   }
 });
 
 // package-external:@zelocorecms/style-engine
 var require_style_engine = __commonJS({
   "package-external:@zelocorecms/style-engine"(exports, module) {
-    module.exports = window.wp.styleEngine;
+    module.exports = window.zc.styleEngine;
   }
 });
 
@@ -290,21 +290,21 @@ var require_cjs = __commonJS({
 // package-external:@zelocorecms/keycodes
 var require_keycodes = __commonJS({
   "package-external:@zelocorecms/keycodes"(exports, module) {
-    module.exports = window.wp.keycodes;
+    module.exports = window.zc.keycodes;
   }
 });
 
 // package-external:@zelocorecms/api-fetch
 var require_api_fetch = __commonJS({
   "package-external:@zelocorecms/api-fetch"(exports, module) {
-    module.exports = window.wp.apiFetch;
+    module.exports = window.zc.apiFetch;
   }
 });
 
 // package-external:@zelocorecms/date
 var require_date = __commonJS({
   "package-external:@zelocorecms/date"(exports, module) {
-    module.exports = window.wp.date;
+    module.exports = window.zc.date;
   }
 });
 
@@ -2800,7 +2800,7 @@ var import_i18n11 = __toESM(require_i18n(), 1);
 // packages/global-styles-ui/build-module/font-library/api.mjs
 var import_api_fetch = __toESM(require_api_fetch(), 1);
 var import_core_data4 = __toESM(require_core_data(), 1);
-var FONT_FAMILIES_URL = "/wp/v2/font-families";
+var FONT_FAMILIES_URL = "/zc/v2/font-families";
 function invalidateFontFamilyCache(registry) {
   const { receiveEntityRecords } = registry.dispatch(import_core_data4.store);
   receiveEntityRecords(

@@ -62,14 +62,14 @@ class ZC_SimplePie_File extends SimplePie\File {
 				$args['headers'] = $this->headers;
 			}
 
-			if ( SimplePie\Misc::get_default_useragent() !== $this->useragent ) { // Use default WP user agent unless custom has been specified.
+			if ( SimplePie\Misc::get_default_useragent() !== $this->useragent ) { // Use default ZC user agent unless custom has been specified.
 				$args['user-agent'] = $this->useragent;
 			}
 
 			$res = zc_safe_remote_request( $url, $args );
 
 			if ( is_zc_error( $res ) ) {
-				$this->error   = 'WP HTTP Error: ' . $res->get_error_message();
+				$this->error   = 'ZC HTTP Error: ' . $res->get_error_message();
 				$this->success = false;
 
 			} else {

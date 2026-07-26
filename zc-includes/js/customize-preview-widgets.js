@@ -9,16 +9,16 @@
  *
  * @since 4.5.0
  *
- * @namespace wp.customize.widgetsPreview
+ * @namespace zc.customize.widgetsPreview
  *
  * @param {jQuery} $   The jQuery object.
  * @param {Object} _   The utilities library.
- * @param {Object} wp  Current ZelocoreCMS environment instance.
+ * @param {Object} zc  Current ZelocoreCMS environment instance.
  * @param {Object} api Information from the API.
  *
  * @return {Object} Widget-related variables.
  */
-wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( $, _, wp, api ) {
+zc.customize.widgetsPreview = zc.customize.WidgetCustomizerPreview = (function( $, _, zc, api ) {
 
 	var self;
 
@@ -40,7 +40,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	 *
 	 * @since 4.5.0
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @return {void}
 	 */
@@ -80,7 +80,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		} );
 	};
 
-	self.WidgetPartial = api.selectiveRefresh.Partial.extend(/** @lends wp.customize.widgetsPreview.WidgetPartial.prototype */{
+	self.WidgetPartial = api.selectiveRefresh.Partial.extend(/** @lends zc.customize.widgetsPreview.WidgetPartial.prototype */{
 
 		/**
 		 * Represents a partial widget instance.
@@ -88,10 +88,10 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		 * @since 4.5.0
 		 *
 		 * @constructs
-		 * @augments wp.customize.selectiveRefresh.Partial
+		 * @augments zc.customize.selectiveRefresh.Partial
 		 *
-		 * @alias wp.customize.widgetsPreview.WidgetPartial
-		 * @memberOf wp.customize.widgetsPreview
+		 * @alias zc.customize.widgetsPreview.WidgetPartial
+		 * @memberOf zc.customize.widgetsPreview
 		 *
 		 * @param {string} id             The partial's ID.
 		 * @param {Object} options        Options used to initialize the partial's
@@ -143,7 +143,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		 * removed from the widget control.
 		 *
 		 * @inheritDoc
-		 * @param {wp.customize.selectiveRefresh.Placement} placement The placement
+		 * @param {zc.customize.selectiveRefresh.Placement} placement The placement
 		 *                                                            function.
 		 *
 		 * @return {void}
@@ -157,7 +157,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		}
 	});
 
-	self.SidebarPartial = api.selectiveRefresh.Partial.extend(/** @lends wp.customize.widgetsPreview.SidebarPartial.prototype */{
+	self.SidebarPartial = api.selectiveRefresh.Partial.extend(/** @lends zc.customize.widgetsPreview.SidebarPartial.prototype */{
 
 		/**
 		 * Represents a partial widget area.
@@ -165,10 +165,10 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		 * @since 4.5.0
 		 *
 		 * @class
-		 * @augments wp.customize.selectiveRefresh.Partial
+		 * @augments zc.customize.selectiveRefresh.Partial
 		 *
-		 * @memberOf wp.customize.widgetsPreview
-		 * @alias wp.customize.widgetsPreview.SidebarPartial
+		 * @memberOf zc.customize.widgetsPreview
+		 * @alias zc.customize.widgetsPreview.SidebarPartial
 		 *
 		 * @param {string} id             The partial's ID.
 		 * @param {Object} options        Options used to initialize the partial's instance.
@@ -344,7 +344,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		 *
 		 * @since 4.5.0
 		 *
-		 * @return {Array.<wp.customize.selectiveRefresh.Placement>} List of placements
+		 * @return {Array.<zc.customize.selectiveRefresh.Placement>} List of placements
 		 *                                                           that were reflowed.
 		 */
 		reflowWidgets: function() {
@@ -412,7 +412,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 		 *
 		 * @param {string} widgetId The widget ID.
 		 *
-		 * @return {wp.customize.selectiveRefresh.Partial} The widget instance partial.
+		 * @return {zc.customize.selectiveRefresh.Partial} The widget instance partial.
 		 */
 		ensureWidgetPlacementContainers: function( widgetId ) {
 			var sidebarPartial = this, widgetPartial, wasInserted = false, partialId = 'widget[' + widgetId + ']';
@@ -586,7 +586,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	 * Calculates the selector for the sidebar's widgets based on the registered
 	 * sidebar's info.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 3.9.0
 	 *
@@ -628,7 +628,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	/**
 	 * Highlights the widget on widget updates or widget control mouse overs.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 3.9.0
 	 * @param {string} widgetId ID of the widget.
@@ -651,7 +651,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	 * Shows a title and highlights widgets on hover. On shift+clicking focuses the
 	 * widget control.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 3.9.0
 	 *
@@ -686,7 +686,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	/**
 	 * Parses a widget ID.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 4.5.0
 	 *
@@ -715,7 +715,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	/**
 	 * Parses a widget setting ID.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 4.5.0
 	 *
@@ -745,7 +745,7 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	/**
 	 * Converts a widget ID into a Customizer setting ID.
 	 *
-	 * @memberOf wp.customize.widgetsPreview
+	 * @memberOf zc.customize.widgetsPreview
 	 *
 	 * @since 4.5.0
 	 *
@@ -770,4 +770,4 @@ wp.customize.widgetsPreview = wp.customize.WidgetCustomizerPreview = (function( 
 	});
 
 	return self;
-})( jQuery, _, wp, wp.customize );
+})( jQuery, _, zc, zc.customize );

@@ -4,21 +4,21 @@
 /***/ 659
 (module) {
 
-var l10n = wp.media.view.l10n,
+var l10n = zc.media.view.l10n,
 	EditAttachmentMetadata;
 
 /**
- * wp.media.controller.EditAttachmentMetadata
+ * zc.media.controller.EditAttachmentMetadata
  *
  * A state for editing an attachment's metadata.
  *
- * @memberOf wp.media.controller
+ * @memberOf zc.media.controller
  *
  * @class
- * @augments wp.media.controller.State
+ * @augments zc.media.controller.State
  * @augments Backbone.Model
  */
-EditAttachmentMetadata = wp.media.controller.State.extend(/** @lends wp.media.controller.EditAttachmentMetadata.prototype */{
+EditAttachmentMetadata = zc.media.controller.State.extend(/** @lends zc.media.controller.EditAttachmentMetadata.prototype */{
 	defaults: {
 		id:      'edit-attachment',
 		// Title string passed to the frame's title region view.
@@ -40,16 +40,16 @@ module.exports = EditAttachmentMetadata;
 (module) {
 
 /**
- * wp.media.view.MediaFrame.Manage.Router
+ * zc.media.view.MediaFrame.Manage.Router
  *
  * A router for handling the browser history and application state.
  *
- * @memberOf wp.media.view.MediaFrame.Manage
+ * @memberOf zc.media.view.MediaFrame.Manage
  *
  * @class
  * @augments Backbone.Router
  */
-var Router = Backbone.Router.extend(/** @lends wp.media.view.MediaFrame.Manage.Router.prototype */{
+var Router = Backbone.Router.extend(/** @lends zc.media.view.MediaFrame.Manage.Router.prototype */{
 	routes: {
 		'upload.php?item=:slug&mode=edit': 'editItem',
 		'upload.php?item=:slug':           'showItem',
@@ -63,7 +63,7 @@ var Router = Backbone.Router.extend(/** @lends wp.media.view.MediaFrame.Manage.R
 	},
 
 	reset: function() {
-		var frame = wp.media.frames.edit;
+		var frame = zc.media.frames.edit;
 
 		if ( frame ) {
 			frame.close();
@@ -77,7 +77,7 @@ var Router = Backbone.Router.extend(/** @lends wp.media.view.MediaFrame.Manage.R
 
 	// Show the modal with a specific item.
 	showItem: function( query ) {
-		var media = wp.media,
+		var media = zc.media,
 			frame = media.frames.browse,
 			library = frame.state().get('library'),
 			item;
@@ -101,7 +101,7 @@ var Router = Backbone.Router.extend(/** @lends wp.media.view.MediaFrame.Manage.R
 	// Show the modal in edit mode with a specific item.
 	editItem: function( query ) {
 		this.showItem( query );
-		wp.media.frames.edit.content.mode( 'edit-details' );
+		zc.media.frames.edit.content.mode( 'edit-details' );
 	}
 });
 
@@ -113,26 +113,26 @@ module.exports = Router;
 /***/ 1312
 (module) {
 
-var Details = wp.media.view.Attachment.Details,
+var Details = zc.media.view.Attachment.Details,
 	TwoColumn;
 
 /**
- * wp.media.view.Attachment.Details.TwoColumn
+ * zc.media.view.Attachment.Details.TwoColumn
  *
  * A similar view to media.view.Attachment.Details
  * for use in the Edit Attachment modal.
  *
- * @memberOf wp.media.view.Attachment.Details
+ * @memberOf zc.media.view.Attachment.Details
  *
  * @class
- * @augments wp.media.view.Attachment.Details
- * @augments wp.media.view.Attachment
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.Attachment.Details
+ * @augments zc.media.view.Attachment
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-TwoColumn = Details.extend(/** @lends wp.media.view.Attachment.Details.TwoColumn.prototype */{
-	template: wp.template( 'attachment-details-two-column' ),
+TwoColumn = Details.extend(/** @lends zc.media.view.Attachment.Details.TwoColumn.prototype */{
+	template: zc.template( 'attachment-details-two-column' ),
 
 	initialize: function() {
 		this.controller.on( 'content:activate:edit-details', _.bind( this.editAttachment, this ) );
@@ -162,25 +162,25 @@ module.exports = TwoColumn;
 /***/ 5806
 (module) {
 
-var Button = wp.media.view.Button,
-	DeleteSelected = wp.media.view.DeleteSelectedButton,
+var Button = zc.media.view.Button,
+	DeleteSelected = zc.media.view.DeleteSelectedButton,
 	DeleteSelectedPermanently;
 
 /**
- * wp.media.view.DeleteSelectedPermanentlyButton
+ * zc.media.view.DeleteSelectedPermanentlyButton
  *
  * When MEDIA_TRASH is true, a button that handles bulk Delete Permanently logic
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.DeleteSelectedButton
- * @augments wp.media.view.Button
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.DeleteSelectedButton
+ * @augments zc.media.view.Button
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-DeleteSelectedPermanently = DeleteSelected.extend(/** @lends wp.media.view.DeleteSelectedPermanentlyButton.prototype */{
+DeleteSelectedPermanently = DeleteSelected.extend(/** @lends zc.media.view.DeleteSelectedPermanentlyButton.prototype */{
 	initialize: function() {
 		DeleteSelected.prototype.initialize.apply( this, arguments );
 		this.controller.on( 'select:activate', this.selectActivate, this );
@@ -216,24 +216,24 @@ module.exports = DeleteSelectedPermanently;
 /***/ 6606
 (module) {
 
-var Button = wp.media.view.Button,
-	l10n = wp.media.view.l10n,
+var Button = zc.media.view.Button,
+	l10n = zc.media.view.l10n,
 	DeleteSelected;
 
 /**
- * wp.media.view.DeleteSelectedButton
+ * zc.media.view.DeleteSelectedButton
  *
  * A button that handles bulk Delete/Trash logic
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.Button
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.Button
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-DeleteSelected = Button.extend(/** @lends wp.media.view.DeleteSelectedButton.prototype */{
+DeleteSelected = Button.extend(/** @lends zc.media.view.DeleteSelectedButton.prototype */{
 	initialize: function() {
 		Button.prototype.initialize.apply( this, arguments );
 		if ( this.options.filters ) {
@@ -246,7 +246,7 @@ DeleteSelected = Button.extend(/** @lends wp.media.view.DeleteSelectedButton.pro
 	filterChange: function( model ) {
 		if ( 'trash' === model.get( 'status' ) ) {
 			this.model.set( 'text', l10n.restoreSelected );
-		} else if ( wp.media.view.settings.mediaTrash ) {
+		} else if ( zc.media.view.settings.mediaTrash ) {
 			this.model.set( 'text', l10n.trashSelected );
 		} else {
 			this.model.set( 'text', l10n.deletePermanently );
@@ -278,22 +278,22 @@ module.exports = DeleteSelected;
 (module) {
 
 
-var Button = wp.media.view.Button,
-	l10n = wp.media.view.l10n,
+var Button = zc.media.view.Button,
+	l10n = zc.media.view.l10n,
 	SelectModeToggle;
 
 /**
- * wp.media.view.SelectModeToggleButton
+ * zc.media.view.SelectModeToggleButton
  *
- * @memberOf wp.media.view
+ * @memberOf zc.media.view
  *
  * @class
- * @augments wp.media.view.Button
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.Button
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-SelectModeToggle = Button.extend(/** @lends wp.media.view.SelectModeToggle.prototype */{
+SelectModeToggle = Button.extend(/** @lends zc.media.view.SelectModeToggle.prototype */{
 	initialize: function() {
 		_.defaults( this.options, {
 			size : ''
@@ -361,22 +361,22 @@ module.exports = SelectModeToggle;
 /***/ 8521
 (module) {
 
-var View = wp.media.View,
-	EditImage = wp.media.view.EditImage,
+var View = zc.media.View,
+	EditImage = zc.media.view.EditImage,
 	Details;
 
 /**
- * wp.media.view.EditImage.Details
+ * zc.media.view.EditImage.Details
  *
- * @memberOf wp.media.view.EditImage
+ * @memberOf zc.media.view.EditImage
  *
  * @class
- * @augments wp.media.view.EditImage
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.EditImage
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
  */
-Details = EditImage.extend(/** @lends wp.media.view.EditImage.Details.prototype */{
+Details = EditImage.extend(/** @lends zc.media.view.EditImage.Details.prototype */{
 	initialize: function( options ) {
 		this.editor = window.imageEdit;
 		this.frame = options.frame;
@@ -403,14 +403,14 @@ module.exports = Details;
 /***/ 1003
 (module) {
 
-var Frame = wp.media.view.Frame,
-	MediaFrame = wp.media.view.MediaFrame,
+var Frame = zc.media.view.Frame,
+	MediaFrame = zc.media.view.MediaFrame,
 
 	$ = jQuery,
 	EditAttachments;
 
 /**
- * wp.media.view.MediaFrame.EditAttachments
+ * zc.media.view.MediaFrame.EditAttachments
  *
  * A frame for editing the details of a specific media item.
  *
@@ -418,19 +418,19 @@ var Frame = wp.media.view.Frame,
  *
  * Requires an attachment model to be passed in the options hash under `model`.
  *
- * @memberOf wp.media.view.MediaFrame
+ * @memberOf zc.media.view.MediaFrame
  *
  * @class
- * @augments wp.media.view.Frame
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.Frame
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
- * @mixes wp.media.controller.StateMachine
+ * @mixes zc.media.controller.StateMachine
  */
-EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAttachments.prototype */{
+EditAttachments = MediaFrame.extend(/** @lends zc.media.view.MediaFrame.EditAttachments.prototype */{
 
 	className: 'edit-attachment-frame',
-	template:  wp.template( 'edit-attachment-frame' ),
+	template:  zc.template( 'edit-attachment-frame' ),
 	regions:   [ 'title', 'content' ],
 
 	events: {
@@ -484,7 +484,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 	createModal: function() {
 		// Initialize modal container view.
 		if ( this.options.modal ) {
-			this.modal = new wp.media.view.Modal({
+			this.modal = new zc.media.view.Modal({
 				controller:     this,
 				title:          this.options.title,
 				hasCloseButton: false
@@ -514,7 +514,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 	 */
 	createStates: function() {
 		this.states.add([
-			new wp.media.controller.EditAttachmentMetadata({
+			new zc.media.controller.EditAttachmentMetadata({
 				model:   this.model,
 				library: this.library
 			})
@@ -528,7 +528,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 	 *                               should be set with the proper region view.
 	 */
 	editMetadataMode: function( contentRegion ) {
-		contentRegion.view = new wp.media.view.Attachment.Details.TwoColumn({
+		contentRegion.view = new zc.media.view.Attachment.Details.TwoColumn({
 			controller: this,
 			model:      this.model
 		});
@@ -537,7 +537,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 		 * Attach a subview to display fields added via the
 		 * `attachment_fields_to_edit` filter.
 		 */
-		contentRegion.view.views.set( '.attachment-compat', new wp.media.view.AttachmentCompat({
+		contentRegion.view.views.set( '.attachment-compat', new zc.media.view.AttachmentCompat({
 			controller: this,
 			model:      this.model
 		}) );
@@ -555,7 +555,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 	 *                               should be set with the proper region view.
 	 */
 	editImageMode: function( contentRegion ) {
-		var editImageController = new wp.media.controller.EditImage( {
+		var editImageController = new zc.media.controller.EditImage( {
 			model: this.model,
 			frame: this
 		} );
@@ -564,7 +564,7 @@ EditAttachments = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.EditAtta
 		editImageController._router = function() {};
 		editImageController._menu = function() {};
 
-		contentRegion.view = new wp.media.view.EditImage.Details( {
+		contentRegion.view = new zc.media.view.EditImage.Details( {
 			model: this.model,
 			frame: this,
 			controller: editImageController
@@ -690,30 +690,30 @@ module.exports = EditAttachments;
 /***/ 8359
 (module) {
 
-var MediaFrame = wp.media.view.MediaFrame,
-	Library = wp.media.controller.Library,
+var MediaFrame = zc.media.view.MediaFrame,
+	Library = zc.media.controller.Library,
 
 	$ = Backbone.$,
 	Manage;
 
 /**
- * wp.media.view.MediaFrame.Manage
+ * zc.media.view.MediaFrame.Manage
  *
  * A generic management frame workflow.
  *
  * Used in the media grid view.
  *
- * @memberOf wp.media.view.MediaFrame
+ * @memberOf zc.media.view.MediaFrame
  *
  * @class
- * @augments wp.media.view.MediaFrame
- * @augments wp.media.view.Frame
- * @augments wp.media.View
- * @augments wp.Backbone.View
+ * @augments zc.media.view.MediaFrame
+ * @augments zc.media.view.Frame
+ * @augments zc.media.View
+ * @augments zc.Backbone.View
  * @augments Backbone.View
- * @mixes wp.media.controller.StateMachine
+ * @mixes zc.media.controller.StateMachine
  */
-Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype */{
+Manage = MediaFrame.extend(/** @lends zc.media.view.MediaFrame.Manage.prototype */{
 	/**
 	 * @constructs
 	 */
@@ -732,7 +732,7 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 		this.$body = $( document.body );
 		this.$window = $( window );
 		this.$adminBar = $( '#wpadminbar' );
-		// Store the Add New button for later reuse in wp.media.view.UploaderInline.
+		// Store the Add New button for later reuse in zc.media.view.UploaderInline.
 		this.$uploaderToggler = $( '.page-title-action' )
 			.attr( 'aria-expanded', 'false' )
 			.on( 'click', _.bind( this.addNewClickHandler, this ) );
@@ -744,13 +744,13 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 
 		// Force the uploader off if the upload limit has been exceeded or
 		// if the browser isn't supported.
-		if ( wp.Uploader.limitExceeded || ! wp.Uploader.browser.supported ) {
+		if ( zc.Uploader.limitExceeded || ! zc.Uploader.browser.supported ) {
 			this.options.uploader = false;
 		}
 
 		// Initialize a window-wide uploader.
 		if ( this.options.uploader ) {
-			this.uploader = new wp.media.view.UploaderWindow({
+			this.uploader = new zc.media.view.UploaderWindow({
 				controller: this,
 				uploader: {
 					dropzone:  document.body,
@@ -763,7 +763,7 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 			this.options.uploader = false;
 		}
 
-		this.gridRouter = new wp.media.view.MediaFrame.Manage.Router();
+		this.gridRouter = new zc.media.view.MediaFrame.Manage.Router();
 
 		// Call 'initialize' directly on the parent class.
 		MediaFrame.prototype.initialize.apply( this, arguments );
@@ -776,7 +776,7 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 		this.render();
 		this.bindSearchHandler();
 
-		wp.media.frames.browse = this;
+		zc.media.frames.browse = this;
 	},
 
 	bindSearchHandler: function() {
@@ -826,7 +826,7 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 		// Add the default states.
 		this.states.add([
 			new Library({
-				library:            wp.media.query( options.library ),
+				library:            zc.media.query( options.library ),
 				multiple:           options.multiple,
 				title:              options.title,
 				content:            'browse',
@@ -902,10 +902,10 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 	 */
 	openEditAttachmentModal: function( model ) {
 		// Create a new EditAttachment frame, passing along the library and the attachment model.
-		if ( wp.media.frames.edit ) {
-			wp.media.frames.edit.open().trigger( 'refresh', model );
+		if ( zc.media.frames.edit ) {
+			zc.media.frames.edit.open().trigger( 'refresh', model );
 		} else {
-			wp.media.frames.edit = wp.media( {
+			zc.media.frames.edit = zc.media( {
 				frame:       'edit-attachments',
 				controller:  this,
 				library:     this.state().get('library'),
@@ -919,13 +919,13 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 	 *
 	 * @param {Object} contentRegion Basic object with a `view` property, which
 	 *                               should be set with the proper region view.
-	 * @this wp.media.controller.Region
+	 * @this zc.media.controller.Region
 	 */
 	browseContent: function( contentRegion ) {
 		var state = this.state();
 
 		// Browse our library of attachments.
-		this.browserView = contentRegion.view = new wp.media.view.AttachmentsBrowser({
+		this.browserView = contentRegion.view = new zc.media.view.AttachmentsBrowser({
 			controller: this,
 			collection: state.get('library'),
 			selection:  state.get('selection'),
@@ -947,7 +947,7 @@ Manage = MediaFrame.extend(/** @lends wp.media.view.MediaFrame.Manage.prototype 
 		});
 		this.browserView.on( 'ready', _.bind( this.bindDeferred, this ) );
 
-		this.errors = wp.Uploader.errors;
+		this.errors = zc.Uploader.errors;
 		this.errors.on( 'add remove reset', this.sidebarVisibility, this );
 	},
 
@@ -1012,7 +1012,7 @@ module.exports = Manage;
  * @output zc-includes/js/media-grid.js
  */
 
-var media = wp.media;
+var media = zc.media;
 
 media.controller.EditAttachmentMetadata = __webpack_require__( 659 );
 media.view.MediaFrame.Manage = __webpack_require__( 8359 );

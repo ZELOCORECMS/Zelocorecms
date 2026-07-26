@@ -37,16 +37,16 @@ tinymce.PluginManager.add('wpgallery', function( editor ) {
 			return;
 		}
 
-		// Check if the `wp.media` API exists.
-		if ( typeof wp === 'undefined' || ! wp.media ) {
+		// Check if the `zc.media` API exists.
+		if ( typeof zc === 'undefined' || ! zc.media ) {
 			return;
 		}
 
 		data = window.decodeURIComponent( editor.dom.getAttrib( node, 'data-zc-media' ) );
 
 		// Make sure we've selected a gallery node.
-		if ( editor.dom.hasClass( node, 'zc-gallery' ) && wp.media.gallery ) {
-			gallery = wp.media.gallery;
+		if ( editor.dom.hasClass( node, 'zc-gallery' ) && zc.media.gallery ) {
+			gallery = zc.media.gallery;
 			frame = gallery.edit( data );
 
 			frame.state('gallery-edit').on( 'update', function( selection ) {
@@ -99,7 +99,7 @@ tinymce.PluginManager.add('wpgallery', function( editor ) {
 
 	editor.on( 'BeforeSetContent', function( event ) {
 		// 'wpview' handles the gallery shortcode when present.
-		if ( ! editor.plugins.wpview || typeof wp === 'undefined' || ! wp.mce ) {
+		if ( ! editor.plugins.wpview || typeof zc === 'undefined' || ! zc.mce ) {
 			event.content = replaceGalleryShortcodes( event.content );
 		}
 	});

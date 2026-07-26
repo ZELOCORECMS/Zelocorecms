@@ -5,10 +5,10 @@
  */
 ( function( $ ) {
 	var tempID = 0;
-	var separator = wp.i18n._x( ',', 'tag delimiter' ) || ',';
-	var __ = wp.i18n.__,
-	    _n = wp.i18n._n,
-	    sprintf = wp.i18n.sprintf;
+	var separator = zc.i18n._x( ',', 'tag delimiter' ) || ',';
+	var __ = zc.i18n.__,
+	    _n = zc.i18n._n,
+	    sprintf = zc.i18n.sprintf;
 
 	function split( val ) {
 		return val.split( new RegExp( separator + '\\s*' ) );
@@ -109,7 +109,7 @@
 
 				if ( $.ui.keyCode.TAB === event.keyCode ) {
 					// Audible confirmation message when a tag has been selected.
-					window.wp.a11y.speak( wp.i18n.__( 'Term selected.' ), 'assertive' );
+					window.zc.a11y.speak( zc.i18n.__( 'Term selected.' ), 'assertive' );
 					event.preventDefault();
 				} else if ( $.ui.keyCode.ENTER === event.keyCode ) {
 					// If we're in the edit post Tags meta box, add the tag.

@@ -7,7 +7,7 @@
  */
 
 /**
- * Loads the WP image-editing interface.
+ * Loads the ZC image-editing interface.
  *
  * @since 2.9.0
  *

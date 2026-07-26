@@ -2,15 +2,15 @@
  * @output zc-admin/js/widgets/custom-html-widgets.js
  */
 
-/* global wp */
+/* global zc */
 /* eslint consistent-this: [ "error", "control" ] */
 /* eslint no-magic-numbers: ["error", { "ignore": [0,1,-1] }] */
 
 /**
- * @namespace wp.customHtmlWidget
- * @memberOf wp
+ * @namespace zc.customHtmlWidget
+ * @memberOf zc
  */
-wp.customHtmlWidgets = ( function( $ ) {
+zc.customHtmlWidgets = ( function( $ ) {
 	'use strict';
 
 	var component = {
@@ -24,7 +24,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 		}
 	};
 
-	component.CustomHtmlWidgetControl = Backbone.View.extend(/** @lends wp.customHtmlWidgets.CustomHtmlWidgetControl.prototype */{
+	component.CustomHtmlWidgetControl = Backbone.View.extend(/** @lends zc.customHtmlWidgets.CustomHtmlWidgetControl.prototype */{
 
 		/**
 		 * View events.
@@ -36,7 +36,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 		/**
 		 * Text widget control.
 		 *
-		 * @constructs wp.customHtmlWidgets.CustomHtmlWidgetControl
+		 * @constructs zc.customHtmlWidgets.CustomHtmlWidgetControl
 		 * @augments Backbone.View
 		 * @abstract
 		 *
@@ -63,7 +63,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 			control.customizeSettingId = 'widget_' + control.widgetIdBase + '[' + String( control.widgetNumber ) + ']';
 
 			control.$el.addClass( 'custom-html-widget-fields' );
-			control.$el.html( wp.template( 'widget-custom-html-control-fields' )( { codeEditorDisabled: component.codeEditorSettings.disabled } ) );
+			control.$el.html( zc.template( 'widget-custom-html-control-fields' )( { codeEditorDisabled: component.codeEditorSettings.disabled } ) );
 
 			control.errorNoticeContainer = control.$el.find( '.code-editor-error-container' );
 			control.currentErrorAnnotations = [];
@@ -138,11 +138,11 @@ wp.customHtmlWidgets = ( function( $ ) {
 				control.fields.content[0].setCustomValidity( message );
 			}
 
-			if ( wp.customize && wp.customize.has( control.customizeSettingId ) ) {
-				customizeSetting = wp.customize( control.customizeSettingId );
+			if ( zc.customize && zc.customize.has( control.customizeSettingId ) ) {
+				customizeSetting = zc.customize( control.customizeSettingId );
 				customizeSetting.notifications.remove( 'htmlhint_error' );
 				if ( 0 !== errorAnnotations.length ) {
-					customizeSetting.notifications.add( 'htmlhint_error', new wp.customize.Notification( 'htmlhint_error', {
+					customizeSetting.notifications.add( 'htmlhint_error', new zc.customize.Notification( 'htmlhint_error', {
 						message: message,
 						type: 'error'
 					} ) );
@@ -155,7 +155,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 				control.errorNoticeContainer.empty();
 				control.errorNoticeContainer.append( errorNotice );
 				control.errorNoticeContainer.slideDown( 'fast' );
-				wp.a11y.speak( message );
+				zc.a11y.speak( message );
 			} else {
 				control.errorNoticeContainer.slideUp( 'fast' );
 			}
@@ -224,7 +224,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 				}
 			});
 
-			control.editor = wp.codeEditor.initialize( control.fields.content, settings );
+			control.editor = zc.codeEditor.initialize( control.fields.content, settings );
 
 			// Improve the editor accessibility.
 			$( control.editor.codemirror.display.lineDiv )
@@ -260,7 +260,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 			});
 
 			// Prevent hitting Esc from collapsing the widget control.
-			if ( wp.customize ) {
+			if ( zc.customize ) {
 				control.editor.codemirror.on( 'keydown', function onKeydown( codemirror, event ) {
 					var escKeyCode = 27;
 					if ( escKeyCode === event.keyCode ) {
@@ -274,16 +274,16 @@ wp.customHtmlWidgets = ( function( $ ) {
 	/**
 	 * Mapping of widget ID to instances of CustomHtmlWidgetControl subclasses.
 	 *
-	 * @alias wp.customHtmlWidgets.widgetControls
+	 * @alias zc.customHtmlWidgets.widgetControls
 	 *
-	 * @type {Object.<string, wp.textWidgets.CustomHtmlWidgetControl>}
+	 * @type {Object.<string, zc.textWidgets.CustomHtmlWidgetControl>}
 	 */
 	component.widgetControls = {};
 
 	/**
 	 * Handle widget being added or initialized for the first time at the widget-added event.
 	 *
-	 * @alias wp.customHtmlWidgets.handleWidgetAdded
+	 * @alias zc.customHtmlWidgets.handleWidgetAdded
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -333,7 +333,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 		 * This ensures that the textarea is visible and the editor can be initialized.
 		 */
 		renderWhenAnimationDone = function() {
-			if ( ! ( wp.customize ? widgetContainer.parent().hasClass( 'expanded' ) : widgetContainer.hasClass( 'open' ) ) ) { // Core merge: The wp.customize condition can be eliminated with this change being in core: https://core.trac.zelocorecms.org/changeset/41260
+			if ( ! ( zc.customize ? widgetContainer.parent().hasClass( 'expanded' ) : widgetContainer.hasClass( 'open' ) ) ) { // Core merge: The zc.customize condition can be eliminated with this change being in core: https://core.trac.zelocorecms.org/changeset/41260
 				setTimeout( renderWhenAnimationDone, animatedCheckDelay );
 			} else {
 				widgetControl.initializeEditor();
@@ -345,7 +345,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 	/**
 	 * Setup widget in accessibility mode.
 	 *
-	 * @alias wp.customHtmlWidgets.setupAccessibleMode
+	 * @alias zc.customHtmlWidgets.setupAccessibleMode
 	 *
 	 * @return {void}
 	 */
@@ -380,7 +380,7 @@ wp.customHtmlWidgets = ( function( $ ) {
 	 * the widgets admin screen and also via the 'widget-synced' event when making
 	 * a change to a widget in the customizer.
 	 *
-	 * @alias wp.customHtmlWidgets.handleWidgetUpdated
+	 * @alias zc.customHtmlWidgets.handleWidgetUpdated
 	 *
 	 * @param {jQuery.Event} event - Event.
 	 * @param {jQuery}       widgetContainer - Widget container element.
@@ -409,9 +409,9 @@ wp.customHtmlWidgets = ( function( $ ) {
 	 *
 	 * This function exists to prevent the JS file from having to boot itself.
 	 * When ZelocoreCMS enqueues this script, it should have an inline script
-	 * attached which calls wp.textWidgets.init().
+	 * attached which calls zc.textWidgets.init().
 	 *
-	 * @alias wp.customHtmlWidgets.init
+	 * @alias zc.customHtmlWidgets.init
 	 *
 	 * @param {Object} settings - Options for code editor, exported from PHP.
 	 *

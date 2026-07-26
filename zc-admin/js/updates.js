@@ -9,8 +9,8 @@
 
 /**
  * @param {jQuery}  $                                        jQuery object.
- * @param {object}  wp                                       WP object.
- * @param {object}  settings                                 WP Updates settings.
+ * @param {object}  zc                                       ZC object.
+ * @param {object}  settings                                 ZC Updates settings.
  * @param {string}  settings.ajax_nonce                      Ajax nonce.
  * @param {object=} settings.plugins                         Base names of plugins in their different states.
  * @param {Array}   settings.plugins.all                     Base names of all plugins.
@@ -29,24 +29,24 @@
  * @param {object=} settings.totals                          Combined information for available update counts.
  * @param {number}  settings.totals.count                    Holds the amount of available updates.
  */
-(function( $, wp, settings ) {
+(function( $, zc, settings ) {
 	var $document = $( document ),
-		__ = wp.i18n.__,
-		_x = wp.i18n._x,
-		_n = wp.i18n._n,
-		_nx = wp.i18n._nx,
-		sprintf = wp.i18n.sprintf;
+		__ = zc.i18n.__,
+		_x = zc.i18n._x,
+		_n = zc.i18n._n,
+		_nx = zc.i18n._nx,
+		sprintf = zc.i18n.sprintf;
 
-	wp = wp || {};
+	zc = zc || {};
 
 	/**
-	 * The WP Updates object.
+	 * The ZC Updates object.
 	 *
 	 * @since 4.2.0
 	 *
-	 * @namespace wp.updates
+	 * @namespace zc.updates
 	 */
-	wp.updates = {};
+	zc.updates = {};
 
 	/**
 	 * Removed in 5.5.0, needed for back-compatibility.
@@ -56,7 +56,7 @@
 	 *
 	 * @type {object}
 	 */
-	wp.updates.l10n = {
+	zc.updates.l10n = {
 		searchResults: '',
 		searchResultsLabel: '',
 		noPlugins: '',
@@ -121,7 +121,7 @@
 		autoUpdatesError: ''
 	};
 
-	wp.updates.l10n = window.wp.deprecateL10nObject( 'wp.updates.l10n', wp.updates.l10n, '5.5.0' );
+	zc.updates.l10n = window.zc.deprecateL10nObject( 'zc.updates.l10n', zc.updates.l10n, '5.5.0' );
 
 	/**
 	 * User nonce for ajax calls.
@@ -130,7 +130,7 @@
 	 *
 	 * @type {string}
 	 */
-	wp.updates.ajaxNonce = settings.ajax_nonce;
+	zc.updates.ajaxNonce = settings.ajax_nonce;
 
 	/**
 	 * Current search term.
@@ -139,7 +139,7 @@
 	 *
 	 * @type {string}
 	 */
-	wp.updates.searchTerm = '';
+	zc.updates.searchTerm = '';
 
 	/**
 	 * Minimum number of characters before an ajax search is fired.
@@ -148,7 +148,7 @@
 	 *
 	 * @type {number}
 	 */
-	wp.updates.searchMinCharacters = 2;
+	zc.updates.searchMinCharacters = 2;
 
 	/**
 	 * Whether filesystem credentials need to be requested from the user.
@@ -157,7 +157,7 @@
 	 *
 	 * @type {bool}
 	 */
-	wp.updates.shouldRequestFilesystemCredentials = false;
+	zc.updates.shouldRequestFilesystemCredentials = false;
 
 	/**
 	 * Filesystem credentials to be packaged along with the request.
@@ -179,7 +179,7 @@
 	 * @property {bool}   filesystemCredentials.available          Whether filesystem credentials have been provided.
 	 *                                                             Default 'false'.
 	 */
-	wp.updates.filesystemCredentials = {
+	zc.updates.filesystemCredentials = {
 		ftp:       {
 			host:           '',
 			username:       '',
@@ -202,7 +202,7 @@
 	 *
 	 * @type {bool}
 	 */
-	wp.updates.ajaxLocked = false;
+	zc.updates.ajaxLocked = false;
 
 	/**
 	 * Admin notice template.
@@ -211,7 +211,7 @@
 	 *
 	 * @type {function}
 	 */
-	wp.updates.adminNotice = wp.template( 'zc-updates-admin-notice' );
+	zc.updates.adminNotice = zc.template( 'zc-updates-admin-notice' );
 
 	/**
 	 * Update queue.
@@ -224,7 +224,7 @@
 	 *
 	 * @type {Array.object}
 	 */
-	wp.updates.queue = [];
+	zc.updates.queue = [];
 
 	/**
 	 * Holds a jQuery reference to return focus to when exiting the request credentials modal.
@@ -233,7 +233,7 @@
 	 *
 	 * @type {jQuery}
 	 */
-	wp.updates.$elToReturnFocusToFromCredentialsModal = undefined;
+	zc.updates.$elToReturnFocusToFromCredentialsModal = undefined;
 
 	/**
 	 * Adds or updates an admin notice.
@@ -250,13 +250,13 @@
 	 * @param {Array=}  data.errorMessages Optional. Error messages of failed operations.
 	 *
 	 */
-	wp.updates.addAdminNotice = function( data ) {
+	zc.updates.addAdminNotice = function( data ) {
 		var $notice = $( data.selector ),
 			$headerEnd = $( '.zc-header-end' ),
 			$adminNotice;
 
 		delete data.selector;
-		$adminNotice = wp.updates.adminNotice( data );
+		$adminNotice = zc.updates.adminNotice( data );
 
 		// Check if this admin notice already exists.
 		if ( ! $notice.length ) {
@@ -288,11 +288,11 @@
 	 * @return {$.promise}    A jQuery promise that represents the request,
 	 *                        decorated with an abort() method.
 	 */
-	wp.updates.ajax = function( action, data ) {
+	zc.updates.ajax = function( action, data ) {
 		var options = {};
 
-		if ( wp.updates.ajaxLocked ) {
-			wp.updates.queue.push( {
+		if ( zc.updates.ajaxLocked ) {
+			zc.updates.queue.push( {
 				action: action,
 				data:   data
 			} );
@@ -301,7 +301,7 @@
 			return $.Deferred();
 		}
 
-		wp.updates.ajaxLocked = true;
+		zc.updates.ajaxLocked = true;
 
 		if ( data.success ) {
 			options.success = data.success;
@@ -315,17 +315,17 @@
 
 		options.data = _.extend( data, {
 			action:          action,
-			_ajax_nonce:     wp.updates.ajaxNonce,
-			_fs_nonce:       wp.updates.filesystemCredentials.fsNonce,
-			username:        wp.updates.filesystemCredentials.ftp.username,
-			password:        wp.updates.filesystemCredentials.ftp.password,
-			hostname:        wp.updates.filesystemCredentials.ftp.hostname,
-			connection_type: wp.updates.filesystemCredentials.ftp.connectionType,
-			public_key:      wp.updates.filesystemCredentials.ssh.publicKey,
-			private_key:     wp.updates.filesystemCredentials.ssh.privateKey
+			_ajax_nonce:     zc.updates.ajaxNonce,
+			_fs_nonce:       zc.updates.filesystemCredentials.fsNonce,
+			username:        zc.updates.filesystemCredentials.ftp.username,
+			password:        zc.updates.filesystemCredentials.ftp.password,
+			hostname:        zc.updates.filesystemCredentials.ftp.hostname,
+			connection_type: zc.updates.filesystemCredentials.ftp.connectionType,
+			public_key:      zc.updates.filesystemCredentials.ssh.publicKey,
+			private_key:     zc.updates.filesystemCredentials.ssh.privateKey
 		} );
 
-		return wp.ajax.send( options ).always( wp.updates.ajaxAlways );
+		return zc.ajax.send( options ).always( zc.updates.ajaxAlways );
 	};
 
 	/**
@@ -337,16 +337,16 @@
 	 * @param {Array=}  response.debug     Optional. Debug information.
 	 * @param {string=} response.errorCode Optional. Error code for an error that occurred.
 	 */
-	wp.updates.ajaxAlways = function( response ) {
+	zc.updates.ajaxAlways = function( response ) {
 		if ( ! response.errorCode || 'unable_to_connect_to_filesystem' !== response.errorCode ) {
-			wp.updates.ajaxLocked = false;
-			wp.updates.queueChecker();
+			zc.updates.ajaxLocked = false;
+			zc.updates.queueChecker();
 		}
 
 		if ( 'undefined' !== typeof response.debug && window.console && window.console.log ) {
 			_.map( response.debug, function( message ) {
 				// Remove all HTML tags and write a message to the console.
-				window.console.log( wp.sanitize.stripTagsAndEncodeText( message ) );
+				window.console.log( zc.sanitize.stripTagsAndEncodeText( message ) );
 			} );
 		}
 	};
@@ -356,7 +356,7 @@
 	 *
 	 * @since 4.7.0
 	 */
-	wp.updates.refreshCount = function() {
+	zc.updates.refreshCount = function() {
 		var $adminBarUpdates              = $( '#zc-admin-bar-updates' ),
 			$dashboardNavMenuUpdateCount  = $( 'a[href="update-core.php"] .update-plugins' ),
 			$pluginsNavMenuUpdateCount    = $( 'a[href="plugins.php"] .update-plugins' ),
@@ -438,7 +438,7 @@
 	 * @param {string=} data.pluginName    Optional. The plugin's name.
 	 * @param {string=} data.plugin        Optional. The plugin file, relative to the plugins directory.
 	 */
-	wp.updates.setCardButtonStatus = function( data ) {
+	zc.updates.setCardButtonStatus = function( data ) {
 		var target = window.parent === window ? null : window.parent;
 
 		$.support.postMessage = !! window.postMessage;
@@ -458,7 +458,7 @@
 	 * @param {string} type The type of item that was updated or deleted.
 	 *                      Can be 'plugin', 'theme'.
 	 */
-	wp.updates.decrementCount = function( type ) {
+	zc.updates.decrementCount = function( type ) {
 		settings.totals.counts.total = Math.max( --settings.totals.counts.total, 0 );
 
 		if ( 'plugin' === type ) {
@@ -467,7 +467,7 @@
 			settings.totals.counts.themes = Math.max( --settings.totals.counts.themes, 0 );
 		}
 
-		wp.updates.refreshCount( type );
+		zc.updates.refreshCount( type );
 	};
 
 	/**
@@ -479,20 +479,20 @@
 	 * @param {Object}               args         Arguments.
 	 * @param {string}               args.plugin  Plugin basename.
 	 * @param {string}               args.slug    Plugin slug.
-	 * @param {updatePluginSuccess=} args.success Optional. Success callback. Default: wp.updates.updatePluginSuccess
-	 * @param {updatePluginError=}   args.error   Optional. Error callback. Default: wp.updates.updatePluginError
+	 * @param {updatePluginSuccess=} args.success Optional. Success callback. Default: zc.updates.updatePluginSuccess
+	 * @param {updatePluginError=}   args.error   Optional. Error callback. Default: zc.updates.updatePluginError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.updatePlugin = function( args ) {
+	zc.updates.updatePlugin = function( args ) {
 		var $updateRow, $card, $message, message,
 			$adminBarUpdates = $( '#zc-admin-bar-updates' ),
 			buttonText = __( 'Updating...' ),
 			isPluginInstall = 'plugin-install' === pagenow || 'plugin-install-network' === pagenow;
 
 		args = _.extend( {
-			success: wp.updates.updatePluginSuccess,
-			error: wp.updates.updatePluginError
+			success: zc.updates.updatePluginSuccess,
+			error: zc.updates.updatePluginError
 		}, args );
 
 		if ( 'plugins' === pagenow || 'plugins-network' === pagenow ) {
@@ -529,7 +529,7 @@
 		$document.trigger( 'zc-plugin-updating', args );
 
 		if ( isPluginInstall && 'plugin-information-footer' === $card.attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'updating-plugin',
 					slug: args.slug,
@@ -540,7 +540,7 @@
 			);
 		}
 
-		return wp.updates.ajax( 'update-plugin', args );
+		return zc.updates.ajax( 'update-plugin', args );
 	};
 
 	/**
@@ -557,7 +557,7 @@
 	 * @param {string} response.oldVersion Old version of the plugin.
 	 * @param {string} response.newVersion New version of the plugin.
 	 */
-	wp.updates.updatePluginSuccess = function( response ) {
+	zc.updates.updatePluginSuccess = function( response ) {
 		var $pluginRow, $updateMessage, newText,
 			$adminBarUpdates = $( '#zc-admin-bar-updates' ),
 			buttonText = _x( 'Updated!', 'plugin' ),
@@ -593,12 +593,12 @@
 			.attr( 'aria-label', ariaLabel )
 			.text( buttonText );
 
-		wp.a11y.speak( __( 'Update completed successfully.' ) );
+		zc.a11y.speak( __( 'Update completed successfully.' ) );
 
 		if ( 'plugin_install_from_iframe' !== $updateMessage.attr( 'id' ) ) {
-			wp.updates.decrementCount( 'plugin' );
+			zc.updates.decrementCount( 'plugin' );
 		} else {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'updated-plugin',
 					slug: response.slug,
@@ -626,15 +626,15 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.updatePluginError = function( response ) {
+	zc.updates.updatePluginError = function( response ) {
 		var $pluginRow, $card, $message, errorMessage, buttonText, ariaLabel,
 			$adminBarUpdates = $( '#zc-admin-bar-updates' );
 
-		if ( ! wp.updates.isValidResponse( response, 'update' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'update' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'update-plugin' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'update-plugin' ) ) {
 			return;
 		}
 
@@ -671,7 +671,7 @@
 			buttonText = __( 'Update failed.' );
 
 			$card = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' )
-				.append( wp.updates.adminNotice( {
+				.append( zc.updates.adminNotice( {
 					className: 'update-message notice-error notice-alt is-dismissible',
 					message:   errorMessage
 				} ) );
@@ -714,10 +714,10 @@
 
 		$adminBarUpdates.removeClass( 'spin' );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
 		if ( 'plugin-information-footer' === $card.attr('id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'plugin-update-failed',
 					slug: response.slug,
@@ -738,20 +738,20 @@
 	 *
 	 * @param {Object}                args         Arguments.
 	 * @param {string}                args.slug    Plugin identifier in the ZelocoreCMS.org Plugin repository.
-	 * @param {installPluginSuccess=} args.success Optional. Success callback. Default: wp.updates.installPluginSuccess
-	 * @param {installPluginError=}   args.error   Optional. Error callback. Default: wp.updates.installPluginError
+	 * @param {installPluginSuccess=} args.success Optional. Success callback. Default: zc.updates.installPluginSuccess
+	 * @param {installPluginError=}   args.error   Optional. Error callback. Default: zc.updates.installPluginError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.installPlugin = function( args ) {
+	zc.updates.installPlugin = function( args ) {
 		var $card    = $( '.plugin-card-' + args.slug + ', #plugin-information-footer' ),
 			$message = $card.find( '.install-now' ),
 			buttonText = __( 'Installing...' ),
 			ariaLabel;
 
 		args = _.extend( {
-			success: wp.updates.installPluginSuccess,
-			error: wp.updates.installPluginError
+			success: zc.updates.installPluginSuccess,
+			error: zc.updates.installPluginError
 		}, args );
 
 		if ( 'import' === pagenow ) {
@@ -773,7 +773,7 @@
 			.attr( 'aria-label', ariaLabel )
 			.text( buttonText );
 
-		wp.a11y.speak( __( 'Installing... please wait.' ) );
+		zc.a11y.speak( __( 'Installing... please wait.' ) );
 
 		// Remove previous error messages, if any.
 		$card.removeClass( 'plugin-card-install-failed' ).find( '.notice.notice-error' ).remove();
@@ -781,7 +781,7 @@
 		$document.trigger( 'zc-plugin-installing', args );
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'installing-plugin',
 					slug: args.slug,
@@ -792,7 +792,7 @@
 			);
 		}
 
-		return wp.updates.ajax( 'install-plugin', args );
+		return zc.updates.ajax( 'install-plugin', args );
 	};
 
 	/**
@@ -805,7 +805,7 @@
 	 * @param {string} response.pluginName  Name of the installed plugin.
 	 * @param {string} response.activateUrl URL to activate the just installed plugin.
 	 */
-	wp.updates.installPluginSuccess = function( response ) {
+	zc.updates.installPluginSuccess = function( response ) {
 		var $message = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ).find( '.install-now' ),
 			buttonText = _x( 'Installed!', 'plugin' ),
 			ariaLabel = sprintf(
@@ -820,20 +820,20 @@
 			.attr( 'aria-label', ariaLabel )
 			.text( buttonText );
 
-		wp.a11y.speak( __( 'Installation completed successfully.' ) );
+		zc.a11y.speak( __( 'Installation completed successfully.' ) );
 
 		$document.trigger( 'zc-plugin-install-success', response );
 
 		if ( response.activateUrl ) {
 			setTimeout( function() {
-				wp.updates.checkPluginDependencies( {
+				zc.updates.checkPluginDependencies( {
 					slug: response.slug
 				} );
 			}, 1000 );
 		}
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'installed-plugin',
 					slug: response.slug,
@@ -857,7 +857,7 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.installPluginError = function( response ) {
+	zc.updates.installPluginError = function( response ) {
 		var $card   = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ),
 			$button = $card.find( '.install-now' ),
 			buttonText = __( 'Installation failed.' ),
@@ -868,11 +868,11 @@
 			),
 			errorMessage;
 
-		if ( ! wp.updates.isValidResponse( response, 'install' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'install' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'install-plugin' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'install-plugin' ) ) {
 			return;
 		}
 
@@ -901,9 +901,9 @@
 			.attr( 'aria-label', ariaLabel )
 			.text( buttonText );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
-		wp.updates.setCardButtonStatus(
+		zc.updates.setCardButtonStatus(
 			{
 				status: 'plugin-install-failed',
 				slug: response.slug,
@@ -924,21 +924,21 @@
 	 *
 	 * @param {Object}                          args         Arguments.
 	 * @param {string}                          args.slug    Plugin identifier in the ZelocoreCMS.org Plugin repository.
-	 * @param {checkPluginDependenciesSuccess=} args.success Optional. Success callback. Default: wp.updates.checkPluginDependenciesSuccess
-	 * @param {checkPluginDependenciesError=}   args.error   Optional. Error callback. Default: wp.updates.checkPluginDependenciesError
+	 * @param {checkPluginDependenciesSuccess=} args.success Optional. Success callback. Default: zc.updates.checkPluginDependenciesSuccess
+	 * @param {checkPluginDependenciesError=}   args.error   Optional. Error callback. Default: zc.updates.checkPluginDependenciesError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.checkPluginDependencies = function( args ) {
+	zc.updates.checkPluginDependencies = function( args ) {
 		args = _.extend( {
-			success: wp.updates.checkPluginDependenciesSuccess,
-			error: wp.updates.checkPluginDependenciesError
+			success: zc.updates.checkPluginDependenciesSuccess,
+			error: zc.updates.checkPluginDependenciesError
 		}, args );
 
-		wp.a11y.speak( __( 'Checking plugin dependencies... please wait.' ) );
+		zc.a11y.speak( __( 'Checking plugin dependencies... please wait.' ) );
 		$document.trigger( 'zc-checking-plugin-dependencies', args );
 
-		return wp.updates.ajax( 'check_plugin_dependencies', args );
+		return zc.updates.ajax( 'check_plugin_dependencies', args );
 	};
 
 	/**
@@ -952,7 +952,7 @@
 	 * @param {string} response.plugin      The plugin file, relative to the plugins directory.
 	 * @param {string} response.activateUrl URL to activate the just checked plugin.
 	 */
-	wp.updates.checkPluginDependenciesSuccess = function( response ) {
+	zc.updates.checkPluginDependenciesSuccess = function( response ) {
 		var $message = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ).find( '.install-now' ),
 			buttonText, ariaLabel;
 
@@ -962,7 +962,7 @@
 			.addClass( 'activate-now button-primary' )
 			.attr( 'href', response.activateUrl );
 
-		wp.a11y.speak( __( 'Plugin dependencies check completed successfully.' ) );
+		zc.a11y.speak( __( 'Plugin dependencies check completed successfully.' ) );
 		$document.trigger( 'zc-check-plugin-dependencies-success', response );
 
 		if ( 'plugins-network' === pagenow || 'plugin-install-network' === pagenow ) {
@@ -993,7 +993,7 @@
 		}
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'dependencies-check-success',
 					slug: response.slug,
@@ -1020,7 +1020,7 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.checkPluginDependenciesError = function( response ) {
+	zc.updates.checkPluginDependenciesError = function( response ) {
 		var $message = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ).find( '.install-now' ),
 			buttonText = _x( 'Activate', 'plugin' ),
 			ariaLabel = sprintf(
@@ -1031,7 +1031,7 @@
 			),
 			errorMessage;
 
-		if ( ! wp.updates.isValidResponse( response, 'check-dependencies' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'check-dependencies' ) ) {
 			return;
 		}
 
@@ -1041,7 +1041,7 @@
 			response.errorMessage
 		);
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 		$document.trigger( 'zc-check-plugin-dependencies-error', response );
 
 		$message
@@ -1051,7 +1051,7 @@
 			.text( buttonText );
 
 		if ( 'plugin-information-footer' === $message.parent().attr('id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'dependencies-check-failed',
 					slug: response.slug,
@@ -1073,24 +1073,24 @@
 	 * @param {string}                 args.name    The name of the plugin.
 	 * @param {string}                 args.slug    Plugin identifier in the ZelocoreCMS.org Plugin repository.
 	 * @param {string}                 args.plugin  The plugin file, relative to the plugins directory.
-	 * @param {activatePluginSuccess=} args.success Optional. Success callback. Default: wp.updates.activatePluginSuccess
-	 * @param {activatePluginError=}   args.error   Optional. Error callback. Default: wp.updates.activatePluginError
+	 * @param {activatePluginSuccess=} args.success Optional. Success callback. Default: zc.updates.activatePluginSuccess
+	 * @param {activatePluginError=}   args.error   Optional. Error callback. Default: zc.updates.activatePluginError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.activatePlugin = function( args ) {
+	zc.updates.activatePlugin = function( args ) {
 		var $message = $( '.plugin-card-' + args.slug + ', #plugin-information-footer' ).find( '.activate-now, .activating-message' );
 
 		args = _.extend( {
-			success: wp.updates.activatePluginSuccess,
-			error: wp.updates.activatePluginError
+			success: zc.updates.activatePluginSuccess,
+			error: zc.updates.activatePluginError
 		}, args );
 
-		wp.a11y.speak( __( 'Activating... please wait.' ) );
+		zc.a11y.speak( __( 'Activating... please wait.' ) );
 		$document.trigger( 'zc-activating-plugin', args );
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'activating-plugin',
 					slug: args.slug,
@@ -1106,7 +1106,7 @@
 			);
 		}
 
-		return wp.updates.ajax( 'activate-plugin', args );
+		return zc.updates.ajax( 'activate-plugin', args );
 	};
 
 	/**
@@ -1119,7 +1119,7 @@
 	 * @param {string} response.pluginName  Name of the activated plugin.
 	 * @param {string} response.plugin      The plugin file, relative to the plugins directory.
 	 */
-	wp.updates.activatePluginSuccess = function( response ) {
+	zc.updates.activatePluginSuccess = function( response ) {
 		var $message = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ).find( '.activating-message' ),
 			buttonText = _x( 'Activated!', 'plugin' ),
 			ariaLabel = sprintf(
@@ -1128,7 +1128,7 @@
 				response.pluginName
 			);
 
-		wp.a11y.speak( __( 'Activation completed successfully.' ) );
+		zc.a11y.speak( __( 'Activation completed successfully.' ) );
 		$document.trigger( 'zc-plugin-activate-success', response );
 
 		$message
@@ -1138,7 +1138,7 @@
 			.text( buttonText );
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'activated-plugin',
 					slug: response.slug,
@@ -1155,7 +1155,7 @@
 			.text( _x( 'Active', 'plugin' ) );
 
 			if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-				wp.updates.setCardButtonStatus(
+				zc.updates.setCardButtonStatus(
 					{
 						status: 'plugin-active',
 						slug: response.slug,
@@ -1183,7 +1183,7 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.activatePluginError = function( response ) {
+	zc.updates.activatePluginError = function( response ) {
 		var $message = $( '.plugin-card-' + response.slug + ', #plugin-information-footer' ).find( '.activating-message' ),
 			buttonText = __( 'Activation failed.' ),
 			ariaLabel = sprintf(
@@ -1193,7 +1193,7 @@
 			),
 			errorMessage;
 
-		if ( ! wp.updates.isValidResponse( response, 'activate' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'activate' ) ) {
 			return;
 		}
 
@@ -1203,7 +1203,7 @@
 			response.errorMessage
 		);
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 		$document.trigger( 'zc-plugin-activate-error', response );
 
 		$message
@@ -1213,7 +1213,7 @@
 			.text( buttonText );
 
 		if ( 'plugin-information-footer' === $message.parent().attr( 'id' ) ) {
-			wp.updates.setCardButtonStatus(
+			zc.updates.setCardButtonStatus(
 				{
 					status: 'plugin-activation-failed',
 					slug: response.slug,
@@ -1236,8 +1236,8 @@
 	 * @param {string} response.pluginName  Name of the installed plugin.
 	 * @param {string} response.activateUrl URL to activate the just installed plugin.
 	 */
-	wp.updates.installImporterSuccess = function( response ) {
-		wp.updates.addAdminNotice( {
+	zc.updates.installImporterSuccess = function( response ) {
+		zc.updates.addAdminNotice( {
 			id:        'install-success',
 			className: 'notice-success is-dismissible',
 			message:   sprintf(
@@ -1260,7 +1260,7 @@
 			})
 			.text( __( 'Run Importer' ) );
 
-		wp.a11y.speak( __( 'Installation completed successfully.' ) );
+		zc.a11y.speak( __( 'Installation completed successfully.' ) );
 
 		$document.trigger( 'zc-importer-install-success', response );
 	};
@@ -1276,7 +1276,7 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.installImporterError = function( response ) {
+	zc.updates.installImporterError = function( response ) {
 		var errorMessage = sprintf(
 				/* translators: %s: Error string for a failed installation. */
 				__( 'Installation failed: %s' ),
@@ -1285,15 +1285,15 @@
 			$installLink = $( '[data-slug="' + response.slug + '"]' ),
 			pluginName = $installLink.data( 'name' );
 
-		if ( ! wp.updates.isValidResponse( response, 'install' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'install' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'install-plugin' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'install-plugin' ) ) {
 			return;
 		}
 
-		wp.updates.addAdminNotice( {
+		zc.updates.addAdminNotice( {
 			id:        response.errorCode,
 			className: 'notice-error is-dismissible',
 			message:   errorMessage
@@ -1311,7 +1311,7 @@
 			)
 			.text( _x( 'Install Now', 'plugin' ) );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
 		$document.trigger( 'zc-importer-install-error', response );
 	};
@@ -1324,17 +1324,17 @@
 	 * @param {Object}               args         Arguments.
 	 * @param {string}               args.plugin  Basename of the plugin to be deleted.
 	 * @param {string}               args.slug    Slug of the plugin to be deleted.
-	 * @param {deletePluginSuccess=} args.success Optional. Success callback. Default: wp.updates.deletePluginSuccess
-	 * @param {deletePluginError=}   args.error   Optional. Error callback. Default: wp.updates.deletePluginError
+	 * @param {deletePluginSuccess=} args.success Optional. Success callback. Default: zc.updates.deletePluginSuccess
+	 * @param {deletePluginError=}   args.error   Optional. Error callback. Default: zc.updates.deletePluginError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.deletePlugin = function( args ) {
+	zc.updates.deletePlugin = function( args ) {
 		var $link = $( '[data-plugin="' + args.plugin + '"]' ).find( '.row-actions a.delete' );
 
 		args = _.extend( {
-			success: wp.updates.deletePluginSuccess,
-			error: wp.updates.deletePluginError
+			success: zc.updates.deletePluginSuccess,
+			error: zc.updates.deletePluginError
 		}, args );
 
 		if ( $link.html() !== __( 'Deleting...' ) ) {
@@ -1343,11 +1343,11 @@
 				.text( __( 'Deleting...' ) );
 		}
 
-		wp.a11y.speak( __( 'Deleting...' ) );
+		zc.a11y.speak( __( 'Deleting...' ) );
 
 		$document.trigger( 'zc-plugin-deleting', args );
 
-		return wp.updates.ajax( 'delete-plugin', args );
+		return zc.updates.ajax( 'delete-plugin', args );
 	};
 
 	/**
@@ -1360,7 +1360,7 @@
 	 * @param {string} response.plugin     Base name of the plugin that was deleted.
 	 * @param {string} response.pluginName Name of the plugin that was deleted.
 	 */
-	wp.updates.deletePluginSuccess = function( response ) {
+	zc.updates.deletePluginSuccess = function( response ) {
 
 		// Removes the plugin and updates rows.
 		$( '[data-plugin="' + response.plugin + '"]' ).css( { backgroundColor: '#faafaa' } ).fadeOut( 350, function() {
@@ -1370,7 +1370,7 @@
 				$currentView     = $views.find( '[aria-current="page"]' ),
 				$itemsCount      = $( '.displaying-num' ),
 				columnCount      = $form.find( 'thead th:not(.hidden), thead td' ).length,
-				pluginDeletedRow = wp.template( 'item-deleted-row' ),
+				pluginDeletedRow = zc.template( 'item-deleted-row' ),
 				/**
 				 * Plugins Base names of plugins in their different states.
 				 *
@@ -1396,7 +1396,7 @@
 			// Remove plugin from update count.
 			if ( -1 !== _.indexOf( plugins.upgrade, response.plugin ) ) {
 				plugins.upgrade = _.without( plugins.upgrade, response.plugin );
-				wp.updates.decrementCount( 'plugin' );
+				zc.updates.decrementCount( 'plugin' );
 			}
 
 			// Remove from views.
@@ -1470,7 +1470,7 @@
 			}
 		} );
 
-		wp.a11y.speak( _x( 'Deleted!', 'plugin' ) );
+		zc.a11y.speak( _x( 'Deleted!', 'plugin' ) );
 
 		$document.trigger( 'zc-plugin-delete-success', response );
 	};
@@ -1487,10 +1487,10 @@
 	 * @param {string}  response.errorCode    Error code for the error that occurred.
 	 * @param {string}  response.errorMessage The error that occurred.
 	 */
-	wp.updates.deletePluginError = function( response ) {
+	zc.updates.deletePluginError = function( response ) {
 		var $plugin, $pluginUpdateRow,
-			pluginUpdateRow  = wp.template( 'item-update-row' ),
-			noticeContent    = wp.updates.adminNotice( {
+			pluginUpdateRow  = zc.template( 'item-update-row' ),
+			noticeContent    = zc.updates.adminNotice( {
 				className: 'update-message notice-error notice-alt',
 				message:   response.errorMessage
 			} );
@@ -1503,11 +1503,11 @@
 			$pluginUpdateRow = $plugin.siblings( '[data-slug="' + response.slug + '"]' );
 		}
 
-		if ( ! wp.updates.isValidResponse( response, 'delete' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'delete' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'delete-plugin' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'delete-plugin' ) ) {
 			return;
 		}
 
@@ -1539,17 +1539,17 @@
 	 *
 	 * @param {Object}              args         Arguments.
 	 * @param {string}              args.slug    Theme stylesheet.
-	 * @param {updateThemeSuccess=} args.success Optional. Success callback. Default: wp.updates.updateThemeSuccess
-	 * @param {updateThemeError=}   args.error   Optional. Error callback. Default: wp.updates.updateThemeError
+	 * @param {updateThemeSuccess=} args.success Optional. Success callback. Default: zc.updates.updateThemeSuccess
+	 * @param {updateThemeError=}   args.error   Optional. Error callback. Default: zc.updates.updateThemeError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.updateTheme = function( args ) {
+	zc.updates.updateTheme = function( args ) {
 		var $notice;
 
 		args = _.extend( {
-			success: wp.updates.updateThemeSuccess,
-			error: wp.updates.updateThemeError
+			success: zc.updates.updateThemeSuccess,
+			error: zc.updates.updateThemeError
 		}, args );
 
 		if ( 'themes-network' === pagenow ) {
@@ -1579,12 +1579,12 @@
 			$notice.data( 'originaltext', $notice.html() );
 		}
 
-		wp.a11y.speak( __( 'Updating... please wait.' ) );
+		zc.a11y.speak( __( 'Updating... please wait.' ) );
 		$notice.text( __( 'Updating...' ) );
 
 		$document.trigger( 'zc-theme-updating', args );
 
-		return wp.updates.ajax( 'update-theme', args );
+		return zc.updates.ajax( 'update-theme', args );
 	};
 
 	/**
@@ -1599,7 +1599,7 @@
 	 * @param {string} response.oldVersion Old version of the theme.
 	 * @param {string} response.newVersion New version of the theme.
 	 */
-	wp.updates.updateThemeSuccess = function( response ) {
+	zc.updates.updateThemeSuccess = function( response ) {
 		var isModalOpen    = $( 'body.modal-open' ).length,
 			$theme         = $( '[data-slug="' + response.slug + '"]' ),
 			updatedMessage = {
@@ -1618,7 +1618,7 @@
 				$theme.html( newText );
 			}
 
-			$notice = $( '.theme-info .notice' ).add( wp.customize.control( 'installed_theme_' + response.slug ).container.find( '.theme' ).find( '.update-message' ) );
+			$notice = $( '.theme-info .notice' ).add( zc.customize.control( 'installed_theme_' + response.slug ).container.find( '.theme' ).find( '.update-message' ) );
 		} else if ( 'themes-network' === pagenow ) {
 			$notice = $theme.find( '.update-message' );
 
@@ -1640,16 +1640,16 @@
 			}
 		}
 
-		wp.updates.addAdminNotice( _.extend( { selector: $notice }, updatedMessage ) );
-		wp.a11y.speak( __( 'Update completed successfully.' ) );
+		zc.updates.addAdminNotice( _.extend( { selector: $notice }, updatedMessage ) );
+		zc.a11y.speak( __( 'Update completed successfully.' ) );
 
-		wp.updates.decrementCount( 'theme' );
+		zc.updates.decrementCount( 'theme' );
 
 		$document.trigger( 'zc-theme-update-success', response );
 
 		// Show updated message after modal re-rendered.
 		if ( isModalOpen && 'customize' !== pagenow ) {
-			$( '.theme-info .theme-author' ).after( wp.updates.adminNotice( updatedMessage ) );
+			$( '.theme-info .theme-author' ).after( zc.updates.adminNotice( updatedMessage ) );
 		}
 	};
 
@@ -1663,7 +1663,7 @@
 	 * @param {string} response.errorCode    Error code for the error that occurred.
 	 * @param {string} response.errorMessage The error that occurred.
 	 */
-	wp.updates.updateThemeError = function( response ) {
+	zc.updates.updateThemeError = function( response ) {
 		var $theme       = $( '[data-slug="' + response.slug + '"]' ),
 			errorMessage = sprintf(
 				/* translators: %s: Error string for a failed update. */
@@ -1672,16 +1672,16 @@
 			),
 			$notice;
 
-		if ( ! wp.updates.isValidResponse( response, 'update' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'update' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'update-theme' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'update-theme' ) ) {
 			return;
 		}
 
 		if ( 'customize' === pagenow ) {
-			$theme = wp.customize.control( 'installed_theme_' + response.slug ).container.find( '.theme' );
+			$theme = zc.customize.control( 'installed_theme_' + response.slug ).container.find( '.theme' );
 		}
 
 		if ( 'themes-network' === pagenow ) {
@@ -1692,13 +1692,13 @@
 			$( 'body.modal-open' ).length ? $( '.load-customize:visible' ).trigger( 'focus' ) : $theme.find( '.load-customize' ).trigger( 'focus');
 		}
 
-		wp.updates.addAdminNotice( {
+		zc.updates.addAdminNotice( {
 			selector:  $notice,
 			className: 'update-message notice-error notice-alt is-dismissible',
 			message:   errorMessage
 		} );
 
-		wp.a11y.speak( errorMessage );
+		zc.a11y.speak( errorMessage );
 
 		$document.trigger( 'zc-theme-update-error', response );
 	};
@@ -1710,17 +1710,17 @@
 	 *
 	 * @param {Object}               args
 	 * @param {string}               args.slug    Theme stylesheet.
-	 * @param {installThemeSuccess=} args.success Optional. Success callback. Default: wp.updates.installThemeSuccess
-	 * @param {installThemeError=}   args.error   Optional. Error callback. Default: wp.updates.installThemeError
+	 * @param {installThemeSuccess=} args.success Optional. Success callback. Default: zc.updates.installThemeSuccess
+	 * @param {installThemeError=}   args.error   Optional. Error callback. Default: zc.updates.installThemeError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.installTheme = function( args ) {
+	zc.updates.installTheme = function( args ) {
 		var $message = $( '.theme-install[data-slug="' + args.slug + '"]' );
 
 		args = _.extend( {
-			success: wp.updates.installThemeSuccess,
-			error: wp.updates.installThemeError
+			success: zc.updates.installThemeSuccess,
+			error: zc.updates.installThemeError
 		}, args );
 
 		$message.addClass( 'updating-message' );
@@ -1740,14 +1740,14 @@
 			)
 			.text( __( 'Installing...' ) );
 
-		wp.a11y.speak( __( 'Installing... please wait.' ) );
+		zc.a11y.speak( __( 'Installing... please wait.' ) );
 
 		// Remove previous error messages, if any.
 		$( '.install-theme-info, [data-slug="' + args.slug + '"]' ).removeClass( 'theme-install-failed' ).find( '.notice.notice-error' ).remove();
 
 		$document.trigger( 'zc-theme-installing', args );
 
-		return wp.updates.ajax( 'install-theme', args );
+		return zc.updates.ajax( 'install-theme', args );
 	};
 
 	/**
@@ -1760,7 +1760,7 @@
 	 * @param {string} response.customizeUrl URL to the Customizer for the just installed theme.
 	 * @param {string} response.activateUrl  URL to activate the just installed theme.
 	 */
-	wp.updates.installThemeSuccess = function( response ) {
+	zc.updates.installThemeSuccess = function( response ) {
 		var $card = $( '.zc-full-overlay-header, [data-slug=' + response.slug + ']' ),
 			$message;
 
@@ -1779,7 +1779,7 @@
 			)
 			.text( _x( 'Installed!', 'theme' ) );
 
-		wp.a11y.speak( __( 'Installation completed successfully.' ) );
+		zc.a11y.speak( __( 'Installation completed successfully.' ) );
 
 		setTimeout( function() {
 
@@ -1839,23 +1839,23 @@
 	 * @param {string} response.errorCode    Error code for the error that occurred.
 	 * @param {string} response.errorMessage The error that occurred.
 	 */
-	wp.updates.installThemeError = function( response ) {
+	zc.updates.installThemeError = function( response ) {
 		var $card, $button,
 			errorMessage = sprintf(
 				/* translators: %s: Error string for a failed installation. */
 				__( 'Installation failed: %s' ),
 				response.errorMessage
 			),
-			$message     = wp.updates.adminNotice( {
+			$message     = zc.updates.adminNotice( {
 				className: 'update-message notice-error notice-alt',
 				message:   errorMessage
 			} );
 
-		if ( ! wp.updates.isValidResponse( response, 'install' ) ) {
+		if ( ! zc.updates.isValidResponse( response, 'install' ) ) {
 			return;
 		}
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'install-theme' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'install-theme' ) ) {
 			return;
 		}
 
@@ -1867,7 +1867,7 @@
 				$button = $( '.theme-install[data-slug="' + response.slug + '"]' );
 				$card   = $button.closest( '.theme' ).addClass( 'theme-install-failed' ).append( $message );
 			}
-			wp.customize.notifications.remove( 'theme_installing' );
+			zc.customize.notifications.remove( 'theme_installing' );
 		} else {
 			if ( $document.find( 'body' ).hasClass( 'full-overlay-active' ) ) {
 				$button = $( '.theme-install[data-slug="' + response.slug + '"]' );
@@ -1890,7 +1890,7 @@
 			)
 			.text( __( 'Installation failed.' ) );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
 		$document.trigger( 'zc-theme-install-error', response );
 	};
@@ -1902,12 +1902,12 @@
 	 *
 	 * @param {Object}              args
 	 * @param {string}              args.slug    Theme stylesheet.
-	 * @param {deleteThemeSuccess=} args.success Optional. Success callback. Default: wp.updates.deleteThemeSuccess
-	 * @param {deleteThemeError=}   args.error   Optional. Error callback. Default: wp.updates.deleteThemeError
+	 * @param {deleteThemeSuccess=} args.success Optional. Success callback. Default: zc.updates.deleteThemeSuccess
+	 * @param {deleteThemeError=}   args.error   Optional. Error callback. Default: zc.updates.deleteThemeError
 	 * @return {$.promise} A jQuery promise that represents the request,
 	 *                     decorated with an abort() method.
 	 */
-	wp.updates.deleteTheme = function( args ) {
+	zc.updates.deleteTheme = function( args ) {
 		var $button;
 
 		if ( 'themes' === pagenow ) {
@@ -1917,8 +1917,8 @@
 		}
 
 		args = _.extend( {
-			success: wp.updates.deleteThemeSuccess,
-			error: wp.updates.deleteThemeError
+			success: zc.updates.deleteThemeSuccess,
+			error: zc.updates.deleteThemeError
 		}, args );
 
 		if ( $button && $button.html() !== __( 'Deleting...' ) ) {
@@ -1927,14 +1927,14 @@
 				.text( __( 'Deleting...' ) );
 		}
 
-		wp.a11y.speak( __( 'Deleting...' ) );
+		zc.a11y.speak( __( 'Deleting...' ) );
 
 		// Remove previous error messages, if any.
 		$( '.theme-info .update-message' ).remove();
 
 		$document.trigger( 'zc-theme-deleting', args );
 
-		return wp.updates.ajax( 'delete-theme', args );
+		return zc.updates.ajax( 'delete-theme', args );
 	};
 
 	/**
@@ -1945,7 +1945,7 @@
 	 * @param {Object} response      Response from the server.
 	 * @param {string} response.slug Slug of the theme that was deleted.
 	 */
-	wp.updates.deleteThemeSuccess = function( response ) {
+	zc.updates.deleteThemeSuccess = function( response ) {
 		var $themeRows = $( '[data-slug="' + response.slug + '"]' );
 
 		if ( 'themes-network' === pagenow ) {
@@ -1955,7 +1955,7 @@
 				var $views     = $( '.subsubsub' ),
 					$themeRow  = $( this ),
 					themes     = settings.themes,
-					deletedRow = wp.template( 'item-deleted-row' );
+					deletedRow = zc.template( 'item-deleted-row' );
 
 				if ( ! $themeRow.hasClass( 'plugin-update-tr' ) ) {
 					$themeRow.after(
@@ -1972,7 +1972,7 @@
 				// Remove theme from update count.
 				if ( -1 !== _.indexOf( themes.upgrade, response.slug ) ) {
 					themes.upgrade = _.without( themes.upgrade, response.slug );
-					wp.updates.decrementCount( 'theme' );
+					zc.updates.decrementCount( 'theme' );
 				}
 
 				// Remove from views.
@@ -2014,11 +2014,11 @@
 		if ( 'themes' === pagenow ) {
 		    var theme = _.find( _wpThemeSettings.themes, { id: response.slug } );
 		    if ( theme.hasUpdate ) {
-		        wp.updates.decrementCount( 'theme' );
+		        zc.updates.decrementCount( 'theme' );
 		    }
 		}
 
-		wp.a11y.speak( _x( 'Deleted!', 'theme' ) );
+		zc.a11y.speak( _x( 'Deleted!', 'theme' ) );
 
 		$document.trigger( 'zc-theme-delete-success', response );
 	};
@@ -2033,22 +2033,22 @@
 	 * @param {string} response.errorCode    Error code for the error that occurred.
 	 * @param {string} response.errorMessage The error that occurred.
 	 */
-	wp.updates.deleteThemeError = function( response ) {
+	zc.updates.deleteThemeError = function( response ) {
 		var $themeRow    = $( 'tr.inactive[data-slug="' + response.slug + '"]' ),
 			$button      = $( '.theme-actions .delete-theme' ),
-			updateRow    = wp.template( 'item-update-row' ),
+			updateRow    = zc.template( 'item-update-row' ),
 			$updateRow   = $themeRow.siblings( '#' + response.slug + '-update' ),
 			errorMessage = sprintf(
 				/* translators: %s: Error string for a failed deletion. */
 				__( 'Deletion failed: %s' ),
 				response.errorMessage
 			),
-			$message     = wp.updates.adminNotice( {
+			$message     = zc.updates.adminNotice( {
 				className: 'update-message notice-error notice-alt',
 				message:   errorMessage
 			} );
 
-		if ( wp.updates.maybeHandleCredentialError( response, 'delete-theme' ) ) {
+		if ( zc.updates.maybeHandleCredentialError( response, 'delete-theme' ) ) {
 			return;
 		}
 
@@ -2072,7 +2072,7 @@
 
 		$button.html( $button.data( 'originaltext' ) );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
 		$document.trigger( 'zc-theme-delete-error', response );
 	};
@@ -2087,10 +2087,10 @@
 	 * @param {string} action The type of request to perform.
 	 * @return {Object} The Ajax payload with the appropriate callbacks.
 	 */
-	wp.updates._addCallbacks = function( data, action ) {
+	zc.updates._addCallbacks = function( data, action ) {
 		if ( 'import' === pagenow && 'install-plugin' === action ) {
-			data.success = wp.updates.installImporterSuccess;
-			data.error   = wp.updates.installImporterError;
+			data.success = zc.updates.installImporterSuccess;
+			data.error   = zc.updates.installImporterError;
 		}
 
 		return data;
@@ -2102,39 +2102,39 @@
 	 * @since 4.2.0
 	 * @since 4.6.0 Can handle multiple job types.
 	 */
-	wp.updates.queueChecker = function() {
+	zc.updates.queueChecker = function() {
 		var job;
 
-		if ( wp.updates.ajaxLocked || ! wp.updates.queue.length ) {
+		if ( zc.updates.ajaxLocked || ! zc.updates.queue.length ) {
 			return;
 		}
 
-		job = wp.updates.queue.shift();
+		job = zc.updates.queue.shift();
 
 		// Handle a queue job.
 		switch ( job.action ) {
 			case 'install-plugin':
-				wp.updates.installPlugin( job.data );
+				zc.updates.installPlugin( job.data );
 				break;
 
 			case 'update-plugin':
-				wp.updates.updatePlugin( job.data );
+				zc.updates.updatePlugin( job.data );
 				break;
 
 			case 'delete-plugin':
-				wp.updates.deletePlugin( job.data );
+				zc.updates.deletePlugin( job.data );
 				break;
 
 			case 'install-theme':
-				wp.updates.installTheme( job.data );
+				zc.updates.installTheme( job.data );
 				break;
 
 			case 'update-theme':
-				wp.updates.updateTheme( job.data );
+				zc.updates.updateTheme( job.data );
 				break;
 
 			case 'delete-theme':
-				wp.updates.deleteTheme( job.data );
+				zc.updates.deleteTheme( job.data );
 				break;
 
 			default:
@@ -2149,18 +2149,18 @@
 	 *
 	 * @param {Event=} event Optional. Event interface.
 	 */
-	wp.updates.requestFilesystemCredentials = function( event ) {
-		if ( false === wp.updates.filesystemCredentials.available ) {
+	zc.updates.requestFilesystemCredentials = function( event ) {
+		if ( false === zc.updates.filesystemCredentials.available ) {
 			/*
 			 * After exiting the credentials request modal,
 			 * return the focus to the element triggering the request.
 			 */
-			if ( event && ! wp.updates.$elToReturnFocusToFromCredentialsModal ) {
-				wp.updates.$elToReturnFocusToFromCredentialsModal = $( event.target );
+			if ( event && ! zc.updates.$elToReturnFocusToFromCredentialsModal ) {
+				zc.updates.$elToReturnFocusToFromCredentialsModal = $( event.target );
 			}
 
-			wp.updates.ajaxLocked = true;
-			wp.updates.requestForCredentialsModalOpen();
+			zc.updates.ajaxLocked = true;
+			zc.updates.requestForCredentialsModalOpen();
 		}
 	};
 
@@ -2171,9 +2171,9 @@
 	 *
 	 * @param {Event=} event Optional. Event interface.
 	 */
-	wp.updates.maybeRequestFilesystemCredentials = function( event ) {
-		if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
-			wp.updates.requestFilesystemCredentials( event );
+	zc.updates.maybeRequestFilesystemCredentials = function( event ) {
+		if ( zc.updates.shouldRequestFilesystemCredentials && ! zc.updates.ajaxLocked ) {
+			zc.updates.requestFilesystemCredentials( event );
 		}
 	};
 
@@ -2187,9 +2187,9 @@
 	 *
 	 * @param {Event} event Event interface.
 	 */
-	wp.updates.keydown = function( event ) {
+	zc.updates.keydown = function( event ) {
 		if ( 27 === event.keyCode ) {
-			wp.updates.requestForCredentialsModalCancel();
+			zc.updates.requestForCredentialsModalCancel();
 		} else if ( 9 === event.keyCode ) {
 
 			// #upgrade button must always be the last focus-able element in the dialog.
@@ -2210,13 +2210,13 @@
 	 *
 	 * @since 4.2.0
 	 */
-	wp.updates.requestForCredentialsModalOpen = function() {
+	zc.updates.requestForCredentialsModalOpen = function() {
 		var $modal = $( '#request-filesystem-credentials-dialog' );
 
 		$( 'body' ).addClass( 'modal-open' );
 		$modal.show();
 		$modal.find( 'input:enabled:first' ).trigger( 'focus' );
-		$modal.on( 'keydown', wp.updates.keydown );
+		$modal.on( 'keydown', zc.updates.keydown );
 	};
 
 	/**
@@ -2224,12 +2224,12 @@
 	 *
 	 * @since 4.2.0
 	 */
-	wp.updates.requestForCredentialsModalClose = function() {
+	zc.updates.requestForCredentialsModalClose = function() {
 		$( '#request-filesystem-credentials-dialog' ).hide();
 		$( 'body' ).removeClass( 'modal-open' );
 
-		if ( wp.updates.$elToReturnFocusToFromCredentialsModal ) {
-			wp.updates.$elToReturnFocusToFromCredentialsModal.trigger( 'focus' );
+		if ( zc.updates.$elToReturnFocusToFromCredentialsModal ) {
+			zc.updates.$elToReturnFocusToFromCredentialsModal.trigger( 'focus' );
 		}
 	};
 
@@ -2239,22 +2239,22 @@
 	 * @since 4.2.0
 	 * @since 4.6.0 Triggers an event for callbacks to listen to and add their actions.
 	 */
-	wp.updates.requestForCredentialsModalCancel = function() {
+	zc.updates.requestForCredentialsModalCancel = function() {
 
 		// Not ajaxLocked and no queue means we already have cleared things up.
-		if ( ! wp.updates.ajaxLocked && ! wp.updates.queue.length ) {
+		if ( ! zc.updates.ajaxLocked && ! zc.updates.queue.length ) {
 			return;
 		}
 
-		_.each( wp.updates.queue, function( job ) {
+		_.each( zc.updates.queue, function( job ) {
 			$document.trigger( 'credential-modal-cancel', job );
 		} );
 
 		// Remove the lock, and clear the queue.
-		wp.updates.ajaxLocked = false;
-		wp.updates.queue = [];
+		zc.updates.ajaxLocked = false;
+		zc.updates.queue = [];
 
-		wp.updates.requestForCredentialsModalClose();
+		zc.updates.requestForCredentialsModalClose();
 	};
 
 	/**
@@ -2264,7 +2264,7 @@
 	 *
 	 * @param {string} message Error message.
 	 */
-	wp.updates.showErrorInCredentialsForm = function( message ) {
+	zc.updates.showErrorInCredentialsForm = function( message ) {
 		var $filesystemForm = $( '#request-filesystem-credentials-form' );
 
 		// Remove any existing error.
@@ -2280,12 +2280,12 @@
 	 * @param {Object} response Ajax response.
 	 * @param {string} action   The type of request to perform.
 	 */
-	wp.updates.credentialError = function( response, action ) {
+	zc.updates.credentialError = function( response, action ) {
 
 		// Restore callbacks.
-		response = wp.updates._addCallbacks( response, action );
+		response = zc.updates._addCallbacks( response, action );
 
-		wp.updates.queue.unshift( {
+		zc.updates.queue.unshift( {
 			action: action,
 
 			/*
@@ -2295,9 +2295,9 @@
 			data: response
 		} );
 
-		wp.updates.filesystemCredentials.available = false;
-		wp.updates.showErrorInCredentialsForm( response.errorMessage );
-		wp.updates.requestFilesystemCredentials();
+		zc.updates.filesystemCredentials.available = false;
+		zc.updates.showErrorInCredentialsForm( response.errorMessage );
+		zc.updates.requestFilesystemCredentials();
 	};
 
 	/**
@@ -2311,9 +2311,9 @@
 	 * @param {string} action                The type of request to perform.
 	 * @return {boolean} Whether there is an error that needs to be handled or not.
 	 */
-	wp.updates.maybeHandleCredentialError = function( response, action ) {
-		if ( wp.updates.shouldRequestFilesystemCredentials && response.errorCode && 'unable_to_connect_to_filesystem' === response.errorCode ) {
-			wp.updates.credentialError( response, action );
+	zc.updates.maybeHandleCredentialError = function( response, action ) {
+		if ( zc.updates.shouldRequestFilesystemCredentials && response.errorCode && 'unable_to_connect_to_filesystem' === response.errorCode ) {
+			zc.updates.credentialError( response, action );
 			return true;
 		}
 
@@ -2332,7 +2332,7 @@
 	 * @param {string}          action                Type of action the response is referring to. Can be 'delete',
 	 *                                                'update' or 'install'.
 	 */
-	wp.updates.isValidResponse = function( response, action ) {
+	zc.updates.isValidResponse = function( response, action ) {
 		var error = __( 'An error occurred during the update process. Please try again.' ),
 			errorMessage;
 
@@ -2385,15 +2385,15 @@
 		errorMessage = errorMessage.replace( '%s', error );
 
 		// Add admin notice.
-		wp.updates.addAdminNotice( {
+		zc.updates.addAdminNotice( {
 			id:        'unknown_error',
 			className: 'notice-error is-dismissible',
 			message:   _.escape( errorMessage )
 		} );
 
 		// Remove the lock, and clear the queue.
-		wp.updates.ajaxLocked = false;
-		wp.updates.queue      = [];
+		zc.updates.ajaxLocked = false;
+		zc.updates.queue      = [];
 
 		// Change buttons of all running updates.
 		$( '.button.updating-message' )
@@ -2409,7 +2409,7 @@
 				.removeAttr( 'aria-label' )
 				.text( errorMessage );
 
-		wp.a11y.speak( errorMessage, 'assertive' );
+		zc.a11y.speak( errorMessage, 'assertive' );
 
 		return false;
 	};
@@ -2422,8 +2422,8 @@
 	 *
 	 * @since 4.2.0
 	 */
-	wp.updates.beforeunload = function() {
-		if ( wp.updates.ajaxLocked ) {
+	zc.updates.beforeunload = function() {
+		if ( zc.updates.ajaxLocked ) {
 			return __( 'Updates may not complete if you navigate away from this page.' );
 		}
 	};
@@ -2439,7 +2439,7 @@
 		settings = _.extend( settings, window._wpUpdatesItemCounts || {} );
 
 		if ( settings.totals ) {
-			wp.updates.refreshCount();
+			zc.updates.refreshCount();
 		}
 
 		/*
@@ -2449,7 +2449,7 @@
 		 *
 		 * @see {zc_print_request_filesystem_credentials_modal() in PHP}
 		 */
-		wp.updates.shouldRequestFilesystemCredentials = $filesystemModal.length > 0;
+		zc.updates.shouldRequestFilesystemCredentials = $filesystemModal.length > 0;
 
 		/**
 		 * File system credentials form submit noop-er / handler.
@@ -2460,20 +2460,20 @@
 			event.preventDefault();
 
 			// Persist the credentials input by the user for the duration of the page load.
-			wp.updates.filesystemCredentials.ftp.hostname       = $( '#hostname' ).val();
-			wp.updates.filesystemCredentials.ftp.username       = $( '#username' ).val();
-			wp.updates.filesystemCredentials.ftp.password       = $( '#password' ).val();
-			wp.updates.filesystemCredentials.ftp.connectionType = $( 'input[name="connection_type"]:checked' ).val();
-			wp.updates.filesystemCredentials.ssh.publicKey      = $( '#public_key' ).val();
-			wp.updates.filesystemCredentials.ssh.privateKey     = $( '#private_key' ).val();
-			wp.updates.filesystemCredentials.fsNonce            = $( '#_fs_nonce' ).val();
-			wp.updates.filesystemCredentials.available          = true;
+			zc.updates.filesystemCredentials.ftp.hostname       = $( '#hostname' ).val();
+			zc.updates.filesystemCredentials.ftp.username       = $( '#username' ).val();
+			zc.updates.filesystemCredentials.ftp.password       = $( '#password' ).val();
+			zc.updates.filesystemCredentials.ftp.connectionType = $( 'input[name="connection_type"]:checked' ).val();
+			zc.updates.filesystemCredentials.ssh.publicKey      = $( '#public_key' ).val();
+			zc.updates.filesystemCredentials.ssh.privateKey     = $( '#private_key' ).val();
+			zc.updates.filesystemCredentials.fsNonce            = $( '#_fs_nonce' ).val();
+			zc.updates.filesystemCredentials.available          = true;
 
 			// Unlock and invoke the queue.
-			wp.updates.ajaxLocked = false;
-			wp.updates.queueChecker();
+			zc.updates.ajaxLocked = false;
+			zc.updates.queueChecker();
 
-			wp.updates.requestForCredentialsModalClose();
+			zc.updates.requestForCredentialsModalClose();
 		} );
 
 		/**
@@ -2481,7 +2481,7 @@
 		 *
 		 * @since 4.2.0
 		 */
-		$filesystemModal.on( 'click', '[data-js-action="close"], .notification-dialog-background', wp.updates.requestForCredentialsModalCancel );
+		$filesystemModal.on( 'click', '[data-js-action="close"], .notification-dialog-background', zc.updates.requestForCredentialsModalCancel );
 
 		/**
 		 * Hide SSH fields when not selected.
@@ -2558,7 +2558,7 @@
 				}
 			}
 
-			wp.a11y.speak( __( 'Update canceled.' ) );
+			zc.a11y.speak( __( 'Update canceled.' ) );
 		} );
 
 		/**
@@ -2578,11 +2578,11 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			// Return the user to the input box of the plugin's table row after closing the modal.
-			wp.updates.$elToReturnFocusToFromCredentialsModal = $pluginRow.find( '.check-column input' );
-			wp.updates.updatePlugin( {
+			zc.updates.$elToReturnFocusToFromCredentialsModal = $pluginRow.find( '.check-column input' );
+			zc.updates.updatePlugin( {
 				plugin: $pluginRow.data( 'plugin' ),
 				slug:   $pluginRow.data( 'slug' )
 			} );
@@ -2603,9 +2603,9 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
-			wp.updates.updatePlugin( {
+			zc.updates.updatePlugin( {
 				plugin: $button.data( 'plugin' ),
 				slug:   $button.data( 'slug' )
 			} );
@@ -2626,8 +2626,8 @@
 				return;
 			}
 
-			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
-				wp.updates.requestFilesystemCredentials( event );
+			if ( zc.updates.shouldRequestFilesystemCredentials && ! zc.updates.ajaxLocked ) {
+				zc.updates.requestFilesystemCredentials( event );
 
 				$document.on( 'credential-modal-cancel', function() {
 					var $message = $( '.install-now.updating-message' );
@@ -2636,11 +2636,11 @@
 						.removeClass( 'updating-message' )
 						.text( _x( 'Install Now', 'plugin' ) );
 
-					wp.a11y.speak( __( 'Update canceled.' ) );
+					zc.a11y.speak( __( 'Update canceled.' ) );
 				} );
 			}
 
-			wp.updates.installPlugin( {
+			zc.updates.installPlugin( {
 				slug: $button.data( 'slug' )
 			} );
 		} );
@@ -2675,8 +2675,8 @@
 				return;
 			}
 
-			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
-				wp.updates.requestFilesystemCredentials( event );
+			if ( zc.updates.shouldRequestFilesystemCredentials && ! zc.updates.ajaxLocked ) {
+				zc.updates.requestFilesystemCredentials( event );
 
 				$document.on( 'credential-modal-cancel', function() {
 
@@ -2692,15 +2692,15 @@
 						)
 						.text( _x( 'Install Now', 'plugin' ) );
 
-					wp.a11y.speak( __( 'Update canceled.' ) );
+					zc.a11y.speak( __( 'Update canceled.' ) );
 				} );
 			}
 
-			wp.updates.installPlugin( {
+			zc.updates.installPlugin( {
 				slug:    $button.data( 'slug' ),
 				pagenow: pagenow,
-				success: wp.updates.installImporterSuccess,
-				error:   wp.updates.installImporterError
+				success: zc.updates.installImporterSuccess,
+				error:   zc.updates.installImporterError
 			} );
 		} );
 
@@ -2735,9 +2735,9 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
-			wp.updates.deletePlugin( {
+			zc.updates.deletePlugin( {
 				plugin: $pluginRow.data( 'plugin' ),
 				slug:   $pluginRow.data( 'slug' )
 			} );
@@ -2761,11 +2761,11 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			// Return the user to the input box of the theme's table row after closing the modal.
-			wp.updates.$elToReturnFocusToFromCredentialsModal = $themeRow.find( '.check-column input' );
-			wp.updates.updateTheme( {
+			zc.updates.$elToReturnFocusToFromCredentialsModal = $themeRow.find( '.check-column input' );
+			zc.updates.updateTheme( {
 				slug: $themeRow.data( 'slug' )
 			} );
 		} );
@@ -2791,9 +2791,9 @@
 				return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
-			wp.updates.deleteTheme( {
+			zc.updates.deleteTheme( {
 				slug: $themeRow.data( 'slug' )
 			} );
 		} );
@@ -2858,7 +2858,7 @@
 					return;
 			}
 
-			wp.updates.maybeRequestFilesystemCredentials( event );
+			zc.updates.maybeRequestFilesystemCredentials( event );
 
 			event.preventDefault();
 
@@ -2888,7 +2888,7 @@
 				$itemRow.addClass( 'is-enqueued' );
 
 				// Add it to the queue.
-				wp.updates.queue.push( {
+				zc.updates.queue.push( {
 					action: action,
 					data:   {
 						plugin: $itemRow.data( 'plugin' ),
@@ -2913,7 +2913,7 @@
 
 				$itemRow.find( 'input[name="checked[]"]:checked' ).prop( 'checked', false );
 
-				wp.updates.adminNotice = wp.template( 'zc-bulk-updates-admin-notice' );
+				zc.updates.adminNotice = zc.template( 'zc-bulk-updates-admin-notice' );
 
 				var successMessage = null;
 
@@ -2943,7 +2943,7 @@
 					);
 				}
 
-				wp.updates.addAdminNotice( {
+				zc.updates.addAdminNotice( {
 					id:            'bulk-action-notice',
 					className:     'bulk-action-notice',
 					successMessage: successMessage,
@@ -2961,18 +2961,18 @@
 					$bulkActionNotice.find( '.bulk-action-errors' ).toggleClass( 'hidden' );
 				} );
 
-				if ( error > 0 && ! wp.updates.queue.length ) {
+				if ( error > 0 && ! zc.updates.queue.length ) {
 					$( 'html, body' ).animate( { scrollTop: 0 } );
 				}
 			} );
 
 			// Reset admin notice template after #bulk-action-notice was added.
 			$document.on( 'zc-updates-notice-added', function() {
-				wp.updates.adminNotice = wp.template( 'zc-updates-admin-notice' );
+				zc.updates.adminNotice = zc.template( 'zc-updates-admin-notice' );
 			} );
 
 			// Check the queue, now that the event handlers have been added.
-			wp.updates.queueChecker();
+			zc.updates.queueChecker();
 		} );
 
 		if ( $pluginInstallSearch.length ) {
@@ -2981,9 +2981,9 @@
 
 		// Track the previous search string length.
 		var previousSearchStringLength = 0;
-		wp.updates.shouldSearch = function( searchStringLength ) {
-			var shouldSearch = searchStringLength >= wp.updates.searchMinCharacters ||
-				previousSearchStringLength > wp.updates.searchMinCharacters;
+		zc.updates.shouldSearch = function( searchStringLength ) {
+			var shouldSearch = searchStringLength >= zc.updates.searchMinCharacters ||
+				previousSearchStringLength > zc.updates.searchMinCharacters;
 			previousSearchStringLength = searchStringLength;
 			return shouldSearch;
 		};
@@ -2999,7 +2999,7 @@
 				searchStringLength = $pluginInstallSearch.val().length;
 
 			data = {
-				_ajax_nonce: wp.updates.ajaxNonce,
+				_ajax_nonce: zc.updates.ajaxNonce,
 				s:           encodeURIComponent( event.target.value ),
 				tab:         'search',
 				type:        $( '#typeselector' ).val(),
@@ -3008,7 +3008,7 @@
 			searchLocation = location.href.split( '?' )[ 0 ] + '?' + $.param( _.omit( data, [ '_ajax_nonce', 'pagenow' ] ) );
 
 			// Set the autocomplete attribute, turning off autocomplete 1 character before ajax search kicks in.
-			if ( wp.updates.shouldSearch( searchStringLength ) ) {
+			if ( zc.updates.shouldSearch( searchStringLength ) ) {
 				$pluginInstallSearch.attr( 'autocomplete', 'off' );
 			} else {
 				$pluginInstallSearch.attr( 'autocomplete', 'on' );
@@ -3020,11 +3020,11 @@
 				event.target.value = '';
 			}
 
-			if ( wp.updates.searchTerm === data.s && 'typechange' !== eventtype ) {
+			if ( zc.updates.searchTerm === data.s && 'typechange' !== eventtype ) {
 				return;
 			} else {
 				$pluginFilter.empty();
-				wp.updates.searchTerm = data.s;
+				zc.updates.searchTerm = data.s;
 			}
 
 			if ( window.history && window.history.replaceState ) {
@@ -3048,20 +3048,20 @@
 				$( '.plugins-popular-tags-wrapper' ).remove();
 			}
 
-			if ( 'undefined' !== typeof wp.updates.searchRequest ) {
-				wp.updates.searchRequest.abort();
+			if ( 'undefined' !== typeof zc.updates.searchRequest ) {
+				zc.updates.searchRequest.abort();
 			}
 			$( 'body' ).addClass( 'loading-content' );
 
-			wp.updates.searchRequest = wp.ajax.post( 'search-install-plugins', data ).done( function( response ) {
+			zc.updates.searchRequest = zc.ajax.post( 'search-install-plugins', data ).done( function( response ) {
 				$( 'body' ).removeClass( 'loading-content' );
 				$pluginFilter.append( response.items );
-				delete wp.updates.searchRequest;
+				delete zc.updates.searchRequest;
 
 				if ( 0 === response.count ) {
-					wp.a11y.speak( __( 'You do not appear to have any plugins available at this time.' ) );
+					zc.a11y.speak( __( 'You do not appear to have any plugins available at this time.' ) );
 				} else {
-					wp.a11y.speak(
+					zc.a11y.speak(
 						sprintf(
 							/* translators: %s: Number of plugins. */
 							__( 'Number of plugins found: %d' ),
@@ -3085,7 +3085,7 @@
 		 */
 		$pluginSearch.on( 'keyup input', _.debounce( function( event ) {
 			var data = {
-				_ajax_nonce:   wp.updates.ajaxNonce,
+				_ajax_nonce:   zc.updates.ajaxNonce,
 				s:             encodeURIComponent( event.target.value ),
 				pagenow:       pagenow,
 				plugin_status: 'all'
@@ -3094,7 +3094,7 @@
 			searchStringLength = $pluginSearch.val().length;
 
 			// Set the autocomplete attribute, turning off autocomplete 1 character before ajax search kicks in.
-			if ( wp.updates.shouldSearch( searchStringLength ) ) {
+			if ( zc.updates.shouldSearch( searchStringLength ) ) {
 				$pluginSearch.attr( 'autocomplete', 'off' );
 			} else {
 				$pluginSearch.attr( 'autocomplete', 'on' );
@@ -3106,10 +3106,10 @@
 				event.target.value = '';
 			}
 
-			if ( wp.updates.searchTerm === data.s ) {
+			if ( zc.updates.searchTerm === data.s ) {
 				return;
 			} else {
-				wp.updates.searchTerm = data.s;
+				zc.updates.searchTerm = data.s;
 			}
 
 			queryArgs = _.object( _.compact( _.map( location.search.slice( 1 ).split( '&' ), function( item ) {
@@ -3122,15 +3122,15 @@
 				window.history.replaceState( null, '', location.href.split( '?' )[ 0 ] + '?s=' + data.s + '&plugin_status=' + data.plugin_status );
 			}
 
-			if ( 'undefined' !== typeof wp.updates.searchRequest ) {
-				wp.updates.searchRequest.abort();
+			if ( 'undefined' !== typeof zc.updates.searchRequest ) {
+				zc.updates.searchRequest.abort();
 			}
 
 			$bulkActionForm.empty();
 			$( 'body' ).addClass( 'loading-content' );
 			$( '.subsubsub .current' ).removeClass( 'current' );
 
-			wp.updates.searchRequest = wp.ajax.post( 'search-plugins', data ).done( function( response ) {
+			zc.updates.searchRequest = zc.ajax.post( 'search-plugins', data ).done( function( response ) {
 
 				// Can we just ditch this whole subtitle business?
 				var $subTitle    = $( '<span />' ).addClass( 'subtitle' ).html(
@@ -3152,12 +3152,12 @@
 
 				$( 'body' ).removeClass( 'loading-content' );
 				$bulkActionForm.append( response.items );
-				delete wp.updates.searchRequest;
+				delete zc.updates.searchRequest;
 
 				if ( 0 === response.count ) {
-					wp.a11y.speak( __( 'No plugins found. Try a different search.'  ) );
+					zc.a11y.speak( __( 'No plugins found. Try a different search.'  ) );
 				} else {
-					wp.a11y.speak(
+					zc.a11y.speak(
 						sprintf(
 							/* translators: %s: Number of plugins. */
 							__( 'Number of plugins found: %d' ),
@@ -3302,7 +3302,7 @@
 				// Called from `zc-admin/includes/class-zc-upgrader-skins.php`.
 				case 'decrementUpdateCount':
 					/** @property {string} message.upgradeType */
-					wp.updates.decrementCount( message.upgradeType );
+					zc.updates.decrementCount( message.upgradeType );
 					break;
 
 				case 'install-plugin':
@@ -3311,10 +3311,10 @@
 						return;
 					}
 
-					message.data = wp.updates._addCallbacks( message.data, message.action );
+					message.data = zc.updates._addCallbacks( message.data, message.action );
 
-					wp.updates.queue.push( message );
-					wp.updates.queueChecker();
+					zc.updates.queue.push( message );
+					zc.updates.queueChecker();
 					break;
 			}
 		} );
@@ -3324,7 +3324,7 @@
 		 *
 		 * @since 4.2.0
 		 */
-		$( window ).on( 'beforeunload', wp.updates.beforeunload );
+		$( window ).on( 'beforeunload', zc.updates.beforeunload );
 
 		/**
 		 * Prevents the page form scrolling when activating auto-updates with the Spacebar key.
@@ -3413,7 +3413,7 @@
 						href = $toggler.attr( 'href' );
 
 					if ( ! response.success ) {
-						// if WP returns 0 for response (which can happen in a few cases),
+						// if ZC returns 0 for response (which can happen in a few cases),
 						// output the general error message since we won't have response.data.error.
 						if ( response.data && response.data.error ) {
 							errorMessage = response.data.error;
@@ -3422,7 +3422,7 @@
 						}
 
 						$parent.find( '.notice.notice-error' ).removeClass( 'hidden' ).find( 'p' ).text( errorMessage );
-						wp.a11y.speak( errorMessage, 'assertive' );
+						zc.a11y.speak( errorMessage, 'assertive' );
 						return;
 					}
 
@@ -3462,7 +3462,7 @@
 
 						$label.text( __( 'Disable auto-updates' ) );
 						$parent.find( '.auto-update-time' ).removeClass( 'hidden' );
-						wp.a11y.speak( __( 'Auto-updates enabled' ) );
+						zc.a11y.speak( __( 'Auto-updates enabled' ) );
 					} else {
 						// The toggler control can be either a link or a button.
 						if ( $toggler[ 0 ].hasAttribute( 'href' ) ) {
@@ -3473,7 +3473,7 @@
 
 						$label.text( __( 'Enable auto-updates' ) );
 						$parent.find( '.auto-update-time' ).addClass( 'hidden' );
-						wp.a11y.speak( __( 'Auto-updates disabled' ) );
+						zc.a11y.speak( __( 'Auto-updates disabled' ) );
 					}
 
 					$document.trigger( 'zc-auto-update-setting-changed', { state: action, type: type, asset: asset } );
@@ -3484,7 +3484,7 @@
 						.find( 'p' )
 						.text( __( 'The request could not be completed.' ) );
 
-					wp.a11y.speak( __( 'The request could not be completed.' ), 'assertive' );
+					zc.a11y.speak( __( 'The request could not be completed.' ), 'assertive' );
 				} )
 				.always( function() {
 					$toggler.removeAttr( 'data-doing-ajax' ).find( '.dashicons-update' ).addClass( 'hidden' );
@@ -3492,4 +3492,4 @@
 			}
 		);
 	} );
-})( jQuery, window.wp, window._wpUpdatesSettings );
+})( jQuery, window.zc, window._wpUpdatesSettings );

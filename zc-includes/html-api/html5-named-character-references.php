@@ -1231,7 +1231,7 @@ $html5_named_character_references = ZC_Token_Map::from_precomputed_table(
 			"\x02r;\x04𝔴",
 			// wopf;[𝕨].
 			"\x03pf;\x04𝕨",
-			// wp;[℘].
+			// zc;[℘].
 			"\x01;\x03℘",
 			// wreath;[≀] wr;[≀].
 			"\x05eath;\x03≀\x01;\x03≀",

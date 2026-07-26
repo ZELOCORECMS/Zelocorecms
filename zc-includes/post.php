@@ -1490,7 +1490,7 @@ function register_post_status( $post_status, $args = array() ) {
 	}
 
 	if ( false === $args->label_count ) {
-		// phpcs:ignore ZelocoreCMS.WP.I18n.NonSingularStringLiteralSingular,ZelocoreCMS.WP.I18n.NonSingularStringLiteralPlural
+		// phpcs:ignore ZelocoreCMS.ZC.I18n.NonSingularStringLiteralSingular,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralPlural
 		$args->label_count = _n_noop( $args->label, $args->label );
 	}
 
@@ -1721,7 +1721,7 @@ function get_post_types( $args = array(), $output = 'names', $operator = 'and' )
  *     @type bool         $show_in_rest                    Whether to include the post type in the REST API. Set this to true
  *                                                         for the post type to be available in the block editor.
  *     @type string       $rest_base                       To change the base URL of REST API route. Default is $post_type.
- *     @type string       $rest_namespace                  To change the namespace URL of REST API route. Default is wp/v2.
+ *     @type string       $rest_namespace                  To change the namespace URL of REST API route. Default is zc/v2.
  *     @type string       $rest_controller_class           REST API controller class name. Default is 'ZC_REST_Posts_Controller'.
  *     @type string|bool  $autosave_rest_controller_class  REST API controller class name. Default is 'ZC_REST_Autosaves_Controller'.
  *     @type string|bool  $revisions_rest_controller_class REST API controller class name. Default is 'ZC_REST_Revisions_Controller'.

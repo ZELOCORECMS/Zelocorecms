@@ -4,15 +4,15 @@
 
 /* global _wpUtilSettings */
 
-/** @namespace wp */
-window.wp = window.wp || {};
+/** @namespace zc */
+window.zc = window.zc || {};
 
 (function ($) {
 	// Check for the utility settings.
 	var settings = typeof _wpUtilSettings === 'undefined' ? {} : _wpUtilSettings;
 
 	/**
-	 * wp.template( id )
+	 * zc.template( id )
 	 *
 	 * Fetch a JavaScript template for an id, and return a templating function for it.
 	 *
@@ -20,7 +20,7 @@ window.wp = window.wp || {};
 	 *                    For example, "attachment" maps to "tmpl-attachment".
 	 * @return {function} A function that lazily-compiles the template requested.
 	 */
-	wp.template = _.memoize(function ( id ) {
+	zc.template = _.memoize(function ( id ) {
 		var compiled,
 			/*
 			 * Underscore's default ERB-style templates are incompatible with PHP
@@ -46,17 +46,17 @@ window.wp = window.wp || {};
 	});
 
 	/*
-	 * wp.ajax
+	 * zc.ajax
 	 * ------
 	 *
 	 * Tools for sending ajax requests with JSON responses and built in error handling.
 	 * Mirrors and wraps jQuery's ajax APIs.
 	 */
-	wp.ajax = {
+	zc.ajax = {
 		settings: settings.ajax || {},
 
 		/**
-		 * wp.ajax.post( [action], [data] )
+		 * zc.ajax.post( [action], [data] )
 		 *
 		 * Sends a POST request to ZelocoreCMS.
 		 *
@@ -67,13 +67,13 @@ window.wp = window.wp || {};
 		 *                     decorated with an abort() method.
 		 */
 		post: function( action, data ) {
-			return wp.ajax.send({
+			return zc.ajax.send({
 				data: _.isObject( action ) ? action : _.extend( data || {}, { action: action })
 			});
 		},
 
 		/**
-		 * wp.ajax.send( [action], [options] )
+		 * zc.ajax.send( [action], [options] )
 		 *
 		 * Sends a POST request to ZelocoreCMS.
 		 *
@@ -94,7 +94,7 @@ window.wp = window.wp || {};
 
 			options = _.defaults( options || {}, {
 				type:    'POST',
-				url:     wp.ajax.settings.url,
+				url:     zc.ajax.settings.url,
 				context: this
 			});
 

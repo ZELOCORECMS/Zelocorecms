@@ -1504,7 +1504,7 @@ class ZC_REST_Attachments_Controller extends ZC_REST_Posts_Controller {
 			}
 		}
 
-		// Pass off to WP to handle the actual upload.
+		// Pass off to ZC to handle the actual upload.
 		$overrides = array(
 			'test_form' => false,
 		);

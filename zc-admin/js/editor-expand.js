@@ -33,7 +33,7 @@
 			$sideSortables = $( '#side-sortables' ),
 			$postboxContainer = $( '#postbox-container-1' ),
 			$postBody = $('#post-body'),
-			fullscreen = window.wp.editor && window.wp.editor.fullscreen,
+			fullscreen = window.zc.editor && window.zc.editor.fullscreen,
 			mceEditor,
 			mceBind = function(){},
 			mceUnbind = function(){},
@@ -212,10 +212,10 @@
 					range, view, offset;
 
 				/*
-				 * If editor.wp.getView and the selection node from the editor selection
+				 * If editor.zc.getView and the selection node from the editor selection
 				 * are defined, use this as a view for the offset.
 				 */
-				if ( editor.wp && editor.wp.getView && ( view = editor.wp.getView( node ) ) ) {
+				if ( editor.zc && editor.zc.getView && ( view = editor.zc.getView( node ) ) ) {
 					offset = view.getBoundingClientRect();
 				} else {
 					range = editor.selection.getRng();
@@ -1602,9 +1602,9 @@
 			$title.add( $content ).on( 'blur.focus', maybeFadeIn );
 		}
 
-		window.wp = window.wp || {};
-		window.wp.editor = window.wp.editor || {};
-		window.wp.editor.dfw = {
+		window.zc = window.zc || {};
+		window.zc.editor = window.zc.editor || {};
+		window.zc.editor.dfw = {
 			activate: activate,
 			deactivate: deactivate,
 			isActive: isActive,

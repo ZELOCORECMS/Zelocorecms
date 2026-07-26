@@ -316,7 +316,7 @@
  *    invalid. The text for these nodes is the text that a browser would transform into
  *    an HTML comment when parsing. E.g. for `</%post_author>` the text is `%post_author`.
  *  - `DOCTYPE` declarations like `<DOCTYPE html>` which have no closing tag.
- *  - XML Processing instruction nodes like `<?wp __( "Like" ); ?>` (with restrictions [2]).
+ *  - XML Processing instruction nodes like `<?zc __( "Like" ); ?>` (with restrictions [2]).
  *  - The empty end tag `</>` which is ignored in the browser and DOM.
  *
  * [1]: There are no CDATA sections in HTML. When encountering `<![CDATA[`, everything
@@ -4983,7 +4983,7 @@ class ZC_HTML_Tag_Processor {
 	 *
 	 * Example:
 	 *
-	 *     <?wp __( 'Like' ) ?>
+	 *     <?zc __( 'Like' ) ?>
 	 *
 	 * This is an HTML comment, but it looks like a CDATA node.
 	 *

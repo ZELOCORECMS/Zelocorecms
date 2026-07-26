@@ -74,7 +74,7 @@ function render_block_core_query_pagination_numbers( $attributes, $content, $blo
 			 * The proper fix of this should be in core. Track Ticket:
 			 * @see https://core.trac.zelocorecms.org/ticket/53868
 			 *
-			 * TODO: After two WP versions (starting from the WP version the core patch landed),
+			 * TODO: After two ZC versions (starting from the ZC version the core patch landed),
 			 * we should remove this and call `paginate_links` with the proper new arg.
 			 */
 			$paginate_args['add_args'] = array( 'cst' => '' );

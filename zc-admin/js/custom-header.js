@@ -46,7 +46,7 @@
 			}
 
 			// Create the media frame.
-			frame = wp.media.frames.customHeader = wp.media({
+			frame = zc.media.frames.customHeader = zc.media({
 				// Set the title of the modal.
 				title: $el.data('choose'),
 

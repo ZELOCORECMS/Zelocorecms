@@ -157,12 +157,12 @@ jQuery( function( $ ) {
 	$( '.wrap' ).on( 'click', '.thickbox.open-plugin-details-modal', function( e ) {
 		// The `data-title` attribute is used only in the Plugin screens.
 		var title = $( this ).data( 'title' ) ?
-			wp.i18n.sprintf(
+			zc.i18n.sprintf(
 				// translators: %s: Plugin name.
-				wp.i18n.__( 'Plugin: %s' ),
+				zc.i18n.__( 'Plugin: %s' ),
 				$( this ).data( 'title' )
 			) :
-			wp.i18n.__( 'Plugin details' );
+			zc.i18n.__( 'Plugin details' );
 
 		e.preventDefault();
 		e.stopPropagation();
@@ -176,7 +176,7 @@ jQuery( function( $ ) {
 		tbWindow
 			.attr({
 				'role': 'dialog',
-				'aria-label': wp.i18n.__( 'Plugin details' )
+				'aria-label': zc.i18n.__( 'Plugin details' )
 			})
 			.addClass( 'plugin-details-modal' );
 

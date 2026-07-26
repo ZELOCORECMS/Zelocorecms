@@ -181,16 +181,16 @@ $navigation_rest_route = rest_get_route_for_post_type_items(
 $preload_paths = array(
 	array( rest_get_route_for_post_type_items( 'attachment' ), 'OPTIONS' ),
 	array( rest_get_route_for_post_type_items( 'page' ), 'OPTIONS' ),
-	'/wp/v2/types?context=view',
-	'/wp/v2/types/zc_template?context=edit',
-	'/wp/v2/types/zc_template_part?context=edit',
-	'/wp/v2/templates?context=edit&per_page=-1',
-	'/wp/v2/template-parts?context=edit&per_page=-1',
-	'/wp/v2/themes?context=edit&status=active',
-	'/wp/v2/global-styles/' . $active_global_styles_id . '?context=edit',
-	array( '/wp/v2/global-styles/' . $active_global_styles_id, 'OPTIONS' ),
-	'/wp/v2/global-styles/themes/' . $active_theme . '?context=view',
-	'/wp/v2/global-styles/themes/' . $active_theme . '/variations?context=view',
+	'/zc/v2/types?context=view',
+	'/zc/v2/types/zc_template?context=edit',
+	'/zc/v2/types/zc_template_part?context=edit',
+	'/zc/v2/templates?context=edit&per_page=-1',
+	'/zc/v2/template-parts?context=edit&per_page=-1',
+	'/zc/v2/themes?context=edit&status=active',
+	'/zc/v2/global-styles/' . $active_global_styles_id . '?context=edit',
+	array( '/zc/v2/global-styles/' . $active_global_styles_id, 'OPTIONS' ),
+	'/zc/v2/global-styles/themes/' . $active_theme . '?context=view',
+	'/zc/v2/global-styles/themes/' . $active_theme . '/variations?context=view',
 	array( $navigation_rest_route, 'OPTIONS' ),
 	array(
 		add_query_arg(
@@ -207,10 +207,10 @@ $preload_paths = array(
 		),
 		'GET',
 	),
-	'/wp/v2/settings',
-	array( '/wp/v2/settings', 'OPTIONS' ),
+	'/zc/v2/settings',
+	array( '/zc/v2/settings', 'OPTIONS' ),
 	// Used by getBlockPatternCategories in useBlockEditorSettings.
-	'/wp/v2/block-patterns/categories',
+	'/zc/v2/block-patterns/categories',
 	// @see packages/core-data/src/entities.js
 	'/?_fields=' . implode(
 		',',
@@ -246,13 +246,13 @@ if ( $block_editor_context->post ) {
 				'slug',
 				// @link https://github.com/ZelocoreCMS/gutenberg/blob/e093fefd041eb6cc4a4e7f67b92ab54fd75c8858/packages/core-data/src/private-selectors.ts#L244-L254
 				empty( $block_editor_context->post->post_name ) ? 'page' : 'page-' . $block_editor_context->post->post_name,
-				'/wp/v2/templates/lookup'
+				'/zc/v2/templates/lookup'
 			);
 		}
 	}
 } else {
-	$preload_paths[] = '/wp/v2/templates/lookup?slug=front-page';
-	$preload_paths[] = '/wp/v2/templates/lookup?slug=home';
+	$preload_paths[] = '/zc/v2/templates/lookup?slug=front-page';
+	$preload_paths[] = '/zc/v2/templates/lookup?slug=home';
 }
 
 block_editor_rest_api_preload( $preload_paths, $block_editor_context );
@@ -260,8 +260,8 @@ block_editor_rest_api_preload( $preload_paths, $block_editor_context );
 zc_add_inline_script(
 	'zc-edit-site',
 	sprintf(
-		'wp.domReady( function() {
-			wp.editSite.initializeEditor( "site-editor", %s );
+		'zc.domReady( function() {
+			zc.editSite.initializeEditor( "site-editor", %s );
 		} );',
 		zc_json_encode( $editor_settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 	)
@@ -270,7 +270,7 @@ zc_add_inline_script(
 // Preload server-registered block schemas.
 zc_add_inline_script(
 	'zc-blocks',
-	'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
+	'zc.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
 );
 
 // Preload server-registered block bindings sources.
@@ -284,7 +284,7 @@ if ( ! empty( $registered_sources ) ) {
 			'usesContext' => $source->uses_context,
 		);
 	}
-	$script = sprintf( 'for ( const source of %s ) { wp.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
+	$script = sprintf( 'for ( const source of %s ) { zc.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
 	zc_add_inline_script(
 		'zc-blocks',
 		$script
@@ -293,7 +293,7 @@ if ( ! empty( $registered_sources ) ) {
 
 zc_add_inline_script(
 	'zc-blocks',
-	sprintf( 'wp.blocks.setCategories( %s );', zc_json_encode( $editor_settings['blockCategories'] ?? array(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
+	sprintf( 'zc.blocks.setCategories( %s );', zc_json_encode( $editor_settings['blockCategories'] ?? array(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
 	'after'
 );
 

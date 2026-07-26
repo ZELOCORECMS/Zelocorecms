@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).tokenList = (() => {
+var zc;
+(zc ||= {}).tokenList = (() => {
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
   var __getOwnPropNames = Object.getOwnPropertyNames;
@@ -210,4 +210,4 @@ var wp;
   };
   return __toCommonJS(index_exports);
 })();
-if (typeof wp.tokenList === 'object' && wp.tokenList.default) { wp.tokenList = wp.tokenList.default; }
+if (typeof zc.tokenList === 'object' && zc.tokenList.default) { zc.tokenList = zc.tokenList.default; }

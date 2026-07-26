@@ -13,7 +13,7 @@
 
 /** Text_Diff_Renderer */
 
-// WP #7391
+// ZC #7391
 require_once dirname(dirname(__FILE__)) . '/Renderer.php';
 
 /**

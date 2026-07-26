@@ -3,8 +3,8 @@
 (function ($, _, Backbone) {
 	'use strict';
 
-	/** @namespace wp */
-	window.wp = window.wp || {};
+	/** @namespace zc */
+	window.zc = window.zc || {};
 
 	var WPPlaylistView = Backbone.View.extend(/** @lends WPPlaylistView.prototype */{
 		/**
@@ -23,14 +23,14 @@
 			this.current = this.tracks.first();
 
 			if ( 'audio' === this.data.type ) {
-				this.currentTemplate = wp.template( 'zc-playlist-current-item' );
+				this.currentTemplate = zc.template( 'zc-playlist-current-item' );
 				this.currentNode = this.$( '.zc-playlist-current-item' );
 			}
 
 			this.renderCurrent();
 
 			if ( this.data.tracklist ) {
-				this.itemTemplate = wp.template( 'zc-playlist-item' );
+				this.itemTemplate = zc.template( 'zc-playlist-item' );
 				this.playingClass = 'zc-playlist-playing';
 				this.renderTracks();
 			}
@@ -188,13 +188,13 @@
 	}
 
 	/**
-	 * Expose the API publicly on window.wp.playlist.
+	 * Expose the API publicly on window.zc.playlist.
 	 *
-	 * @namespace wp.playlist
+	 * @namespace zc.playlist
 	 * @since 4.9.3
 	 * @type {object}
 	 */
-	window.wp.playlist = {
+	window.zc.playlist = {
 		initialize: initialize
 	};
 

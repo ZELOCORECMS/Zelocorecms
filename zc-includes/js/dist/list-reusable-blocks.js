@@ -1,5 +1,5 @@
-var wp;
-(wp ||= {}).listReusableBlocks = (() => {
+var zc;
+(zc ||= {}).listReusableBlocks = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -29,42 +29,42 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
@@ -141,9 +141,9 @@ var wp;
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var import_blob = __toESM(require_blob(), 1);
   async function exportReusableBlock(id) {
-    const postType = await (0, import_api_fetch.default)({ path: `/wp/v2/types/zc_block` });
+    const postType = await (0, import_api_fetch.default)({ path: `/zc/v2/types/zc_block` });
     const post = await (0, import_api_fetch.default)({
-      path: `/wp/v2/${postType.rest_base}/${id}?context=edit`
+      path: `/zc/v2/${postType.rest_base}/${id}?context=edit`
     });
     const title = post.title.raw;
     const content = post.content.raw;
@@ -200,9 +200,9 @@ var wp;
     if (parsedContent.__file !== "zc_block" || !parsedContent.title || !parsedContent.content || typeof parsedContent.title !== "string" || typeof parsedContent.content !== "string" || parsedContent.syncStatus && typeof parsedContent.syncStatus !== "string") {
       throw new Error("Invalid pattern JSON file");
     }
-    const postType = await (0, import_api_fetch2.default)({ path: `/wp/v2/types/zc_block` });
+    const postType = await (0, import_api_fetch2.default)({ path: `/zc/v2/types/zc_block` });
     const reusableBlock = await (0, import_api_fetch2.default)({
-      path: `/wp/v2/${postType.rest_base}`,
+      path: `/zc/v2/${postType.rest_base}`,
       data: {
         title: parsedContent.title,
         content: parsedContent.content,

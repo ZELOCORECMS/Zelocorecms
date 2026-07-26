@@ -4,7 +4,7 @@
 
 /* global pagenow, ajaxurl, postboxes, wpActiveEditor:true, ajaxWidgets */
 /* global ajaxPopulateWidgets, quickPressLoad,  */
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 window.communityEventsData = window.communityEventsData || {};
 
 /**
@@ -35,7 +35,7 @@ jQuery( function($) {
 				welcomepanelnonce: $( '#welcomepanelnonce' ).val()
 			},
 			function() {
-				wp.a11y.speak( wp.i18n.__( 'Screen Options updated.' ) );
+				zc.a11y.speak( zc.i18n.__( 'Screen Options updated.' ) );
 			}
 		);
 	};
@@ -273,11 +273,11 @@ jQuery( function( $ ) {
 	'use strict';
 
 	var communityEventsData = window.communityEventsData,
-		dateI18n = wp.date.dateI18n,
-		format = wp.date.format,
-		sprintf = wp.i18n.sprintf,
-		__ = wp.i18n.__,
-		_x = wp.i18n._x,
+		dateI18n = zc.date.dateI18n,
+		format = zc.date.format,
+		sprintf = zc.i18n.sprintf,
+		__ = zc.i18n.__,
+		_x = zc.i18n._x,
 		app;
 
 	/**
@@ -285,15 +285,15 @@ jQuery( function( $ ) {
 	 *
 	 * @since 4.8.0
 	 *
-	 * @memberOf wp
-	 * @namespace wp.communityEvents
+	 * @memberOf zc
+	 * @namespace zc.communityEvents
 	 */
-	app = window.wp.communityEvents = /** @lends wp.communityEvents */{
+	app = window.zc.communityEvents = /** @lends zc.communityEvents */{
 		initialized: false,
 		model: null,
 
 		/**
-		 * Initializes the wp.communityEvents object.
+		 * Initializes the zc.communityEvents object.
 		 *
 		 * @since 4.8.0
 		 *
@@ -428,7 +428,7 @@ jQuery( function( $ ) {
 
 			$spinner.addClass( 'is-active' );
 
-			wp.ajax.post( 'get-community-events', requestParams )
+			zc.ajax.post( 'get-community-events', requestParams )
 				.always( function() {
 					$spinner.removeClass( 'is-active' );
 				})
@@ -464,7 +464,7 @@ jQuery( function( $ ) {
 		 *
 		 * @since 4.8.0
 		 *
-		 * @param {Object} templateParams The various parameters that will get passed to wp.template.
+		 * @param {Object} templateParams The various parameters that will get passed to zc.template.
 		 * @param {string} initiatedBy    'user' to indicate that this was triggered manually by the user;
 		 *                                'app' to indicate it was triggered automatically by the app itself.
 		 *
@@ -514,10 +514,10 @@ jQuery( function( $ ) {
 				$locationMessage.text( __( 'Attend an upcoming event near you.' ) );
 
 				if ( templateParams.events.length ) {
-					template = wp.template( 'community-events-event-list' );
+					template = zc.template( 'community-events-event-list' );
 					$results.html( template( templateParams ) );
 				} else {
-					template = wp.template( 'community-events-no-upcoming-events' );
+					template = zc.template( 'community-events-no-upcoming-events' );
 					$results.html( template( templateParams ) );
 				}
 
@@ -526,19 +526,19 @@ jQuery( function( $ ) {
 				elementVisibility['.community-events-results']          = true;
 
 			} else if ( templateParams.location.description ) {
-				template = wp.template( 'community-events-attend-event-near' );
+				template = zc.template( 'community-events-attend-event-near' );
 				$locationMessage.html( template( templateParams ) );
 
 				if ( templateParams.events.length ) {
-					template = wp.template( 'community-events-event-list' );
+					template = zc.template( 'community-events-event-list' );
 					$results.html( template( templateParams ) );
 				} else {
-					template = wp.template( 'community-events-no-upcoming-events' );
+					template = zc.template( 'community-events-no-upcoming-events' );
 					$results.html( template( templateParams ) );
 				}
 
 				if ( 'user' === initiatedBy ) {
-					wp.a11y.speak(
+					zc.a11y.speak(
 						sprintf(
 							/* translators: %s: The name of a city. */
 							__( 'City updated. Listing events near %s.' ),
@@ -553,9 +553,9 @@ jQuery( function( $ ) {
 				elementVisibility['.community-events-results']          = true;
 
 			} else if ( templateParams.unknownCity ) {
-				template = wp.template( 'community-events-could-not-locate' );
+				template = zc.template( 'community-events-could-not-locate' );
 				$( '.community-events-could-not-locate' ).html( template( templateParams ) );
-				wp.a11y.speak(
+				zc.a11y.speak(
 					sprintf(
 						/*
 						 * These specific examples were chosen to highlight the fact that a
@@ -588,7 +588,7 @@ jQuery( function( $ ) {
 				 * Showing error messages for an event that user isn't aware of
 				 * could be confusing or unnecessarily distracting.
 				 */
-				wp.a11y.speak( __( 'An error occurred. Please try again.' ) );
+				zc.a11y.speak( __( 'An error occurred. Please try again.' ) );
 
 				elementVisibility['.community-events-errors']         = true;
 				elementVisibility['.community-events-error-occurred'] = true;
@@ -632,7 +632,7 @@ jQuery( function( $ ) {
 		 * @since 5.5.2
 		 *
 		 * @param {Array}  rawEvents  The events that should have dynamic fields added to them.
-		 * @param {string} timeFormat A time format acceptable by `wp.date.dateI18n()`.
+		 * @param {string} timeFormat A time format acceptable by `zc.date.dateI18n()`.
 		 *
 		 * @returns {Array}
 		 */
@@ -662,7 +662,7 @@ jQuery( function( $ ) {
 		},
 
 		/**
-		 * Returns the user's local/browser time zone, in a form suitable for `wp.date.i18n()`.
+		 * Returns the user's local/browser time zone, in a form suitable for `zc.date.i18n()`.
 		 *
 		 * @since 5.5.2
 		 *
@@ -758,7 +758,7 @@ jQuery( function( $ ) {
 		 *
 		 * @param {int}    startDate   The Unix timestamp in milliseconds when the the event starts.
 		 * @param {int}    endDate     The Unix timestamp in milliseconds when the the event ends.
-		 * @param {string} timeZone    A time zone string or offset which is parsable by `wp.date.i18n()`.
+		 * @param {string} timeZone    A time zone string or offset which is parsable by `zc.date.i18n()`.
 		 *
 		 * @returns {string}
 		 */
@@ -842,4 +842,4 @@ window.communityEventsData.l10n = window.communityEventsData.l10n || {
 	city_updated: ''
 };
 
-window.communityEventsData.l10n = window.wp.deprecateL10nObject( 'communityEventsData.l10n', window.communityEventsData.l10n, '5.6.0' );
+window.communityEventsData.l10n = window.zc.deprecateL10nObject( 'communityEventsData.l10n', window.communityEventsData.l10n, '5.6.0' );

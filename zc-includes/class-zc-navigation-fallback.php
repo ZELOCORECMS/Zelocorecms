@@ -297,6 +297,6 @@ class ZC_Navigation_Fallback {
 		$registry = ZC_Block_Type_Registry::get_instance();
 
 		// If `core/page-list` is not registered then use empty blocks.
-		return $registry->is_registered( 'core/page-list' ) ? '<!-- wp:page-list /-->' : '';
+		return $registry->is_registered( 'core/page-list' ) ? '<!-- zc:page-list /-->' : '';
 	}
 }

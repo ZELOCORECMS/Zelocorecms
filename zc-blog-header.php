@@ -13,7 +13,7 @@ if ( ! isset( $zc_did_header ) ) {
 	require_once __DIR__ . '/zc-load.php';
 
 	// Set up the ZelocoreCMS query.
-	wp();
+	zc();
 
 	// Load the theme template.
 	require_once ABSPATH . ZCINC . '/template-loader.php';

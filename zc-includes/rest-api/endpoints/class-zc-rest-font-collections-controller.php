@@ -23,7 +23,7 @@ class ZC_REST_Font_Collections_Controller extends ZC_REST_Controller {
 	 */
 	public function __construct() {
 		$this->rest_base = 'font-collections';
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 	}
 
 	/**

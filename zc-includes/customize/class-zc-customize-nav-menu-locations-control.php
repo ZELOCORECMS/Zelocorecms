@@ -42,7 +42,7 @@ class ZC_Customize_Nav_Menu_Locations_Control extends ZC_Customize_Control {
 			<# var elementId; #>
 			<ul class="menu-location-settings">
 				<li class="customize-control assigned-menu-locations-title">
-					<span class="customize-control-title">{{ wp.customize.Menus.data.l10n.locationsTitle }}</span>
+					<span class="customize-control-title">{{ zc.customize.Menus.data.l10n.locationsTitle }}</span>
 					<# if ( data.isCreating ) { #>
 						<p>
 							<?php echo _x( 'Where do you want this menu to appear?', 'menu locations' ); ?>

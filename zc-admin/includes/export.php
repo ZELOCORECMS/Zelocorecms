@@ -283,7 +283,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo '<wp:cat_name>' . wxr_cdata( $category->name ) . "</wp:cat_name>\n";
+		echo '<zc:cat_name>' . wxr_cdata( $category->name ) . "</zc:cat_name>\n";
 	}
 
 	/**
@@ -298,7 +298,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo '<wp:category_description>' . wxr_cdata( $category->description ) . "</wp:category_description>\n";
+		echo '<zc:category_description>' . wxr_cdata( $category->description ) . "</zc:category_description>\n";
 	}
 
 	/**
@@ -313,7 +313,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo '<wp:tag_name>' . wxr_cdata( $tag->name ) . "</wp:tag_name>\n";
+		echo '<zc:tag_name>' . wxr_cdata( $tag->name ) . "</zc:tag_name>\n";
 	}
 
 	/**
@@ -328,7 +328,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo '<wp:tag_description>' . wxr_cdata( $tag->description ) . "</wp:tag_description>\n";
+		echo '<zc:tag_description>' . wxr_cdata( $tag->description ) . "</zc:tag_description>\n";
 	}
 
 	/**
@@ -343,7 +343,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo '<wp:term_name>' . wxr_cdata( $term->name ) . "</wp:term_name>\n";
+		echo '<zc:term_name>' . wxr_cdata( $term->name ) . "</zc:term_name>\n";
 	}
 
 	/**
@@ -358,7 +358,7 @@ function export_wp( $args = array() ) {
 			return;
 		}
 
-		echo "\t\t<wp:term_description>" . wxr_cdata( $term->description ) . "</wp:term_description>\n";
+		echo "\t\t<zc:term_description>" . wxr_cdata( $term->description ) . "</zc:term_description>\n";
 	}
 
 	/**
@@ -389,7 +389,7 @@ function export_wp( $args = array() ) {
 			 * @param object $meta     Current meta object.
 			 */
 			if ( ! apply_filters( 'wxr_export_skip_termmeta', false, $meta->meta_key, $meta ) ) {
-				printf( "\t\t<wp:termmeta>\n\t\t\t<wp:meta_key>%s</wp:meta_key>\n\t\t\t<wp:meta_value>%s</wp:meta_value>\n\t\t</wp:termmeta>\n", wxr_cdata( $meta->meta_key ), wxr_cdata( $meta->meta_value ) );
+				printf( "\t\t<zc:termmeta>\n\t\t\t<zc:meta_key>%s</zc:meta_key>\n\t\t\t<zc:meta_value>%s</zc:meta_value>\n\t\t</zc:termmeta>\n", wxr_cdata( $meta->meta_key ), wxr_cdata( $meta->meta_value ) );
 			}
 		}
 	}
@@ -429,14 +429,14 @@ function export_wp( $args = array() ) {
 		$authors = array_unique( $authors, SORT_REGULAR ); // Remove duplicate authors.
 
 		foreach ( $authors as $author ) {
-			echo "\t<wp:author>";
-			echo '<wp:author_id>' . (int) $author->ID . '</wp:author_id>';
-			echo '<wp:author_login>' . wxr_cdata( $author->user_login ) . '</wp:author_login>';
-			echo '<wp:author_email>' . wxr_cdata( $author->user_email ) . '</wp:author_email>';
-			echo '<wp:author_display_name>' . wxr_cdata( $author->display_name ) . '</wp:author_display_name>';
-			echo '<wp:author_first_name>' . wxr_cdata( $author->first_name ) . '</wp:author_first_name>';
-			echo '<wp:author_last_name>' . wxr_cdata( $author->last_name ) . '</wp:author_last_name>';
-			echo "</wp:author>\n";
+			echo "\t<zc:author>";
+			echo '<zc:author_id>' . (int) $author->ID . '</zc:author_id>';
+			echo '<zc:author_login>' . wxr_cdata( $author->user_login ) . '</zc:author_login>';
+			echo '<zc:author_email>' . wxr_cdata( $author->user_email ) . '</zc:author_email>';
+			echo '<zc:author_display_name>' . wxr_cdata( $author->display_name ) . '</zc:author_display_name>';
+			echo '<zc:author_first_name>' . wxr_cdata( $author->first_name ) . '</zc:author_first_name>';
+			echo '<zc:author_last_name>' . wxr_cdata( $author->last_name ) . '</zc:author_last_name>';
+			echo "</zc:author>\n";
 		}
 	}
 
@@ -452,12 +452,12 @@ function export_wp( $args = array() ) {
 		}
 
 		foreach ( $nav_menus as $menu ) {
-			echo "\t<wp:term>";
-			echo '<wp:term_id>' . (int) $menu->term_id . '</wp:term_id>';
-			echo '<wp:term_taxonomy>nav_menu</wp:term_taxonomy>';
-			echo '<wp:term_slug>' . wxr_cdata( $menu->slug ) . '</wp:term_slug>';
+			echo "\t<zc:term>";
+			echo '<zc:term_id>' . (int) $menu->term_id . '</zc:term_id>';
+			echo '<zc:term_taxonomy>nav_menu</zc:term_taxonomy>';
+			echo '<zc:term_slug>' . wxr_cdata( $menu->slug ) . '</zc:term_slug>';
 			wxr_term_name( $menu );
-			echo "</wp:term>\n";
+			echo "</zc:term>\n";
 		}
 	}
 
@@ -523,7 +523,7 @@ function export_wp( $args = array() ) {
 	xmlns:content="http://purl.org/rss/1.0/modules/content/"
 	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
 	xmlns:dc="http://purl.org/dc/elements/1.1/"
-	xmlns:wp="http://zelocorecms.org/export/<?php echo WXR_VERSION; ?>/"
+	xmlns:zc="http://zelocorecms.org/export/<?php echo WXR_VERSION; ?>/"
 >
 
 <channel>
@@ -532,47 +532,47 @@ function export_wp( $args = array() ) {
 	<description><?php bloginfo_rss( 'description' ); ?></description>
 	<pubDate><?php echo gmdate( 'D, d M Y H:i:s +0000' ); ?></pubDate>
 	<language><?php bloginfo_rss( 'language' ); ?></language>
-	<wp:wxr_version><?php echo WXR_VERSION; ?></wp:wxr_version>
-	<wp:base_site_url><?php echo wxr_site_url(); ?></wp:base_site_url>
-	<wp:base_blog_url><?php bloginfo_rss( 'url' ); ?></wp:base_blog_url>
+	<zc:wxr_version><?php echo WXR_VERSION; ?></zc:wxr_version>
+	<zc:base_site_url><?php echo wxr_site_url(); ?></zc:base_site_url>
+	<zc:base_blog_url><?php bloginfo_rss( 'url' ); ?></zc:base_blog_url>
 
 	<?php wxr_authors_list( $post_ids ); ?>
 
 	<?php foreach ( $cats as $c ) : ?>
-	<wp:category>
-		<wp:term_id><?php echo (int) $c->term_id; ?></wp:term_id>
-		<wp:category_nicename><?php echo wxr_cdata( $c->slug ); ?></wp:category_nicename>
-		<wp:category_parent><?php echo wxr_cdata( $c->parent ? $cats[ $c->parent ]->slug : '' ); ?></wp:category_parent>
+	<zc:category>
+		<zc:term_id><?php echo (int) $c->term_id; ?></zc:term_id>
+		<zc:category_nicename><?php echo wxr_cdata( $c->slug ); ?></zc:category_nicename>
+		<zc:category_parent><?php echo wxr_cdata( $c->parent ? $cats[ $c->parent ]->slug : '' ); ?></zc:category_parent>
 		<?php
 		wxr_cat_name( $c );
 		wxr_category_description( $c );
 		wxr_term_meta( $c );
 		?>
-	</wp:category>
+	</zc:category>
 	<?php endforeach; ?>
 	<?php foreach ( $tags as $t ) : ?>
-	<wp:tag>
-		<wp:term_id><?php echo (int) $t->term_id; ?></wp:term_id>
-		<wp:tag_slug><?php echo wxr_cdata( $t->slug ); ?></wp:tag_slug>
+	<zc:tag>
+		<zc:term_id><?php echo (int) $t->term_id; ?></zc:term_id>
+		<zc:tag_slug><?php echo wxr_cdata( $t->slug ); ?></zc:tag_slug>
 		<?php
 		wxr_tag_name( $t );
 		wxr_tag_description( $t );
 		wxr_term_meta( $t );
 		?>
-	</wp:tag>
+	</zc:tag>
 	<?php endforeach; ?>
 	<?php foreach ( $terms as $t ) : ?>
-	<wp:term>
-		<wp:term_id><?php echo (int) $t->term_id; ?></wp:term_id>
-		<wp:term_taxonomy><?php echo wxr_cdata( $t->taxonomy ); ?></wp:term_taxonomy>
-		<wp:term_slug><?php echo wxr_cdata( $t->slug ); ?></wp:term_slug>
-		<wp:term_parent><?php echo wxr_cdata( $t->parent ? $terms[ $t->parent ]->slug : '' ); ?></wp:term_parent>
+	<zc:term>
+		<zc:term_id><?php echo (int) $t->term_id; ?></zc:term_id>
+		<zc:term_taxonomy><?php echo wxr_cdata( $t->taxonomy ); ?></zc:term_taxonomy>
+		<zc:term_slug><?php echo wxr_cdata( $t->slug ); ?></zc:term_slug>
+		<zc:term_parent><?php echo wxr_cdata( $t->parent ? $terms[ $t->parent ]->slug : '' ); ?></zc:term_parent>
 		<?php
 		wxr_term_name( $t );
 		wxr_term_description( $t );
 		wxr_term_meta( $t );
 		?>
-	</wp:term>
+	</zc:term>
 	<?php endforeach; ?>
 	<?php
 	if ( 'all' === $args['content'] ) {
@@ -642,22 +642,22 @@ function export_wp( $args = array() ) {
 		<description></description>
 		<content:encoded><?php echo $content; ?></content:encoded>
 		<excerpt:encoded><?php echo $excerpt; ?></excerpt:encoded>
-		<wp:post_id><?php echo (int) $post->ID; ?></wp:post_id>
-		<wp:post_date><?php echo wxr_cdata( $post->post_date ); ?></wp:post_date>
-		<wp:post_date_gmt><?php echo wxr_cdata( $post->post_date_gmt ); ?></wp:post_date_gmt>
-		<wp:post_modified><?php echo wxr_cdata( $post->post_modified ); ?></wp:post_modified>
-		<wp:post_modified_gmt><?php echo wxr_cdata( $post->post_modified_gmt ); ?></wp:post_modified_gmt>
-		<wp:comment_status><?php echo wxr_cdata( $post->comment_status ); ?></wp:comment_status>
-		<wp:ping_status><?php echo wxr_cdata( $post->ping_status ); ?></wp:ping_status>
-		<wp:post_name><?php echo wxr_cdata( $post->post_name ); ?></wp:post_name>
-		<wp:status><?php echo wxr_cdata( $post->post_status ); ?></wp:status>
-		<wp:post_parent><?php echo (int) $post->post_parent; ?></wp:post_parent>
-		<wp:menu_order><?php echo (int) $post->menu_order; ?></wp:menu_order>
-		<wp:post_type><?php echo wxr_cdata( $post->post_type ); ?></wp:post_type>
-		<wp:post_password><?php echo wxr_cdata( $post->post_password ); ?></wp:post_password>
-		<wp:is_sticky><?php echo (int) $is_sticky; ?></wp:is_sticky>
+		<zc:post_id><?php echo (int) $post->ID; ?></zc:post_id>
+		<zc:post_date><?php echo wxr_cdata( $post->post_date ); ?></zc:post_date>
+		<zc:post_date_gmt><?php echo wxr_cdata( $post->post_date_gmt ); ?></zc:post_date_gmt>
+		<zc:post_modified><?php echo wxr_cdata( $post->post_modified ); ?></zc:post_modified>
+		<zc:post_modified_gmt><?php echo wxr_cdata( $post->post_modified_gmt ); ?></zc:post_modified_gmt>
+		<zc:comment_status><?php echo wxr_cdata( $post->comment_status ); ?></zc:comment_status>
+		<zc:ping_status><?php echo wxr_cdata( $post->ping_status ); ?></zc:ping_status>
+		<zc:post_name><?php echo wxr_cdata( $post->post_name ); ?></zc:post_name>
+		<zc:status><?php echo wxr_cdata( $post->post_status ); ?></zc:status>
+		<zc:post_parent><?php echo (int) $post->post_parent; ?></zc:post_parent>
+		<zc:menu_order><?php echo (int) $post->menu_order; ?></zc:menu_order>
+		<zc:post_type><?php echo wxr_cdata( $post->post_type ); ?></zc:post_type>
+		<zc:post_password><?php echo wxr_cdata( $post->post_password ); ?></zc:post_password>
+		<zc:is_sticky><?php echo (int) $is_sticky; ?></zc:is_sticky>
 				<?php	if ( 'attachment' === $post->post_type ) : ?>
-		<wp:attachment_url><?php echo wxr_cdata( zc_get_attachment_url( $post->ID ) ); ?></wp:attachment_url>
+		<zc:attachment_url><?php echo wxr_cdata( zc_get_attachment_url( $post->ID ) ); ?></zc:attachment_url>
 	<?php endif; ?>
 				<?php wxr_post_taxonomy(); ?>
 				<?php
@@ -679,10 +679,10 @@ function export_wp( $args = array() ) {
 						continue;
 					}
 					?>
-		<wp:postmeta>
-		<wp:meta_key><?php echo wxr_cdata( $meta->meta_key ); ?></wp:meta_key>
-		<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
-		</wp:postmeta>
+		<zc:postmeta>
+		<zc:meta_key><?php echo wxr_cdata( $meta->meta_key ); ?></zc:meta_key>
+		<zc:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></zc:meta_value>
+		</zc:postmeta>
 					<?php
 	endforeach;
 
@@ -695,19 +695,19 @@ function export_wp( $args = array() ) {
 				);
 				foreach ( $comments as $c ) :
 					?>
-		<wp:comment>
-			<wp:comment_id><?php echo (int) $c->comment_ID; ?></wp:comment_id>
-			<wp:comment_author><?php echo wxr_cdata( $c->comment_author ); ?></wp:comment_author>
-			<wp:comment_author_email><?php echo wxr_cdata( $c->comment_author_email ); ?></wp:comment_author_email>
-			<wp:comment_author_url><?php echo sanitize_url( $c->comment_author_url ); ?></wp:comment_author_url>
-			<wp:comment_author_IP><?php echo wxr_cdata( $c->comment_author_IP ); ?></wp:comment_author_IP>
-			<wp:comment_date><?php echo wxr_cdata( $c->comment_date ); ?></wp:comment_date>
-			<wp:comment_date_gmt><?php echo wxr_cdata( $c->comment_date_gmt ); ?></wp:comment_date_gmt>
-			<wp:comment_content><?php echo wxr_cdata( $c->comment_content ); ?></wp:comment_content>
-			<wp:comment_approved><?php echo wxr_cdata( $c->comment_approved ); ?></wp:comment_approved>
-			<wp:comment_type><?php echo wxr_cdata( $c->comment_type ); ?></wp:comment_type>
-			<wp:comment_parent><?php echo (int) $c->comment_parent; ?></wp:comment_parent>
-			<wp:comment_user_id><?php echo (int) $c->user_id; ?></wp:comment_user_id>
+		<zc:comment>
+			<zc:comment_id><?php echo (int) $c->comment_ID; ?></zc:comment_id>
+			<zc:comment_author><?php echo wxr_cdata( $c->comment_author ); ?></zc:comment_author>
+			<zc:comment_author_email><?php echo wxr_cdata( $c->comment_author_email ); ?></zc:comment_author_email>
+			<zc:comment_author_url><?php echo sanitize_url( $c->comment_author_url ); ?></zc:comment_author_url>
+			<zc:comment_author_IP><?php echo wxr_cdata( $c->comment_author_IP ); ?></zc:comment_author_IP>
+			<zc:comment_date><?php echo wxr_cdata( $c->comment_date ); ?></zc:comment_date>
+			<zc:comment_date_gmt><?php echo wxr_cdata( $c->comment_date_gmt ); ?></zc:comment_date_gmt>
+			<zc:comment_content><?php echo wxr_cdata( $c->comment_content ); ?></zc:comment_content>
+			<zc:comment_approved><?php echo wxr_cdata( $c->comment_approved ); ?></zc:comment_approved>
+			<zc:comment_type><?php echo wxr_cdata( $c->comment_type ); ?></zc:comment_type>
+			<zc:comment_parent><?php echo (int) $c->comment_parent; ?></zc:comment_parent>
+			<zc:comment_user_id><?php echo (int) $c->user_id; ?></zc:comment_user_id>
 					<?php
 					$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
 					foreach ( $c_meta as $meta ) :
@@ -727,12 +727,12 @@ function export_wp( $args = array() ) {
 							continue;
 						}
 						?>
-	<wp:commentmeta>
-	<wp:meta_key><?php echo wxr_cdata( $meta->meta_key ); ?></wp:meta_key>
-			<wp:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></wp:meta_value>
-			</wp:commentmeta>
+	<zc:commentmeta>
+	<zc:meta_key><?php echo wxr_cdata( $meta->meta_key ); ?></zc:meta_key>
+			<zc:meta_value><?php echo wxr_cdata( $meta->meta_value ); ?></zc:meta_value>
+			</zc:commentmeta>
 					<?php	endforeach; ?>
-		</wp:comment>
+		</zc:comment>
 			<?php	endforeach; ?>
 		</item>
 				<?php

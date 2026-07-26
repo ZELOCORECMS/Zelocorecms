@@ -4,7 +4,7 @@
  * @output zc-includes/js/customize-preview.js
  */
 (function( exports, $ ){
-	var api = wp.customize,
+	var api = zc.customize,
 		debounce,
 		currentHistoryState = {};
 
@@ -92,15 +92,15 @@
 	};
 
 	/**
-	 * @memberOf wp.customize
-	 * @alias wp.customize.Preview
+	 * @memberOf zc.customize
+	 * @alias zc.customize.Preview
 	 *
 	 * @constructor
-	 * @augments wp.customize.Messenger
-	 * @augments wp.customize.Class
-	 * @mixes wp.customize.Events
+	 * @augments zc.customize.Messenger
+	 * @augments zc.customize.Class
+	 * @mixes zc.customize.Events
 	 */
-	api.Preview = api.Messenger.extend(/** @lends wp.customize.Preview.prototype */{
+	api.Preview = api.Messenger.extend(/** @lends zc.customize.Preview.prototype */{
 		/**
 		 * @param {Object} params  - Parameters to configure the messenger.
 		 * @param {Object} options - Extend any instance parameter or method with this object.
@@ -161,7 +161,7 @@
 
 			// If the link is not previewable, prevent the browser from navigating to it.
 			if ( ! api.isLinkPreviewable( link[0] ) ) {
-				wp.a11y.speak( api.settings.l10n.linkUnpreviewable );
+				zc.a11y.speak( api.settings.l10n.linkUnpreviewable );
 				event.preventDefault();
 				return;
 			}
@@ -198,7 +198,7 @@
 
 			// If the link is not previewable, prevent the browser from navigating to it.
 			if ( 'GET' !== form.prop( 'method' ).toUpperCase() || ! api.isLinkPreviewable( urlParser ) ) {
-				wp.a11y.speak( api.settings.l10n.formUnpreviewable );
+				zc.a11y.speak( api.settings.l10n.formUnpreviewable );
 				event.preventDefault();
 				return;
 			}
@@ -304,7 +304,7 @@
 			return false;
 		}
 
-		// Skip wp login and signup pages.
+		// Skip zc login and signup pages.
 		if ( /\/zc-(login|signup)\.php$/.test( element.pathname ) ) {
 			return false;
 		}
@@ -913,4 +913,4 @@
 		api.trigger( 'preview-ready' );
 	});
 
-})( wp, jQuery );
+})( zc, jQuery );

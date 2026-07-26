@@ -22,7 +22,7 @@ class ZC_REST_Widget_Types_Controller extends ZC_REST_Controller {
 	 * @since 5.8.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'widget-types';
 	}
 

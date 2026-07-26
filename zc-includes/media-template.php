@@ -31,14 +31,14 @@ function zc_underscore_audio_template() {
 	<?php endforeach; ?>#>
 >
 	<# if ( ! _.isEmpty( data.model.src ) ) { #>
-	<source src="{{ data.model.src }}" type="{{ wp.media.view.settings.embedMimes[ data.model.src.split('.').pop() ] }}" />
+	<source src="{{ data.model.src }}" type="{{ zc.media.view.settings.embedMimes[ data.model.src.split('.').pop() ] }}" />
 	<# } #>
 
 	<?php
 	foreach ( $audio_types as $type ) :
 		?>
 	<# if ( ! _.isEmpty( data.model.<?php echo $type; ?> ) ) { #>
-	<source src="{{ data.model.<?php echo $type; ?> }}" type="{{ wp.media.view.settings.embedMimes[ '<?php echo $type; ?>' ] }}" />
+	<source src="{{ data.model.<?php echo $type; ?> }}" type="{{ zc.media.view.settings.embedMimes[ '<?php echo $type; ?>' ] }}" />
 	<# } #>
 		<?php
 	endforeach;
@@ -57,7 +57,7 @@ function zc_underscore_video_template() {
 	$video_types = zc_get_video_extensions();
 	?>
 <#  var w_rule = '', classes = [],
-		w, h, settings = wp.media.view.settings,
+		w, h, settings = zc.media.view.settings,
 		isYouTube = isVimeo = false;
 
 	if ( ! _.isEmpty( data.model.src ) ) {
@@ -407,8 +407,8 @@ function zc_print_media_templates() {
 					var w_rule = '';
 					if ( data.width ) {
 						w_rule = 'width: ' + data.width + 'px;';
-					} else if ( wp.media.view.settings.contentWidth ) {
-						w_rule = 'width: ' + wp.media.view.settings.contentWidth + 'px;';
+					} else if ( zc.media.view.settings.contentWidth ) {
+						w_rule = 'width: ' + zc.media.view.settings.contentWidth + 'px;';
 					}
 				#>
 				<div style="{{ w_rule }}" class="zc-media-wrapper zc-video">
@@ -681,8 +681,8 @@ function zc_print_media_templates() {
 				var w_rule = '';
 				if ( data.width ) {
 					w_rule = 'width: ' + data.width + 'px;';
-				} else if ( wp.media.view.settings.contentWidth ) {
-					w_rule = 'width: ' + wp.media.view.settings.contentWidth + 'px;';
+				} else if ( zc.media.view.settings.contentWidth ) {
+					w_rule = 'width: ' + zc.media.view.settings.contentWidth + 'px;';
 				}
 			#>
 				<div style="{{ w_rule }}" class="zc-media-wrapper zc-video">
@@ -947,15 +947,15 @@ function zc_print_media_templates() {
 					data-user-setting="urlbutton"
 				<# } #>>
 
-				<option value="post" <# if ( ! wp.media.galleryDefaults.link || 'post' === wp.media.galleryDefaults.link ) {
+				<option value="post" <# if ( ! zc.media.galleryDefaults.link || 'post' === zc.media.galleryDefaults.link ) {
 					#>selected="selected"<# }
 				#>>
 					<?php esc_html_e( 'Attachment Page' ); ?>
 				</option>
-				<option value="file" <# if ( 'file' === wp.media.galleryDefaults.link ) { #>selected="selected"<# } #>>
+				<option value="file" <# if ( 'file' === zc.media.galleryDefaults.link ) { #>selected="selected"<# } #>>
 					<?php esc_html_e( 'Media File' ); ?>
 				</option>
-				<option value="none" <# if ( 'none' === wp.media.galleryDefaults.link ) { #>selected="selected"<# } #>>
+				<option value="none" <# if ( 'none' === zc.media.galleryDefaults.link ) { #>selected="selected"<# } #>>
 					<?php echo esc_html_x( 'None', 'Media item link option' ); ?>
 				</option>
 			</select>
@@ -967,7 +967,7 @@ function zc_print_media_templates() {
 				data-setting="columns">
 				<?php for ( $i = 1; $i <= 9; $i++ ) : ?>
 					<option value="<?php echo esc_attr( $i ); ?>" <#
-						if ( <?php echo $i; ?> == wp.media.galleryDefaults.columns ) { #>selected="selected"<# }
+						if ( <?php echo $i; ?> == zc.media.galleryDefaults.columns ) { #>selected="selected"<# }
 					#>>
 						<?php echo esc_html( $i ); ?>
 					</option>
@@ -1303,8 +1303,8 @@ function zc_print_media_templates() {
 	<?php // Template for an embedded Audio details. ?>
 	<script type="text/html" id="tmpl-audio-details">
 		<# var ext, html5types = {
-			mp3: wp.media.view.settings.embedMimes.mp3,
-			ogg: wp.media.view.settings.embedMimes.ogg
+			mp3: zc.media.view.settings.embedMimes.mp3,
+			ogg: zc.media.view.settings.embedMimes.ogg
 		}; #>
 
 		<?php $audio_types = zc_get_audio_extensions(); ?>
@@ -1383,9 +1383,9 @@ function zc_print_media_templates() {
 	<?php // Template for an embedded Video details. ?>
 	<script type="text/html" id="tmpl-video-details">
 		<# var ext, html5types = {
-			mp4: wp.media.view.settings.embedMimes.mp4,
-			ogv: wp.media.view.settings.embedMimes.ogv,
-			webm: wp.media.view.settings.embedMimes.webm
+			mp4: zc.media.view.settings.embedMimes.mp4,
+			ogv: zc.media.view.settings.embedMimes.ogv,
+			webm: zc.media.view.settings.embedMimes.webm
 		}; #>
 
 		<?php $video_types = zc_get_video_extensions(); ?>

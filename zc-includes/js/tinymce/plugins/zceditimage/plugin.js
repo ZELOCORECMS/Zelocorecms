@@ -61,8 +61,8 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 	} );
 
 	editor.once( 'preinit', function() {
-		if ( editor.wp && editor.wp._createToolbar ) {
-			toolbar = editor.wp._createToolbar( [
+		if ( editor.zc && editor.zc._createToolbar ) {
+			toolbar = editor.zc._createToolbar( [
 				'zc_img_alignleft',
 				'zc_img_aligncenter',
 				'zc_img_alignright',
@@ -506,8 +506,8 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 			}
 		}
 
-		if ( wp.media.events ) {
-			wp.media.events.trigger( 'editor:image-update', {
+		if ( zc.media.events ) {
+			zc.media.events.trigger( 'editor:image-update', {
 				editor: editor,
 				metadata: imageData,
 				image: imageNode
@@ -520,7 +520,7 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 	function editImage( img ) {
 		var frame, callback, metadata, imageNode;
 
-		if ( typeof wp === 'undefined' || ! wp.media ) {
+		if ( typeof zc === 'undefined' || ! zc.media ) {
 			editor.execCommand( 'mceImage' );
 			return;
 		}
@@ -531,19 +531,19 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 		editor.$( img ).attr( 'data-zc-editing', 1 );
 
 		// Manipulate the metadata by reference that is fed into the PostImage model used in the media modal.
-		wp.media.events.trigger( 'editor:image-edit', {
+		zc.media.events.trigger( 'editor:image-edit', {
 			editor: editor,
 			metadata: metadata,
 			image: img
 		} );
 
-		frame = wp.media({
+		frame = zc.media({
 			frame: 'image',
 			state: 'image-details',
 			metadata: metadata
 		} );
 
-		wp.media.events.trigger( 'editor:frame-create', { frame: frame } );
+		zc.media.events.trigger( 'editor:frame-create', { frame: frame } );
 
 		callback = function( imageData ) {
 			editor.undoManager.transact( function() {
@@ -888,9 +888,9 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 		} );
 	} )();
 
-	// Add to editor.wp.
-	editor.wp = editor.wp || {};
-	editor.wp.isPlaceholder = isPlaceholder;
+	// Add to editor.zc.
+	editor.zc = editor.zc || {};
+	editor.zc.isPlaceholder = isPlaceholder;
 
 	// Back-compat.
 	return {

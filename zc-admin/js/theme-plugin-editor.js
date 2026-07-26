@@ -6,14 +6,14 @@
 
 /* eslint no-magic-numbers: ["error", { "ignore": [-1, 0, 1, 9, 1000] }] */
 
-if ( ! window.wp ) {
-	window.wp = {};
+if ( ! window.zc ) {
+	window.zc = {};
 }
 
-wp.themePluginEditor = (function( $ ) {
+zc.themePluginEditor = (function( $ ) {
 	'use strict';
 	var component, TreeLinks,
-		__ = wp.i18n.__, _n = wp.i18n._n, sprintf = wp.i18n.sprintf;
+		__ = zc.i18n.__, _n = zc.i18n._n, sprintf = zc.i18n.sprintf;
 
 	component = {
 		codeEditor: {},
@@ -40,7 +40,7 @@ wp.themePluginEditor = (function( $ ) {
 			$.extend( component, settings );
 		}
 
-		component.noticeTemplate = wp.template( 'zc-file-editor-notice' );
+		component.noticeTemplate = zc.template( 'zc-file-editor-notice' );
 		component.noticesContainer = component.form.find( '.editor-notices' );
 		component.submitButton = component.form.find( ':input[name=submit]' );
 		component.spinner = component.form.find( '.submit .spinner' );
@@ -57,7 +57,7 @@ wp.themePluginEditor = (function( $ ) {
 
 		if ( false !== component.codeEditor ) {
 			/*
-			 * Defer adding notices until after DOM ready as workaround for WP Admin injecting
+			 * Defer adding notices until after DOM ready as workaround for ZC Admin injecting
 			 * its own managed dismiss buttons and also to prevent the editor from showing a notice
 			 * when the file had linting errors to begin with.
 			 */
@@ -123,7 +123,7 @@ wp.themePluginEditor = (function( $ ) {
 		component.warning.on( 'click', '.file-editor-warning-dismiss', component.dismissWarning );
 		// Make screen readers announce the warning message after a short delay (necessary for some screen readers).
 		setTimeout( function() {
-			wp.a11y.speak( wp.sanitize.stripTags( rawMessage.replace( /\s+/g, ' ' ) ), 'assertive' );
+			zc.a11y.speak( zc.sanitize.stripTags( rawMessage.replace( /\s+/g, ' ' ) ), 'assertive' );
 		}, 1000 );
 	};
 
@@ -161,7 +161,7 @@ wp.themePluginEditor = (function( $ ) {
 	 */
 	component.dismissWarning = function() {
 
-		wp.ajax.post( 'dismiss-zc-pointer', {
+		zc.ajax.post( 'dismiss-zc-pointer', {
 			pointer: component.themeOrPlugin + '_editor_notice'
 		});
 
@@ -222,7 +222,7 @@ wp.themePluginEditor = (function( $ ) {
 		}
 
 		component.spinner.addClass( 'is-active' );
-		request = wp.ajax.post( 'edit-theme-plugin-file', data );
+		request = zc.ajax.post( 'edit-theme-plugin-file', data );
 
 		// Remove previous save notice before saving.
 		if ( component.lastSaveNoticeCode ) {
@@ -300,7 +300,7 @@ wp.themePluginEditor = (function( $ ) {
 			}
 		} );
 
-		wp.a11y.speak( notice.message );
+		zc.a11y.speak( notice.message );
 
 		component.noticesContainer.append( noticeElement );
 		noticeElement.slideDown( 'fast' );
@@ -414,7 +414,7 @@ wp.themePluginEditor = (function( $ ) {
 			}
 		};
 
-		editor = wp.codeEditor.initialize( $( '#newcontent' ), codeEditorSettings );
+		editor = zc.codeEditor.initialize( $( '#newcontent' ), codeEditorSettings );
 		editor.codemirror.on( 'change', component.onChange );
 
 		function onSaveShortcut() {
@@ -1037,11 +1037,11 @@ wp.themePluginEditor = (function( $ ) {
  *
  * @type {object}
  */
-wp.themePluginEditor.l10n = wp.themePluginEditor.l10n || {
+zc.themePluginEditor.l10n = zc.themePluginEditor.l10n || {
 	saveAlert: '',
 	saveError: '',
 	lintError: {
-		alternative: 'wp.i18n',
+		alternative: 'zc.i18n',
 		func: function() {
 			return {
 				singular: '',
@@ -1051,4 +1051,4 @@ wp.themePluginEditor.l10n = wp.themePluginEditor.l10n || {
 	}
 };
 
-wp.themePluginEditor.l10n = window.wp.deprecateL10nObject( 'wp.themePluginEditor.l10n', wp.themePluginEditor.l10n, '5.5.0' );
+zc.themePluginEditor.l10n = window.zc.deprecateL10nObject( 'zc.themePluginEditor.l10n', zc.themePluginEditor.l10n, '5.5.0' );

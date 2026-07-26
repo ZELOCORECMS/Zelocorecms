@@ -6,7 +6,7 @@
  */
 
 ( function () {
-	var toggleElements, status, input, icon, label, __ = wp.i18n.__;
+	var toggleElements, status, input, icon, label, __ = zc.i18n.__;
 
 	toggleElements = document.querySelectorAll( '.pwd-toggle' );
 

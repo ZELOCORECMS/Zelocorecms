@@ -624,7 +624,7 @@ class ZC_Customize_Nav_Menu_Setting extends ZC_Customize_Setting {
 	 *
 	 * @see ZC_Customize_Nav_Menu_Setting::update()
 	 *
-	 * @param array $data Additional information passed back to the 'saved' event on `wp.customize`.
+	 * @param array $data Additional information passed back to the 'saved' event on `zc.customize`.
 	 * @return array Export data.
 	 */
 	public function amend_customize_save_response( $data ) {

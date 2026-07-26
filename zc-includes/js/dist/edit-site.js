@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).editSite = (() => {
+var zc;
+(zc ||= {}).editSite = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -41,105 +41,105 @@ var wp;
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/block-library
   var require_block_library = __commonJS({
     "package-external:@zelocorecms/block-library"(exports, module) {
-      module.exports = window.wp.blockLibrary;
+      module.exports = window.zc.blockLibrary;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/editor
   var require_editor = __commonJS({
     "package-external:@zelocorecms/editor"(exports, module) {
-      module.exports = window.wp.editor;
+      module.exports = window.zc.editor;
     }
   });
 
   // package-external:@zelocorecms/preferences
   var require_preferences = __commonJS({
     "package-external:@zelocorecms/preferences"(exports, module) {
-      module.exports = window.wp.preferences;
+      module.exports = window.zc.preferences;
     }
   });
 
   // package-external:@zelocorecms/widgets
   var require_widgets = __commonJS({
     "package-external:@zelocorecms/widgets"(exports, module) {
-      module.exports = window.wp.widgets;
+      module.exports = window.zc.widgets;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/patterns
   var require_patterns = __commonJS({
     "package-external:@zelocorecms/patterns"(exports, module) {
-      module.exports = window.wp.patterns;
+      module.exports = window.zc.patterns;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/router
   var require_router = __commonJS({
     "package-external:@zelocorecms/router"(exports, module) {
-      module.exports = window.wp.router;
+      module.exports = window.zc.router;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
@@ -243,91 +243,91 @@ var wp;
   // package-external:@zelocorecms/a11y
   var require_a11y = __commonJS({
     "package-external:@zelocorecms/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
+      module.exports = window.zc.a11y;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/plugins
   var require_plugins = __commonJS({
     "package-external:@zelocorecms/plugins"(exports, module) {
-      module.exports = window.wp.plugins;
+      module.exports = window.zc.plugins;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
   // package-external:@zelocorecms/commands
   var require_commands = __commonJS({
     "package-external:@zelocorecms/commands"(exports, module) {
-      module.exports = window.wp.commands;
+      module.exports = window.zc.commands;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/style-engine
   var require_style_engine = __commonJS({
     "package-external:@zelocorecms/style-engine"(exports, module) {
-      module.exports = window.wp.styleEngine;
+      module.exports = window.zc.styleEngine;
     }
   });
 
@@ -493,14 +493,14 @@ var wp;
   // package-external:@zelocorecms/date
   var require_date = __commonJS({
     "package-external:@zelocorecms/date"(exports, module) {
-      module.exports = window.wp.date;
+      module.exports = window.zc.date;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
@@ -989,7 +989,7 @@ var wp;
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
@@ -1471,10 +1471,10 @@ var wp;
   var getCanUserCreateMedia = (0, import_data2.createRegistrySelector)(
     (select3) => () => {
       (0, import_deprecated2.default)(
-        `wp.data.select( 'core/edit-site' ).getCanUserCreateMedia()`,
+        `zc.data.select( 'core/edit-site' ).getCanUserCreateMedia()`,
         {
           since: "6.7",
-          alternative: `wp.data.select( 'core' ).canUser( 'create', { kind: 'postType', type: 'attachment' } )`
+          alternative: `zc.data.select( 'core' ).canUser( 'create', { kind: 'postType', type: 'attachment' } )`
         }
       );
       return select3(import_core_data2.store).canUser("create", "media");
@@ -6420,7 +6420,7 @@ var wp;
   var import_api_fetch = __toESM(require_api_fetch(), 1);
   var import_element12 = __toESM(require_element(), 1);
   var import_url5 = __toESM(require_url(), 1);
-  var ACTIVE_THEMES_URL = "/wp/v2/themes?status=active";
+  var ACTIVE_THEMES_URL = "/zc/v2/themes?status=active";
   function useActualCurrentTheme() {
     const [currentTheme, setCurrentTheme] = (0, import_element12.useState)();
     (0, import_element12.useEffect)(() => {
@@ -7621,7 +7621,7 @@ var wp;
     if (typeof resolvedValue === "object" && resolvedValue !== null && "url" in resolvedValue && resolvedValue?.url) {
       resolvedValue.url = getResolvedThemeFilePath(
         resolvedValue.url,
-        tree?._links?.["wp:theme-file"]
+        tree?._links?.["zc:theme-file"]
       );
     }
     return resolvedValue;
@@ -21864,10 +21864,10 @@ var wp;
   var import_jsx_runtime162 = __toESM(require_jsx_runtime(), 1);
   var { Fill, Slot } = (0, import_components79.createSlotFill)("PluginTemplateSettingPanel");
   var PluginTemplateSettingPanel = ({ children }) => {
-    (0, import_deprecated3.default)("wp.editSite.PluginTemplateSettingPanel", {
+    (0, import_deprecated3.default)("zc.editSite.PluginTemplateSettingPanel", {
       since: "6.6",
       version: "6.8",
-      alternative: "wp.editor.PluginDocumentSettingPanel"
+      alternative: "zc.editor.PluginDocumentSettingPanel"
     });
     const isCurrentEntityTemplate = (0, import_data39.useSelect)(
       (select3) => select3(import_editor15.store).getCurrentPostType() === "zc_template",
@@ -21895,7 +21895,7 @@ var wp;
   var import_jsx_runtime163 = __toESM(require_jsx_runtime(), 1);
   function SiteExport() {
     const canExport = (0, import_data40.useSelect)((select3) => {
-      const targetHints = select3(import_core_data29.store).getCurrentTheme()?._links?.["wp:export-theme"]?.[0]?.targetHints ?? {};
+      const targetHints = select3(import_core_data29.store).getCurrentTheme()?._links?.["zc:export-theme"]?.[0]?.targetHints ?? {};
       return !!targetHints.allow?.includes("GET");
     }, []);
     const { createErrorNotice } = (0, import_data40.useDispatch)(import_notices2.store);
@@ -41642,7 +41642,7 @@ If there's a particular need for this, please submit a feature request at https:
       const { getSettings: getSettings7 } = unlock(select3(store));
       return getSettings7();
     }, []);
-    const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
+    const settingsBlockPatterns = storedSettings.__experimentalAdditionalBlockPatterns ?? // ZC 6.0
     storedSettings.__experimentalBlockPatterns;
     const restBlockPatterns = (0, import_data66.useSelect)(
       (select3) => select3(import_core_data43.store).getBlockPatterns(),
@@ -46743,7 +46743,7 @@ If there's a particular need for this, please submit a feature request at https:
       return {
         per_page: view.perPage,
         page: view.page,
-        _embed: "author,wp:featuredmedia",
+        _embed: "author,zc:featuredmedia",
         order: view.sort?.direction,
         orderby: view.sort?.field,
         orderby_hierarchy: !!view.showLevels,
@@ -47163,9 +47163,9 @@ If there's a particular need for this, please submit a feature request at https:
     "site-editor.php"
   );
   var deprecateSlot = (name2) => {
-    (0, import_deprecated5.default)(`wp.editPost.${name2}`, {
+    (0, import_deprecated5.default)(`zc.editPost.${name2}`, {
       since: "6.6",
-      alternative: `wp.editor.${name2}`
+      alternative: `zc.editor.${name2}`
     });
   };
   function PluginMoreMenuItem(props) {
@@ -47247,7 +47247,7 @@ If there's a particular need for this, please submit a feature request at https:
     return root;
   }
   function reinitializeEditor() {
-    (0, import_deprecated6.default)("wp.editSite.reinitializeEditor", {
+    (0, import_deprecated6.default)("zc.editSite.reinitializeEditor", {
       since: "6.2",
       version: "6.3"
     });

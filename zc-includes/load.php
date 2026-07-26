@@ -1625,15 +1625,15 @@ function zc_load_translations_early() {
  *
  * @since 4.4.0
  *
- * @param bool $is_installing Optional. True to set WP into Installing mode, false to turn Installing mode off.
+ * @param bool $is_installing Optional. True to set ZC into Installing mode, false to turn Installing mode off.
  *                            Omit this parameter if you only want to fetch the current status.
- * @return bool True if WP is installing, otherwise false. When a `$is_installing` is passed, the function will
- *              report whether WP was in installing mode prior to the change to `$is_installing`.
+ * @return bool True if ZC is installing, otherwise false. When a `$is_installing` is passed, the function will
+ *              report whether ZC was in installing mode prior to the change to `$is_installing`.
  */
 function zc_installing( $is_installing = null ) {
 	static $installing = null;
 
-	// Support for the `ZC_INSTALLING` constant, defined before WP is loaded.
+	// Support for the `ZC_INSTALLING` constant, defined before ZC is loaded.
 	if ( is_null( $installing ) ) {
 		$installing = defined( 'ZC_INSTALLING' ) && ZC_INSTALLING;
 	}

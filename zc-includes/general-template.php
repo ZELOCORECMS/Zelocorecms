@@ -2983,7 +2983,7 @@ function get_post_datetime( $post = null, $field = 'date', $source = 'local' ) {
  * Retrieves post published or modified time as a Unix timestamp.
  *
  * Note that this function returns a true Unix timestamp, not summed with timezone offset
- * like older WP functions.
+ * like older ZC functions.
  *
  * @since 5.3.0
  *
@@ -4000,7 +4000,7 @@ function zc_editor( $content, $editor_id, $settings = array() ) {
  * Outputs the editor scripts, stylesheets, and default settings.
  *
  * The editor can be initialized when needed after page load.
- * See wp.editor.initialize() in zc-admin/js/editor.js for initialization options.
+ * See zc.editor.initialize() in zc-admin/js/editor.js for initialization options.
  *
  * @uses _ZC_Editors
  * @since 4.8.0
@@ -4090,7 +4090,7 @@ function zc_enqueue_code_editor( $args ) {
 		}
 	}
 
-	zc_add_inline_script( 'code-editor', sprintf( 'jQuery.extend( wp.codeEditor.defaultSettings, %s );', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
+	zc_add_inline_script( 'code-editor', sprintf( 'jQuery.extend( zc.codeEditor.defaultSettings, %s );', zc_json_encode( $settings, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ) );
 
 	/**
 	 * Fires when scripts and styles are enqueued for the code editor.
@@ -4184,7 +4184,7 @@ function zc_get_code_editor_settings( $args ) {
 				'Backbone'          => false,
 				'jQuery'            => false,
 				'JSON'              => false,
-				'wp'                => false,
+				'zc'                => false,
 				'export'            => false,
 				'module'            => false,
 				'require'           => false,

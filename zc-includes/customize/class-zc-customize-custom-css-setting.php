@@ -10,7 +10,7 @@
  */
 
 /**
- * Custom Setting to handle WP Custom CSS.
+ * Custom Setting to handle ZC Custom CSS.
  *
  * @since 4.7.0
  *

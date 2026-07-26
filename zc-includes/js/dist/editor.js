@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).editor = (() => {
+var zc;
+(zc ||= {}).editor = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -41,84 +41,84 @@ var wp;
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/date
   var require_date = __commonJS({
     "package-external:@zelocorecms/date"(exports, module) {
-      module.exports = window.wp.date;
+      module.exports = window.zc.date;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/preferences
   var require_preferences = __commonJS({
     "package-external:@zelocorecms/preferences"(exports, module) {
-      module.exports = window.wp.preferences;
+      module.exports = window.zc.preferences;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
@@ -132,42 +132,42 @@ var wp;
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/a11y
   var require_a11y = __commonJS({
     "package-external:@zelocorecms/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
+      module.exports = window.zc.a11y;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
@@ -209,28 +209,28 @@ var wp;
   // package-external:@zelocorecms/media-utils
   var require_media_utils = __commonJS({
     "package-external:@zelocorecms/media-utils"(exports, module) {
-      module.exports = window.wp.mediaUtils;
+      module.exports = window.zc.mediaUtils;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/patterns
   var require_patterns = __commonJS({
     "package-external:@zelocorecms/patterns"(exports, module) {
-      module.exports = window.wp.patterns;
+      module.exports = window.zc.patterns;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
@@ -733,7 +733,7 @@ var wp;
   // package-external:@zelocorecms/style-engine
   var require_style_engine = __commonJS({
     "package-external:@zelocorecms/style-engine"(exports, module) {
-      module.exports = window.wp.styleEngine;
+      module.exports = window.zc.styleEngine;
     }
   });
 
@@ -1221,70 +1221,70 @@ var wp;
   // package-external:@zelocorecms/block-serialization-default-parser
   var require_block_serialization_default_parser = __commonJS({
     "package-external:@zelocorecms/block-serialization-default-parser"(exports, module) {
-      module.exports = window.wp.blockSerializationDefaultParser;
+      module.exports = window.zc.blockSerializationDefaultParser;
     }
   });
 
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/commands
   var require_commands = __commonJS({
     "package-external:@zelocorecms/commands"(exports, module) {
-      module.exports = window.wp.commands;
+      module.exports = window.zc.commands;
     }
   });
 
   // package-external:@zelocorecms/viewport
   var require_viewport = __commonJS({
     "package-external:@zelocorecms/viewport"(exports, module) {
-      module.exports = window.wp.viewport;
+      module.exports = window.zc.viewport;
     }
   });
 
   // package-external:@zelocorecms/plugins
   var require_plugins = __commonJS({
     "package-external:@zelocorecms/plugins"(exports, module) {
-      module.exports = window.wp.plugins;
+      module.exports = window.zc.plugins;
     }
   });
 
   // package-external:@zelocorecms/upload-media
   var require_upload_media = __commonJS({
     "package-external:@zelocorecms/upload-media"(exports, module) {
-      module.exports = window.wp.uploadMedia;
+      module.exports = window.zc.uploadMedia;
     }
   });
 
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
   // package-external:@zelocorecms/warning
   var require_warning = __commonJS({
     "package-external:@zelocorecms/warning"(exports, module) {
-      module.exports = window.wp.warning;
+      module.exports = window.zc.warning;
     }
   });
 
@@ -2522,14 +2522,14 @@ var wp;
   // package-external:@zelocorecms/wordcount
   var require_wordcount = __commonJS({
     "package-external:@zelocorecms/wordcount"(exports, module) {
-      module.exports = window.wp.wordcount;
+      module.exports = window.zc.wordcount;
     }
   });
 
   // package-external:@zelocorecms/server-side-render
   var require_server_side_render = __commonJS({
     "package-external:@zelocorecms/server-side-render"(exports, module) {
-      module.exports = window.wp.serverSideRender;
+      module.exports = window.zc.serverSideRender;
     }
   });
 
@@ -4087,7 +4087,7 @@ var wp;
   function canUserUseUnfilteredHTML(state) {
     return Boolean(
       getCurrentPost(state)._links?.hasOwnProperty(
-        "wp:action-unfiltered-html"
+        "zc:action-unfiltered-html"
       )
     );
   }
@@ -4184,9 +4184,9 @@ var wp;
   }
   function getBlockEditorSelector(name2) {
     return (0, import_data3.createRegistrySelector)((select6) => (state, ...args) => {
-      (0, import_deprecated.default)("`wp.data.select( 'core/editor' )." + name2 + "`", {
+      (0, import_deprecated.default)("`zc.data.select( 'core/editor' )." + name2 + "`", {
         since: "5.3",
-        alternative: "`wp.data.select( 'core/block-editor' )." + name2 + "`",
+        alternative: "`zc.data.select( 'core/block-editor' )." + name2 + "`",
         version: "6.2"
       });
       return select6(import_block_editor2.store)[name2](...args);
@@ -4607,7 +4607,7 @@ var wp;
   };
   function __experimentalTearDownEditor() {
     (0, import_deprecated2.default)(
-      "wp.data.dispatch( 'core/editor' ).__experimentalTearDownEditor",
+      "zc.data.dispatch( 'core/editor' ).__experimentalTearDownEditor",
       {
         since: "6.5"
       }
@@ -4615,7 +4615,7 @@ var wp;
     return { type: "DO_NOTHING" };
   }
   function resetPost() {
-    (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).resetPost", {
+    (0, import_deprecated2.default)("zc.data.dispatch( 'core/editor' ).resetPost", {
       since: "6.0",
       version: "6.3",
       alternative: "Initialize the editor with the setupEditorState action"
@@ -4623,7 +4623,7 @@ var wp;
     return { type: "DO_NOTHING" };
   }
   function updatePost() {
-    (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).updatePost", {
+    (0, import_deprecated2.default)("zc.data.dispatch( 'core/editor' ).updatePost", {
       since: "5.7",
       alternative: "Use the core entities store instead"
     });
@@ -4632,9 +4632,9 @@ var wp;
     };
   }
   function setupEditorState(post2) {
-    (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).setupEditorState", {
+    (0, import_deprecated2.default)("zc.data.dispatch( 'core/editor' ).setupEditorState", {
       since: "6.5",
-      alternative: "wp.data.dispatch( 'core/editor' ).setEditedPost"
+      alternative: "zc.data.dispatch( 'core/editor' ).setEditedPost"
     });
     return setEditedPost(post2.type, post2.id);
   }
@@ -4811,7 +4811,7 @@ var wp;
     );
   }
   function refreshPost() {
-    (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).refreshPost", {
+    (0, import_deprecated2.default)("zc.data.dispatch( 'core/editor' ).refreshPost", {
       since: "6.0",
       version: "6.3",
       alternative: "Use the core entities store instead"
@@ -4821,7 +4821,7 @@ var wp;
   var trashPost = () => async ({ select: select6, dispatch: dispatch7, registry }) => {
     const postTypeSlug = select6.getCurrentPostType();
     const postType2 = await registry.resolveSelect(import_core_data2.store).getPostType(postTypeSlug);
-    const { rest_base: restBase, rest_namespace: restNamespace = "wp/v2" } = postType2;
+    const { rest_base: restBase, rest_namespace: restNamespace = "zc/v2" } = postType2;
     dispatch7({ type: "REQUEST_POST_DELETE_START" });
     try {
       const post2 = select6.getCurrentPost();
@@ -4869,7 +4869,7 @@ var wp;
     registry.dispatch(import_core_data2.store).undo();
   };
   function createUndoLevel() {
-    (0, import_deprecated2.default)("wp.data.dispatch( 'core/editor' ).createUndoLevel", {
+    (0, import_deprecated2.default)("zc.data.dispatch( 'core/editor' ).createUndoLevel", {
       since: "6.0",
       version: "6.3",
       alternative: "Use the core entities store instead"
@@ -5113,9 +5113,9 @@ var wp;
     };
   }
   var getBlockEditorAction = (name2) => (...args) => ({ registry }) => {
-    (0, import_deprecated2.default)("`wp.data.dispatch( 'core/editor' )." + name2 + "`", {
+    (0, import_deprecated2.default)("`zc.data.dispatch( 'core/editor' )." + name2 + "`", {
       since: "5.3",
-      alternative: "`wp.data.dispatch( 'core/block-editor' )." + name2 + "`",
+      alternative: "`zc.data.dispatch( 'core/block-editor' )." + name2 + "`",
       version: "6.2"
     });
     registry.dispatch(import_block_editor3.store)[name2](...args);
@@ -5395,10 +5395,10 @@ var wp;
   var import_url2 = __toESM(require_url(), 1);
   var import_deprecated3 = __toESM(require_deprecated(), 1);
   function cleanForSlug2(string) {
-    (0, import_deprecated3.default)("wp.editor.cleanForSlug", {
+    (0, import_deprecated3.default)("zc.editor.cleanForSlug", {
       since: "12.7",
       plugin: "Gutenberg",
-      alternative: "wp.url.cleanForSlug"
+      alternative: "zc.url.cleanForSlug"
     });
     return (0, import_url2.cleanForSlug)(string);
   }
@@ -9811,7 +9811,7 @@ var wp;
     item,
     config: config2
   }) => {
-    const media = item?._embedded?.["wp:featuredmedia"]?.[0];
+    const media = item?._embedded?.["zc:featuredmedia"]?.[0];
     const url = media?.source_url;
     if (url) {
       return /* @__PURE__ */ (0, import_jsx_runtime82.jsx)(
@@ -10933,7 +10933,7 @@ var wp;
           menu_order: item.menu_order,
           ping_status: item.ping_status
         };
-        const assignablePropertiesPrefix = "wp:action-assign-";
+        const assignablePropertiesPrefix = "zc:action-assign-";
         const assignableProperties = Object.keys(item?._links || {}).filter(
           (property) => property.startsWith(assignablePropertiesPrefix)
         ).map(
@@ -12724,8 +12724,8 @@ var wp;
   }) {
     const [attachedPostTitle, setAttachedPostTitle] = (0, import_element21.useState)(null);
     const parentId = item.post;
-    const embeddedPostId = item._embedded?.["wp:attached-to"]?.[0]?.id;
-    const embeddedPostTitle = item._embedded?.["wp:attached-to"]?.[0]?.title;
+    const embeddedPostId = item._embedded?.["zc:attached-to"]?.[0]?.id;
+    const embeddedPostTitle = item._embedded?.["zc:attached-to"]?.[0]?.title;
     (0, import_element21.useEffect)(() => {
       if (!!parentId && parentId === embeddedPostId) {
         setAttachedPostTitle(
@@ -12751,10 +12751,10 @@ var wp;
     data,
     onChange
   }) {
-    const defaultPost = !!data.post && !!data?._embedded?.["wp:attached-to"]?.[0] ? [
+    const defaultPost = !!data.post && !!data?._embedded?.["zc:attached-to"]?.[0] ? [
       {
         label: getRenderedContent(
-          data._embedded?.["wp:attached-to"]?.[0]?.title
+          data._embedded?.["zc:attached-to"]?.[0]?.title
         ),
         value: data.post.toString()
       }
@@ -12774,7 +12774,7 @@ var wp;
     const handleDetach = () => {
       onChange({
         post: 0,
-        _embedded: { ...data?._embedded, "wp:attached-to": void 0 }
+        _embedded: { ...data?._embedded, "zc:attached-to": void 0 }
       });
       setOptions([]);
     };
@@ -12825,7 +12825,7 @@ var wp;
             post: Number(selectedPostId),
             _embedded: {
               ...data?._embedded,
-              "wp:attached-to": [attachedTo]
+              "zc:attached-to": [attachedTo]
             }
           });
         }
@@ -13470,7 +13470,7 @@ var wp;
   var import_api_fetch3 = __toESM(require_api_fetch(), 1);
   async function mediaFinalize(id) {
     await (0, import_api_fetch3.default)({
-      path: `/wp/v2/media/${id}/finalize`,
+      path: `/zc/v2/media/${id}/finalize`,
       method: "POST"
     });
   }
@@ -13967,7 +13967,7 @@ var wp;
     if (typeof resolvedValue === "object" && resolvedValue !== null && "url" in resolvedValue && resolvedValue?.url) {
       resolvedValue.url = getResolvedThemeFilePath(
         resolvedValue.url,
-        tree?._links?.["wp:theme-file"]
+        tree?._links?.["zc:theme-file"]
       );
     }
     return resolvedValue;
@@ -16203,7 +16203,7 @@ var wp;
             "postType",
             postType2,
             postId2
-          )?._links?.hasOwnProperty("wp:action-unfiltered-html"),
+          )?._links?.hasOwnProperty("zc:action-unfiltered-html"),
           focusMode: get("core", "focusMode"),
           hasFixedToolbar: get("core", "fixedToolbar") || !isLargeViewport,
           hiddenBlockTypes: get("core", "hiddenBlockTypes"),
@@ -16236,9 +16236,9 @@ var wp;
     const { merged: mergedGlobalStyles } = useGlobalStylesContext();
     const globalStylesData = mergedGlobalStyles.styles ?? EMPTY_OBJECT3;
     const globalStylesLinksData = mergedGlobalStyles._links ?? EMPTY_OBJECT3;
-    const settingsBlockPatterns = settings.__experimentalAdditionalBlockPatterns ?? // WP 6.0
+    const settingsBlockPatterns = settings.__experimentalAdditionalBlockPatterns ?? // ZC 6.0
     settings.__experimentalBlockPatterns;
-    const settingsBlockPatternCategories = settings.__experimentalAdditionalBlockPatternCategories ?? // WP 6.0
+    const settingsBlockPatternCategories = settings.__experimentalAdditionalBlockPatternCategories ?? // ZC 6.0
     settings.__experimentalBlockPatternCategories;
     const blockPatterns = (0, import_element27.useMemo)(
       () => [...settingsBlockPatterns || []].filter(
@@ -22725,7 +22725,7 @@ var wp;
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
-        canEditCSS: !!globalStyles?._links?.["wp:action-edit-css"]
+        canEditCSS: !!globalStyles?._links?.["zc:action-edit-css"]
       };
     }, []);
     const currentBlockStyle = variation ? blockVariations.find((s3) => s3.name === variation) : null;
@@ -23197,7 +23197,7 @@ var wp;
   // packages/global-styles-ui/build-module/font-library/api.mjs
   var import_api_fetch4 = __toESM(require_api_fetch(), 1);
   var import_core_data41 = __toESM(require_core_data(), 1);
-  var FONT_FAMILIES_URL = "/wp/v2/font-families";
+  var FONT_FAMILIES_URL = "/zc/v2/font-families";
   function invalidateFontFamilyCache(registry) {
     const { receiveEntityRecords } = registry.dispatch(import_core_data41.store);
     receiveEntityRecords(
@@ -42165,10 +42165,10 @@ var wp;
   // packages/editor/build-module/components/editor-notices/index.mjs
   var import_jsx_runtime222 = __toESM(require_jsx_runtime(), 1);
   function EditorNotices() {
-    (0, import_deprecated9.default)("wp.editor.EditorNotices", {
+    (0, import_deprecated9.default)("zc.editor.EditorNotices", {
       since: "7.0",
       version: "7.2",
-      alternative: "wp.notices.InlineNotices"
+      alternative: "zc.notices.InlineNotices"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime222.jsx)(
       import_notices18.InlineNotices,
@@ -42186,10 +42186,10 @@ var wp;
   var import_notices19 = __toESM(require_notices(), 1);
   var import_jsx_runtime223 = __toESM(require_jsx_runtime(), 1);
   function EditorSnackbars() {
-    (0, import_deprecated10.default)("wp.editor.EditorSnackbars", {
+    (0, import_deprecated10.default)("zc.editor.EditorSnackbars", {
       since: "7.0",
       version: "7.2",
-      alternative: "wp.notices.SnackbarNotices"
+      alternative: "zc.notices.SnackbarNotices"
     });
     return /* @__PURE__ */ (0, import_jsx_runtime223.jsx)(import_notices19.SnackbarNotices, { className: "components-editor-notices__snackbar" });
   }
@@ -44422,7 +44422,7 @@ var wp;
   function PostAuthorCheck({ children }) {
     const { hasAssignAuthorAction } = (0, import_data115.useSelect)((select6) => {
       const post2 = select6(store).getCurrentPost();
-      const canAssignAuthor = post2?._links?.["wp:action-assign-author"] ? true : false;
+      const canAssignAuthor = post2?._links?.["zc:action-assign-author"] ? true : false;
       return {
         hasAssignAuthorAction: canAssignAuthor
       };
@@ -45772,7 +45772,7 @@ var wp;
     const { hasPublishAction, isPublished } = (0, import_data130.useSelect)((select6) => {
       const { isCurrentPostPublished: isCurrentPostPublished2, getCurrentPost: getCurrentPost2 } = select6(store);
       return {
-        hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: getCurrentPost2()._links?.["zc:action-publish"] ?? false,
         isPublished: isCurrentPostPublished2()
       };
     }, []);
@@ -46001,7 +46001,7 @@ var wp;
         isBeingScheduled: isEditedPostBeingScheduled2(),
         isSaving: isSavingPost2(),
         isPublishing: isPublishingPost2(),
-        hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: getCurrentPost2()._links?.["zc:action-publish"] ?? false,
         postType: getCurrentPostType2(),
         isAutosaving: isAutosavingPost2(),
         hasNonPostEntityChanges: select6(store).hasNonPostEntityChanges(),
@@ -46173,7 +46173,7 @@ var wp;
         isPostSavingLocked: isPostSavingLocked2(),
         isPublishable: isEditedPostPublishable2(),
         isPublished: isCurrentPostPublished2(),
-        hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: getCurrentPost2()._links?.["zc:action-publish"] ?? false,
         postType: getCurrentPostType2(),
         postId: getCurrentPostId2(),
         postStatus: getEditedPostAttribute2("status"),
@@ -46816,8 +46816,8 @@ var wp;
           per_page: -1
         };
         return {
-          hasCreateAction: _taxonomy ? post2._links?.["wp:action-create-" + _taxonomy.rest_base] ?? false : false,
-          hasAssignAction: _taxonomy ? post2._links?.["wp:action-assign-" + _taxonomy.rest_base] ?? false : false,
+          hasCreateAction: _taxonomy ? post2._links?.["zc:action-create-" + _taxonomy.rest_base] ?? false : false,
+          hasAssignAction: _taxonomy ? post2._links?.["zc:action-assign-" + _taxonomy.rest_base] ?? false : false,
           taxonomy: _taxonomy,
           termIds: _termIds,
           terms: _termIds?.length ? getEntityRecords("taxonomy", slug, query) : EMPTY_ARRAY7,
@@ -47204,8 +47204,8 @@ var wp;
         const _taxonomy = getEntityRecord("root", "taxonomy", slug);
         const post2 = getCurrentPost2();
         return {
-          hasCreateAction: _taxonomy ? !!post2._links?.["wp:action-create-" + _taxonomy.rest_base] : false,
-          hasAssignAction: _taxonomy ? !!post2._links?.["wp:action-assign-" + _taxonomy.rest_base] : false,
+          hasCreateAction: _taxonomy ? !!post2._links?.["zc:action-create-" + _taxonomy.rest_base] : false,
+          hasAssignAction: _taxonomy ? !!post2._links?.["zc:action-assign-" + _taxonomy.rest_base] : false,
           terms: _taxonomy ? getEditedPostAttribute2(_taxonomy.rest_base) : EMPTY_ARRAY8,
           loading: isResolving("getEntityRecords", [
             "taxonomy",
@@ -47749,7 +47749,7 @@ var wp;
       const { getEntityRecord, isResolving } = select6(import_core_data94.store);
       const siteData = getEntityRecord("root", "__unstableBase", void 0) || {};
       return {
-        hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: getCurrentPost2()._links?.["zc:action-publish"] ?? false,
         isBeingScheduled: isEditedPostBeingScheduled2(),
         isRequestingSiteIcon: isResolving("getEntityRecord", [
           "root",
@@ -48107,7 +48107,7 @@ var wp;
       const { isPublishSidebarEnabled: isPublishSidebarEnabled2 } = select6(store);
       const postType2 = getPostType(getEditedPostAttribute2("type"));
       return {
-        hasPublishAction: getCurrentPost2()._links?.["wp:action-publish"] ?? false,
+        hasPublishAction: getCurrentPost2()._links?.["zc:action-publish"] ?? false,
         isPostTypeViewable: postType2?.viewable,
         isBeingScheduled: isEditedPostBeingScheduled2(),
         isDirty: isEditedPostDirty2(),
@@ -48164,7 +48164,7 @@ var wp;
     const { hasStickyAction, postType: postType2 } = (0, import_data149.useSelect)((select6) => {
       const post2 = select6(store).getCurrentPost();
       return {
-        hasStickyAction: post2._links?.["wp:action-sticky"] ?? false,
+        hasStickyAction: post2._links?.["zc:action-sticky"] ?? false,
         postType: select6(store).getCurrentPostType()
       };
     }, []);
@@ -48245,7 +48245,7 @@ var wp;
           password: getEditedPostAttribute2("password"),
           postId: getCurrentPostId2(),
           postType: getCurrentPostType2(),
-          canEdit: getCurrentPost2()._links?.["wp:action-publish"] ?? false
+          canEdit: getCurrentPost2()._links?.["zc:action-publish"] ?? false
         };
       },
       []
@@ -48455,7 +48455,7 @@ var wp;
           isSaving: isSavingPost2(),
           isSaveable: isEditedPostSaveable2(),
           isScheduled: isCurrentPostScheduled2(),
-          hasPublishAction: getCurrentPost2()?._links?.["wp:action-publish"] ?? false,
+          hasPublishAction: getCurrentPost2()?._links?.["zc:action-publish"] ?? false,
           showIconLabels: get("core", "showIconLabels"),
           postStatus: getEditedPostAttribute2("status"),
           postStatusHasChanged: !!getPostEdits2()?.status,
@@ -48534,7 +48534,7 @@ var wp;
   var import_data153 = __toESM(require_data(), 1);
   function PostScheduleCheck({ children }) {
     const hasPublishAction = (0, import_data153.useSelect)((select6) => {
-      return select6(store).getCurrentPost()._links?.["wp:action-publish"] ?? false;
+      return select6(store).getCurrentPost()._links?.["zc:action-publish"] ?? false;
     }, []);
     if (!hasPublishAction) {
       return null;
@@ -48610,7 +48610,7 @@ var wp;
   var import_deprecated11 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime291 = __toESM(require_jsx_runtime(), 1);
   function PostSwitchToDraftButton() {
-    (0, import_deprecated11.default)("wp.editor.PostSwitchToDraftButton", {
+    (0, import_deprecated11.default)("zc.editor.PostSwitchToDraftButton", {
       since: "6.7",
       version: "6.9"
     });
@@ -49211,7 +49211,7 @@ var wp;
       const postTypeSlug = select6(store).getCurrentPostType();
       const postType2 = select6(import_core_data102.store).getPostType(postTypeSlug);
       const permalinkParts = select6(store).getPermalinkParts();
-      const hasPublishAction = post2?._links?.["wp:action-publish"] ?? false;
+      const hasPublishAction = post2?._links?.["zc:action-publish"] ?? false;
       return {
         isEditable: select6(store).isPermalinkEditable() && hasPublishAction,
         postSlug: (0, import_url18.safeDecodeURIComponent)(
@@ -49480,7 +49480,7 @@ var wp;
   var import_data171 = __toESM(require_data(), 1);
   function PostVisibilityCheck({ render: render4 }) {
     const canEdit = (0, import_data171.useSelect)((select6) => {
-      return select6(store).getCurrentPost()._links?.["wp:action-publish"] ?? false;
+      return select6(store).getCurrentPost()._links?.["zc:action-publish"] ?? false;
     });
     return render4({ canEdit });
   }
@@ -49704,9 +49704,9 @@ var wp;
   var import_jsx_runtime305 = __toESM(require_jsx_runtime(), 1);
   function deprecateComponent(name2, Wrapped, staticsToHoist = []) {
     const Component6 = (0, import_element144.forwardRef)((props, ref) => {
-      (0, import_deprecated12.default)("wp.editor." + name2, {
+      (0, import_deprecated12.default)("zc.editor." + name2, {
         since: "5.3",
-        alternative: "wp.blockEditor." + name2,
+        alternative: "zc.blockEditor." + name2,
         version: "6.2"
       });
       return /* @__PURE__ */ (0, import_jsx_runtime305.jsx)(Wrapped, { ref, ...props });
@@ -49721,9 +49721,9 @@ var wp;
   }
   function deprecateFunction(name2, func) {
     return (...args) => {
-      (0, import_deprecated12.default)("wp.editor." + name2, {
+      (0, import_deprecated12.default)("zc.editor." + name2, {
         since: "5.3",
-        alternative: "wp.blockEditor." + name2,
+        alternative: "zc.blockEditor." + name2,
         version: "6.2"
       });
       return func(...args);
@@ -51128,7 +51128,7 @@ var wp;
       postType: postType2
     } = (0, import_data187.useSelect)((select6) => {
       return {
-        hasPublishAction: !!select6(store).getCurrentPost()?._links?.["wp:action-publish"],
+        hasPublishAction: !!select6(store).getCurrentPost()?._links?.["zc:action-publish"],
         isBeingScheduled: select6(store).isEditedPostBeingScheduled(),
         isPending: select6(store).isCurrentPostPending(),
         isPublished: select6(store).isCurrentPostPublished(),
@@ -62913,7 +62913,7 @@ var wp;
         _postType,
         _postId,
         {
-          _embed: "author,wp:attached-to"
+          _embed: "author,zc:attached-to"
         }
       );
       return {
@@ -66298,7 +66298,7 @@ var wp;
       const globalStylesId = __experimentalGetCurrentGlobalStylesId();
       const globalStyles = globalStylesId ? getEntityRecord("root", "globalStyles", globalStylesId) : void 0;
       return {
-        canEditCSS: !!globalStyles?._links?.["wp:action-edit-css"]
+        canEditCSS: !!globalStyles?._links?.["zc:action-edit-css"]
       };
     }, []);
     const loadCustomCSS = () => {

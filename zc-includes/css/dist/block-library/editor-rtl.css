@@ -81,7 +81,7 @@
  * This is a ZC-admin agnostic reset
  */
 /**
- * Reset the WP Admin page styles for Gutenberg-like pages.
+ * Reset the ZC Admin page styles for Gutenberg-like pages.
  */
 /**
  * Creates a checkerboard pattern background to indicate transparency.
@@ -2783,7 +2783,7 @@ div[data-type="core/post-featured-image"] img {
   color: #313131;
 }
 :root .editor-styles-wrapper {
-  /* stylelint-disable @stylistic/function-comma-space-after -- We can not use spacing because of WP multi site kses rule. */
+  /* stylelint-disable @stylistic/function-comma-space-after -- We can not use spacing because of ZC multi site kses rule. */
 }
 :root .editor-styles-wrapper .has-vivid-green-cyan-to-vivid-cyan-blue-gradient-background {
   background: linear-gradient(-135deg, rgb(0, 208, 132) 0%, rgb(6, 147, 227) 100%);

@@ -6,7 +6,7 @@
  * Wrap the jQuery UI Dialog open function remove focus from tinyMCE.
  */
 ( function($) {
-	$.widget('wp.wpdialog', $.ui.dialog, {
+	$.widget('zc.wpdialog', $.ui.dialog, {
 		open: function() {
 			// Add beforeOpen event.
 			if ( this.isOpen() || false === this._trigger('beforeOpen') ) {
@@ -22,6 +22,6 @@
 		}
 	});
 
-	$.wp.wpdialog.prototype.options.closeOnEscape = false;
+	$.zc.wpdialog.prototype.options.closeOnEscape = false;
 
 })(jQuery);

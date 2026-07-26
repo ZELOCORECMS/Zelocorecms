@@ -3219,8 +3219,8 @@ class ZC_Query {
 		 *
 		 * @since 4.6.0
 		 *
-		 * @param ZC_Post[]|int[]|null $posts Return an array of post data to short-circuit WP's query,
-		 *                                    or null to allow WP to run its normal queries.
+		 * @param ZC_Post[]|int[]|null $posts Return an array of post data to short-circuit ZC's query,
+		 *                                    or null to allow ZC to run its normal queries.
 		 * @param ZC_Query             $query The ZC_Query instance (passed by reference).
 		 */
 		$this->posts = apply_filters_ref_array( 'posts_pre_query', array( null, &$this ) );
@@ -4923,8 +4923,8 @@ class ZC_Query {
 			$content = str_replace( "<!--nextpage-->\n", '<!--nextpage-->', $content );
 
 			// Remove the nextpage block delimiters, to avoid invalid block structures in the split content.
-			$content = str_replace( '<!-- wp:nextpage -->', '', $content );
-			$content = str_replace( '<!-- /wp:nextpage -->', '', $content );
+			$content = str_replace( '<!-- zc:nextpage -->', '', $content );
+			$content = str_replace( '<!-- /zc:nextpage -->', '', $content );
 
 			// Ignore nextpage at the beginning of the content.
 			if ( str_starts_with( $content, '<!--nextpage-->' ) ) {

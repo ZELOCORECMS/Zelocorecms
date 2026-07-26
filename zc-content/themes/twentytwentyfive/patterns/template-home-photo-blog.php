@@ -12,22 +12,22 @@
  */
 
 ?>
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- zc:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <main class="zc-block-group" style="margin-top:var(--zc--preset--spacing--60)">
-	<!-- wp:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
+	<!-- zc:group {"layout":{"type":"flex","orientation":"vertical","justifyContent":"center"}} -->
 	<div class="zc-block-group">
-		<!-- wp:heading {"textAlign":"center","level":1,"className":"is-style-text-annotation"} -->
+		<!-- zc:heading {"textAlign":"center","level":1,"className":"is-style-text-annotation"} -->
 		<h1 class="zc-block-heading has-text-align-center is-style-text-annotation"><?php esc_html_e( 'Stories', 'twentytwentyfive' ); ?></h1>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 	</div>
-	<!-- /wp:group -->
-	<!-- wp:heading {"textAlign":"center","align":"wide","fontSize":"xx-large"} -->
+	<!-- /zc:group -->
+	<!-- zc:heading {"textAlign":"center","align":"wide","fontSize":"xx-large"} -->
 	<h2 class="zc-block-heading alignwide has-text-align-center has-xx-large-font-size"><?php esc_html_e( 'Tell your story', 'twentytwentyfive' ); ?></h2>
-	<!-- /wp:heading -->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop-photo-blog"} /-->
+	<!-- /zc:heading -->
+	<!-- zc:pattern {"slug":"twentytwentyfive/template-query-loop-photo-blog"} /-->
 </main>
-<!-- /wp:group -->
+<!-- /zc:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- zc:template-part {"slug":"footer"} /-->

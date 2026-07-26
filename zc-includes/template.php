@@ -769,7 +769,7 @@ function locate_template( $template_names, $load = false, $load_once = true, $ar
  * @global ZC_Rewrite $zc_rewrite    ZelocoreCMS rewrite component.
  * @global wpdb       $wpdb          ZelocoreCMS database abstraction object.
  * @global string     $zc_version
- * @global WP         $zc            Current ZelocoreCMS environment instance.
+ * @global ZC         $zc            Current ZelocoreCMS environment instance.
  * @global int        $id
  * @global ZC_Comment $comment       Global comment object.
  * @global int        $user_ID

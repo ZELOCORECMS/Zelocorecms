@@ -11,16 +11,16 @@
 		_button = '<input type="button" class="button button-small" />',
 		_wrappingLabel = '<label></label>',
 		_wrappingLabelText = '<span class="screen-reader-text"></span>',
-		__ = wp.i18n.__;
+		__ = zc.i18n.__;
 
 	/**
 	 * Creates a jQuery UI color picker that is used in the theme customizer.
 	 *
-	 * @class $.widget.wp.wpColorPicker
+	 * @class $.widget.zc.wpColorPicker
 	 *
 	 * @since 3.5.0
 	 */
-	ColorPicker = /** @lends $.widget.wp.wpColorPicker.prototype */{
+	ColorPicker = /** @lends $.widget.zc.wpColorPicker.prototype */{
 		options: {
 			defaultColor: false,
 			change: false,
@@ -352,5 +352,5 @@
 	};
 
 	// Register the color picker as a widget.
-	$.widget( 'wp.wpColorPicker', ColorPicker );
+	$.widget( 'zc.wpColorPicker', ColorPicker );
 }( jQuery ) );

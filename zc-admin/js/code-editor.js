@@ -6,17 +6,17 @@
 
 /* eslint-env es2020 */
 
-if ( 'undefined' === typeof window.wp ) {
+if ( 'undefined' === typeof window.zc ) {
 	/**
-	 * @namespace wp
+	 * @namespace zc
 	 */
-	window.wp = {};
+	window.zc = {};
 }
-if ( 'undefined' === typeof window.wp.codeEditor ) {
+if ( 'undefined' === typeof window.zc.codeEditor ) {
 	/**
-	 * @namespace wp.codeEditor
+	 * @namespace zc.codeEditor
 	 */
-	window.wp.codeEditor = {};
+	window.zc.codeEditor = {};
 }
 
 /**
@@ -144,9 +144,9 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
  * @param {Object & {
  *   codeEditor: WpCodeEditor,
  *   CodeMirror: typeof import('codemirror'),
- * }} wp - ZelocoreCMS namespace.
+ * }} zc - ZelocoreCMS namespace.
  */
-( function( $, wp ) {
+( function( $, zc ) {
 	'use strict';
 
 	/**
@@ -155,7 +155,7 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 	 * @since 4.9.0
 	 * @type {CodeEditorSettings}
 	 */
-	wp.codeEditor.defaultSettings = {
+	zc.codeEditor.defaultSettings = {
 		codemirror: {},
 		csslint: {},
 		htmlhint: {},
@@ -413,9 +413,9 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 	 *
 	 * @return {CodeEditorInstance} Instance.
 	 */
-	wp.codeEditor.initialize = function initialize( textarea, settings ) {
+	zc.codeEditor.initialize = function initialize( textarea, settings ) {
 		if ( document.readyState === 'loading' ) {
-			console.warn( 'wp.codeEditor.initialize() ran too early. Invoke this function in a `DOMContentLoaded` event listener.' );
+			console.warn( 'zc.codeEditor.initialize() ran too early. Invoke this function in a `DOMContentLoaded` event listener.' );
 		}
 
 		let $textarea;
@@ -426,14 +426,14 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 		}
 
 		/** @type {CodeEditorSettings} */
-		const instanceSettings = $.extend( true, {}, wp.codeEditor.defaultSettings, settings );
+		const instanceSettings = $.extend( true, {}, zc.codeEditor.defaultSettings, settings );
 
 		const lintingController = configureLinting( instanceSettings );
 		if ( instanceSettings.codemirror ) {
 			instanceSettings.codemirror.lint = lintingController.getLintOptions();
 		}
 
-		const codemirror = /** @type {CodeMirrorEditor} */ ( wp.CodeMirror.fromTextArea( $textarea[0], instanceSettings.codemirror ) );
+		const codemirror = /** @type {CodeMirrorEditor} */ ( zc.CodeMirror.fromTextArea( $textarea[0], instanceSettings.codemirror ) );
 
 		lintingController.init( codemirror );
 
@@ -472,7 +472,7 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 					return;
 				}
 
-				const innerMode = wp.CodeMirror.innerMode( codemirror.getMode(), token.state ).mode.name;
+				const innerMode = zc.CodeMirror.innerMode( codemirror.getMode(), token.state ).mode.name;
 				const doc = codemirror.getDoc();
 				const lineBeforeCursor = doc.getLine( doc.getCursor().line ).slice( 0, doc.getCursor().ch );
 				let shouldAutocomplete = false;
@@ -509,4 +509,4 @@ if ( 'undefined' === typeof window.wp.codeEditor ) {
 		return instance;
 	};
 
-})( jQuery, window.wp );
+})( jQuery, window.zc );

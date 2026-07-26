@@ -8,11 +8,11 @@
  * For examples see the default plugins: https://github.com/tinymce/tinymce/tree/master/js/tinymce/plugins
  */
 tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
-	if ( this.wp ) {
+	if ( this.zc ) {
 		return this;
 	}
 
-	this.wp = {};
+	this.zc = {};
 	this.parent = editor.windowManager;
 	this.editor = editor;
 
@@ -21,7 +21,7 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 	this.open = function( args, params ) {
 		var $element,
 			self = this,
-			wp = this.wp;
+			zc = this.zc;
 
 		if ( ! args.wpDialog ) {
 			return this.parent.open.apply( this, arguments );
@@ -29,7 +29,7 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			return;
 		}
 
-		if ( typeof jQuery === 'undefined' || ! jQuery.wp || ! jQuery.wp.wpdialog ) {
+		if ( typeof jQuery === 'undefined' || ! jQuery.zc || ! jQuery.zc.wpdialog ) {
 			// wpdialog.js is not loaded.
 			if ( window.console && window.console.error ) {
 				window.console.error('wpdialog.js is not loaded. Please set "wpdialogs" as dependency for your script when calling zc_enqueue_script(). You may also want to enqueue the "zc-jquery-ui-dialog" stylesheet.');
@@ -38,7 +38,7 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			return;
 		}
 
-		wp.$element = $element = jQuery( '#' + args.id );
+		zc.$element = $element = jQuery( '#' + args.id );
 
 		if ( ! $element.length ) {
 			return;
@@ -48,8 +48,8 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			window.console.log('tinymce.WPWindowManager is deprecated. Use the default editor.windowManager to open dialogs with inline HTML.');
 		}
 
-		wp.features = args;
-		wp.params = params;
+		zc.features = args;
+		zc.params = params;
 
 		// Store selection. Takes a snapshot in the FocusManager of the selection before focus is moved to the dialog.
 		editor.nodeChanged();
@@ -69,18 +69,18 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 		$element.wpdialog('open');
 
 		$element.on( 'wpdialogclose', function() {
-			if ( self.wp.$element ) {
-				self.wp = {};
+			if ( self.zc.$element ) {
+				self.zc = {};
 			}
 		});
 	};
 
 	this.close = function() {
-		if ( ! this.wp.features || ! this.wp.features.wpDialog ) {
+		if ( ! this.zc.features || ! this.zc.features.wpDialog ) {
 			return this.parent.close.apply( this, arguments );
 		}
 
-		this.wp.$element.wpdialog('close');
+		this.zc.$element.wpdialog('close');
 	};
 };
 

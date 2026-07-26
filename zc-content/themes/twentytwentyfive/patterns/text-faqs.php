@@ -13,86 +13,86 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0">
-	<!-- wp:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50"}},"layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"blockGap":"var:preset|spacing|50"}},"layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide" style="padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-		<!-- wp:heading {"fontSize":"x-large"} -->
+		<!-- zc:heading {"fontSize":"x-large"} -->
 		<h2 class="zc-block-heading has-x-large-font-size"><?php echo esc_html_x( 'Frequently Asked Questions', 'Heading of the FAQs pattern.', 'twentytwentyfive' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
+		<!-- zc:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
 		<div class="zc-block-columns">
-			<!-- wp:column -->
+			<!-- zc:column -->
 			<div class="zc-block-column">
-				<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
+				<!-- zc:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
 				<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--30);padding-bottom:var(--zc--preset--spacing--30)">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php echo esc_html_x( 'What is The Stories Book about?', 'Question in the FAQs pattern.', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php echo esc_html_x( 'This exquisite compilation showcases a diverse array of photographs that capture the essence of different eras and cultures, reflecting the unique styles and perspectives of each artist.', 'Answer in the FAQs pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:column -->
+			<!-- /zc:column -->
 
-			<!-- wp:column -->
+			<!-- zc:column -->
 			<div class="zc-block-column">
-				<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
+				<!-- zc:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
 				<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--30);padding-bottom:var(--zc--preset--spacing--30)">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php echo esc_html_x( 'How much does The Stories Book cost?', 'Question in the FAQs pattern.', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php echo esc_html_x( 'This exquisite compilation showcases a diverse array of photographs that capture the essence of different eras and cultures, reflecting the unique styles and perspectives of each artist.', 'Answer in the FAQs pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:column -->
+			<!-- /zc:column -->
 		</div>
-		<!-- /wp:columns -->
+		<!-- /zc:columns -->
 
-		<!-- wp:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
+		<!-- zc:columns {"style":{"spacing":{"blockGap":{"left":"var:preset|spacing|50"}}}} -->
 		<div class="zc-block-columns">
-			<!-- wp:column -->
+			<!-- zc:column -->
 			<div class="zc-block-column">
-				<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
+				<!-- zc:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
 				<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--30);padding-bottom:var(--zc--preset--spacing--30)">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php echo esc_html_x( 'When will The Stories Book be released?', 'Question in the FAQs pattern.', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php echo esc_html_x( 'This exquisite compilation showcases a diverse array of photographs that capture the essence of different eras and cultures, reflecting the unique styles and perspectives of each artist.', 'Answer in the FAQs pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:column -->
+			<!-- /zc:column -->
 
-			<!-- wp:column -->
+			<!-- zc:column -->
 			<div class="zc-block-column">
-				<!-- wp:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
+				<!-- zc:group {"style":{"border":{"top":{"color":"var:preset|color|accent-6","width":"1px"}},"spacing":{"padding":{"top":"var:preset|spacing|30","bottom":"var:preset|spacing|30"}}},"layout":{"type":"default"}} -->
 				<div class="zc-block-group" style="border-top-color:var(--zc--preset--color--accent-6);border-top-width:1px;padding-top:var(--zc--preset--spacing--30);padding-bottom:var(--zc--preset--spacing--30)">
-					<!-- wp:heading {"level":3} -->
+					<!-- zc:heading {"level":3} -->
 					<h3 class="zc-block-heading"><?php echo esc_html_x( 'Are signed copies available?', 'Question in the FAQs pattern.', 'twentytwentyfive' ); ?></h3>
-					<!-- /wp:heading -->
+					<!-- /zc:heading -->
 
-					<!-- wp:paragraph -->
+					<!-- zc:paragraph -->
 					<p><?php echo esc_html_x( 'This exquisite compilation showcases a diverse array of photographs that capture the essence of different eras and cultures, reflecting the unique styles and perspectives of each artist.', 'Answer in the FAQs pattern.', 'twentytwentyfive' ); ?></p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div>
-			<!-- /wp:column -->
+			<!-- /zc:column -->
 		</div>
-		<!-- /wp:columns -->
+		<!-- /zc:columns -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

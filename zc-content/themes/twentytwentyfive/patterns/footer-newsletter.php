@@ -12,36 +12,36 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained","justifyContent":"center"}} -->
+<!-- zc:group {"align":"full","className":"is-style-section-3","style":{"spacing":{"padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"}}},"layout":{"type":"constrained","justifyContent":"center"}} -->
 <div class="zc-block-group alignfull is-style-section-3" style="padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:heading {"style":{"typography":{"fontSize":"clamp(1rem, 380px, 24vw)","letterSpacing":"-0.02em","fontWeight":"600","fontStyle":"normal"}}} -->
+		<!-- zc:heading {"style":{"typography":{"fontSize":"clamp(1rem, 380px, 24vw)","letterSpacing":"-0.02em","fontWeight":"600","fontStyle":"normal"}}} -->
 		<h2 class="zc-block-heading" style="font-size:clamp(1rem, 380px, 24vw);font-style:normal;font-weight:600;letter-spacing:-0.02em"><?php esc_html_e( 'Stories', 'twentytwentyfive' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:paragraph {"fontSize":"x-large"} -->
+		<!-- zc:paragraph {"fontSize":"x-large"} -->
 		<p class="has-x-large-font-size"><?php esc_html_e( 'Receive our articles in your inbox.', 'twentytwentyfive' ); ?></p>
-		<!-- /wp:paragraph -->
+		<!-- /zc:paragraph -->
 
-		<!-- wp:buttons -->
+		<!-- zc:buttons -->
 		<div class="zc-block-buttons">
-			<!-- wp:button -->
+			<!-- zc:button -->
 			<div class="zc-block-button"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Subscribe', 'twentytwentyfive' ); ?></a></div>
-			<!-- /wp:button -->
+			<!-- /zc:button -->
 		</div>
-		<!-- /wp:buttons -->
+		<!-- /zc:buttons -->
 
-		<!-- wp:spacer {"height":"var:preset|spacing|50"} -->
+		<!-- zc:spacer {"height":"var:preset|spacing|50"} -->
 		<div style="height:var(--zc--preset--spacing--50)" aria-hidden="true" class="zc-block-spacer"></div>
-		<!-- /wp:spacer -->
+		<!-- /zc:spacer -->
 
-		<!-- wp:group {"align":"full","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
+		<!-- zc:group {"align":"full","layout":{"type":"flex","flexWrap":"wrap","justifyContent":"space-between"}} -->
 		<div class="zc-block-group alignfull">
-			<!-- wp:paragraph {"fontSize":"small"} -->
+			<!-- zc:paragraph {"fontSize":"small"} -->
 			<p class="has-small-font-size"><?php esc_html_e( 'Twenty Twenty-Five', 'twentytwentyfive' ); ?></p>
-			<!-- /wp:paragraph -->
-			<!-- wp:paragraph {"fontSize":"small"} -->
+			<!-- /zc:paragraph -->
+			<!-- zc:paragraph {"fontSize":"small"} -->
 			<p class="has-small-font-size">
 				<?php
 					printf(
@@ -51,10 +51,10 @@
 					);
 					?>
 			</p>
-			<!-- /wp:paragraph -->
+			<!-- /zc:paragraph -->
 		</div>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

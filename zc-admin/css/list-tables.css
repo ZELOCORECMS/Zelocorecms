@@ -1854,7 +1854,7 @@ div.action-links,
 }
 
 @media screen and (max-width: 782px) {
-	/* WP List Table Options & Filters */
+	/* ZC List Table Options & Filters */
 	.tablenav {
 		height: auto;
 	}
@@ -1948,7 +1948,7 @@ div.action-links,
 		line-height: 1.125;
 	}
 
-	/* WP List Table Adjustments: General */
+	/* ZC List Table Adjustments: General */
 	.form-wrap > p {
 		display: none;
 	}

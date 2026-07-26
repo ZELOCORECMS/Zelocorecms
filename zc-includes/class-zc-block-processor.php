@@ -109,7 +109,7 @@
  *
  * It’s possible for the processor to fail to scan forward if the input document ends
  * in a proper prefix of an explicit block comment delimiter. For example, if the input
- * ends in `<!-- wp:` then it _might_ be the start of another delimiter. The parser
+ * ends in `<!-- zc:` then it _might_ be the start of another delimiter. The parser
  * cannot know, however, and therefore refuses to proceed. {@see static::get_last_error()}
  * to distinguish between a failure to find the next token and an incomplete input.
  *
@@ -125,7 +125,7 @@
  * type is an argument to a method it will be normalized to account for implicit namespaces.
  * Passing `paragraph` is the same as passing `core/paragraph`. On the contrary, anywhere
  * this class returns a block type, it will return the fully-qualified and normalized form.
- * For example, for the `<!-- wp:group -->` delimiter it will return `core/group` as the
+ * For example, for the `<!-- zc:group -->` delimiter it will return `core/group` as the
  * block type.
  *
  * There are two special block types that change the behavior of the processor:
@@ -301,7 +301,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25   30   35   40   45   50
-	 *     <!-- wp:group --><!-- wp:void /--><!-- /wp:group -->
+	 *     <!-- zc:group --><!-- zc:void /--><!-- /zc:group -->
 	 *                      ╰─ Starts at byte offset 17.
 	 *
 	 * @since 6.9.0
@@ -316,7 +316,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25   30   35   40   45   50
-	 *     <!-- wp:group --><!-- wp:void /--><!-- /wp:group -->
+	 *     <!-- zc:group --><!-- zc:void /--><!-- /zc:group -->
 	 *                      ╰───────────────╯
 	 *                        17 bytes long.
 	 *
@@ -333,7 +333,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25   30   35   40   45   50   55
-	 *     <!-- wp:paragraph --><p>Content</p><⃨!⃨-⃨-⃨ ⃨/⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨-⃨>⃨
+	 *     <!-- zc:paragraph --><p>Content</p><⃨!⃨-⃨-⃨ ⃨/⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨-⃨>⃨
 	 *                          │             ╰─ This delimiter was matched, and after matching,
 	 *                          │                revealed the preceding HTML span.
 	 *                          │
@@ -355,11 +355,11 @@ class ZC_Block_Processor {
 	 *
 	 * Example:
 	 *
-	 *     <!-- wp:core/gallery -->
+	 *     <!-- zc:core/gallery -->
 	 *             │    ╰─ Name starts here.
 	 *             ╰─ Namespace starts here.
 	 *
-	 *     <!-- wp:gallery -->
+	 *     <!-- zc:gallery -->
 	 *             ├─ The namespace would start here but is implied as “core.”
 	 *             ╰─ The name starts here.
 	 *
@@ -377,11 +377,11 @@ class ZC_Block_Processor {
 	 *
 	 * Example:
 	 *
-	 *     <!-- wp:core/gallery -->
+	 *     <!-- zc:core/gallery -->
 	 *             │    ╰─ Name starts here.
 	 *             ╰─ Namespace starts here.
 	 *
-	 *     <!-- wp:gallery -->
+	 *     <!-- zc:gallery -->
 	 *             ├─ The namespace would start here but is implied as “core.”
 	 *             ╰─ The name starts here.
 	 *
@@ -397,7 +397,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25
-	 *     <!-- wp:core/gallery -->
+	 *     <!-- zc:core/gallery -->
 	 *                  ╰─────╯
 	 *                7 bytes long.
 	 *
@@ -426,7 +426,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25   30   35   40
-	 *     <!-- wp:paragraph {"dropCaps":true} -->
+	 *     <!-- zc:paragraph {"dropCaps":true} -->
 	 *                       ╰─ Starts at byte offset 18.
 	 *
 	 * @since 6.9.0
@@ -441,7 +441,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *          5    10   15   20   25   30   35   40
-	 *     <!-- wp:paragraph {"dropCaps":true} -->
+	 *     <!-- zc:paragraph {"dropCaps":true} -->
 	 *                       ╰───────────────╯
 	 *                         17 bytes long.
 	 *
@@ -575,16 +575,16 @@ class ZC_Block_Processor {
 	 * Example blocks:
 	 *
 	 *     // The first delimiter opens the paragraph block.
-	 *     <⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨-⃨>⃨<p>Content</p><!-- /wp:paragraph-->
+	 *     <⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨-⃨>⃨<p>Content</p><!-- /zc:paragraph-->
 	 *
 	 *     // The void block is the first opener in this sequence of closers.
-	 *     <!-- /wp:group --><⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨s⃨p⃨a⃨c⃨e⃨r⃨ ⃨{⃨"⃨h⃨e⃨i⃨g⃨h⃨t⃨"⃨:⃨"⃨2⃨0⃨0⃨p⃨x⃨"⃨}⃨ ⃨/⃨-⃨-⃨>⃨<!-- /wp:group -->
+	 *     <!-- /zc:group --><⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨s⃨p⃨a⃨c⃨e⃨r⃨ ⃨{⃨"⃨h⃨e⃨i⃨g⃨h⃨t⃨"⃨:⃨"⃨2⃨0⃨0⃨p⃨x⃨"⃨}⃨ ⃨/⃨-⃨-⃨>⃨<!-- /zc:group -->
 	 *
 	 *     // If, however, `*` is provided as the block type, freeform content is matched.
-	 *     <⃨h⃨2⃨>⃨M⃨y⃨ ⃨s⃨y⃨n⃨o⃨p⃨s⃨i⃨s⃨<⃨/⃨h⃨2⃨>⃨\⃨n⃨<!-- wp:my/table-of-contents /-->
+	 *     <⃨h⃨2⃨>⃨M⃨y⃨ ⃨s⃨y⃨n⃨o⃨p⃨s⃨i⃨s⃨<⃨/⃨h⃨2⃨>⃨\⃨n⃨<!-- zc:my/table-of-contents /-->
 	 *
 	 *     // Inner HTML is never freeform content, and will not be matched even with the wildcard.
-	 *     <!-- /wp:list-item --></ul><!-- /wp:list --><⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨>⃨<p>
+	 *     <!-- /zc:list-item --></ul><!-- /zc:list --><⃨!⃨-⃨-⃨ ⃨w⃨p⃨:⃨p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ ⃨-⃨>⃨<p>
 	 *
 	 * Example:
 	 *
@@ -650,19 +650,19 @@ class ZC_Block_Processor {
 	 *
 	 * Example delimiters:
 	 *
-	 *     <!-- wp:paragraph {"dropCap": true} -->
-	 *     <!-- wp:separator /-->
-	 *     <!-- /wp:paragraph -->
+	 *     <!-- zc:paragraph {"dropCap": true} -->
+	 *     <!-- zc:separator /-->
+	 *     <!-- /zc:paragraph -->
 	 *
 	 *     // If the wildcard `*` is provided as the block type, freeform content is matched.
-	 *     <⃨h⃨2⃨>⃨M⃨y⃨ ⃨s⃨y⃨n⃨o⃨p⃨s⃨i⃨s⃨<⃨/⃨h⃨2⃨>⃨\⃨n⃨<!-- wp:my/table-of-contents /-->
+	 *     <⃨h⃨2⃨>⃨M⃨y⃨ ⃨s⃨y⃨n⃨o⃨p⃨s⃨i⃨s⃨<⃨/⃨h⃨2⃨>⃨\⃨n⃨<!-- zc:my/table-of-contents /-->
 	 *
 	 *     // Inner HTML is never freeform content, and will not be matched even with the wildcard.
-	 *     ...</ul><⃨!⃨-⃨-⃨ ⃨/⃨w⃨p⃨:⃨l⃨i⃨s⃨t⃨ ⃨-⃨-⃨>⃨<!-- wp:paragraph --><p>
+	 *     ...</ul><⃨!⃨-⃨-⃨ ⃨/⃨w⃨p⃨:⃨l⃨i⃨s⃨t⃨ ⃨-⃨-⃨>⃨<!-- zc:paragraph --><p>
 	 *
 	 * Example:
 	 *
-	 *     $html      = '<!-- wp:void /-->\n<!-- wp:void /-->';
+	 *     $html      = '<!-- zc:void /-->\n<!-- zc:void /-->';
 	 *     $processor = new ZC_Block_Processor( $html );
 	 *     while ( $processor->next_delimiter() {
 	 *         // Runs twice, seeing both void blocks of type “core/void.”
@@ -707,9 +707,9 @@ class ZC_Block_Processor {
 	 *
 	 * Example tokens:
 	 *
-	 *     <!-- wp:paragraph {"dropCap": true} -->
-	 *     <!-- wp:separator /-->
-	 *     <!-- /wp:paragraph -->
+	 *     <!-- zc:paragraph {"dropCap": true} -->
+	 *     <!-- zc:separator /-->
+	 *     <!-- /zc:paragraph -->
 	 *     <p>Normal HTML content</p>
 	 *     Plaintext content too!
 	 *
@@ -803,7 +803,7 @@ class ZC_Block_Processor {
 			 * comments once they are matched to see if they are also block delimiters. In
 			 * practice, this nuance has not caused any known problems since developing blocks.
 			 *
-			 * <⃨!⃨-⃨-⃨ /wp:core/paragraph {"dropCap":true} /-->
+			 * <⃨!⃨-⃨-⃨ /zc:core/paragraph {"dropCap":true} /-->
 			 */
 			$comment_opening_at = strpos( $text, '<!--', $at );
 
@@ -847,7 +847,7 @@ class ZC_Block_Processor {
 				return false;
 			}
 
-			// <!-- ⃨/wp:core/paragraph {"dropCap":true} /-->
+			// <!-- ⃨/zc:core/paragraph {"dropCap":true} /-->
 			$opening_whitespace_at = $comment_opening_at + 4;
 			if ( $opening_whitespace_at >= $end ) {
 				goto incomplete;
@@ -856,7 +856,7 @@ class ZC_Block_Processor {
 			$opening_whitespace_length = strspn( $text, " \t\f\r\n", $opening_whitespace_at );
 
 			/*
-			 * The `wp` prefix cannot come before this point, but it may come after it
+			 * The `zc` prefix cannot come before this point, but it may come after it
 			 * depending on the presence of the closer. This is detected next.
 			 */
 			$zc_prefix_at = $opening_whitespace_at + $opening_whitespace_length;
@@ -869,7 +869,7 @@ class ZC_Block_Processor {
 				continue;
 			}
 
-			// <!-- /⃨wp:core/paragraph {"dropCap":true} /-->
+			// <!-- /⃨zc:core/paragraph {"dropCap":true} /-->
 			$has_closer = false;
 			if ( '/' === $text[ $zc_prefix_at ] ) {
 				$has_closer = true;
@@ -877,9 +877,9 @@ class ZC_Block_Processor {
 			}
 
 			// <!-- /w⃨p⃨:⃨core/paragraph {"dropCap":true} /-->
-			if ( $zc_prefix_at < $end && 0 !== substr_compare( $text, 'wp:', $zc_prefix_at, 3 ) ) {
+			if ( $zc_prefix_at < $end && 0 !== substr_compare( $text, 'zc:', $zc_prefix_at, 3 ) ) {
 				if (
-					( $zc_prefix_at + 2 >= $end && str_ends_with( $text, 'wp' ) ) ||
+					( $zc_prefix_at + 2 >= $end && str_ends_with( $text, 'zc' ) ) ||
 					( $zc_prefix_at + 1 >= $end && str_ends_with( $text, 'w' ) )
 				) {
 					goto incomplete;
@@ -894,7 +894,7 @@ class ZC_Block_Processor {
 			 * the block name. It’s easier to first detect the span and then determine
 			 * if it’s a namespace of a name.
 			 *
-			 * <!-- /wp:c⃨o⃨r⃨e⃨/paragraph {"dropCap":true} /-->
+			 * <!-- /zc:c⃨o⃨r⃨e⃨/paragraph {"dropCap":true} /-->
 			 */
 			$namespace_at = $zc_prefix_at + 3;
 			if ( $namespace_at >= $end ) {
@@ -915,7 +915,7 @@ class ZC_Block_Processor {
 				goto incomplete;
 			}
 
-			// <!-- /wp:core/⃨paragraph {"dropCap":true} /-->
+			// <!-- /zc:core/⃨paragraph {"dropCap":true} /-->
 			$has_separator = '/' === $text[ $separator_at ];
 			if ( $has_separator ) {
 				$name_at = $separator_at + 1;
@@ -924,7 +924,7 @@ class ZC_Block_Processor {
 					goto incomplete;
 				}
 
-				// <!-- /wp:core/p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ {"dropCap":true} /-->
+				// <!-- /zc:core/p⃨a⃨r⃨a⃨g⃨r⃨a⃨p⃨h⃨ {"dropCap":true} /-->
 				$start_of_name = $text[ $name_at ];
 				if ( 'a' > $start_of_name || 'z' < $start_of_name ) {
 					$at = $this->find_html_comment_end( $comment_opening_at, $end );
@@ -947,7 +947,7 @@ class ZC_Block_Processor {
 			 * update if it’s not.
 			 */
 
-			// <!-- /wp:core/paragraph ⃨{"dropCap":true} /-->
+			// <!-- /zc:core/paragraph ⃨{"dropCap":true} /-->
 			$after_name_whitespace_at     = $name_at + $name_length;
 			$after_name_whitespace_length = strspn( $text, " \t\f\r\n", $after_name_whitespace_at );
 			$json_at                      = $after_name_whitespace_at + $after_name_whitespace_length;
@@ -961,7 +961,7 @@ class ZC_Block_Processor {
 				continue;
 			}
 
-			// <!-- /wp:core/paragraph {⃨"dropCap":true} /-->
+			// <!-- /zc:core/paragraph {⃨"dropCap":true} /-->
 			$has_json    = '{' === $text[ $json_at ];
 			$json_length = 0;
 
@@ -973,14 +973,14 @@ class ZC_Block_Processor {
 			 * This also matches the behavior in the official block parser,
 			 * even though it allows for matching invalid JSON content.
 			 *
-			 * <!-- /wp:core/paragraph {"dropCap":true} /-⃨-⃨>⃨
+			 * <!-- /zc:core/paragraph {"dropCap":true} /-⃨-⃨>⃨
 			 */
 			$comment_closing_at = strpos( $text, '-->', $json_at );
 			if ( false === $comment_closing_at ) {
 				goto incomplete;
 			}
 
-			// <!-- /wp:core/paragraph {"dropCap":true} /⃨-->
+			// <!-- /zc:core/paragraph {"dropCap":true} /⃨-->
 			if ( '/' === $text[ $comment_closing_at - 1 ] ) {
 				$has_void_flag    = true;
 				$void_flag_length = 1;
@@ -1010,7 +1010,7 @@ class ZC_Block_Processor {
 			 *
 			 * @todo It’s likely faster to scan forward instead of in reverse.
 			 *
-			 * <!-- /wp:core/paragraph {"dropCap":true}⃨ ⃨/-->
+			 * <!-- /zc:core/paragraph {"dropCap":true}⃨ ⃨/-->
 			 */
 			$after_json_whitespace_length = 0;
 			for ( $char_at = $comment_closing_at - $void_flag_length - 1; $char_at > $json_at; $char_at-- ) {
@@ -1144,7 +1144,7 @@ class ZC_Block_Processor {
 	 *     $processor->next_token();
 	 *     array( '#text' ) === $processor->get_breadcrumbs();
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:a --><!-- wp:b --><!-- wp:c /--><!-- /wp:b --><!-- /wp:a -->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:a --><!-- zc:b --><!-- zc:c /--><!-- /zc:b --><!-- /zc:a -->' );
 	 *     $processor->next_token();
 	 *     array( 'core/a' ) === $processor->get_breadcrumbs();
 	 *     $processor->next_token();
@@ -1159,7 +1159,7 @@ class ZC_Block_Processor {
 	 *     array() === $processor->get_breadcrumbs();
 	 *
 	 *     // Inner HTML is also an HTML span.
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:a -->Inner HTML<!-- /wp:a -->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:a -->Inner HTML<!-- /zc:a -->' );
 	 *     $processor->next_token();
 	 *     $processor->next_token();
 	 *     array( 'core/a', '#html' ) === $processor->get_breadcrumbs();
@@ -1479,7 +1479,7 @@ class ZC_Block_Processor {
 	 * Example:
 	 *
 	 *              0    5   10   15   20   25   30   35   40
-	 *     $text = '<!-- wp:block --><!-- /wp:core/block -->';
+	 *     $text = '<!-- zc:block --><!-- /zc:core/block -->';
 	 *
 	 *     true  === ZC_Block_Processor::are_equal_block_types( $text, 9, 5, $text, 27, 10 );
 	 *     false === ZC_Block_Processor::are_equal_block_types( $text, 9, 5, 'my/block', 0, 8 );
@@ -1846,25 +1846,25 @@ class ZC_Block_Processor {
 	 *
 	 * Example:
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:image {"url": "https://zelocorecms.org/favicon.ico"} -->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:image {"url": "https://zelocorecms.org/favicon.ico"} -->' );
 	 *     $processor->next_delimiter();
 	 *     $memory_hungry_and_slow_attributes = $processor->allocate_and_return_parsed_attributes();
 	 *     $memory_hungry_and_slow_attributes === array( 'url' => 'https://zelocorecms.org/favicon.ico' );
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- /wp:image {"url": "https://zelocorecms.org/favicon.ico"} -->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- /zc:image {"url": "https://zelocorecms.org/favicon.ico"} -->' );
 	 *     $processor->next_delimiter();
 	 *     null            = $processor->allocate_and_return_parsed_attributes();
 	 *     JSON_ERROR_NONE = $processor->get_last_json_error();
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:separator {} /-->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:separator {} /-->' );
 	 *     $processor->next_delimiter();
 	 *     array() === $processor->allocate_and_return_parsed_attributes();
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:separator /-->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:separator /-->' );
 	 *     $processor->next_delimiter();
 	 *     null = $processor->allocate_and_return_parsed_attributes();
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:image {"url} -->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:image {"url} -->' );
 	 *     $processor->next_delimiter();
 	 *     null                 = $processor->allocate_and_return_parsed_attributes();
 	 *     JSON_ERROR_CTRL_CHAR = $processor->get_last_json_error();
@@ -1896,7 +1896,7 @@ class ZC_Block_Processor {
 	 *
 	 * Example:
 	 *
-	 *     $processor = new ZC_Block_Processor( '<!-- wp:void /-->' );
+	 *     $processor = new ZC_Block_Processor( '<!-- zc:void /-->' );
 	 *     null     === $processor->get_span();
 	 *
 	 *     $processor->next_delimiter();

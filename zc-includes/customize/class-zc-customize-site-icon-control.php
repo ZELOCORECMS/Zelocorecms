@@ -67,7 +67,7 @@ class ZC_Customize_Site_Icon_Control extends ZC_Customize_Cropped_Image_Control 
 						<div class="direction-wrap">
 							<img src="{{ data.attachment.sizes.full ? data.attachment.sizes.full.url : data.attachment.url }}" class="app-icon-preview" alt="{{
 								data.attachment.alt ?
-									wp.i18n.sprintf(
+									zc.i18n.sprintf(
 										<?php
 										/* translators: %s: The selected image alt text. */
 										echo zc_json_encode( __( 'App icon preview: Current image: %s' ) )
@@ -75,7 +75,7 @@ class ZC_Customize_Site_Icon_Control extends ZC_Customize_Cropped_Image_Control 
 										,
 										data.attachment.alt
 									) :
-									wp.i18n.sprintf(
+									zc.i18n.sprintf(
 										<?php
 										/* translators: %s: The selected image filename. */
 										echo zc_json_encode( __( 'App icon preview: The current image has no alternative text. The file name is: %s' ) );
@@ -89,7 +89,7 @@ class ZC_Customize_Site_Icon_Control extends ZC_Customize_Cropped_Image_Control 
 								<div class="site-icon-preview-tab">
 									<img src="{{ data.attachment.sizes.full ? data.attachment.sizes.full.url : data.attachment.url }}" class="browser-icon-preview" alt="{{
 										data.attachment.alt ?
-											wp.i18n.sprintf(
+											zc.i18n.sprintf(
 												<?php
 												/* translators: %s: The selected image alt text. */
 												echo zc_json_encode( __( 'Browser icon preview: Current image: %s' ) );
@@ -97,7 +97,7 @@ class ZC_Customize_Site_Icon_Control extends ZC_Customize_Cropped_Image_Control 
 												,
 												data.attachment.alt
 											) :
-											wp.i18n.sprintf(
+											zc.i18n.sprintf(
 												<?php
 												/* translators: %s: The selected image filename. */
 												echo zc_json_encode( __( 'Browser icon preview: The current image has no alternative text. The file name is: %s' ) );

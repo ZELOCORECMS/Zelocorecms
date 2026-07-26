@@ -168,7 +168,7 @@ class ZC_REST_Term_Search_Handler extends ZC_REST_Search_Handler {
 		}
 
 		$links['about'] = array(
-			'href' => rest_url( sprintf( 'wp/v2/taxonomies/%s', $term->taxonomy ) ),
+			'href' => rest_url( sprintf( 'zc/v2/taxonomies/%s', $term->taxonomy ) ),
 		);
 
 		return $links;

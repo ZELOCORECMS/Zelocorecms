@@ -71,7 +71,7 @@ zelocms plugin:disable seo   # Disable a plugin
 zelocms plugin:create        # Scaffold a new plugin
 
 # ZelocoreCMS Migration
-zelocms migrate:zelocorecms    # Interactive WP migration wizard
+zelocms migrate:zelocorecms    # Interactive ZC migration wizard
 zelocms migrate:strapi       # Migrate from Strapi
 zelocms migrate:contentful   # Migrate from Contentful
 

@@ -95,7 +95,7 @@ window.wpWidgets = {
 					$( this ).find( '.widget-inside :tabbable:first' ).trigger( 'focus' );
 				} );
 
-				event.returnValue = wp.i18n.__( 'The changes you made will be lost if you navigate away from this page.' );
+				event.returnValue = zc.i18n.__( 'The changes you made will be lost if you navigate away from this page.' );
 				return event.returnValue;
 			}
 		});
@@ -127,11 +127,11 @@ window.wpWidgets = {
 				// Save button is initially disabled, but is enabled when a field is changed.
 				if ( ! widget.data( 'dirty-state-initialized' ) ) {
 					saveButton = inside.find( '.widget-control-save' );
-					saveButton.prop( 'disabled', true ).val( wp.i18n.__( 'Saved' ) );
+					saveButton.prop( 'disabled', true ).val( zc.i18n.__( 'Saved' ) );
 					inside.on( 'input change', function() {
 						self.dirtyWidgets[ widgetId ] = true;
 						widget.addClass( 'widget-dirty' );
-						saveButton.prop( 'disabled', false ).val( wp.i18n.__( 'Save' ) );
+						saveButton.prop( 'disabled', false ).val( zc.i18n.__( 'Save' ) );
 					});
 					widget.data( 'dirty-state-initialized', true );
 				}
@@ -572,7 +572,7 @@ window.wpWidgets = {
 					wpWidgets.appendTitle( widget );
 
 					// Re-disable the save button.
-					widget.find( '.widget-control-save' ).prop( 'disabled', true ).val( wp.i18n.__( 'Saved' ) );
+					widget.find( '.widget-control-save' ).prop( 'disabled', true ).val( zc.i18n.__( 'Saved' ) );
 
 					widget.removeClass( 'widget-dirty' );
 
@@ -703,7 +703,7 @@ window.wpWidgets = {
 			// have to queue this "by hand".
 			widget.find( '.widget-title' ).trigger('click');
 			// At the end of the animation, announce the widget has been added.
-			window.wp.a11y.speak( wp.i18n.__( 'Widget has been added to the selected sidebar' ), 'assertive' );
+			window.zc.a11y.speak( zc.i18n.__( 'Widget has been added to the selected sidebar' ), 'assertive' );
 		}, 250 );
 	},
 
@@ -760,4 +760,4 @@ wpWidgets.l10n = wpWidgets.l10n || {
 	widgetAdded: ''
 };
 
-wpWidgets.l10n = window.wp.deprecateL10nObject( 'wpWidgets.l10n', wpWidgets.l10n, '5.5.0' );
+wpWidgets.l10n = window.zc.deprecateL10nObject( 'wpWidgets.l10n', wpWidgets.l10n, '5.5.0' );

@@ -72,19 +72,19 @@ jQuery( function($) {
 					$('select#parent option[value="' + data.match(/tag_ID=(\d+)/)[1] + '"]').remove();
 					$('a.tag-link-' + data.match(/tag_ID=(\d+)/)[1]).remove();
 					nextFocus.trigger( 'focus' );
-					message = wp.i18n.__( 'The selected tag has been deleted.' );
+					message = zc.i18n.__( 'The selected tag has been deleted.' );
 			
 				} else if ( '-1' == r ) {
-					message = wp.i18n.__( 'Sorry, you are not allowed to do that.' );
+					message = zc.i18n.__( 'Sorry, you are not allowed to do that.' );
 					$('#ajax-response').empty().append('<div class="notice notice-error"><p>' + message + '</p></div>');
 					resetRowAfterFailure( tr );
 
 				} else {
-					message = wp.i18n.__( 'An error occurred while processing your request. Please try again later.' );
+					message = zc.i18n.__( 'An error occurred while processing your request. Please try again later.' );
 					$('#ajax-response').empty().append('<div class="notice notice-error"><p>' + message + '</p></div>');
 					resetRowAfterFailure( tr );
 				}
-				wp.a11y.speak( message, 'assertive' );
+				zc.a11y.speak( message, 'assertive' );
 			});
 		}
 

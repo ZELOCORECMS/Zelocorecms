@@ -12,18 +12,18 @@
  */
 
 ?>
-<!-- wp:template-part {"slug":"header"} /-->
+<!-- zc:template-part {"slug":"header"} /-->
 
-<!-- wp:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"tagName":"main","style":{"spacing":{"margin":{"top":"var:preset|spacing|60"}}},"layout":{"type":"constrained"}} -->
 <main class="zc-block-group" style="margin-top:var(--zc--preset--spacing--60)">
-	<!-- wp:heading {"level":1,"align":"wide","fontSize":"x-large"} -->
+	<!-- zc:heading {"level":1,"align":"wide","fontSize":"x-large"} -->
 	<h1 class="zc-block-heading alignwide has-x-large-font-size"><?php esc_html_e( 'Blog', 'twentytwentyfive' ); ?></h1>
-	<!-- /wp:heading -->
-	<!-- wp:spacer {"height":"var:preset|spacing|50"} -->
+	<!-- /zc:heading -->
+	<!-- zc:spacer {"height":"var:preset|spacing|50"} -->
 	<div style="height:var(--zc--preset--spacing--50)" aria-hidden="true" class="zc-block-spacer"></div>
-	<!-- /wp:spacer -->
-	<!-- wp:pattern {"slug":"twentytwentyfive/template-query-loop-text-blog"} /-->
+	<!-- /zc:spacer -->
+	<!-- zc:pattern {"slug":"twentytwentyfive/template-query-loop-text-blog"} /-->
 </main>
-<!-- /wp:group -->
+<!-- /zc:group -->
 
-<!-- wp:template-part {"slug":"footer"} /-->
+<!-- zc:template-part {"slug":"footer"} /-->

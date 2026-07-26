@@ -8,70 +8,70 @@
  * Description: Post meta information with separator on the top.
  */
 ?>
-<!-- wp:spacer {"height":"0"} -->
+<!-- zc:spacer {"height":"0"} -->
 <div style="height:0" aria-hidden="true" class="zc-block-spacer"></div>
-<!-- /wp:spacer -->
+<!-- /zc:spacer -->
 
-<!-- wp:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|70"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"style":{"spacing":{"margin":{"top":"var:preset|spacing|70"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group" style="margin-top:var(--zc--preset--spacing--70)">
-	<!-- wp:separator {"opacity":"css","align":"wide","className":"is-style-wide"} -->
+	<!-- zc:separator {"opacity":"css","align":"wide","className":"is-style-wide"} -->
 	<hr class="zc-block-separator alignwide has-css-opacity is-style-wide"/>
-	<!-- /wp:separator -->
+	<!-- /zc:separator -->
 
-	<!-- wp:columns {"align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|30"}},"fontSize":"small"} -->
+	<!-- zc:columns {"align":"wide","style":{"spacing":{"margin":{"top":"var:preset|spacing|30"},"blockGap":"var:preset|spacing|30"}},"fontSize":"small"} -->
 	<div class="zc-block-columns alignwide has-small-font-size" style="margin-top:var(--zc--preset--spacing--30)">
-		<!-- wp:column {"style":{"spacing":{"blockGap":"0px"}}} -->
+		<!-- zc:column {"style":{"spacing":{"blockGap":"0px"}}} -->
 		<div class="zc-block-column">
-			<!-- wp:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex"}} -->
+			<!-- zc:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex"}} -->
 			<div class="zc-block-group">
-				<!-- wp:paragraph -->
+				<!-- zc:paragraph -->
 				<p>
 					<?php echo esc_html_x( 'Posted', 'Verb to explain the publication status of a post', 'twentytwentythree' ); ?>
 				</p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 
-				<!-- wp:post-date /-->
+				<!-- zc:post-date /-->
 
-				<!-- wp:paragraph -->
+				<!-- zc:paragraph -->
 				<p>
 					<?php echo esc_html_x( 'in', 'Preposition to show the relationship between the post and its categories', 'twentytwentythree' ); ?>
 				</p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 
-				<!-- wp:post-terms {"term":"category"} /-->
+				<!-- zc:post-terms {"term":"category"} /-->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 
-			<!-- wp:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex"}} -->
+			<!-- zc:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex"}} -->
 			<div class="zc-block-group">
-				<!-- wp:paragraph -->
+				<!-- zc:paragraph -->
 				<p>
 					<?php echo esc_html_x( 'by', 'Preposition to show the relationship between the post and its author', 'twentytwentythree' ); ?>
 				</p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 
-				<!-- wp:post-author {"showAvatar":false} /-->
+				<!-- zc:post-author {"showAvatar":false} /-->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 
-		<!-- wp:column {"style":{"spacing":{"blockGap":"0px"}}} -->
+		<!-- zc:column {"style":{"spacing":{"blockGap":"0px"}}} -->
 		<div class="zc-block-column">
-			<!-- wp:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex","orientation":"vertical"}} -->
+			<!-- zc:group {"style":{"spacing":{"blockGap":"0.5ch"}},"layout":{"type":"flex","orientation":"vertical"}} -->
 			<div class="zc-block-group">
-				<!-- wp:paragraph -->
+				<!-- zc:paragraph -->
 				<p>
 					<?php echo esc_html_x( 'Tags:', 'Label for a list of post tags', 'twentytwentythree' ); ?>
 				</p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 
-				<!-- wp:post-terms {"term":"post_tag"} /-->
+				<!-- zc:post-terms {"term":"post_tag"} /-->
 			</div>
-			<!-- /wp:group -->
+			<!-- /zc:group -->
 		</div>
-		<!-- /wp:column -->
+		<!-- /zc:column -->
 	</div>
-	<!-- /wp:columns -->
+	<!-- /zc:columns -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

@@ -115,7 +115,7 @@ class ZC_REST_Global_Styles_Controller extends ZC_REST_Posts_Controller {
 
 	/**
 	 * Sanitize the global styles stylesheet to decode endpoint.
-	 * For example, `wp/v2/global-styles/twentytwentytwo%200.4.0`
+	 * For example, `zc/v2/global-styles/twentytwentytwo%200.4.0`
 	 * would be decoded to `twentytwentytwo 0.4.0`.
 	 *
 	 * @since 5.9.0
@@ -397,7 +397,7 @@ class ZC_REST_Global_Styles_Controller extends ZC_REST_Posts_Controller {
 				'href' => rest_url( trailingslashit( $base ) . $id ),
 			),
 			'about' => array(
-				'href' => rest_url( 'wp/v2/types/' . $this->post_type ),
+				'href' => rest_url( 'zc/v2/types/' . $this->post_type ),
 			),
 		);
 

@@ -54,24 +54,24 @@ window.wpAjax = jQuery.extend( {
 			} );
 			if ( err.length ) {
 				re.html( '<div class="notice notice-error" role="alert">' + err + '</div>' );
-				wp.a11y.speak( err );
+				zc.a11y.speak( err );
 			} else if ( noticeMessage.length ) {
 				re.html( '<div class="notice notice-success is-dismissible" role="alert"><p>' + noticeMessage + '</p></div>');
 				jQuery(document).trigger( 'zc-updates-notice-added' );
-				wp.a11y.speak( noticeMessage );
+				zc.a11y.speak( noticeMessage );
 			}
 			return parsed;
 		}
 		if ( isNaN( x ) ) {
-			wp.a11y.speak( x );
+			zc.a11y.speak( x );
 			return ! re.html( '<div class="notice notice-error" role="alert"><p>' + x + '</p></div>' );
 		}
 		x = parseInt( x, 10 );
 		if ( -1 === x ) {
-			wp.a11y.speak( wpAjax.noPerm );
+			zc.a11y.speak( wpAjax.noPerm );
 			return ! re.html( '<div class="notice notice-error" role="alert"><p>' + wpAjax.noPerm + '</p></div>' );
 		} else if ( 0 === x ) {
-			wp.a11y.speak( wpAjax.broken );
+			zc.a11y.speak( wpAjax.broken );
 			return ! re.html( '<div class="notice notice-error" role="alert"><p>' + wpAjax.broken  + '</p></div>' );
 		}
 		return true;

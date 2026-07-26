@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).blockLibrary = (() => {
+var zc;
+(zc ||= {}).blockLibrary = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -41,42 +41,42 @@ var wp;
   // package-external:@zelocorecms/blocks
   var require_blocks = __commonJS({
     "package-external:@zelocorecms/blocks"(exports, module) {
-      module.exports = window.wp.blocks;
+      module.exports = window.zc.blocks;
     }
   });
 
   // package-external:@zelocorecms/compose
   var require_compose = __commonJS({
     "package-external:@zelocorecms/compose"(exports, module) {
-      module.exports = window.wp.compose;
+      module.exports = window.zc.compose;
     }
   });
 
   // package-external:@zelocorecms/data
   var require_data = __commonJS({
     "package-external:@zelocorecms/data"(exports, module) {
-      module.exports = window.wp.data;
+      module.exports = window.zc.data;
     }
   });
 
   // package-external:@zelocorecms/block-editor
   var require_block_editor = __commonJS({
     "package-external:@zelocorecms/block-editor"(exports, module) {
-      module.exports = window.wp.blockEditor;
+      module.exports = window.zc.blockEditor;
     }
   });
 
   // package-external:@zelocorecms/server-side-render
   var require_server_side_render = __commonJS({
     "package-external:@zelocorecms/server-side-render"(exports, module) {
-      module.exports = window.wp.serverSideRender;
+      module.exports = window.zc.serverSideRender;
     }
   });
 
   // package-external:@zelocorecms/i18n
   var require_i18n = __commonJS({
     "package-external:@zelocorecms/i18n"(exports, module) {
-      module.exports = window.wp.i18n;
+      module.exports = window.zc.i18n;
     }
   });
 
@@ -3072,7 +3072,7 @@ var wp;
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
@@ -3086,105 +3086,105 @@ var wp;
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/primitives
   var require_primitives = __commonJS({
     "package-external:@zelocorecms/primitives"(exports, module) {
-      module.exports = window.wp.primitives;
+      module.exports = window.zc.primitives;
     }
   });
 
   // package-external:@zelocorecms/components
   var require_components = __commonJS({
     "package-external:@zelocorecms/components"(exports, module) {
-      module.exports = window.wp.components;
+      module.exports = window.zc.components;
     }
   });
 
   // package-external:@zelocorecms/blob
   var require_blob = __commonJS({
     "package-external:@zelocorecms/blob"(exports, module) {
-      module.exports = window.wp.blob;
+      module.exports = window.zc.blob;
     }
   });
 
   // package-external:@zelocorecms/core-data
   var require_core_data = __commonJS({
     "package-external:@zelocorecms/core-data"(exports, module) {
-      module.exports = window.wp.coreData;
+      module.exports = window.zc.coreData;
     }
   });
 
   // package-external:@zelocorecms/url
   var require_url = __commonJS({
     "package-external:@zelocorecms/url"(exports, module) {
-      module.exports = window.wp.url;
+      module.exports = window.zc.url;
     }
   });
 
   // package-external:@zelocorecms/html-entities
   var require_html_entities = __commonJS({
     "package-external:@zelocorecms/html-entities"(exports, module) {
-      module.exports = window.wp.htmlEntities;
+      module.exports = window.zc.htmlEntities;
     }
   });
 
   // package-external:@zelocorecms/notices
   var require_notices = __commonJS({
     "package-external:@zelocorecms/notices"(exports, module) {
-      module.exports = window.wp.notices;
+      module.exports = window.zc.notices;
     }
   });
 
   // package-external:@zelocorecms/private-apis
   var require_private_apis = __commonJS({
     "package-external:@zelocorecms/private-apis"(exports, module) {
-      module.exports = window.wp.privateApis;
+      module.exports = window.zc.privateApis;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/rich-text
   var require_rich_text = __commonJS({
     "package-external:@zelocorecms/rich-text"(exports, module) {
-      module.exports = window.wp.richText;
+      module.exports = window.zc.richText;
     }
   });
 
   // package-external:@zelocorecms/date
   var require_date = __commonJS({
     "package-external:@zelocorecms/date"(exports, module) {
-      module.exports = window.wp.date;
+      module.exports = window.zc.date;
     }
   });
 
   // package-external:@zelocorecms/api-fetch
   var require_api_fetch = __commonJS({
     "package-external:@zelocorecms/api-fetch"(exports, module) {
-      module.exports = window.wp.apiFetch;
+      module.exports = window.zc.apiFetch;
     }
   });
 
   // package-external:@zelocorecms/hooks
   var require_hooks = __commonJS({
     "package-external:@zelocorecms/hooks"(exports, module) {
-      module.exports = window.wp.hooks;
+      module.exports = window.zc.hooks;
     }
   });
 
@@ -3673,42 +3673,42 @@ var wp;
   // package-external:@zelocorecms/upload-media
   var require_upload_media = __commonJS({
     "package-external:@zelocorecms/upload-media"(exports, module) {
-      module.exports = window.wp.uploadMedia;
+      module.exports = window.zc.uploadMedia;
     }
   });
 
   // package-external:@zelocorecms/a11y
   var require_a11y = __commonJS({
     "package-external:@zelocorecms/a11y"(exports, module) {
-      module.exports = window.wp.a11y;
+      module.exports = window.zc.a11y;
     }
   });
 
   // package-external:@zelocorecms/escape-html
   var require_escape_html = __commonJS({
     "package-external:@zelocorecms/escape-html"(exports, module) {
-      module.exports = window.wp.escapeHtml;
+      module.exports = window.zc.escapeHtml;
     }
   });
 
   // package-external:@zelocorecms/wordcount
   var require_wordcount = __commonJS({
     "package-external:@zelocorecms/wordcount"(exports, module) {
-      module.exports = window.wp.wordcount;
+      module.exports = window.zc.wordcount;
     }
   });
 
   // package-external:@zelocorecms/patterns
   var require_patterns = __commonJS({
     "package-external:@zelocorecms/patterns"(exports, module) {
-      module.exports = window.wp.patterns;
+      module.exports = window.zc.patterns;
     }
   });
 
   // package-external:@zelocorecms/autop
   var require_autop = __commonJS({
     "package-external:@zelocorecms/autop"(exports, module) {
-      module.exports = window.wp.autop;
+      module.exports = window.zc.autop;
     }
   });
 
@@ -3771,7 +3771,7 @@ var wp;
   // package-external:@zelocorecms/keyboard-shortcuts
   var require_keyboard_shortcuts = __commonJS({
     "package-external:@zelocorecms/keyboard-shortcuts"(exports, module) {
-      module.exports = window.wp.keyboardShortcuts;
+      module.exports = window.zc.keyboardShortcuts;
     }
   });
 
@@ -4959,7 +4959,7 @@ var wp;
 
   // packages/block-library/build-module/accordion/block.json
   var block_default = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/accordion",
     title: "Accordion",
@@ -5204,7 +5204,7 @@ var wp;
 
   // packages/block-library/build-module/accordion-item/block.json
   var block_default2 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/accordion-item",
     title: "Accordion Item",
@@ -5423,7 +5423,7 @@ var wp;
 
   // packages/block-library/build-module/accordion-heading/block.json
   var block_default3 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/accordion-heading",
     title: "Accordion Heading",
@@ -5818,7 +5818,7 @@ var wp;
 
   // packages/block-library/build-module/accordion-panel/block.json
   var block_default4 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/accordion-panel",
     title: "Accordion Panel",
@@ -5906,7 +5906,7 @@ var wp;
 
   // packages/block-library/build-module/archives/block.json
   var block_default5 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/archives",
     title: "Archives",
@@ -6123,7 +6123,7 @@ var wp;
 
   // packages/block-library/build-module/avatar/block.json
   var block_default6 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/avatar",
     title: "Avatar",
@@ -6736,7 +6736,7 @@ var wp;
 
   // packages/block-library/build-module/embed/block.json
   var block_default7 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/embed",
     title: "Embed",
@@ -7277,7 +7277,7 @@ var wp;
 
   // packages/block-library/build-module/audio/block.json
   var block_default8 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/audio",
     title: "Audio",
@@ -7490,7 +7490,7 @@ var wp;
 
   // packages/block-library/build-module/breadcrumbs/block.json
   var block_default9 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/breadcrumbs",
     title: "Breadcrumbs",
@@ -9720,7 +9720,7 @@ var wp;
 
   // packages/block-library/build-module/button/block.json
   var block_default10 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/button",
     title: "Button",
@@ -10262,7 +10262,7 @@ var wp;
 
   // packages/block-library/build-module/buttons/block.json
   var block_default11 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/buttons",
     title: "Buttons",
@@ -10387,7 +10387,7 @@ var wp;
 
   // packages/block-library/build-module/calendar/block.json
   var block_default12 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/calendar",
     title: "Calendar",
@@ -10549,7 +10549,7 @@ var wp;
 
   // packages/block-library/build-module/categories/block.json
   var block_default13 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/categories",
     title: "Terms List",
@@ -11065,7 +11065,7 @@ var wp;
         base_url: baseURL,
         suffix
       });
-      window.wp.oldEditor.initialize(props.id, {
+      window.zc.oldEditor.initialize(props.id, {
         tinymce: {
           ...settings122,
           setup(editor) {
@@ -11081,7 +11081,7 @@ var wp;
         }
       });
       return () => {
-        window.wp.oldEditor.remove(props.id);
+        window.zc.oldEditor.remove(props.id);
       };
     }, []);
     return /* @__PURE__ */ (0, import_jsx_runtime184.jsx)("textarea", { ...props });
@@ -11129,7 +11129,7 @@ var wp;
                     __next40pxDefaultSize: true,
                     variant: "primary",
                     onClick: () => {
-                      onChange(window.wp.oldEditor.getContent(id));
+                      onChange(window.zc.oldEditor.getContent(id));
                       onClose();
                     },
                     children: (0, import_i18n20.__)("Save")
@@ -11207,7 +11207,7 @@ var wp;
 
   // packages/block-library/build-module/freeform/block.json
   var block_default14 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/freeform",
     title: "Classic",
@@ -11293,7 +11293,7 @@ var wp;
 
   // packages/block-library/build-module/code/block.json
   var block_default15 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/code",
     title: "Code",
@@ -11667,7 +11667,7 @@ var wp;
 
   // packages/block-library/build-module/column/block.json
   var block_default16 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/column",
     title: "Column",
@@ -12243,7 +12243,7 @@ var wp;
 
   // packages/block-library/build-module/columns/block.json
   var block_default17 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/columns",
     title: "Columns",
@@ -12646,7 +12646,7 @@ var wp;
 
   // packages/block-library/build-module/comments/block.json
   var block_default18 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments",
     title: "Comments",
@@ -13179,7 +13179,7 @@ var wp;
 
   // packages/block-library/build-module/comment-author-avatar/block.json
   var block_default19 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: "fse",
     name: "core/comment-author-avatar",
@@ -13336,7 +13336,7 @@ var wp;
 
   // packages/block-library/build-module/comment-author-name/block.json
   var block_default20 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-author-name",
     title: "Comment Author Name",
@@ -13619,7 +13619,7 @@ var wp;
 
   // packages/block-library/build-module/comment-content/block.json
   var block_default21 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-content",
     title: "Comment Content",
@@ -13768,7 +13768,7 @@ var wp;
 
   // packages/block-library/build-module/comment-date/block.json
   var block_default22 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-date",
     title: "Comment Date",
@@ -13982,7 +13982,7 @@ var wp;
 
   // packages/block-library/build-module/comment-edit-link/block.json
   var block_default23 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-edit-link",
     title: "Comment Edit Link",
@@ -14176,7 +14176,7 @@ var wp;
 
   // packages/block-library/build-module/comment-reply-link/block.json
   var block_default24 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-reply-link",
     title: "Comment Reply Link",
@@ -14318,7 +14318,7 @@ var wp;
 
   // packages/block-library/build-module/comment-template/block.json
   var block_default25 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comment-template",
     title: "Comment Template",
@@ -14425,7 +14425,7 @@ var wp;
         return;
       }
       (0, import_api_fetch.default)({
-        path: (0, import_url3.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url3.addQueryArgs)("/zc/v2/comments", {
           ...queryArgs,
           post: postId,
           per_page: perPage,
@@ -14694,7 +14694,7 @@ var wp;
 
   // packages/block-library/build-module/comments-pagination-previous/block.json
   var block_default26 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments-pagination-previous",
     title: "Comments Previous Page",
@@ -14807,7 +14807,7 @@ var wp;
 
   // packages/block-library/build-module/comments-pagination/block.json
   var block_default27 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments-pagination",
     title: "Comments Pagination",
@@ -15030,7 +15030,7 @@ var wp;
 
   // packages/block-library/build-module/comments-pagination-next/block.json
   var block_default28 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments-pagination-next",
     title: "Comments Next Page",
@@ -15143,7 +15143,7 @@ var wp;
 
   // packages/block-library/build-module/comments-pagination-numbers/block.json
   var block_default29 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments-pagination-numbers",
     title: "Comments Page Numbers",
@@ -15233,7 +15233,7 @@ var wp;
 
   // packages/block-library/build-module/comments-title/block.json
   var block_default30 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/comments-title",
     title: "Comments Title",
@@ -15348,7 +15348,7 @@ var wp;
       }
       const currentPostId = postId;
       (0, import_api_fetch2.default)({
-        path: (0, import_url4.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url4.addQueryArgs)("/zc/v2/comments", {
           post: postId,
           _fields: "id"
         }),
@@ -19657,7 +19657,7 @@ var wp;
 
   // packages/block-library/build-module/cover/block.json
   var block_default31 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/cover",
     title: "Cover",
@@ -20290,7 +20290,7 @@ var wp;
 
   // packages/block-library/build-module/details/block.json
   var block_default32 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/details",
     title: "Details",
@@ -22511,7 +22511,7 @@ ${url}
 
   // packages/block-library/build-module/file/block.json
   var block_default33 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/file",
     title: "File",
@@ -23117,7 +23117,7 @@ ${url}
 
   // packages/block-library/build-module/form/block.json
   var block_default34 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/form",
@@ -23844,7 +23844,7 @@ ${url}
 
   // packages/block-library/build-module/form-input/block.json
   var block_default35 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/form-input",
@@ -24098,7 +24098,7 @@ ${url}
 
   // packages/block-library/build-module/form-submit-button/block.json
   var block_default36 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/form-submit-button",
@@ -24188,7 +24188,7 @@ ${url}
 
   // packages/block-library/build-module/form-submission-notification/block.json
   var block_default37 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/form-submission-notification",
@@ -25939,7 +25939,7 @@ ${url}
       if (!linkTo) {
         __unstableMarkNextChangeAsNotPersistent();
         setAttributes({
-          linkTo: window?.wp?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE
+          linkTo: window?.zc?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE
         });
       }
     }, [linkTo]);
@@ -26335,7 +26335,7 @@ ${url}
 
   // packages/block-library/build-module/gallery/block.json
   var block_default38 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/gallery",
     title: "Gallery",
@@ -27255,7 +27255,7 @@ ${url}
 
   // packages/block-library/build-module/group/block.json
   var block_default39 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/group",
     title: "Group",
@@ -27998,7 +27998,7 @@ ${url}
 
   // packages/block-library/build-module/heading/block.json
   var block_default40 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/heading",
     title: "Heading",
@@ -28326,7 +28326,7 @@ ${url}
 
   // packages/block-library/build-module/home-link/block.json
   var block_default41 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/home-link",
     category: "design",
@@ -28831,7 +28831,7 @@ ${js}
 
   // packages/block-library/build-module/html/block.json
   var block_default42 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/html",
     title: "Custom HTML",
@@ -29228,7 +29228,7 @@ ${js}
   // packages/block-library/build-module/icon/block.json
   var block_default43 = {
     apiVersion: 3,
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     name: "core/icon",
     title: "Icon",
     category: "media",
@@ -31585,7 +31585,7 @@ ${js}
       }
       let linkDestination = attributes2.linkDestination;
       if (!linkDestination) {
-        switch (window?.wp?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE2) {
+        switch (window?.zc?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE2) {
           case "file":
           case LINK_DESTINATION_MEDIA2:
             linkDestination = LINK_DESTINATION_MEDIA2;
@@ -31769,7 +31769,7 @@ ${js}
 
   // packages/block-library/build-module/image/block.json
   var block_default44 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/image",
     title: "Image",
@@ -32291,7 +32291,7 @@ ${js}
 
   // packages/block-library/build-module/latest-comments/block.json
   var block_default45 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/latest-comments",
     title: "Latest Comments",
@@ -32580,7 +32580,7 @@ ${js}
 
   // packages/block-library/build-module/latest-posts/block.json
   var block_default46 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/latest-posts",
     title: "Latest Posts",
@@ -32790,7 +32790,7 @@ ${js}
     }
   ];
   function getFeaturedImageDetails(post, size) {
-    const image = post._embedded?.["wp:featuredmedia"]?.["0"];
+    const image = post._embedded?.["zc:featuredmedia"]?.["0"];
     return {
       url: image?.media_details?.sizes?.[size]?.source_url ?? image?.source_url,
       alt: image?.alt_text
@@ -33243,7 +33243,7 @@ ${js}
             order,
             orderby: orderBy,
             per_page: postsToShow,
-            _embed: "author,wp:featuredmedia",
+            _embed: "author,zc:featuredmedia",
             ignore_sticky: true
           }).filter(([, value]) => typeof value !== "undefined")
         );
@@ -34115,7 +34115,7 @@ ${js}
 
   // packages/block-library/build-module/list/block.json
   var block_default47 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/list",
     title: "List",
@@ -34490,7 +34490,7 @@ ${js}
 
   // packages/block-library/build-module/math/block.json
   var block_default48 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/math",
     title: "Math",
@@ -34622,7 +34622,7 @@ ${js}
 
   // packages/block-library/build-module/list-item/block.json
   var block_default49 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/list-item",
     title: "List Item",
@@ -35288,7 +35288,7 @@ ${js}
 
   // packages/block-library/build-module/loginout/block.json
   var block_default50 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/loginout",
     title: "Login/out",
@@ -36560,7 +36560,7 @@ ${js}
       let newHref = href;
       if (mediaType === "image") {
         if (!newLinkDestination) {
-          switch (window?.wp?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE3) {
+          switch (window?.zc?.media?.view?.settings?.defaultProps?.link || LINK_DESTINATION_NONE3) {
             case "file":
             case LINK_DESTINATION_MEDIA3:
               newLinkDestination = LINK_DESTINATION_MEDIA3;
@@ -36979,7 +36979,7 @@ ${js}
 
   // packages/block-library/build-module/media-text/block.json
   var block_default51 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/media-text",
     title: "Media & Text",
@@ -37573,7 +37573,7 @@ ${js}
 
   // packages/block-library/build-module/missing/block.json
   var block_default52 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/missing",
     title: "Unsupported",
@@ -37711,7 +37711,7 @@ ${js}
 
   // packages/block-library/build-module/more/block.json
   var block_default53 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/more",
     title: "More",
@@ -37829,7 +37829,7 @@ ${js}
 
   // packages/block-library/build-module/navigation/block.json
   var block_default54 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/navigation",
     title: "Navigation",
@@ -43607,7 +43607,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-link/block.json
   var block_default55 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/navigation-link",
     title: "Custom Link",
@@ -44346,7 +44346,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-submenu/block.json
   var block_default56 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/navigation-submenu",
     title: "Submenu",
@@ -44868,7 +44868,7 @@ ${js}
 
   // packages/block-library/build-module/nextpage/block.json
   var block_default57 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/nextpage",
     title: "Page Break",
@@ -45031,7 +45031,7 @@ ${js}
 
   // packages/block-library/build-module/navigation-overlay-close/block.json
   var block_default58 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/navigation-overlay-close",
     title: "Navigation Overlay Close",
@@ -45119,7 +45119,7 @@ ${js}
 
   // packages/block-library/build-module/pattern/block.json
   var block_default59 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/pattern",
     title: "Pattern Placeholder",
@@ -45319,7 +45319,7 @@ ${js}
 
   // packages/block-library/build-module/page-list/block.json
   var block_default60 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/page-list",
     title: "Page List",
@@ -45876,7 +45876,7 @@ ${js}
 
   // packages/block-library/build-module/page-list-item/block.json
   var block_default61 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/page-list-item",
     title: "Page List Item",
@@ -46724,7 +46724,7 @@ ${js}
 
   // packages/block-library/build-module/paragraph/block.json
   var block_default62 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/paragraph",
     title: "Paragraph",
@@ -46922,7 +46922,7 @@ ${js}
 
   // packages/block-library/build-module/playlist/block.json
   var block_default63 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/playlist",
@@ -47568,7 +47568,7 @@ ${js}
 
   // packages/block-library/build-module/playlist-track/block.json
   var block_default64 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/playlist-track",
@@ -47874,7 +47874,7 @@ ${js}
 
   // packages/block-library/build-module/post-author/block.json
   var block_default65 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-author",
     title: "Author (deprecated)",
@@ -48181,7 +48181,7 @@ ${js}
         return {
           authorDetails: authorId ? getUser(authorId, { context: "view" }) : null,
           supportsAuthor: getPostType(postType)?.supports?.author ?? false,
-          canAssignAuthor: currentPost?._links?.["wp:action-assign-author"] ? true : false
+          canAssignAuthor: currentPost?._links?.["zc:action-assign-author"] ? true : false
         };
       },
       [postType, postId]
@@ -48458,7 +48458,7 @@ ${js}
 
   // packages/block-library/build-module/post-author-name/block.json
   var block_default66 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-author-name",
     title: "Author Name",
@@ -48741,7 +48741,7 @@ ${js}
 
   // packages/block-library/build-module/post-author-biography/block.json
   var block_default67 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-author-biography",
     title: "Author Biography",
@@ -48916,7 +48916,7 @@ ${js}
 
   // packages/block-library/build-module/post-comment/block.json
   var block_default68 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: "fse",
     name: "core/post-comment",
@@ -49034,7 +49034,7 @@ ${js}
 
   // packages/block-library/build-module/post-comments-count/block.json
   var block_default69 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-comments-count",
     title: "Comments Count",
@@ -49102,7 +49102,7 @@ ${js}
       }
       const currentPostId = postId;
       (0, import_api_fetch3.default)({
-        path: (0, import_url17.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url17.addQueryArgs)("/zc/v2/comments", {
           post: postId
         }),
         parse: false
@@ -49219,7 +49219,7 @@ ${js}
 
   // packages/block-library/build-module/post-comments-form/block.json
   var block_default70 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-comments-form",
     title: "Comments Form",
@@ -49386,7 +49386,7 @@ ${js}
 
   // packages/block-library/build-module/post-comments-link/block.json
   var block_default71 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-comments-link",
     title: "Comments Link",
@@ -49464,7 +49464,7 @@ ${js}
       }
       const currentPostId = postId;
       (0, import_api_fetch4.default)({
-        path: (0, import_url18.addQueryArgs)("/wp/v2/comments", {
+        path: (0, import_url18.addQueryArgs)("/zc/v2/comments", {
           post: postId
         }),
         parse: false
@@ -49619,7 +49619,7 @@ ${js}
 
   // packages/block-library/build-module/post-content/block.json
   var block_default72 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-content",
     title: "Content",
@@ -49888,7 +49888,7 @@ ${js}
 
   // packages/block-library/build-module/post-date/block.json
   var block_default73 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-date",
     title: "Date",
@@ -50442,7 +50442,7 @@ ${js}
 
   // packages/block-library/build-module/post-excerpt/block.json
   var block_default74 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-excerpt",
     title: "Excerpt",
@@ -50740,7 +50740,7 @@ ${js}
 
   // packages/block-library/build-module/post-featured-image/block.json
   var block_default75 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-featured-image",
     title: "Featured Image",
@@ -51247,7 +51247,7 @@ ${js}
       if (!useFirstImageFromPost) {
         return;
       }
-      const imageOpener = /<!--\s+wp:(?:core\/)?image\s+(?<attrs>{(?:(?:[^}]+|}+(?=})|(?!}\s+\/?-->).)*)?}\s+)?-->/.exec(
+      const imageOpener = /<!--\s+zc:(?:core\/)?image\s+(?<attrs>{(?:(?:[^}]+|}+(?=})|(?!}\s+\/?-->).)*)?}\s+)?-->/.exec(
         postContent
       );
       const imageId = imageOpener?.groups?.attrs && JSON.parse(imageOpener.groups.attrs)?.id;
@@ -51565,7 +51565,7 @@ ${js}
 
   // packages/block-library/build-module/post-navigation-link/block.json
   var block_default76 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-navigation-link",
     title: "Post Navigation Link",
@@ -51952,7 +51952,7 @@ ${js}
 
   // packages/block-library/build-module/post-template/block.json
   var block_default77 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-template",
     title: "Post Template",
@@ -52343,7 +52343,7 @@ ${js}
 
   // packages/block-library/build-module/post-terms/block.json
   var block_default78 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-terms",
     title: "Post Terms",
@@ -52700,7 +52700,7 @@ ${js}
 
   // packages/block-library/build-module/post-time-to-read/block.json
   var block_default79 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-time-to-read",
     title: "Time to Read",
@@ -53007,7 +53007,7 @@ ${js}
 
   // packages/block-library/build-module/post-title/block.json
   var block_default80 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/post-title",
     title: "Title",
@@ -53413,7 +53413,7 @@ ${js}
 
   // packages/block-library/build-module/preformatted/block.json
   var block_default81 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/preformatted",
     title: "Preformatted",
@@ -54192,7 +54192,7 @@ ${js}
 
   // packages/block-library/build-module/pullquote/block.json
   var block_default82 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/pullquote",
     title: "Pullquote",
@@ -54450,7 +54450,7 @@ ${js}
 
   // packages/block-library/build-module/query/block.json
   var block_default83 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query",
     title: "Query Loop",
@@ -54808,7 +54808,7 @@ ${js}
       return { isSingular: true };
     }
     let isSingular = false;
-    let templateType = templateSlug === "wp" ? "custom" : templateSlug;
+    let templateType = templateSlug === "zc" ? "custom" : templateSlug;
     const singularTemplates = ["404", "blank", "single", "page", "custom"];
     const templateTypeFromSlug = templateSlug.includes("-") ? templateSlug.split("-", 1)[0] : templateSlug;
     const queryFromTemplateSlug = templateSlug.includes("-") ? templateSlug.split("-").slice(1).join("-") : "";
@@ -57038,7 +57038,7 @@ ${js}
 
   // packages/block-library/build-module/query-no-results/block.json
   var block_default84 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-no-results",
     title: "No Results",
@@ -57134,7 +57134,7 @@ ${js}
 
   // packages/block-library/build-module/query-pagination/block.json
   var block_default85 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-pagination",
     title: "Pagination",
@@ -57418,7 +57418,7 @@ ${js}
 
   // packages/block-library/build-module/query-pagination-next/block.json
   var block_default86 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-pagination-next",
     title: "Next Page",
@@ -57533,7 +57533,7 @@ ${js}
 
   // packages/block-library/build-module/query-pagination-numbers/block.json
   var block_default87 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-pagination-numbers",
     title: "Page Numbers",
@@ -57670,7 +57670,7 @@ ${js}
 
   // packages/block-library/build-module/query-pagination-previous/block.json
   var block_default88 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-pagination-previous",
     title: "Previous Page",
@@ -57785,7 +57785,7 @@ ${js}
 
   // packages/block-library/build-module/query-title/block.json
   var block_default89 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-title",
     title: "Query Title",
@@ -58275,7 +58275,7 @@ ${js}
 
   // packages/block-library/build-module/query-total/block.json
   var block_default90 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/query-total",
     title: "Query Total",
@@ -58830,7 +58830,7 @@ ${js}
 
   // packages/block-library/build-module/quote/block.json
   var block_default91 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/quote",
     title: "Quote",
@@ -59189,7 +59189,7 @@ ${js}
 
   // packages/block-library/build-module/block/block.json
   var block_default92 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/block",
     title: "Pattern",
@@ -59526,7 +59526,7 @@ ${js}
 
   // packages/block-library/build-module/read-more/block.json
   var block_default93 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/read-more",
     title: "Read More",
@@ -59669,7 +59669,7 @@ ${js}
 
   // packages/block-library/build-module/rss/block.json
   var block_default94 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/rss",
     title: "RSS",
@@ -60066,7 +60066,7 @@ ${js}
 
   // packages/block-library/build-module/search/block.json
   var block_default95 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/search",
     title: "Search",
@@ -60823,7 +60823,7 @@ ${js}
 
   // packages/block-library/build-module/separator/block.json
   var block_default96 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/separator",
     title: "Separator",
@@ -61055,7 +61055,7 @@ ${js}
 
   // packages/block-library/build-module/shortcode/block.json
   var block_default97 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/shortcode",
     title: "Shortcode",
@@ -61100,7 +61100,7 @@ ${js}
 
   // packages/block-library/build-module/site-logo/block.json
   var block_default98 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/site-logo",
     title: "Site Logo",
@@ -61775,7 +61775,7 @@ ${js}
 
   // packages/block-library/build-module/site-tagline/block.json
   var block_default99 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/site-tagline",
     title: "Site Tagline",
@@ -61987,7 +61987,7 @@ ${js}
 
   // packages/block-library/build-module/site-title/block.json
   var block_default100 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/site-title",
     title: "Site Title",
@@ -62821,7 +62821,7 @@ ${js}
 
   // packages/block-library/build-module/social-link/block.json
   var block_default101 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/social-link",
     title: "Social Icon",
@@ -63533,7 +63533,7 @@ ${js}
 
   // packages/block-library/build-module/social-links/block.json
   var block_default102 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/social-links",
     title: "Social Icons",
@@ -64152,7 +64152,7 @@ ${js}
 
   // packages/block-library/build-module/spacer/block.json
   var block_default103 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/spacer",
     title: "Spacer",
@@ -64557,7 +64557,7 @@ ${js}
 
   // packages/block-library/build-module/tab/block.json
   var block_default104 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
     name: "core/tab",
@@ -64668,7 +64668,7 @@ ${js}
 
   // packages/block-library/build-module/tab-panel/block.json
   var block_default105 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
     name: "core/tab-panel",
@@ -66073,7 +66073,7 @@ ${js}
 
   // packages/block-library/build-module/table/block.json
   var block_default106 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/table",
     title: "Table",
@@ -66568,7 +66568,7 @@ ${js}
 
   // packages/block-library/build-module/table-of-contents/block.json
   var block_default107 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     __experimental: true,
     name: "core/table-of-contents",
@@ -67220,7 +67220,7 @@ ${js}
 
   // packages/block-library/build-module/tabs/block.json
   var block_default108 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
     name: "core/tabs",
@@ -67519,7 +67519,7 @@ ${js}
 
   // packages/block-library/build-module/tabs-menu/block.json
   var block_default109 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
     name: "core/tabs-menu",
@@ -68061,7 +68061,7 @@ ${js}
 
   // packages/block-library/build-module/tabs-menu-item/block.json
   var block_default110 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     __experimental: true,
     apiVersion: 3,
     name: "core/tabs-menu-item",
@@ -68188,7 +68188,7 @@ ${js}
 
   // packages/block-library/build-module/tag-cloud/block.json
   var block_default111 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/tag-cloud",
     title: "Tag Cloud",
@@ -68486,7 +68486,7 @@ ${js}
 
   // packages/block-library/build-module/template-part/block.json
   var block_default112 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/template-part",
     title: "Template Part",
@@ -69670,7 +69670,7 @@ ${js}
 
   // packages/block-library/build-module/term-count/block.json
   var block_default113 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/term-count",
     title: "Term Count",
@@ -69885,7 +69885,7 @@ ${js}
 
   // packages/block-library/build-module/term-description/block.json
   var block_default114 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/term-description",
     title: "Term Description",
@@ -70103,7 +70103,7 @@ ${js}
 
   // packages/block-library/build-module/term-name/block.json
   var block_default115 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/term-name",
     title: "Term Name",
@@ -70350,7 +70350,7 @@ ${js}
 
   // packages/block-library/build-module/terms-query/block.json
   var block_default116 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/terms-query",
     title: "Terms Query",
@@ -71102,7 +71102,7 @@ ${js}
 
   // packages/block-library/build-module/term-template/block.json
   var block_default117 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/term-template",
     title: "Term Template",
@@ -71441,7 +71441,7 @@ ${js}
 
   // packages/block-library/build-module/text-columns/block.json
   var block_default118 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/text-columns",
     title: "Text Columns (deprecated)",
@@ -71734,7 +71734,7 @@ ${js}
 
   // packages/block-library/build-module/verse/block.json
   var block_default119 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/verse",
     title: "Poetry",
@@ -71896,7 +71896,7 @@ ${js}
 
   // packages/block-library/build-module/video/block.json
   var block_default120 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/video",
     title: "Video",
@@ -73054,7 +73054,7 @@ ${js}
 
   // packages/block-library/build-module/footnotes/block.json
   var block_default121 = {
-    $schema: "https://schemas.wp.org/trunk/block.json",
+    $schema: "https://schemas.zc.org/trunk/block.json",
     apiVersion: 3,
     name: "core/footnotes",
     title: "Footnotes",
@@ -73523,7 +73523,7 @@ ${js}
       blocks.push(playlist_exports);
       blocks.push(playlist_track_exports);
     }
-    if (window?.wp?.oldEditor && (window?.wp?.needsClassicBlock || !window?.__experimentalDisableTinymce || !!new URLSearchParams(window?.location?.search).get(
+    if (window?.zc?.oldEditor && (window?.zc?.needsClassicBlock || !window?.__experimentalDisableTinymce || !!new URLSearchParams(window?.location?.search).get(
       "requiresTinymce"
     ))) {
       blocks.push(freeform_exports);
@@ -73581,7 +73581,7 @@ ${js}
       });
     }
     (0, import_blocks129.setDefaultBlockName)(name63);
-    if (window.wp && window.wp.oldEditor && blocks.some(({ name: name510 }) => name510 === name13)) {
+    if (window.zc && window.zc.oldEditor && blocks.some(({ name: name510 }) => name510 === name13)) {
       (0, import_blocks129.setFreeformContentHandlerName)(name13);
     }
     (0, import_blocks129.setUnregisteredTypeHandlerName)(name52);

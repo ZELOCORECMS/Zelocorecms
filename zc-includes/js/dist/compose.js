@@ -1,6 +1,6 @@
 "use strict";
-var wp;
-(wp ||= {}).compose = (() => {
+var zc;
+(zc ||= {}).compose = (() => {
   var __create = Object.create;
   var __defProp = Object.defineProperty;
   var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
@@ -42,35 +42,35 @@ var wp;
   // package-external:@zelocorecms/is-shallow-equal
   var require_is_shallow_equal = __commonJS({
     "package-external:@zelocorecms/is-shallow-equal"(exports, module) {
-      module.exports = window.wp.isShallowEqual;
+      module.exports = window.zc.isShallowEqual;
     }
   });
 
   // package-external:@zelocorecms/element
   var require_element = __commonJS({
     "package-external:@zelocorecms/element"(exports, module) {
-      module.exports = window.wp.element;
+      module.exports = window.zc.element;
     }
   });
 
   // package-external:@zelocorecms/deprecated
   var require_deprecated = __commonJS({
     "package-external:@zelocorecms/deprecated"(exports, module) {
-      module.exports = window.wp.deprecated;
+      module.exports = window.zc.deprecated;
     }
   });
 
   // package-external:@zelocorecms/dom
   var require_dom = __commonJS({
     "package-external:@zelocorecms/dom"(exports, module) {
-      module.exports = window.wp.dom;
+      module.exports = window.zc.dom;
     }
   });
 
   // package-external:@zelocorecms/keycodes
   var require_keycodes = __commonJS({
     "package-external:@zelocorecms/keycodes"(exports, module) {
-      module.exports = window.wp.keycodes;
+      module.exports = window.zc.keycodes;
     }
   });
 
@@ -532,14 +532,14 @@ var wp;
   // package-external:@zelocorecms/undo-manager
   var require_undo_manager = __commonJS({
     "package-external:@zelocorecms/undo-manager"(exports, module) {
-      module.exports = window.wp.undoManager;
+      module.exports = window.zc.undoManager;
     }
   });
 
   // package-external:@zelocorecms/priority-queue
   var require_priority_queue = __commonJS({
     "package-external:@zelocorecms/priority-queue"(exports, module) {
-      module.exports = window.wp.priorityQueue;
+      module.exports = window.zc.priorityQueue;
     }
   });
 
@@ -938,7 +938,7 @@ var wp;
   var import_jsx_runtime3 = __toESM(require_jsx_runtime(), 1);
   var listener = new listener_default();
   function withGlobalEvents(eventTypesToHandlers) {
-    (0, import_deprecated.default)("wp.compose.withGlobalEvents", {
+    (0, import_deprecated.default)("zc.compose.withGlobalEvents", {
       since: "5.7",
       alternative: "useEffect"
     });
@@ -1076,9 +1076,9 @@ var wp;
   var import_deprecated2 = __toESM(require_deprecated(), 1);
   var import_jsx_runtime6 = __toESM(require_jsx_runtime(), 1);
   function withState(initialState = {}) {
-    (0, import_deprecated2.default)("wp.compose.withState", {
+    (0, import_deprecated2.default)("zc.compose.withState", {
       since: "5.8",
-      alternative: "wp.element.useState"
+      alternative: "zc.element.useState"
     });
     return createHigherOrderComponent((OriginalComponent) => {
       return class WrappedComponent extends import_element5.Component {
@@ -1231,9 +1231,9 @@ var wp;
 
   // packages/compose/build-module/hooks/use-copy-on-click/index.mjs
   function useCopyOnClick(ref, text, timeout = 4e3) {
-    (0, import_deprecated3.default)("wp.compose.useCopyOnClick", {
+    (0, import_deprecated3.default)("zc.compose.useCopyOnClick", {
       since: "5.8",
-      alternative: "wp.compose.useCopyToClipboard"
+      alternative: "zc.compose.useCopyToClipboard"
     });
     const [hasCopied, setHasCopied] = (0, import_element8.useState)(false);
     (0, import_element8.useEffect)(() => {

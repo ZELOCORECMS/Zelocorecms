@@ -331,7 +331,7 @@ class ZC_REST_Abilities_V1_List_Controller extends ZC_REST_Controller {
 				),
 			);
 
-			$links['wp:action-run'] = array(
+			$links['zc:action-run'] = array(
 				'href' => rest_url( sprintf( '%s/%s/%s/run', $this->namespace, $this->rest_base, $ability->get_name() ) ),
 			);
 

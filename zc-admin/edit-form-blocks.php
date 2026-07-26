@@ -59,22 +59,22 @@ if ( ! empty( $post->post_name ) ) {
 }
 // Preload common data.
 $preload_paths = array(
-	'/wp/v2/types?context=view',
-	'/wp/v2/taxonomies?context=view',
+	'/zc/v2/types?context=view',
+	'/zc/v2/taxonomies?context=view',
 	add_query_arg( 'context', 'edit', $rest_path ),
-	sprintf( '/wp/v2/types/%s?context=edit', $post_type ),
-	'/wp/v2/users/me',
+	sprintf( '/zc/v2/types/%s?context=edit', $post_type ),
+	'/zc/v2/users/me',
 	array( rest_get_route_for_post_type_items( 'attachment' ), 'OPTIONS' ),
 	array( rest_get_route_for_post_type_items( 'page' ), 'OPTIONS' ),
 	array( rest_get_route_for_post_type_items( 'zc_block' ), 'OPTIONS' ),
 	array( rest_get_route_for_post_type_items( 'zc_template' ), 'OPTIONS' ),
 	sprintf( '%s/autosaves?context=edit', $rest_path ),
-	'/wp/v2/settings',
-	array( '/wp/v2/settings', 'OPTIONS' ),
-	'/wp/v2/global-styles/themes/' . $active_theme . '?context=view',
-	'/wp/v2/global-styles/themes/' . $active_theme . '/variations?context=view',
-	'/wp/v2/themes?context=edit&status=active',
-	array( '/wp/v2/global-styles/' . ZC_Theme_JSON_Resolver::get_user_global_styles_post_id(), 'OPTIONS' ),
+	'/zc/v2/settings',
+	array( '/zc/v2/settings', 'OPTIONS' ),
+	'/zc/v2/global-styles/themes/' . $active_theme . '?context=view',
+	'/zc/v2/global-styles/themes/' . $active_theme . '/variations?context=view',
+	'/zc/v2/themes?context=edit&status=active',
+	array( '/zc/v2/global-styles/' . ZC_Theme_JSON_Resolver::get_user_global_styles_post_id(), 'OPTIONS' ),
 	/*
 	 * Preload the global styles path with the correct context based on user caps.
 	 * NOTE: There is an equivalent conditional check in the client-side code to fetch
@@ -82,9 +82,9 @@ $preload_paths = array(
 	 * See the call to `canUser()`, under `useGlobalStylesUserConfig()` in `packages/edit-site/src/components/use-global-styles-user-config/index.js`.
 	 * Please ensure that the equivalent check is kept in sync with this preload path.
 	 */
-	'/wp/v2/global-styles/' . ZC_Theme_JSON_Resolver::get_user_global_styles_post_id() . '?context=' . $global_styles_endpoint_context,
+	'/zc/v2/global-styles/' . ZC_Theme_JSON_Resolver::get_user_global_styles_post_id() . '?context=' . $global_styles_endpoint_context,
 	// Used by getBlockPatternCategories in useBlockEditorSettings.
-	'/wp/v2/block-patterns/categories',
+	'/zc/v2/block-patterns/categories',
 	// @see packages/core-data/src/entities.js
 	'/?_fields=' . implode(
 		',',
@@ -113,7 +113,7 @@ $preload_paths = array(
 		'slug',
 		// @link https://github.com/ZelocoreCMS/gutenberg/blob/e093fefd041eb6cc4a4e7f67b92ab54fd75c8858/packages/core-data/src/private-selectors.ts#L244-L254
 		$template_lookup_slug,
-		'/wp/v2/templates/lookup'
+		'/zc/v2/templates/lookup'
 	),
 );
 
@@ -121,7 +121,7 @@ block_editor_rest_api_preload( $preload_paths, $block_editor_context );
 
 zc_add_inline_script(
 	'zc-blocks',
-	sprintf( 'wp.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $post ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
+	sprintf( 'zc.blocks.setCategories( %s );', zc_json_encode( get_block_categories( $post ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) ),
 	'after'
 );
 
@@ -150,7 +150,7 @@ if ( 'auto-draft' === $post->post_status ) {
 // Preload server-registered block schemas.
 zc_add_inline_script(
 	'zc-blocks',
-	'wp.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
+	'zc.blocks.unstable__bootstrapServerSideBlockDefinitions(' . zc_json_encode( get_block_editor_server_block_settings(), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) . ');'
 );
 
 // Preload server-registered block bindings sources.
@@ -164,7 +164,7 @@ if ( ! empty( $registered_sources ) ) {
 			'usesContext' => $source->uses_context,
 		);
 	}
-	$script = sprintf( 'for ( const source of %s ) { wp.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
+	$script = sprintf( 'for ( const source of %s ) { zc.blocks.registerBlockBindingsSource( source ); }', zc_json_encode( $filtered_sources, JSON_HEX_TAG | JSON_UNESCAPED_SLASHES ) );
 	zc_add_inline_script(
 		'zc-blocks',
 		$script
@@ -192,7 +192,7 @@ zc_add_inline_script(
 zc_add_inline_script(
 	'heartbeat',
 	'jQuery( function() {
-		wp.heartbeat.interval( 10 );
+		zc.heartbeat.interval( 10 );
 	} );',
 	'after'
 );
@@ -359,8 +359,8 @@ $editor_settings = get_block_editor_settings( $editor_settings, $block_editor_co
 $init_script = <<<JS
 ( function() {
 	window._wpLoadBlockEditor = new Promise( function( resolve ) {
-		wp.domReady( function() {
-			resolve( wp.editPost.initializeEditor( 'editor', "%s", %d, %s, %s ) );
+		zc.domReady( function() {
+			resolve( zc.editPost.initializeEditor( 'editor', "%s", %d, %s, %s ) );
 		} );
 	} );
 } )();

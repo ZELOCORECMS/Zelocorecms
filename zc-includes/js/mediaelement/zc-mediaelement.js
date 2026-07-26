@@ -1,7 +1,7 @@
 /* global _wpmejsSettings, mejsL10n */
 (function( window, $ ) {
 
-	window.wp = window.wp || {};
+	window.zc = window.zc || {};
 
 	function wpMediaElement() {
 		var settings = {};
@@ -12,7 +12,7 @@
 		 * Ensures media elements that have already been initialized won't be
 		 * processed again.
 		 *
-		 * @memberOf wp.mediaelement
+		 * @memberOf zc.mediaelement
 		 *
 		 * @since 4.4.0
 		 *
@@ -90,11 +90,11 @@
 	}
 
 	/**
-	 * @namespace wp.mediaelement
-	 * @memberOf wp
+	 * @namespace zc.mediaelement
+	 * @memberOf zc
 	 */
-	window.wp.mediaelement = new wpMediaElement();
+	window.zc.mediaelement = new wpMediaElement();
 
-	$( window.wp.mediaelement.initialize );
+	$( window.zc.mediaelement.initialize );
 
 })( window, jQuery );

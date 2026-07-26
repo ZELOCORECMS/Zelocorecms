@@ -529,7 +529,7 @@ class ZC_REST_Font_Faces_Controller extends ZC_REST_Posts_Controller {
 					'context'     => array( 'view', 'edit', 'embed' ),
 				),
 				// Font face settings come directly from theme.json schema
-				// See https://schemas.wp.org/trunk/theme.json
+				// See https://schemas.zc.org/trunk/theme.json
 				'font_face_settings' => array(
 					'description'          => __( 'font-face declaration in theme.json format.' ),
 					'type'                 => 'object',

@@ -42,7 +42,7 @@ class ZC_REST_Block_Patterns_Controller extends ZC_REST_Controller {
 	 * @since 6.0.0
 	 */
 	public function __construct() {
-		$this->namespace = 'wp/v2';
+		$this->namespace = 'zc/v2';
 		$this->rest_base = 'block-patterns/patterns';
 	}
 

@@ -116,17 +116,17 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 |------|-------|------|----------------|
 | 1 | "Why We Built ZELOCORECMS" | Founding Story | Brand |
 | 2 | "ZELOCORECMS vs ZelocoreCMS: 2025 Comparison" | VS Article | ZelocoreCMS alternative |
-| 3 | "How to Migrate from ZelocoreCMS to ZELOCORECMS in 1 Hour" | Tutorial | WP migration |
+| 3 | "How to Migrate from ZelocoreCMS to ZELOCORECMS in 1 Hour" | Tutorial | ZC migration |
 | 4 | "Building a Blog with ZELOCORECMS + Next.js" | Tutorial | CMS for Next.js |
 | 5 | "ZELOCORECMS vs Strapi: Which Should You Choose?" | VS Article | Strapi vs ZELOCORECMS |
 | 6 | "Top 5 Headless CMS in 2025: An Honest Comparison" | List Article | best headless CMS |
-| 7 | "How ZELOCORECMS's Plugin Sandbox Prevents the #1 WP Security Flaw" | Technical | WP security |
+| 7 | "How ZELOCORECMS's Plugin Sandbox Prevents the #1 ZC Security Flaw" | Technical | ZC security |
 | 8 | "ZELOCORECMS vs Contentful: Enterprise Features, Zero Cost" | VS Article | Contentful alternative |
 | ... | ... | ... | ... |
 
 ### YouTube Channel Strategy
 - **Series 1:** "ZELOCORECMS in 60 Seconds" — feature demos (weekly)
-- **Series 2:** "CMS Migration Series" — migrate from WP, Strapi, Ghost, etc.
+- **Series 2:** "CMS Migration Series" — migrate from ZC, Strapi, Ghost, etc.
 - **Series 3:** "Building with ZELOCORECMS" — full tutorial series with Next.js
 - **Series 4:** "Behind the CMS" — how we built specific features
 - **Goal:** 50 videos by v1.0, 500 videos by Year 2
@@ -230,7 +230,7 @@ ZELOCORECMS follows a **Product-Led Growth (PLG)** strategy:
 
 ## 9. Growth Hacking Tactics
 
-### Tactic 1: The "WP Hacked" Rescue
+### Tactic 1: The "ZC Hacked" Rescue
 - Monitor Twitter/X for "ZelocoreCMS hacked" mentions
 - Reach out with: "We're sorry this happened. We built ZELOCORECMS specifically to prevent this. Here's a free migration → [link]"
 - This converts frustrated ZelocoreCMS users into ZELOCORECMS advocates

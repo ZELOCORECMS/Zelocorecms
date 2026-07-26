@@ -48,7 +48,7 @@ function zc_attach_theme_preview_middleware() {
 	zc_add_inline_script(
 		'zc-api-fetch',
 		sprintf(
-			'wp.apiFetch.use( wp.apiFetch.createThemePreviewMiddleware( %s ) );',
+			'zc.apiFetch.use( zc.apiFetch.createThemePreviewMiddleware( %s ) );',
 			zc_json_encode( sanitize_text_field( zc_unslash( $_GET['zc_theme_preview'] ) ), JSON_HEX_TAG | JSON_UNESCAPED_SLASHES )
 		),
 		'after'

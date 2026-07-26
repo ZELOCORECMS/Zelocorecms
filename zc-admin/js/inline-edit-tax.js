@@ -6,7 +6,7 @@
 
 /* global ajaxurl, inlineEditTax */
 
-window.wp = window.wp || {};
+window.zc = window.zc || {};
 
 /**
  * Consists of functions relevant to the inline taxonomy editor.
@@ -17,7 +17,7 @@ window.wp = window.wp || {};
  * @property {string} what The type property with a hash prefixed and a dash
  *                         suffixed.
  */
-( function( $, wp ) {
+( function( $, zc ) {
 
 window.inlineEditTax = {
 
@@ -224,7 +224,7 @@ window.inlineEditTax = {
 							row.find( '.editinline' )
 								.attr( 'aria-expanded', 'false' )
 								.trigger( 'focus' );
-							wp.a11y.speak( wp.i18n.__( 'Changes saved.' ) );
+							zc.a11y.speak( zc.i18n.__( 'Changes saved.' ) );
 						});
 
 					} else {
@@ -234,12 +234,12 @@ window.inlineEditTax = {
 						 * Some error strings may contain HTML entities (e.g. `&#8220`), let's use
 						 * the HTML element's text.
 						 */
-						wp.a11y.speak( $error.text() );
+						zc.a11y.speak( $error.text() );
 					}
 				} else {
 					$errorNotice.removeClass( 'hidden' );
-					$error.text( wp.i18n.__( 'Error while saving the changes.' ) );
-					wp.a11y.speak( wp.i18n.__( 'Error while saving the changes.' ) );
+					$error.text( zc.i18n.__( 'Error while saving the changes.' ) );
+					zc.a11y.speak( zc.i18n.__( 'Error while saving the changes.' ) );
 				}
 			}
 		);
@@ -291,4 +291,4 @@ window.inlineEditTax = {
 
 $( function() { inlineEditTax.init(); } );
 
-})( jQuery, window.wp );
+})( jQuery, window.zc );

@@ -12,45 +12,45 @@
  */
 
 ?>
-<!-- wp:group {"align":"full","style":{"spacing":{"blockGap":"var:preset|spacing|40","padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
+<!-- zc:group {"align":"full","style":{"spacing":{"blockGap":"var:preset|spacing|40","padding":{"top":"var:preset|spacing|50","bottom":"var:preset|spacing|50"},"margin":{"top":"0","bottom":"0"}}},"layout":{"type":"constrained"}} -->
 <div class="zc-block-group alignfull" style="margin-top:0;margin-bottom:0;padding-top:var(--zc--preset--spacing--50);padding-bottom:var(--zc--preset--spacing--50)">
-	<!-- wp:group {"align":"wide","layout":{"type":"default"}} -->
+	<!-- zc:group {"align":"wide","layout":{"type":"default"}} -->
 	<div class="zc-block-group alignwide">
-		<!-- wp:heading {"style":{"typography":{"fontSize":"9.6rem","letterSpacing":"-0.02em"}}} -->
+		<!-- zc:heading {"style":{"typography":{"fontSize":"9.6rem","letterSpacing":"-0.02em"}}} -->
 		<h2 class="zc-block-heading" style="font-size:9.6rem;letter-spacing:-0.02em"><?php esc_html_e( 'Our online store.', 'twentytwentyfive' ); ?></h2>
-		<!-- /wp:heading -->
+		<!-- /zc:heading -->
 
-		<!-- wp:group {"layout":{"type":"grid","columnCount":null,"minimumColumnWidth":"10rem"}} -->
+		<!-- zc:group {"layout":{"type":"grid","columnCount":null,"minimumColumnWidth":"10rem"}} -->
 		<div class="zc-block-group">
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/grid-flower-2.webp' ); ?>" alt="<?php esc_attr_e( 'Black and white flower', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
+			<!-- zc:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
 			<div class="zc-block-cover is-light has-contrast-color has-text-color has-link-color has-medium-font-size"><span aria-hidden="true" class="zc-block-cover__background has-background-dim-0 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:paragraph {"align":"center"} -->
+				<!-- zc:paragraph {"align":"center"} -->
 				<p class="has-text-align-center"><?php esc_html_e( 'Delivered every week', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/malibu-plantlife.webp' ); ?>" alt="<?php esc_attr_e( 'Closeup of plantlife in the Malibu Canyon area', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:cover {"overlayColor":"contrast","isUserOverlayColor":true,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
+			<!-- zc:cover {"overlayColor":"contrast","isUserOverlayColor":true,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
 			<div class="zc-block-cover"><span aria-hidden="true" class="zc-block-cover__background has-contrast-background-color has-background-dim-100 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+				<!-- zc:spacer {"height":"var:preset|spacing|20"} -->
 				<div style="height:var(--zc--preset--spacing--20)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
+				<!-- /zc:spacer -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"}},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast"} -->
+			<!-- zc:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"spacing":{"padding":{"top":"0","bottom":"0","left":"0","right":"0"},"margin":{"top":"0","bottom":"0"}},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast"} -->
 			<div class="zc-block-cover is-light has-contrast-color has-text-color has-link-color" style="margin-top:0;margin-bottom:0;padding-top:0;padding-right:0;padding-bottom:0;padding-left:0"><span aria-hidden="true" class="zc-block-cover__background has-background-dim-0 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:group {"style":{"spacing":{"blockGap":"0","padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}},"fontSize":"medium","layout":{"type":"flex","orientation":"vertical","verticalAlignment":"center","justifyContent":"center"}} -->
+				<!-- zc:group {"style":{"spacing":{"blockGap":"0","padding":{"top":"var:preset|spacing|40","bottom":"var:preset|spacing|40","left":"var:preset|spacing|40","right":"var:preset|spacing|40"}}},"fontSize":"medium","layout":{"type":"flex","orientation":"vertical","verticalAlignment":"center","justifyContent":"center"}} -->
 				<div class="zc-block-group has-medium-font-size" style="padding-top:var(--zc--preset--spacing--40);padding-right:var(--zc--preset--spacing--40);padding-bottom:var(--zc--preset--spacing--40);padding-left:var(--zc--preset--spacing--40)">
-					<!-- wp:paragraph {"align":"center"} -->
+					<!-- zc:paragraph {"align":"center"} -->
 					<p class="has-text-align-center">
 						<?php
 						printf(
@@ -60,82 +60,82 @@
 						);
 						?>
 					</p>
-					<!-- /wp:paragraph -->
+					<!-- /zc:paragraph -->
 				</div>
-				<!-- /wp:group -->
+				<!-- /zc:group -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/akaka-falls-state-park-flora.webp' ); ?>" alt="<?php esc_attr_e( 'Flora of Akaka Falls State Park', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
+			<!-- zc:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
 			<div class="zc-block-cover is-light has-contrast-color has-text-color has-link-color has-medium-font-size"><span aria-hidden="true" class="zc-block-cover__background has-background-dim-0 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:paragraph {"align":"center"} -->
+				<!-- zc:paragraph {"align":"center"} -->
 				<p class="has-text-align-center"><?php esc_html_e( 'Tailored to your needs', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
+			<!-- zc:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
 			<div class="zc-block-cover is-light has-contrast-color has-text-color has-link-color has-medium-font-size"><span aria-hidden="true" class="zc-block-cover__background has-background-dim-0 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:paragraph {"align":"center"} -->
+				<!-- zc:paragraph {"align":"center"} -->
 				<p class="has-text-align-center"><?php esc_html_e( 'Free shipping', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:cover {"overlayColor":"accent-2","isUserOverlayColor":true,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
+			<!-- zc:cover {"overlayColor":"accent-2","isUserOverlayColor":true,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
 			<div class="zc-block-cover is-light"><span aria-hidden="true" class="zc-block-cover__background has-accent-2-background-color has-background-dim-100 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+				<!-- zc:spacer {"height":"var:preset|spacing|20"} -->
 				<div style="height:var(--zc--preset--spacing--20)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
+				<!-- /zc:spacer -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
+			<!-- zc:cover {"dimRatio":0,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"},"elements":{"link":{"color":{"text":"var:preset|color|contrast"}}}},"textColor":"contrast","fontSize":"medium"} -->
 			<div class="zc-block-cover is-light has-contrast-color has-text-color has-link-color has-medium-font-size"><span aria-hidden="true" class="zc-block-cover__background has-background-dim-0 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:paragraph {"align":"center"} -->
+				<!-- zc:paragraph {"align":"center"} -->
 				<p class="has-text-align-center"><?php esc_html_e( 'Cancel anytime', 'twentytwentyfive' ); ?></p>
-				<!-- /wp:paragraph -->
+				<!-- /zc:paragraph -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:cover {"overlayColor":"accent-3","isUserOverlayColor":true,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
+			<!-- zc:cover {"overlayColor":"accent-3","isUserOverlayColor":true,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
 			<div class="zc-block-cover"><span aria-hidden="true" class="zc-block-cover__background has-accent-3-background-color has-background-dim-100 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+				<!-- zc:spacer {"height":"var:preset|spacing|20"} -->
 				<div style="height:var(--zc--preset--spacing--20)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
+				<!-- /zc:spacer -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/botany-flowers.webp' ); ?>" alt="<?php esc_attr_e( 'Botany flowers', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 
-			<!-- wp:cover {"overlayColor":"accent-1","isUserOverlayColor":true,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
+			<!-- zc:cover {"overlayColor":"accent-1","isUserOverlayColor":true,"isDark":false,"style":{"dimensions":{"aspectRatio":"1"}},"layout":{"type":"constrained"}} -->
 			<div class="zc-block-cover is-light"><span aria-hidden="true" class="zc-block-cover__background has-accent-1-background-color has-background-dim-100 has-background-dim"></span><div class="zc-block-cover__inner-container">
-				<!-- wp:spacer {"height":"var:preset|spacing|20"} -->
+				<!-- zc:spacer {"height":"var:preset|spacing|20"} -->
 				<div style="height:var(--zc--preset--spacing--20)" aria-hidden="true" class="zc-block-spacer"></div>
-				<!-- /wp:spacer -->
+				<!-- /zc:spacer -->
 			</div></div>
-			<!-- /wp:cover -->
+			<!-- /zc:cover -->
 
-			<!-- wp:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
+			<!-- zc:image {"aspectRatio":"1","scale":"cover","sizeSlug":"large","linkDestination":"none"} -->
 			<figure class="zc-block-image size-large"><img src="<?php echo esc_url( get_template_directory_uri() . '/assets/images/star-thristle-flower.webp' ); ?>" alt="<?php esc_attr_e( 'Black and white flower', 'twentytwentyfive' ); ?>" style="aspect-ratio:1;object-fit:cover"/></figure>
-			<!-- /wp:image -->
+			<!-- /zc:image -->
 		</div>
-		<!-- /wp:group -->
+		<!-- /zc:group -->
 
-		<!-- wp:buttons -->
+		<!-- zc:buttons -->
 		<div class="zc-block-buttons">
-			<!-- wp:button {"width":100} -->
+			<!-- zc:button {"width":100} -->
 			<div class="zc-block-button has-custom-width zc-block-button__width-100"><a class="zc-block-button__link zc-element-button"><?php esc_html_e( 'Shop now', 'twentytwentyfive' ); ?></a></div>
-			<!-- /wp:button -->
+			<!-- /zc:button -->
 		</div>
-		<!-- /wp:buttons -->
+		<!-- /zc:buttons -->
 	</div>
-	<!-- /wp:group -->
+	<!-- /zc:group -->
 </div>
-<!-- /wp:group -->
+<!-- /zc:group -->

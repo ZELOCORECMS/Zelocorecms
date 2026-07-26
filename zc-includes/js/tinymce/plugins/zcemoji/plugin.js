@@ -1,7 +1,7 @@
 ( function( tinymce ) {
 	tinymce.PluginManager.add( 'wpemoji', function( editor ) {
 		var typing,
-			wp = window.wp,
+			zc = window.zc,
 			settings = window._wpemojiSettings,
 			env = tinymce.Env,
 			ua = window.navigator.userAgent,
@@ -16,7 +16,7 @@
 				return false;
 			}());
 
-		if ( ! wp || ! wp.emoji || settings.supports.everything ) {
+		if ( ! zc || ! zc.emoji || settings.supports.everything ) {
 			return;
 		}
 
@@ -34,7 +34,7 @@
 				'data-zc-emoji': '1'
 			};
 
-			wp.emoji.parse( node, { imgAttr: imgAttr } );
+			zc.emoji.parse( node, { imgAttr: imgAttr } );
 		}
 
 		// Test if the node text contains emoji char(s) and replace.
@@ -92,7 +92,7 @@
 			if ( window.twemoji && window.twemoji.test( node.textContent || node.innerText ) ) {
 				replaceEmoji( node );
 
-				// In IE all content in the editor is left selected after wp.emoji.parse()...
+				// In IE all content in the editor is left selected after zc.emoji.parse()...
 				// Collapse the selection to the beginning.
 				if ( env.ie && env.ie < 9 && event.load && node && node.nodeName === 'BODY' ) {
 					selection.collapse( true );

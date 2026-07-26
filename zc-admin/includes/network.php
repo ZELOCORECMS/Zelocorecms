@@ -515,7 +515,7 @@ function network_step2( $errors = false ) {
 			/*
 			 * translators: This string should only be translated if zc-config-sample.php is localized.
 			 * You can check the localized release package or
-			 * https://i18n.svn.zelocorecms.org/<locale code>/branches/<wp version>/dist/zc-config-sample.php
+			 * https://i18n.svn.zelocorecms.org/<locale code>/branches/<zc version>/dist/zc-config-sample.php
 			 */
 			'<code>/* ' . __( 'That&#8217;s all, stop editing! Happy publishing.' ) . ' */</code>'
 		);

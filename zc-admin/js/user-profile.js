@@ -6,7 +6,7 @@
 (function($) {
 	var updateLock = false,
 		isSubmitting = false,
-		__ = wp.i18n.__,
+		__ = zc.i18n.__,
 		clipboard = new ClipboardJS( '.application-password-display .copy-button' ),
 		$pass1Row,
 		$pass1,
@@ -144,7 +144,7 @@
 				$this.parent().find( '.notice-error' ).remove();
 
 				// Send the reset request.
-				var resetAction =  wp.ajax.post( 'send-password-reset', data );
+				var resetAction =  zc.ajax.post( 'send-password-reset', data );
 
 				// Handle reset success.
 				resetAction.done( function( response ) {
@@ -270,7 +270,7 @@
 			resetToggle ( false );
 
 			// Generate the next password and cache.
-			wp.ajax.post( 'generate-password' )
+			zc.ajax.post( 'generate-password' )
 				.done( function( data ) {
 					$pass1.data( 'pw', data );
 				} );
@@ -317,7 +317,7 @@
 			return;
 		}
 
-		strength = wp.passwordStrength.meter( pass1, wp.passwordStrength.userInputDisallowedList(), pass1 );
+		strength = zc.passwordStrength.meter( pass1, zc.passwordStrength.userInputDisallowedList(), pass1 );
 
 		switch ( strength ) {
 			case -1:
@@ -382,7 +382,7 @@
 					$capsWarning.show();
 					// Don't duplicate existing screen reader Caps lock notifications.
 					if ( event.key !== 'CapsLock' ) {
-						wp.a11y.speak( __( 'Caps lock is on.' ), 'assertive' );
+						zc.a11y.speak( __( 'Caps lock is on.' ), 'assertive' );
 					}
 				} else {
 					$capsWarning.hide();
@@ -457,7 +457,7 @@
 		}, 3000 );
 
 		// Handle success audible feedback.
-		wp.a11y.speak( __( 'Application password has been copied to your clipboard.' ) );
+		zc.a11y.speak( __( 'Application password has been copied to your clipboard.' ) );
 	} );
 
 	$( function() {
@@ -547,14 +547,14 @@
 				$stylesheet.attr( 'href', $this.children( '.css_url' ).val() );
 
 				// Repaint icons.
-				if ( typeof wp !== 'undefined' && wp.svgPainter ) {
+				if ( typeof zc !== 'undefined' && zc.svgPainter ) {
 					try {
 						colors = JSON.parse( $this.children( '.icon_colors' ).val() );
 					} catch ( error ) {}
 
 					if ( colors ) {
-						wp.svgPainter.setColors( colors );
-						wp.svgPainter.paint();
+						zc.svgPainter.setColors( colors );
+						zc.svgPainter.paint();
 					}
 				}
 
@@ -584,7 +584,7 @@
 	$( '#destroy-sessions' ).on( 'click', function( e ) {
 		var $this = $(this);
 
-		wp.ajax.post( 'destroy-sessions', {
+		zc.ajax.post( 'destroy-sessions', {
 			nonce: $( '#_wpnonce' ).val(),
 			user_id: $( '#user_id' ).val()
 		}).done( function( response ) {

@@ -1777,7 +1777,7 @@ function _unzip_file_ziparchive( $file, $to, $needed_dirs = array() ) {
 	 *
 	 * @since 6.4.0
 	 *
-	 * @param null|true|ZC_Error $result         The result of the override. True on success, otherwise WP Error. Default null.
+	 * @param null|true|ZC_Error $result         The result of the override. True on success, otherwise ZC Error. Default null.
 	 * @param string             $file           Full path and filename of ZIP archive.
 	 * @param string             $to             Full path on the filesystem to extract archive to.
 	 * @param string[]           $needed_dirs    A full list of required folders that need to be created.

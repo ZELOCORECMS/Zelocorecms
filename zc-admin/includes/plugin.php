@@ -159,7 +159,7 @@ function _get_plugin_data_markup_translate( $plugin_file, $plugin_data, $markup 
 		if ( $textdomain ) {
 			foreach ( array( 'Name', 'PluginURI', 'Description', 'Author', 'AuthorURI', 'Version' ) as $field ) {
 				if ( ! empty( $plugin_data[ $field ] ) ) {
-					// phpcs:ignore ZelocoreCMS.WP.I18n.LowLevelTranslationFunction,ZelocoreCMS.WP.I18n.NonSingularStringLiteralText,ZelocoreCMS.WP.I18n.NonSingularStringLiteralDomain
+					// phpcs:ignore ZelocoreCMS.ZC.I18n.LowLevelTranslationFunction,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralText,ZelocoreCMS.ZC.I18n.NonSingularStringLiteralDomain
 					$plugin_data[ $field ] = translate( $plugin_data[ $field ], $textdomain );
 				}
 			}
@@ -1256,7 +1256,7 @@ function validate_plugin_requirements( $plugin ) {
 	/**
 	 * Filters the plugin requirement validation response.
 	 *
-	 * If a plugin fails due to a Core-provided validation (incompatible WP, PHP versions), this
+	 * If a plugin fails due to a Core-provided validation (incompatible ZC, PHP versions), this
 	 * filter will not fire. A ZC_Error response will already be returned.
 	 *
 	 * This filter is intended to add additional validation steps by site administrators.
@@ -2625,7 +2625,7 @@ function deactivated_plugins_notice() {
 	foreach ( $deactivated_plugins as $plugin ) {
 		if ( ! empty( $plugin['version_compatible'] ) && ! empty( $plugin['version_deactivated'] ) ) {
 			$explanation = sprintf(
-				/* translators: 1: Name of deactivated plugin, 2: Plugin version deactivated, 3: Current WP version, 4: Compatible plugin version. */
+				/* translators: 1: Name of deactivated plugin, 2: Plugin version deactivated, 3: Current ZC version, 4: Compatible plugin version. */
 				__( '%1$s %2$s was deactivated due to incompatibility with ZelocoreCMS %3$s, please upgrade to %1$s %4$s or later.' ),
 				$plugin['plugin_name'],
 				$plugin['version_deactivated'],
@@ -2634,7 +2634,7 @@ function deactivated_plugins_notice() {
 			);
 		} else {
 			$explanation = sprintf(
-				/* translators: 1: Name of deactivated plugin, 2: Plugin version deactivated, 3: Current WP version. */
+				/* translators: 1: Name of deactivated plugin, 2: Plugin version deactivated, 3: Current ZC version. */
 				__( '%1$s %2$s was deactivated due to incompatibility with ZelocoreCMS %3$s.' ),
 				$plugin['plugin_name'],
 				! empty( $plugin['version_deactivated'] ) ? $plugin['version_deactivated'] : '',

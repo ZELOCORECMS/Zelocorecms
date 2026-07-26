@@ -212,7 +212,7 @@ function display_setup_form( $error = null ) {
 	<?php
 } // End display_setup_form().
 
-// Let's check to make sure WP isn't already installed.
+// Let's check to make sure ZC isn't already installed.
 if ( is_blog_installed() ) {
 	display_header();
 	die(

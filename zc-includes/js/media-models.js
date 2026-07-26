@@ -8,20 +8,20 @@ var $ = Backbone.$,
 	Attachment;
 
 /**
- * wp.media.model.Attachment
+ * zc.media.model.Attachment
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
  * @augments Backbone.Model
  */
-Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototype */{
+Attachment = Backbone.Model.extend(/** @lends zc.media.model.Attachment.prototype */{
 	/**
 	 * Triggered when attachment details change
 	 * Overrides Backbone.Model.sync
 	 *
 	 * @param {string} method
-	 * @param {wp.media.model.Attachment} model
+	 * @param {zc.media.model.Attachment} model
 	 * @param {Object} [options={}]
 	 *
 	 * @return {Promise}
@@ -41,7 +41,7 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 				action: 'get-attachment',
 				id: this.id
 			});
-			return wp.media.ajax( options );
+			return zc.media.ajax( options );
 
 		// Overload the `update` request so properties can be saved.
 		} else if ( 'update' === method ) {
@@ -58,7 +58,7 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 				action:  'save-attachment',
 				id:      this.id,
 				nonce:   this.get('nonces').update,
-				post_id: wp.media.model.settings.post.id
+				post_id: zc.media.model.settings.post.id
 			});
 
 			// Record the values of the changed attributes.
@@ -70,7 +70,7 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 				}, this );
 			}
 
-			return wp.media.ajax( options );
+			return zc.media.ajax( options );
 
 		// Overload the `delete` request so attachments can be removed.
 		// This will permanently delete an attachment.
@@ -88,7 +88,7 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 				_wpnonce: this.get('nonces')['delete']
 			});
 
-			return wp.media.ajax( options ).done( function() {
+			return zc.media.ajax( options ).done( function() {
 				this.destroyed = true;
 			}).fail( function() {
 				this.destroyed = false;
@@ -134,25 +134,25 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 			return $.Deferred().rejectWith( this ).promise();
 		}
 
-		return wp.media.post( 'save-attachment-compat', _.defaults({
+		return zc.media.post( 'save-attachment-compat', _.defaults({
 			id:      this.id,
 			nonce:   this.get('nonces').update,
-			post_id: wp.media.model.settings.post.id
+			post_id: zc.media.model.settings.post.id
 		}, data ) ).done( function( resp, status, xhr ) {
 			model.set( model.parse( resp, xhr ), options );
 		});
 	}
-},/** @lends wp.media.model.Attachment */{
+},/** @lends zc.media.model.Attachment */{
 	/**
 	 * Create a new model on the static 'all' attachments collection and return it.
 	 *
 	 * @static
 	 *
 	 * @param {Object} attrs
-	 * @return {wp.media.model.Attachment}
+	 * @return {zc.media.model.Attachment}
 	 */
 	create: function( attrs ) {
-		var Attachments = wp.media.model.Attachments;
+		var Attachments = zc.media.model.Attachments;
 		return Attachments.all.push( attrs );
 	},
 	/**
@@ -164,10 +164,10 @@ Attachment = Backbone.Model.extend(/** @lends wp.media.model.Attachment.prototyp
 	 * @static
 	 * @param {string} id A string used to identify a model.
 	 * @param {Backbone.Model|undefined} attachment
-	 * @return {wp.media.model.Attachment}
+	 * @return {zc.media.model.Attachment}
 	 */
 	get: _.memoize( function( id, attachment ) {
-		var Attachments = wp.media.model.Attachments;
+		var Attachments = zc.media.model.Attachments;
 		return Attachments.all.push( attachment || { id: id } );
 	})
 });
@@ -181,15 +181,15 @@ module.exports = Attachment;
 (module) {
 
 /**
- * wp.media.model.Attachments
+ * zc.media.model.Attachments
  *
  * A collection of attachments.
  *
  * This collection has no persistence with the server without supplying
  * 'options.props.query = true', which will mirror the collection
- * to an Attachments Query collection - @see wp.media.model.Attachments.mirror().
+ * to an Attachments Query collection - @see zc.media.model.Attachments.mirror().
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
  * @augments Backbone.Collection
@@ -204,11 +204,11 @@ module.exports = Attachment;
  * @param {string} [options.filters]
  *
  */
-var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachments.prototype */{
+var Attachments = Backbone.Collection.extend(/** @lends zc.media.model.Attachments.prototype */{
 	/**
-	 * @type {wp.media.model.Attachment}
+	 * @type {zc.media.model.Attachment}
 	 */
-	model: wp.media.model.Attachment,
+	model: zc.media.model.Attachment,
 	/**
 	 * @param {Array} [models=[]] Array of models used to populate the collection.
 	 * @param {Object} [options={}]
@@ -328,7 +328,7 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * Checks whether an attachment is valid.
 	 *
-	 * @param {wp.media.model.Attachment} attachment
+	 * @param {zc.media.model.Attachment} attachment
 	 * @return {boolean}
 	 */
 	validator: function( attachment ) {
@@ -343,9 +343,9 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * Add or remove an attachment to the collection depending on its validity.
 	 *
-	 * @param {wp.media.model.Attachment} attachment
+	 * @param {zc.media.model.Attachment} attachment
 	 * @param {Object} options
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	validate: function( attachment, options ) {
 		var valid = this.validator( attachment ),
@@ -363,12 +363,12 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * Add or remove all attachments from another collection depending on each one's validity.
 	 *
-	 * @param {wp.media.model.Attachments} attachments
+	 * @param {zc.media.model.Attachments} attachments
 	 * @param {Object} [options={}]
 	 *
-	 * @fires wp.media.model.Attachments#reset
+	 * @fires zc.media.model.Attachments#reset
 	 *
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	validateAll: function( attachments, options ) {
 		options = options || {};
@@ -386,8 +386,8 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	 * Start observing another attachments collection change events
 	 * and replicate them on this collection.
 	 *
-	 * @param {wp.media.model.Attachments} The attachments collection to observe.
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @param {zc.media.model.Attachments} The attachments collection to observe.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	observe: function( attachments ) {
 		this.observers = this.observers || [];
@@ -403,8 +403,8 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * Stop replicating collection change events from another attachments collection.
 	 *
-	 * @param {wp.media.model.Attachments} The attachments collection to stop observing.
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @param {zc.media.model.Attachments} The attachments collection to stop observing.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	unobserve: function( attachments ) {
 		if ( attachments ) {
@@ -447,11 +447,11 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * @access private
 	 *
-	 * @param {wp.media.model.Attachments} attachment
-	 * @param {wp.media.model.Attachments} attachments
+	 * @param {zc.media.model.Attachments} attachment
+	 * @param {zc.media.model.Attachments} attachments
 	 * @param {Object} options
 	 *
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	_validateHandler: function( attachment, attachments, options ) {
 		// If we're not mirroring this `attachments` collection,
@@ -465,9 +465,9 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	/**
 	 * @access private
 	 *
-	 * @param {wp.media.model.Attachments} attachments
+	 * @param {zc.media.model.Attachments} attachments
 	 * @param {Object} options
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	_validateAllHandler: function( attachments, options ) {
 		return this.validateAll( attachments, options );
@@ -476,8 +476,8 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 	 * Start mirroring another attachments collection, clearing out any models already
 	 * in the collection.
 	 *
-	 * @param {wp.media.model.Attachments} The attachments collection to mirror.
-	 * @return {wp.media.model.Attachments} Returns itself to allow chaining.
+	 * @param {zc.media.model.Attachments} The attachments collection to mirror.
+	 * @return {zc.media.model.Attachments} Returns itself to allow chaining.
 	 */
 	mirror: function( attachments ) {
 		if ( this.mirroring && this.mirroring === attachments ) {
@@ -601,7 +601,7 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 				id = attrs.id;
 			}
 
-			attachment = wp.media.model.Attachment.get( id );
+			attachment = zc.media.model.Attachment.get( id );
 			newAttributes = attachment.parse( attrs, xhr );
 
 			if ( ! _.isEqual( attachment.attributes, newAttributes ) ) {
@@ -622,7 +622,7 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 		var props;
 		if ( this.props.get('query') ) {
 			props = this.props.toJSON();
-			this.mirror( wp.media.model.Query.get( props ) );
+			this.mirror( zc.media.model.Query.get( props ) );
 		}
 	},
 	/**
@@ -654,18 +654,18 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 			return;
 		}
 
-		return wp.media.post( 'save-attachment-order', {
-			nonce:       wp.media.model.settings.post.nonce,
-			post_id:     wp.media.model.settings.post.id,
+		return zc.media.post( 'save-attachment-order', {
+			nonce:       zc.media.model.settings.post.nonce,
+			post_id:     zc.media.model.settings.post.id,
 			attachments: attachments
 		});
 	}
-},/** @lends wp.media.model.Attachments */{
+},/** @lends zc.media.model.Attachments */{
 	/**
 	 * A function to compare two attachment models in an attachments collection.
 	 *
-	 * Used as the default comparator for instances of wp.media.model.Attachments
-	 * and its subclasses. @see wp.media.model.Attachments._changeOrderby().
+	 * Used as the default comparator for instances of zc.media.model.Attachments
+	 * and its subclasses. @see zc.media.model.Attachments._changeOrderby().
 	 *
 	 * @param {Backbone.Model} a
 	 * @param {Backbone.Model} b
@@ -693,18 +693,18 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 			ac = bc = null;
 		}
 
-		return ( 'DESC' === order ) ? wp.media.compare( a, b, ac, bc ) : wp.media.compare( b, a, bc, ac );
+		return ( 'DESC' === order ) ? zc.media.compare( a, b, ac, bc ) : zc.media.compare( b, a, bc, ac );
 	},
-	/** @namespace wp.media.model.Attachments.filters */
+	/** @namespace zc.media.model.Attachments.filters */
 	filters: {
 		/**
 		 * @static
 		 * Note that this client-side searching is *not* equivalent
 		 * to our server-side searching.
 		 *
-		 * @param {wp.media.model.Attachment} attachment
+		 * @param {zc.media.model.Attachment} attachment
 		 *
-		 * @this wp.media.model.Attachments
+		 * @this zc.media.model.Attachments
 		 *
 		 * @return {Boolean}
 		 */
@@ -720,9 +720,9 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 		},
 		/**
 		 * @static
-		 * @param {wp.media.model.Attachment} attachment
+		 * @param {zc.media.model.Attachment} attachment
 		 *
-		 * @this wp.media.model.Attachments
+		 * @this zc.media.model.Attachments
 		 *
 		 * @return {boolean}
 		 */
@@ -747,9 +747,9 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 		},
 		/**
 		 * @static
-		 * @param {wp.media.model.Attachment} attachment
+		 * @param {zc.media.model.Attachment} attachment
 		 *
-		 * @this wp.media.model.Attachments
+		 * @this zc.media.model.Attachments
 		 *
 		 * @return {boolean}
 		 */
@@ -763,9 +763,9 @@ var Attachments = Backbone.Collection.extend(/** @lends wp.media.model.Attachmen
 		},
 		/**
 		 * @static
-		 * @param {wp.media.model.Attachment} attachment
+		 * @param {zc.media.model.Attachment} attachment
 		 *
-		 * @this wp.media.model.Attachments
+		 * @this zc.media.model.Attachments
 		 *
 		 * @return {boolean}
 		 */
@@ -789,13 +789,13 @@ module.exports = Attachments;
 (module) {
 
 /**
- * wp.media.model.PostImage
+ * zc.media.model.PostImage
  *
  * An instance of an image that's been embedded into a post.
  *
- * Used in the embedded image attachment display settings modal - @see wp.media.view.MediaFrame.ImageDetails.
+ * Used in the embedded image attachment display settings modal - @see zc.media.view.MediaFrame.ImageDetails.
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
  * @augments Backbone.Model
@@ -803,10 +803,10 @@ module.exports = Attachments;
  * @param {int} [attributes]               Initial model attributes.
  * @param {int} [attributes.attachment_id] ID of the attachment.
  **/
-var PostImage = Backbone.Model.extend(/** @lends wp.media.model.PostImage.prototype */{
+var PostImage = Backbone.Model.extend(/** @lends zc.media.model.PostImage.prototype */{
 
 	initialize: function( attributes ) {
-		var Attachment = wp.media.model.Attachment;
+		var Attachment = zc.media.model.Attachment;
 		this.attachment = false;
 
 		if ( attributes.attachment_id ) {
@@ -949,21 +949,21 @@ module.exports = PostImage;
 /***/ 1288
 (module) {
 
-var Attachments = wp.media.model.Attachments,
+var Attachments = zc.media.model.Attachments,
 	Query;
 
 /**
- * wp.media.model.Query
+ * zc.media.model.Query
  *
  * A collection of attachments that match the supplied query arguments.
  *
  * Note: Do NOT change this.args after the query has been initialized.
  *       Things will break.
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
- * @augments wp.media.model.Attachments
+ * @augments zc.media.model.Attachments
  * @augments Backbone.Collection
  *
  * @param {array}  [models]                      Models to initialize with the collection.
@@ -971,7 +971,7 @@ var Attachments = wp.media.model.Attachments,
  * @param {object} [options.args]                Attachments query arguments.
  * @param {object} [options.args.posts_per_page]
  */
-Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
+Query = Attachments.extend(/** @lends zc.media.model.Query.prototype */{
 	/**
 	 * @param {Array}  [models=[]]  Array of initial models to populate the collection.
 	 * @param {Object} [options={}]
@@ -1021,7 +1021,7 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 		};
 
 		/*
-		 * Observe the central `wp.Uploader.queue` collection to watch for
+		 * Observe the central `zc.Uploader.queue` collection to watch for
 		 * new matches for the query.
 		 *
 		 * Only observe when a limited number of query args are set. There
@@ -1029,8 +1029,8 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 		 * false positives in those queries.
 		 */
 		allowed = [ 's', 'order', 'orderby', 'posts_per_page', 'post_mime_type', 'post_parent', 'author' ];
-		if ( wp.Uploader && _( this.args ).chain().keys().difference( allowed ).isEmpty().value() ) {
-			this.observe( wp.Uploader.queue );
+		if ( zc.Uploader && _( this.args ).chain().keys().difference( allowed ).isEmpty().value() ) {
+			this.observe( zc.Uploader.queue );
 		}
 	},
 	/**
@@ -1071,7 +1071,7 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 	},
 	/**
 	 * Overrides Backbone.Collection.sync
-	 * Overrides wp.media.model.Attachments.sync
+	 * Overrides zc.media.model.Attachments.sync
 	 *
 	 * @param {string} method
 	 * @param {Backbone.Model} model
@@ -1087,7 +1087,7 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 			options.context = this;
 			options.data = _.extend( options.data || {}, {
 				action:  'query-attachments',
-				post_id: wp.media.model.settings.post.id
+				post_id: zc.media.model.settings.post.id
 			});
 
 			// Clone the args so manipulation is non-destructive.
@@ -1099,18 +1099,18 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 			}
 
 			options.data.query = args;
-			return wp.media.ajax( options );
+			return zc.media.ajax( options );
 
 		// Otherwise, fall back to `Backbone.sync()`.
 		} else {
 			/**
-			 * Call wp.media.model.Attachments.sync or Backbone.sync
+			 * Call zc.media.model.Attachments.sync or Backbone.sync
 			 */
 			fallback = Attachments.prototype.sync ? Attachments.prototype : Backbone;
 			return fallback.sync.apply( this, arguments );
 		}
 	}
-}, /** @lends wp.media.model.Query */{
+}, /** @lends zc.media.model.Query */{
 	/**
 	 * @readonly
 	 */
@@ -1177,7 +1177,7 @@ Query = Attachments.extend(/** @lends wp.media.model.Query.prototype */{
 	 * @param {Object} [props.author]
 	 * @param {Object} [options]
 	 *
-	 * @return {wp.media.model.Query} A new Attachments Query collection.
+	 * @return {zc.media.model.Query} A new Attachments Query collection.
 	 */
 	get: (function(){
 		/**
@@ -1260,21 +1260,21 @@ module.exports = Query;
 /***/ 4134
 (module) {
 
-var Attachments = wp.media.model.Attachments,
+var Attachments = zc.media.model.Attachments,
 	Selection;
 
 /**
- * wp.media.model.Selection
+ * zc.media.model.Selection
  *
  * A selection of attachments.
  *
- * @memberOf wp.media.model
+ * @memberOf zc.media.model
  *
  * @class
- * @augments wp.media.model.Attachments
+ * @augments zc.media.model.Attachments
  * @augments Backbone.Collection
  */
-Selection = Attachments.extend(/** @lends wp.media.model.Selection.prototype */{
+Selection = Attachments.extend(/** @lends zc.media.model.Selection.prototype */{
 	/**
 	 * Refresh the `single` model whenever the selection changes.
 	 * Binds `single` instead of using the context argument to ensure
@@ -1299,7 +1299,7 @@ Selection = Attachments.extend(/** @lends wp.media.model.Selection.prototype */{
 	 *
 	 * @param {Array} models
 	 * @param {Object} options
-	 * @return {wp.media.model.Attachment[]}
+	 * @return {zc.media.model.Attachment[]}
 	 */
 	add: function( models, options ) {
 		if ( ! this.multiple ) {
@@ -1314,10 +1314,10 @@ Selection = Attachments.extend(/** @lends wp.media.model.Selection.prototype */{
 	/**
 	 * Fired when toggling (clicking on) an attachment in the modal.
 	 *
-	 * @param {undefined|boolean|wp.media.model.Attachment} model
+	 * @param {undefined|boolean|zc.media.model.Attachment} model
 	 *
-	 * @fires wp.media.model.Selection#selection:single
-	 * @fires wp.media.model.Selection#selection:unsingle
+	 * @fires zc.media.model.Selection#selection:single
+	 * @fires zc.media.model.Selection#selection:unsingle
 	 *
 	 * @return {Backbone.Model}
 	 */
@@ -1394,22 +1394,22 @@ module.exports = Selection;
 
 var Attachment, Attachments, l10n, media;
 
-/** @namespace wp */
-window.wp = window.wp || {};
+/** @namespace zc */
+window.zc = window.zc || {};
 
 /**
  * Create and return a media frame.
  *
  * Handles the default media experience.
  *
- * @alias wp.media
- * @memberOf wp
+ * @alias zc.media
+ * @memberOf zc
  * @namespace
  *
  * @param {Object} attributes The properties passed to the main media controller.
- * @return {wp.media.view.MediaFrame} A media workflow.
+ * @return {zc.media.view.MediaFrame} A media workflow.
  */
-media = wp.media = function( attributes ) {
+media = zc.media = function( attributes ) {
 	var MediaFrame = media.view.MediaFrame,
 		frame;
 
@@ -1444,10 +1444,10 @@ media = wp.media = function( attributes ) {
 	return frame;
 };
 
-/** @namespace wp.media.model */
-/** @namespace wp.media.view */
-/** @namespace wp.media.controller */
-/** @namespace wp.media.frames */
+/** @namespace zc.media.model */
+/** @namespace zc.media.view */
+/** @namespace zc.media.controller */
+/** @namespace zc.media.frames */
 _.extend( media, { model: {}, view: {}, controller: {}, frames: {} });
 
 // Link any localized strings.
@@ -1473,7 +1473,7 @@ media.model.Selection = __webpack_require__( 4134 );
 /**
  * A basic equality comparator for Backbone models.
  *
- * Used to order models within a collection - @see wp.media.model.Attachments.comparator().
+ * Used to order models within a collection - @see zc.media.model.Attachments.comparator().
  *
  * @param {mixed}  a  The primary parameter to compare.
  * @param {mixed}  b  The primary parameter to compare.
@@ -1491,37 +1491,37 @@ media.compare = function( a, b, ac, bc ) {
 	}
 };
 
-_.extend( media, /** @lends wp.media */{
+_.extend( media, /** @lends zc.media */{
 	/**
 	 * media.template( id )
 	 *
 	 * Fetch a JavaScript template for an id, and return a templating function for it.
 	 *
-	 * See wp.template() in `zc-includes/js/zc-util.js`.
+	 * See zc.template() in `zc-includes/js/zc-util.js`.
 	 *
-	 * @borrows wp.template as template
+	 * @borrows zc.template as template
 	 */
-	template: wp.template,
+	template: zc.template,
 
 	/**
 	 * media.post( [action], [data] )
 	 *
 	 * Sends a POST request to ZelocoreCMS.
-	 * See wp.ajax.post() in `zc-includes/js/zc-util.js`.
+	 * See zc.ajax.post() in `zc-includes/js/zc-util.js`.
 	 *
-	 * @borrows wp.ajax.post as post
+	 * @borrows zc.ajax.post as post
 	 */
-	post: wp.ajax.post,
+	post: zc.ajax.post,
 
 	/**
 	 * media.ajax( [action], [options] )
 	 *
 	 * Sends an XHR request to ZelocoreCMS.
-	 * See wp.ajax.send() in `zc-includes/js/zc-util.js`.
+	 * See zc.ajax.send() in `zc-includes/js/zc-util.js`.
 	 *
-	 * @borrows wp.ajax.send as ajax
+	 * @borrows zc.ajax.send as ajax
 	 */
-	ajax: wp.ajax.send,
+	ajax: zc.ajax.send,
 
 	/**
 	 * Scales a set of dimensions to fit within bounding dimensions.
@@ -1595,11 +1595,11 @@ _.extend( media, /** @lends wp.media */{
  * ========================================================================
  */
 /**
- * wp.media.attachment
+ * zc.media.attachment
  *
  * @static
  * @param {string} id A string used to identify a model.
- * @return {wp.media.model.Attachment}
+ * @return {zc.media.model.Attachment}
  */
 media.attachment = function( id ) {
 	return Attachment.get( id );
@@ -1609,17 +1609,17 @@ media.attachment = function( id ) {
  * A collection of all attachments that have been fetched from the server.
  *
  * @static
- * @member {wp.media.model.Attachments}
+ * @member {zc.media.model.Attachments}
  */
 Attachments.all = new Attachments();
 
 /**
- * wp.media.query
+ * zc.media.query
  *
  * Shorthand for creating a new Attachments Query.
  *
  * @param {Object} [props]
- * @return {wp.media.model.Attachments}
+ * @return {zc.media.model.Attachments}
  */
 media.query = function( props ) {
 	return new Attachments( null, {
