@@ -468,30 +468,30 @@ class ZC_Date_Query {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $column The user-supplied column name.
 	 * @return string A validated column name value.
 	 */
 	public function validate_column( $column ) {
-		global $wpdb;
+		global $zcdb;
 
 		$valid_columns = array(
-			'post_date',         // Part of $wpdb->posts.
-			'post_date_gmt',     // Part of $wpdb->posts.
-			'post_modified',     // Part of $wpdb->posts.
-			'post_modified_gmt', // Part of $wpdb->posts.
-			'comment_date',      // Part of $wpdb->comments.
-			'comment_date_gmt',  // Part of $wpdb->comments.
-			'user_registered',   // Part of $wpdb->users.
+			'post_date',         // Part of $zcdb->posts.
+			'post_date_gmt',     // Part of $zcdb->posts.
+			'post_modified',     // Part of $zcdb->posts.
+			'post_modified_gmt', // Part of $zcdb->posts.
+			'comment_date',      // Part of $zcdb->comments.
+			'comment_date_gmt',  // Part of $zcdb->comments.
+			'user_registered',   // Part of $zcdb->users.
 		);
 
 		if ( is_multisite() ) {
 			$valid_columns = array_merge(
 				$valid_columns,
 				array(
-					'registered',   // Part of $wpdb->blogs.
-					'last_updated', // Part of $wpdb->blogs.
+					'registered',   // Part of $zcdb->blogs.
+					'last_updated', // Part of $zcdb->blogs.
 				)
 			);
 		}
@@ -515,23 +515,23 @@ class ZC_Date_Query {
 			}
 
 			$known_columns = array(
-				$wpdb->posts    => array(
+				$zcdb->posts    => array(
 					'post_date',
 					'post_date_gmt',
 					'post_modified',
 					'post_modified_gmt',
 				),
-				$wpdb->comments => array(
+				$zcdb->comments => array(
 					'comment_date',
 					'comment_date_gmt',
 				),
-				$wpdb->users    => array(
+				$zcdb->users    => array(
 					'user_registered',
 				),
 			);
 
 			if ( is_multisite() ) {
-				$known_columns[ $wpdb->blogs ] = array(
+				$known_columns[ $zcdb->blogs ] = array(
 					'registered',
 					'last_updated',
 				);
@@ -707,7 +707,7 @@ class ZC_Date_Query {
 	 *
 	 * @since 4.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $query        Date query clause.
 	 * @param array $parent_query Parent query of the current date query.
@@ -719,7 +719,7 @@ class ZC_Date_Query {
 	 * }
 	 */
 	protected function get_sql_for_clause( $query, $parent_query ) {
-		global $wpdb;
+		global $zcdb;
 
 		// The sub-parts of a $where part.
 		$where_parts = array();
@@ -743,10 +743,10 @@ class ZC_Date_Query {
 
 		// Range queries.
 		if ( ! empty( $query['after'] ) ) {
-			$where_parts[] = $wpdb->prepare( "$column $gt %s", $this->build_mysql_datetime( $query['after'], ! $inclusive ) );
+			$where_parts[] = $zcdb->prepare( "$column $gt %s", $this->build_mysql_datetime( $query['after'], ! $inclusive ) );
 		}
 		if ( ! empty( $query['before'] ) ) {
-			$where_parts[] = $wpdb->prepare( "$column $lt %s", $this->build_mysql_datetime( $query['before'], $inclusive ) );
+			$where_parts[] = $zcdb->prepare( "$column $lt %s", $this->build_mysql_datetime( $query['before'], $inclusive ) );
 		}
 		// Specific value queries.
 
@@ -971,7 +971,7 @@ class ZC_Date_Query {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string   $column  The column to query against. Needs to be pre-validated!
 	 * @param string   $compare The comparison operator. Needs to be pre-validated!
@@ -981,7 +981,7 @@ class ZC_Date_Query {
 	 * @return string|false A query part or false on failure.
 	 */
 	public function build_time_query( $column, $compare, $hour = null, $minute = null, $second = null ) {
-		global $wpdb;
+		global $zcdb;
 
 		// Have to have at least one.
 		if ( ! isset( $hour ) && ! isset( $minute ) && ! isset( $second ) ) {
@@ -1054,7 +1054,7 @@ class ZC_Date_Query {
 			$time   .= sprintf( '%02d', $second );
 		}
 
-		return $wpdb->prepare( "DATE_FORMAT( $column, %s ) $compare %f", $format, $time );
+		return $zcdb->prepare( "DATE_FORMAT( $column, %s ) $compare %f", $format, $time );
 	}
 
 	/**

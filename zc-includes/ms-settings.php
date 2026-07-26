@@ -99,9 +99,9 @@ if ( ! isset( $current_site ) || ! isset( $current_blog ) ) {
 	zc_load_core_site_options( $site_id );
 }
 
-$wpdb->set_prefix( $table_prefix, false ); // $table_prefix can be set in sunrise.php.
-$wpdb->set_blog_id( $current_blog->blog_id, $current_blog->site_id );
-$table_prefix       = $wpdb->get_blog_prefix();
+$zcdb->set_prefix( $table_prefix, false ); // $table_prefix can be set in sunrise.php.
+$zcdb->set_blog_id( $current_blog->blog_id, $current_blog->site_id );
+$table_prefix       = $zcdb->get_blog_prefix();
 $_zc_switched_stack = array();
 $switched           = false;
 

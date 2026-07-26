@@ -19,7 +19,7 @@ require ABSPATH . ZCINC . '/class-zc-metadata-lazyloader.php';
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $meta_type  Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                           'user', or any other object type with an associated meta table.
@@ -38,7 +38,7 @@ require ABSPATH . ZCINC . '/class-zc-metadata-lazyloader.php';
  * @return int|false The meta ID on success, false on failure.
  */
 function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $meta_type || ! $meta_key || ! is_numeric( $object_id ) ) {
 		return false;
@@ -92,8 +92,8 @@ function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique =
 		return $check;
 	}
 
-	if ( $unique && $wpdb->get_var(
-		$wpdb->prepare(
+	if ( $unique && $zcdb->get_var(
+		$zcdb->prepare(
 			"SELECT COUNT(*) FROM $table WHERE meta_key = %s AND $column = %d",
 			$meta_key,
 			$object_id
@@ -127,7 +127,7 @@ function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique =
 	 */
 	do_action( "add_{$meta_type}_meta", $object_id, $meta_key, $_meta_value );
 
-	$result = $wpdb->insert(
+	$result = $zcdb->insert(
 		$table,
 		array(
 			$column      => $object_id,
@@ -140,7 +140,7 @@ function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique =
 		return false;
 	}
 
-	$mid = (int) $wpdb->insert_id;
+	$mid = (int) $zcdb->insert_id;
 
 	zc_cache_delete( $object_id, $meta_type . '_meta' );
 
@@ -178,7 +178,7 @@ function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique =
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $meta_type  Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                           'user', or any other object type with an associated meta table.
@@ -194,7 +194,7 @@ function add_metadata( $meta_type, $object_id, $meta_key, $meta_value, $unique =
  *                  is the same as the one that is already in the database.
  */
 function update_metadata( $meta_type, $object_id, $meta_key, $meta_value, $prev_value = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $meta_type || ! $meta_key || ! is_numeric( $object_id ) ) {
 		return false;
@@ -262,7 +262,7 @@ function update_metadata( $meta_type, $object_id, $meta_key, $meta_value, $prev_
 		}
 	}
 
-	$meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT $id_column FROM $table WHERE meta_key = %s AND $column = %d", $meta_key, $object_id ) );
+	$meta_ids = $zcdb->get_col( $zcdb->prepare( "SELECT $id_column FROM $table WHERE meta_key = %s AND $column = %d", $meta_key, $object_id ) );
 	if ( empty( $meta_ids ) ) {
 		return add_metadata( $meta_type, $object_id, $raw_meta_key, $passed_value );
 	}
@@ -321,7 +321,7 @@ function update_metadata( $meta_type, $object_id, $meta_key, $meta_value, $prev_
 		}
 	}
 
-	$result = $wpdb->update( $table, $data, $where );
+	$result = $zcdb->update( $table, $data, $where );
 	if ( ! $result ) {
 		return false;
 	}
@@ -378,7 +378,7 @@ function update_metadata( $meta_type, $object_id, $meta_key, $meta_value, $prev_
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $meta_type  Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                           'user', or any other object type with an associated meta table.
@@ -397,7 +397,7 @@ function update_metadata( $meta_type, $object_id, $meta_key, $meta_value, $prev_
  * @return bool True on successful delete, false on failure.
  */
 function delete_metadata( $meta_type, $object_id, $meta_key, $meta_value = '', $delete_all = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $meta_type || ! $meta_key || ! is_numeric( $object_id ) && ! $delete_all ) {
 		return false;
@@ -453,26 +453,26 @@ function delete_metadata( $meta_type, $object_id, $meta_key, $meta_value = '', $
 	$_meta_value = $meta_value;
 	$meta_value  = maybe_serialize( $meta_value );
 
-	$query = $wpdb->prepare( "SELECT $id_column FROM $table WHERE meta_key = %s", $meta_key );
+	$query = $zcdb->prepare( "SELECT $id_column FROM $table WHERE meta_key = %s", $meta_key );
 
 	if ( ! $delete_all ) {
-		$query .= $wpdb->prepare( " AND $type_column = %d", $object_id );
+		$query .= $zcdb->prepare( " AND $type_column = %d", $object_id );
 	}
 
 	if ( '' !== $meta_value && null !== $meta_value && false !== $meta_value ) {
-		$query .= $wpdb->prepare( ' AND meta_value = %s', $meta_value );
+		$query .= $zcdb->prepare( ' AND meta_value = %s', $meta_value );
 	}
 
-	$meta_ids = $wpdb->get_col( $query );
+	$meta_ids = $zcdb->get_col( $query );
 	if ( ! count( $meta_ids ) ) {
 		return false;
 	}
 
 	if ( $delete_all ) {
 		if ( '' !== $meta_value && null !== $meta_value && false !== $meta_value ) {
-			$object_ids = $wpdb->get_col( $wpdb->prepare( "SELECT $type_column FROM $table WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value ) );
+			$object_ids = $zcdb->get_col( $zcdb->prepare( "SELECT $type_column FROM $table WHERE meta_key = %s AND meta_value = %s", $meta_key, $meta_value ) );
 		} else {
-			$object_ids = $wpdb->get_col( $wpdb->prepare( "SELECT $type_column FROM $table WHERE meta_key = %s", $meta_key ) );
+			$object_ids = $zcdb->get_col( $zcdb->prepare( "SELECT $type_column FROM $table WHERE meta_key = %s", $meta_key ) );
 		}
 	}
 
@@ -513,7 +513,7 @@ function delete_metadata( $meta_type, $object_id, $meta_key, $meta_value = '', $
 
 	$query = "DELETE FROM $table WHERE $id_column IN( " . implode( ',', $meta_ids ) . ' )';
 
-	$count = $wpdb->query( $query );
+	$count = $zcdb->query( $query );
 
 	if ( ! $count ) {
 		return false;
@@ -795,7 +795,7 @@ function metadata_exists( $meta_type, $object_id, $meta_key ) {
  *
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $meta_type Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                          'user', or any other object type with an associated meta table.
@@ -815,7 +815,7 @@ function metadata_exists( $meta_type, $object_id, $meta_key ) {
  * }
  */
 function get_metadata_by_mid( $meta_type, $meta_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $meta_type || ! is_numeric( $meta_id ) || floor( $meta_id ) != $meta_id ) {
 		return false;
@@ -858,7 +858,7 @@ function get_metadata_by_mid( $meta_type, $meta_id ) {
 
 	$id_column = ( 'user' === $meta_type ) ? 'umeta_id' : 'meta_id';
 
-	$meta = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $table WHERE $id_column = %d", $meta_id ) );
+	$meta = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $table WHERE $id_column = %d", $meta_id ) );
 
 	if ( empty( $meta ) ) {
 		return false;
@@ -876,7 +876,7 @@ function get_metadata_by_mid( $meta_type, $meta_id ) {
  *
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string       $meta_type  Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                                 'user', or any other object type with an associated meta table.
@@ -886,7 +886,7 @@ function get_metadata_by_mid( $meta_type, $meta_id ) {
  * @return bool True on successful update, false on failure.
  */
 function update_metadata_by_mid( $meta_type, $meta_id, $meta_value, $meta_key = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Make sure everything is valid.
 	if ( ! $meta_type || ! is_numeric( $meta_id ) || floor( $meta_id ) != $meta_id ) {
@@ -975,7 +975,7 @@ function update_metadata_by_mid( $meta_type, $meta_id, $meta_value, $meta_key = 
 		}
 
 		// Run the update query, all fields in $data are %s, $where is a %d.
-		$result = $wpdb->update( $table, $data, $where, '%s', '%d' );
+		$result = $zcdb->update( $table, $data, $where, '%s', '%d' );
 		if ( ! $result ) {
 			return false;
 		}
@@ -1003,7 +1003,7 @@ function update_metadata_by_mid( $meta_type, $meta_id, $meta_value, $meta_key = 
  *
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $meta_type Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                          'user', or any other object type with an associated meta table.
@@ -1011,7 +1011,7 @@ function update_metadata_by_mid( $meta_type, $meta_id, $meta_value, $meta_key = 
  * @return bool True on successful delete, false on failure.
  */
 function delete_metadata_by_mid( $meta_type, $meta_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Make sure everything is valid.
 	if ( ! $meta_type || ! is_numeric( $meta_id ) || floor( $meta_id ) != $meta_id ) {
@@ -1086,7 +1086,7 @@ function delete_metadata_by_mid( $meta_type, $meta_id ) {
 		}
 
 		// Run the query, will return true if deleted, false otherwise.
-		$result = (bool) $wpdb->delete( $table, array( $id_column => $meta_id ) );
+		$result = (bool) $zcdb->delete( $table, array( $id_column => $meta_id ) );
 
 		// Clear the caches.
 		zc_cache_delete( $object_id, $meta_type . '_meta' );
@@ -1127,7 +1127,7 @@ function delete_metadata_by_mid( $meta_type, $meta_id ) {
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string       $meta_type  Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                                 'user', or any other object type with an associated meta table.
@@ -1135,7 +1135,7 @@ function delete_metadata_by_mid( $meta_type, $meta_id ) {
  * @return array|false Metadata cache for the specified objects, or false on failure.
  */
 function update_meta_cache( $meta_type, $object_ids ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $meta_type || ! $object_ids ) {
 		return false;
@@ -1201,7 +1201,7 @@ function update_meta_cache( $meta_type, $object_ids ) {
 	$id_list   = implode( ',', $non_cached_ids );
 	$id_column = ( 'user' === $meta_type ) ? 'umeta_id' : 'meta_id';
 
-	$meta_list = $wpdb->get_results( "SELECT $column, meta_key, meta_value FROM $table WHERE $column IN ($id_list) ORDER BY $id_column ASC", ARRAY_A );
+	$meta_list = $zcdb->get_results( "SELECT $column, meta_key, meta_value FROM $table WHERE $column IN ($id_list) ORDER BY $id_column ASC", ARRAY_A );
 
 	if ( ! empty( $meta_list ) ) {
 		foreach ( $meta_list as $metarow ) {
@@ -1281,22 +1281,22 @@ function get_meta_sql( $meta_query, $type, $primary_table, $primary_id_column, $
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $type Type of object metadata is for. Accepts 'blog', 'post', 'comment', 'term',
  *                     'user', or any other object type with an associated meta table.
  * @return string|false Metadata table name, or false if no metadata table exists
  */
 function _get_meta_table( $type ) {
-	global $wpdb;
+	global $zcdb;
 
 	$table_name = $type . 'meta';
 
-	if ( empty( $wpdb->$table_name ) ) {
+	if ( empty( $zcdb->$table_name ) ) {
 		return false;
 	}
 
-	return $wpdb->$table_name;
+	return $zcdb->$table_name;
 }
 
 /**

@@ -308,9 +308,9 @@ $_old_files = array(
 	'zc-includes/js/jquery/ui.widget.js',
 	'zc-includes/js/l10n.dev.js',
 	'zc-includes/js/l10n.js',
-	'zc-includes/js/tinymce/plugins/wplink/css',
-	'zc-includes/js/tinymce/plugins/wplink/img',
-	'zc-includes/js/tinymce/plugins/wplink/js',
+	'zc-includes/js/tinymce/plugins/zclink/css',
+	'zc-includes/js/tinymce/plugins/zclink/img',
+	'zc-includes/js/tinymce/plugins/zclink/js',
 	// Don't delete, yet: 'zc-rss.php',
 	// Don't delete, yet: 'zc-rdf.php',
 	// Don't delete, yet: 'zc-rss2.php',
@@ -329,10 +329,10 @@ $_old_files = array(
 	'zc-includes/js/tinymce/plugins/paste/blank.htm',
 	'zc-includes/js/tinymce/plugins/zelocorecms/css',
 	'zc-includes/js/tinymce/plugins/zelocorecms/editor_plugin.dev.js',
-	'zc-includes/js/tinymce/plugins/wpdialogs/editor_plugin.dev.js',
-	'zc-includes/js/tinymce/plugins/wpeditimage/editor_plugin.dev.js',
-	'zc-includes/js/tinymce/plugins/wpgallery/editor_plugin.dev.js',
-	'zc-includes/js/tinymce/plugins/wplink/editor_plugin.dev.js',
+	'zc-includes/js/tinymce/plugins/zcdialogs/editor_plugin.dev.js',
+	'zc-includes/js/tinymce/plugins/zceditimage/editor_plugin.dev.js',
+	'zc-includes/js/tinymce/plugins/zcgallery/editor_plugin.dev.js',
+	'zc-includes/js/tinymce/plugins/zclink/editor_plugin.dev.js',
 	// Don't delete, yet: 'zc-pass.php',
 	// Don't delete, yet: 'zc-register.php',
 	// 3.5
@@ -375,7 +375,7 @@ $_old_files = array(
 	'zc-admin/images/white-grad.png',
 	'zc-admin/images/widgets-arrow-vs.gif',
 	'zc-admin/images/widgets-arrow.gif',
-	'zc-admin/images/wpspin_dark.gif',
+	'zc-admin/images/zcspin_dark.gif',
 	'zc-includes/images/upload.png',
 	'zc-includes/js/prototype.js',
 	'zc-includes/js/scriptaculous',
@@ -394,7 +394,7 @@ $_old_files = array(
 	'zc-includes/js/json2.dev.js',
 	'zc-includes/js/comment-reply.dev.js',
 	'zc-includes/js/customize-preview.dev.js',
-	'zc-includes/js/wplink.dev.js',
+	'zc-includes/js/zclink.dev.js',
 	'zc-includes/js/tw-sack.dev.js',
 	'zc-includes/js/zc-list-revisions.dev.js',
 	'zc-includes/js/autosave.dev.js',
@@ -555,11 +555,11 @@ $_old_files = array(
 	'zc-includes/js/tinymce/plugins/media/js',
 	'zc-includes/js/tinymce/plugins/media/css',
 	'zc-includes/js/tinymce/plugins/zelocorecms/img',
-	'zc-includes/js/tinymce/plugins/wpdialogs/js',
-	'zc-includes/js/tinymce/plugins/wpeditimage/img',
-	'zc-includes/js/tinymce/plugins/wpeditimage/js',
-	'zc-includes/js/tinymce/plugins/wpeditimage/css',
-	'zc-includes/js/tinymce/plugins/wpgallery/img',
+	'zc-includes/js/tinymce/plugins/zcdialogs/js',
+	'zc-includes/js/tinymce/plugins/zceditimage/img',
+	'zc-includes/js/tinymce/plugins/zceditimage/js',
+	'zc-includes/js/tinymce/plugins/zceditimage/css',
+	'zc-includes/js/tinymce/plugins/zcgallery/img',
 	'zc-includes/js/tinymce/plugins/paste/js',
 	'zc-includes/js/tinymce/themes/advanced',
 	'zc-includes/js/tinymce/tiny_mce.js',
@@ -568,24 +568,24 @@ $_old_files = array(
 	'zc-includes/js/tinymce/plugins/media/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/media/editor_plugin_src.js',
 	'zc-includes/js/tinymce/plugins/media/media.htm',
-	'zc-includes/js/tinymce/plugins/wpview/editor_plugin_src.js',
-	'zc-includes/js/tinymce/plugins/wpview/editor_plugin.js',
+	'zc-includes/js/tinymce/plugins/zcview/editor_plugin_src.js',
+	'zc-includes/js/tinymce/plugins/zcview/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/directionality/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/directionality/editor_plugin_src.js',
 	'zc-includes/js/tinymce/plugins/zelocorecms/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/zelocorecms/editor_plugin_src.js',
-	'zc-includes/js/tinymce/plugins/wpdialogs/editor_plugin_src.js',
-	'zc-includes/js/tinymce/plugins/wpdialogs/editor_plugin.js',
-	'zc-includes/js/tinymce/plugins/wpeditimage/editimage.html',
-	'zc-includes/js/tinymce/plugins/wpeditimage/editor_plugin.js',
-	'zc-includes/js/tinymce/plugins/wpeditimage/editor_plugin_src.js',
+	'zc-includes/js/tinymce/plugins/zcdialogs/editor_plugin_src.js',
+	'zc-includes/js/tinymce/plugins/zcdialogs/editor_plugin.js',
+	'zc-includes/js/tinymce/plugins/zceditimage/editimage.html',
+	'zc-includes/js/tinymce/plugins/zceditimage/editor_plugin.js',
+	'zc-includes/js/tinymce/plugins/zceditimage/editor_plugin_src.js',
 	'zc-includes/js/tinymce/plugins/fullscreen/editor_plugin_src.js',
 	'zc-includes/js/tinymce/plugins/fullscreen/fullscreen.htm',
 	'zc-includes/js/tinymce/plugins/fullscreen/editor_plugin.js',
-	'zc-includes/js/tinymce/plugins/wplink/editor_plugin_src.js',
-	'zc-includes/js/tinymce/plugins/wplink/editor_plugin.js',
-	'zc-includes/js/tinymce/plugins/wpgallery/editor_plugin_src.js',
-	'zc-includes/js/tinymce/plugins/wpgallery/editor_plugin.js',
+	'zc-includes/js/tinymce/plugins/zclink/editor_plugin_src.js',
+	'zc-includes/js/tinymce/plugins/zclink/editor_plugin.js',
+	'zc-includes/js/tinymce/plugins/zcgallery/editor_plugin_src.js',
+	'zc-includes/js/tinymce/plugins/zcgallery/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/tabfocus/editor_plugin.js',
 	'zc-includes/js/tinymce/plugins/tabfocus/editor_plugin_src.js',
 	'zc-includes/js/tinymce/plugins/paste/editor_plugin.js',
@@ -1083,7 +1083,7 @@ $_new_bundled_files = array(
  * @global string[]           $_old_files
  * @global string[]           $_old_requests_files
  * @global string[]           $_new_bundled_files
- * @global wpdb               $wpdb                   ZelocoreCMS database abstraction object.
+ * @global zcdb               $zcdb                   ZelocoreCMS database abstraction object.
  * @global string             $zc_version             The ZelocoreCMS version string.
  *
  * @param string $from New release unzipped path.
@@ -1091,7 +1091,7 @@ $_new_bundled_files = array(
  * @return string|ZC_Error New ZelocoreCMS version on success, ZC_Error on failure.
  */
 function update_core( $from, $to ) {
-	global $zc_filesystem, $_old_files, $_old_requests_files, $_new_bundled_files, $wpdb;
+	global $zc_filesystem, $_old_files, $_old_requests_files, $_new_bundled_files, $zcdb;
 
 	/*
 	 * Give core update script an additional 300 seconds (5 minutes)
@@ -1179,7 +1179,7 @@ function update_core( $from, $to ) {
 	$zc_filesystem->delete( $versions_file );
 
 	$php_version    = PHP_VERSION;
-	$mysql_version  = $wpdb->db_version();
+	$mysql_version  = $zcdb->db_version();
 	$old_zc_version = $GLOBALS['zc_version']; // The version of ZelocoreCMS we're updating from.
 	/*
 	 * Note: str_contains() is not used here, as this file is included
@@ -1189,7 +1189,7 @@ function update_core( $from, $to ) {
 	$development_build = ( false !== strpos( $old_zc_version . $zc_version, '-' ) ); // A dash in the version indicates a development release.
 	$php_compat        = version_compare( $php_version, $required_php_version, '>=' );
 
-	if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $wpdb->is_mysql ) ) {
+	if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $zcdb->is_mysql ) ) {
 		$mysql_compat = true;
 	} else {
 		$mysql_compat = version_compare( $mysql_version, $required_mysql_version, '>=' );

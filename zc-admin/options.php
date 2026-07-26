@@ -396,7 +396,7 @@ require_once ABSPATH . 'zc-admin/admin-header.php';
 		<input type="hidden" name="option_page" value="options" />
 		<table class="form-table" role="presentation">
 <?php
-$options = $wpdb->get_results( "SELECT * FROM $wpdb->options ORDER BY option_name" );
+$options = $zcdb->get_results( "SELECT * FROM $zcdb->options ORDER BY option_name" );
 
 foreach ( (array) $options as $option ) :
 	$disabled = false;

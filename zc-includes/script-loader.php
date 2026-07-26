@@ -341,12 +341,12 @@ function zc_default_packages_scripts( $scripts ) {
  * @since 6.4.0 Added relative time strings for the `zc-date` inline script output.
  *
  * @global ZC_Locale $zc_locale ZelocoreCMS date and time locale object.
- * @global wpdb      $wpdb      ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb      ZelocoreCMS database abstraction object.
  *
  * @param ZC_Scripts $scripts ZC_Scripts object.
  */
 function zc_default_packages_inline_scripts( $scripts ) {
-	global $zc_locale, $wpdb;
+	global $zc_locale, $zcdb;
 
 	if ( isset( $scripts->registered['zc-api-fetch'] ) ) {
 		$scripts->registered['zc-api-fetch']->deps[] = 'zc-hooks';
@@ -379,7 +379,7 @@ function zc_default_packages_inline_scripts( $scripts ) {
 		'after'
 	);
 
-	$meta_key     = $wpdb->get_blog_prefix() . 'persisted_preferences';
+	$meta_key     = $zcdb->get_blog_prefix() . 'persisted_preferences';
 	$user_id      = get_current_user_id();
 	$preload_data = get_user_meta( $user_id, $meta_key, true );
 	$scripts->add_inline_script(
@@ -539,14 +539,14 @@ function zc_tinymce_inline_scripts() {
 		'textcolor',
 		'fullscreen',
 		'zelocorecms',
-		'wpautoresize',
-		'wpeditimage',
-		'wpemoji',
-		'wpgallery',
-		'wplink',
-		'wpdialogs',
-		'wptextpattern',
-		'wpview',
+		'zcautoresize',
+		'zceditimage',
+		'zcemoji',
+		'zcgallery',
+		'zclink',
+		'zcdialogs',
+		'zctextpattern',
+		'zcview',
 	);
 
 	/** This filter is documented in zc-includes/class-zc-editor.php */
@@ -615,7 +615,7 @@ function zc_tinymce_inline_scripts() {
 	);
 
 	if ( $disable_captions ) {
-		$tinymce_settings['wpeditimage_disable_captions'] = true;
+		$tinymce_settings['zceditimage_disable_captions'] = true;
 	}
 
 	if ( ! empty( $editor_settings['tinymce'] ) && is_array( $editor_settings['tinymce'] ) ) {
@@ -1263,10 +1263,10 @@ function zc_default_scripts( $scripts ) {
 
 	$scripts->add( 'admin-bar', "/zc-includes/js/admin-bar$suffix.js", array( 'hoverintent-js' ), false, 1 );
 
-	$scripts->add( 'wplink', "/zc-includes/js/wplink$suffix.js", array( 'common', 'jquery', 'zc-a11y', 'zc-i18n' ), false, 1 );
-	$scripts->set_translations( 'wplink' );
+	$scripts->add( 'zclink', "/zc-includes/js/zclink$suffix.js", array( 'common', 'jquery', 'zc-a11y', 'zc-i18n' ), false, 1 );
+	$scripts->set_translations( 'zclink' );
 	did_action( 'init' ) && $scripts->localize(
-		'wplink',
+		'zclink',
 		'wpLinkL10n',
 		array(
 			'title'          => __( 'Insert/edit link' ),
@@ -1281,7 +1281,7 @@ function zc_default_scripts( $scripts ) {
 		)
 	);
 
-	$scripts->add( 'wpdialogs', "/zc-includes/js/wpdialog$suffix.js", array( 'jquery-ui-dialog' ), false, 1 );
+	$scripts->add( 'zcdialogs', "/zc-includes/js/zcdialog$suffix.js", array( 'jquery-ui-dialog' ), false, 1 );
 
 	$scripts->add( 'word-count', "/zc-admin/js/word-count$suffix.js", array(), false, 1 );
 

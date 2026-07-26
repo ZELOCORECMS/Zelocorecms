@@ -251,14 +251,14 @@ zc.textWidgets = ( function( $ ) {
 					zc.oldEditor.remove( id );
 				}
 
-				// Add or enable the `wpview` plugin.
+				// Add or enable the `zcview` plugin.
 				$( document ).one( 'zc-before-tinymce-init.text-widget-init', function( event, init ) {
 					// If somebody has removed all plugins, they must have a good reason.
 					// Keep it that way.
 					if ( ! init.plugins ) {
 						return;
-					} else if ( ! /\bwpview\b/.test( init.plugins ) ) {
-						init.plugins += ',wpview';
+					} else if ( ! /\bzcview\b/.test( init.plugins ) ) {
+						init.plugins += ',zcview';
 					}
 				} );
 

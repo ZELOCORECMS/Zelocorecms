@@ -692,13 +692,13 @@ class ZC_List_Table {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @global wpdb      $wpdb      ZelocoreCMS database abstraction object.
+	 * @global zcdb      $zcdb      ZelocoreCMS database abstraction object.
 	 * @global ZC_Locale $zc_locale ZelocoreCMS date and time locale object.
 	 *
 	 * @param string $post_type The post type.
 	 */
 	protected function months_dropdown( $post_type ) {
-		global $wpdb, $zc_locale;
+		global $zcdb, $zc_locale;
 
 		/**
 		 * Filters whether to remove the 'Months' drop-down from the post list table.
@@ -727,13 +727,13 @@ class ZC_List_Table {
 			if ( ! isset( $_GET['post_status'] ) || 'trash' !== $_GET['post_status'] ) {
 				$extra_checks .= " AND post_status != 'trash'";
 			} elseif ( isset( $_GET['post_status'] ) ) {
-				$extra_checks = $wpdb->prepare( ' AND post_status = %s', $_GET['post_status'] );
+				$extra_checks = $zcdb->prepare( ' AND post_status = %s', $_GET['post_status'] );
 			}
 
-			$months = $wpdb->get_results(
-				$wpdb->prepare(
+			$months = $zcdb->get_results(
+				$zcdb->prepare(
 					"SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
-					FROM $wpdb->posts
+					FROM $zcdb->posts
 					WHERE post_type = %s
 					$extra_checks
 					ORDER BY post_date DESC",

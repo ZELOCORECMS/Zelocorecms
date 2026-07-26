@@ -126,7 +126,7 @@
 
 						// Add the processed piece for the match.
 						pieces.push( {
-							content: instance.ignore ? text : '<p data-wpview-marker="' + instance.encodedText + '">' + text + '</p>',
+							content: instance.ignore ? text : '<p data-zcview-marker="' + instance.encodedText + '">' + text + '</p>',
 							processed: true
 						} );
 
@@ -143,7 +143,7 @@
 			} );
 
 			content = _.pluck( pieces, 'content' ).join( '' );
-			return content.replace( /<p>\s*<p data-wpview-marker=/g, '<p data-wpview-marker=' ).replace( /<\/p>\s*<\/p>/g, '</p>' );
+			return content.replace( /<p>\s*<p data-zcview-marker=/g, '<p data-zcview-marker=' ).replace( /<\/p>\s*<\/p>/g, '</p>' );
 		},
 
 		/**
@@ -199,7 +199,7 @@
 				return instances[ encodeURIComponent( object ) ];
 			}
 
-			return instances[ $( object ).attr( 'data-wpview-text' ) ];
+			return instances[ $( object ).attr( 'data-zcview-text' ) ];
 		},
 
 		/**
@@ -210,7 +210,7 @@
 		 * @return {string} The textual representation of the view.
 		 */
 		getText: function( node ) {
-			return decodeURIComponent( $( node ).attr( 'data-wpview-text' ) || '' );
+			return decodeURIComponent( $( node ).attr( 'data-zcview-text' ) || '' );
 		},
 
 		/**
@@ -375,7 +375,7 @@
 		 */
 		getEditors: function( callback ) {
 			_.each( tinymce.editors, function( editor ) {
-				if ( editor.plugins.wpview ) {
+				if ( editor.plugins.zcview ) {
 					callback.call( this, editor );
 				}
 			}, this );
@@ -392,7 +392,7 @@
 				var self = this;
 
 				$( editor.getBody() )
-					.find( '[data-wpview-text="' + self.encodedText + '"]' )
+					.find( '[data-zcview-text="' + self.encodedText + '"]' )
 					.filter( function() {
 						var data;
 
@@ -420,7 +420,7 @@
 				var self = this;
 
 				$( editor.getBody() )
-					.find( '[data-wpview-marker="' + this.encodedText + '"]' )
+					.find( '[data-zcview-marker="' + this.encodedText + '"]' )
 					.each( function() {
 						callback.call( self, editor, this );
 					} );
@@ -436,12 +436,12 @@
 				var $viewNode;
 
 				if ( ! this.loader && $( node ).text() !== tinymce.DOM.decode( this.text ) ) {
-					editor.dom.setAttrib( node, 'data-wpview-marker', null );
+					editor.dom.setAttrib( node, 'data-zcview-marker', null );
 					return;
 				}
 
 				$viewNode = editor.$(
-					'<div class="wpview wpview-wrap" data-wpview-text="' + this.encodedText + '" data-wpview-type="' + this.type + '" contenteditable="false"></div>'
+					'<div class="zcview zcview-wrap" data-zcview-text="' + this.encodedText + '" data-zcview-type="' + this.type + '" contenteditable="false"></div>'
 				);
 
 				editor.undoManager.ignore( function() {
@@ -464,7 +464,7 @@
 		 */
 		removeMarkers: function() {
 			this.getMarkers( function( editor, node ) {
-				editor.dom.setAttrib( node, 'data-wpview-marker', null );
+				editor.dom.setAttrib( node, 'data-zcview-marker', null );
 			} );
 		},
 
@@ -491,7 +491,7 @@
 					editor.undoManager.transact( function() {
 						node.innerHTML = '';
 						node.appendChild( _.isString( content ) ? editor.dom.createFragment( content ) : content );
-						editor.dom.add( node, 'span', { 'class': 'wpview-end' } );
+						editor.dom.add( node, 'span', { 'class': 'zcview-end' } );
 					} );
 
 					callback && callback.call( this, editor, node );
@@ -553,7 +553,7 @@
 						frameBorder: '0',
 						allowTransparency: 'true',
 						scrolling: 'no',
-						'class': 'wpview-sandbox',
+						'class': 'zcview-sandbox',
 						style: {
 							width: '100%',
 							display: 'block'
@@ -562,7 +562,7 @@
 					} );
 
 					dom.add( node, 'span', { 'class': 'mce-shim' } );
-					dom.add( node, 'span', { 'class': 'wpview-end' } );
+					dom.add( node, 'span', { 'class': 'zcview-end' } );
 				} );
 
 				/*
@@ -592,13 +592,13 @@
 									'padding: 0;' +
 									'margin: 0;' +
 								'}' +
-								'body#wpview-iframe-sandbox {' +
+								'body#zcview-iframe-sandbox {' +
 									'background: transparent;' +
 									'padding: 1px 0 !important;' +
 									'margin: -1px 0 0 !important;' +
 								'}' +
-								'body#wpview-iframe-sandbox:before,' +
-								'body#wpview-iframe-sandbox:after {' +
+								'body#zcview-iframe-sandbox:before,' +
+								'body#zcview-iframe-sandbox:after {' +
 									'display: none;' +
 									'content: "";' +
 								'}' +
@@ -607,7 +607,7 @@
 								'}' +
 							'</style>' +
 						'</head>' +
-						'<body id="wpview-iframe-sandbox" class="' + bodyClasses + '">' +
+						'<body id="zcview-iframe-sandbox" class="' + bodyClasses + '">' +
 							body +
 						'</body>' +
 					'</html>'
@@ -680,7 +680,7 @@
 			this.setContent(
 				'<div class="loading-placeholder">' +
 					'<div class="dashicons dashicons-' + ( dashicon || 'admin-media' ) + '"></div>' +
-					'<div class="wpview-loading"><ins></ins></div>' +
+					'<div class="zcview-loading"><ins></ins></div>' +
 				'</div>'
 			);
 		},
@@ -693,7 +693,7 @@
 		 */
 		setError: function( message, dashicon ) {
 			this.setContent(
-				'<div class="wpview-error">' +
+				'<div class="zcview-error">' +
 					'<div class="dashicons dashicons-' + ( dashicon || 'no' ) + '"></div>' +
 					'<p>' + message + '</p>' +
 				'</div>'
@@ -735,7 +735,7 @@
 
 				if ( match ) {
 					$( node ).data( 'rendered', false );
-					editor.dom.setAttrib( node, 'data-wpview-text', encodeURIComponent( text ) );
+					editor.dom.setAttrib( node, 'data-zcview-text', encodeURIComponent( text ) );
 					zc.mce.views.createInstance( type, text, match.options, force ).render();
 
 					editor.selection.select( node );
@@ -885,7 +885,7 @@
 			} );
 
 			this.getEditors( function( editor ) {
-				editor.on( 'wpview-selected', function() {
+				editor.on( 'zcview-selected', function() {
 					self.pausePlayers();
 				} );
 			} );
@@ -893,7 +893,7 @@
 
 		pausePlayers: function() {
 			this.getNodes( function( editor, node, content ) {
-				var win = $( 'iframe.wpview-sandbox', content ).get( 0 );
+				var win = $( 'iframe.zcview-sandbox', content ).get( 0 );
 
 				if ( win && ( win = win.contentWindow ) && win.mejs ) {
 					_.each( win.mejs.players, function( player ) {

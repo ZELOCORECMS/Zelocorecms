@@ -65,7 +65,7 @@ switch ( $action ) {
 		$all_links = implode( ',', $linkcheck );
 		/*
 		 * Should now have an array of links we can change:
-		 *     $q = $wpdb->query("update $wpdb->links SET link_category='$category' WHERE link_id IN ($all_links)");
+		 *     $q = $zcdb->query("update $zcdb->links SET link_category='$category' WHERE link_id IN ($all_links)");
 		 */
 
 		zc_redirect( $this_file );

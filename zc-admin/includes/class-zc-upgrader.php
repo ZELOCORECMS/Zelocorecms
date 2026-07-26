@@ -1047,7 +1047,7 @@ class ZC_Upgrader {
 	 *
 	 * @since 4.5.0
 	 *
-	 * @global wpdb $wpdb The ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb The ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $lock_name       The name of this unique lock.
 	 * @param int    $release_timeout Optional. The duration in seconds to respect an existing lock.
@@ -1055,14 +1055,14 @@ class ZC_Upgrader {
 	 * @return bool False if a lock couldn't be created or if the lock is still valid. True otherwise.
 	 */
 	public static function create_lock( $lock_name, $release_timeout = null ) {
-		global $wpdb;
+		global $zcdb;
 		if ( ! $release_timeout ) {
 			$release_timeout = HOUR_IN_SECONDS;
 		}
 		$lock_option = $lock_name . '.lock';
 
 		// Try to lock.
-		$lock_result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'off') /* LOCK */", $lock_option, time() ) );
+		$lock_result = $zcdb->query( $zcdb->prepare( "INSERT IGNORE INTO `$zcdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'off') /* LOCK */", $lock_option, time() ) );
 
 		if ( ! $lock_result ) {
 			$lock_result = get_option( $lock_option );

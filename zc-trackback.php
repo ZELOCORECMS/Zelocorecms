@@ -133,9 +133,9 @@ if ( ! empty( $trackback_url ) && ! empty( $title ) ) {
 	$comment_content      = "<strong>$title</strong>\n\n$excerpt";
 	$comment_type         = 'trackback';
 
-	$dupe = $wpdb->get_results(
-		$wpdb->prepare(
-			"SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s",
+	$dupe = $zcdb->get_results(
+		$zcdb->prepare(
+			"SELECT * FROM $zcdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s",
 			$comment_post_id,
 			$comment_author_url
 		)
@@ -163,7 +163,7 @@ if ( ! empty( $trackback_url ) && ! empty( $title ) ) {
 		trackback_response( 1, $result->get_error_message() );
 	}
 
-	$trackback_id = $wpdb->insert_id;
+	$trackback_id = $zcdb->insert_id;
 
 	/**
 	 * Fires after a trackback is added to a post.

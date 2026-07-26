@@ -122,7 +122,7 @@ function get_id_from_blogname( $slug ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|string|array $fields  Optional. A blog ID, a blog slug, or an array of fields to query against.
  *                                  Defaults to the current blog ID.
@@ -131,7 +131,7 @@ function get_id_from_blogname( $slug ) {
  * @return ZC_Site|false Blog details on success. False on failure.
  */
 function get_blog_details( $fields = null, $get_all = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_array( $fields ) ) {
 		if ( isset( $fields['blog_id'] ) ) {
@@ -144,9 +144,9 @@ function get_blog_details( $fields = null, $get_all = true ) {
 			}
 			if ( str_starts_with( $fields['domain'], 'www.' ) ) {
 				$nowww = substr( $fields['domain'], 4 );
-				$blog  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->blogs WHERE domain IN (%s,%s) AND path = %s ORDER BY CHAR_LENGTH(domain) DESC", $nowww, $fields['domain'], $fields['path'] ) );
+				$blog  = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->blogs WHERE domain IN (%s,%s) AND path = %s ORDER BY CHAR_LENGTH(domain) DESC", $nowww, $fields['domain'], $fields['path'] ) );
 			} else {
-				$blog = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->blogs WHERE domain = %s AND path = %s", $fields['domain'], $fields['path'] ) );
+				$blog = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->blogs WHERE domain = %s AND path = %s", $fields['domain'], $fields['path'] ) );
 			}
 			if ( $blog ) {
 				zc_cache_set( $blog->blog_id . 'short', $blog, 'blog-details' );
@@ -162,9 +162,9 @@ function get_blog_details( $fields = null, $get_all = true ) {
 			}
 			if ( str_starts_with( $fields['domain'], 'www.' ) ) {
 				$nowww = substr( $fields['domain'], 4 );
-				$blog  = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->blogs WHERE domain IN (%s,%s) ORDER BY CHAR_LENGTH(domain) DESC", $nowww, $fields['domain'] ) );
+				$blog  = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->blogs WHERE domain IN (%s,%s) ORDER BY CHAR_LENGTH(domain) DESC", $nowww, $fields['domain'] ) );
 			} else {
-				$blog = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->blogs WHERE domain = %s", $fields['domain'] ) );
+				$blog = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->blogs WHERE domain = %s", $fields['domain'] ) );
 			}
 			if ( $blog ) {
 				zc_cache_set( $blog->blog_id . 'short', $blog, 'blog-details' );
@@ -486,7 +486,7 @@ function update_blog_option( $id, $option, $value, $deprecated = null ) {
  * @see restore_current_blog()
  * @since MU (3.0.0)
  *
- * @global wpdb            $wpdb               ZelocoreCMS database abstraction object.
+ * @global zcdb            $zcdb               ZelocoreCMS database abstraction object.
  * @global int             $blog_id
  * @global array           $_zc_switched_stack
  * @global bool            $switched
@@ -498,7 +498,7 @@ function update_blog_option( $id, $option, $value, $deprecated = null ) {
  * @return true Always returns true.
  */
 function switch_to_blog( $new_blog_id, $deprecated = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	$prev_blog_id = get_current_blog_id();
 	if ( empty( $new_blog_id ) ) {
@@ -531,8 +531,8 @@ function switch_to_blog( $new_blog_id, $deprecated = null ) {
 		return true;
 	}
 
-	$wpdb->set_blog_id( $new_blog_id );
-	$GLOBALS['table_prefix'] = $wpdb->get_blog_prefix();
+	$zcdb->set_blog_id( $new_blog_id );
+	$GLOBALS['table_prefix'] = $zcdb->get_blog_prefix();
 	$GLOBALS['blog_id']      = $new_blog_id;
 
 	zc_cache_switch_to_blog( $new_blog_id );
@@ -551,7 +551,7 @@ function switch_to_blog( $new_blog_id, $deprecated = null ) {
  * @see switch_to_blog()
  * @since MU (3.0.0)
  *
- * @global wpdb            $wpdb               ZelocoreCMS database abstraction object.
+ * @global zcdb            $zcdb               ZelocoreCMS database abstraction object.
  * @global array           $_zc_switched_stack
  * @global int             $blog_id
  * @global bool            $switched
@@ -561,7 +561,7 @@ function switch_to_blog( $new_blog_id, $deprecated = null ) {
  * @return bool True on success, false if we're already on the current blog.
  */
 function restore_current_blog() {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $GLOBALS['_zc_switched_stack'] ) ) {
 		return false;
@@ -580,9 +580,9 @@ function restore_current_blog() {
 		return true;
 	}
 
-	$wpdb->set_blog_id( $new_blog_id );
+	$zcdb->set_blog_id( $new_blog_id );
 	$GLOBALS['blog_id']      = $new_blog_id;
-	$GLOBALS['table_prefix'] = $wpdb->get_blog_prefix();
+	$GLOBALS['table_prefix'] = $zcdb->get_blog_prefix();
 
 	zc_cache_switch_to_blog( $new_blog_id );
 
@@ -750,7 +750,7 @@ function update_archived( $id, $archived ) {
  * @since MU (3.0.0)
  * @since 5.1.0 Use zc_update_site() internally.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $blog_id    Blog ID.
  * @param string $pref       Field name.
@@ -759,7 +759,7 @@ function update_archived( $id, $archived ) {
  * @return string|false $value
  */
 function update_blog_status( $blog_id, $pref, $value, $deprecated = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( null !== $deprecated ) {
 		_deprecated_argument( __FUNCTION__, '3.1.0' );
@@ -790,21 +790,21 @@ function update_blog_status( $blog_id, $pref, $value, $deprecated = null ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $id   Blog ID.
  * @param string $pref Field name.
  * @return bool|string|null $value
  */
 function get_blog_status( $id, $pref ) {
-	global $wpdb;
+	global $zcdb;
 
 	$details = get_site( $id );
 	if ( $details ) {
 		return $details->$pref;
 	}
 
-	return $wpdb->get_var( $wpdb->prepare( "SELECT %s FROM {$wpdb->blogs} WHERE blog_id = %d", $pref, $id ) );
+	return $zcdb->get_var( $zcdb->prepare( "SELECT %s FROM {$zcdb->blogs} WHERE blog_id = %d", $pref, $id ) );
 }
 
 /**
@@ -812,7 +812,7 @@ function get_blog_status( $id, $pref ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param mixed $deprecated Not used.
  * @param int   $start      Optional. Number of blogs to offset the query. Used to build LIMIT clause.
@@ -821,13 +821,13 @@ function get_blog_status( $id, $pref ) {
  * @return array The list of blogs.
  */
 function get_last_updated( $deprecated = '', $start = 0, $quantity = 40 ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, 'MU' ); // Never used.
 	}
 
-	return $wpdb->get_results( $wpdb->prepare( "SELECT blog_id, domain, path FROM $wpdb->blogs WHERE site_id = %d AND public = '1' AND archived = '0' AND mature = '0' AND spam = '0' AND deleted = '0' AND last_updated != '0000-00-00 00:00:00' ORDER BY last_updated DESC limit %d, %d", get_current_network_id(), $start, $quantity ), ARRAY_A );
+	return $zcdb->get_results( $zcdb->prepare( "SELECT blog_id, domain, path FROM $zcdb->blogs WHERE site_id = %d AND public = '1' AND archived = '0' AND mature = '0' AND spam = '0' AND deleted = '0' AND last_updated != '0000-00-00 00:00:00' ORDER BY last_updated DESC limit %d, %d", get_current_network_id(), $start, $quantity ), ARRAY_A );
 }
 
 /**

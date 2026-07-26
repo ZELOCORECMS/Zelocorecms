@@ -1367,18 +1367,18 @@ function zc_nav_menu_manage_columns() {
  * @access private
  * @since 3.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function _zc_delete_orphaned_draft_menu_items() {
-	global $wpdb;
+	global $zcdb;
 
 	$delete_timestamp = time() - ( DAY_IN_SECONDS * EMPTY_TRASH_DAYS );
 
 	// Delete orphaned draft menu items.
-	$menu_items_to_delete = $wpdb->get_col(
-		$wpdb->prepare(
-			"SELECT ID FROM $wpdb->posts AS p
-			LEFT JOIN $wpdb->postmeta AS m ON p.ID = m.post_id
+	$menu_items_to_delete = $zcdb->get_col(
+		$zcdb->prepare(
+			"SELECT ID FROM $zcdb->posts AS p
+			LEFT JOIN $zcdb->postmeta AS m ON p.ID = m.post_id
 			WHERE post_type = 'nav_menu_item' AND post_status = 'draft'
 			AND meta_key = '_menu_item_orphaned' AND meta_value < %d",
 			$delete_timestamp

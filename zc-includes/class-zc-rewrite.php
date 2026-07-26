@@ -420,15 +420,15 @@ class ZC_Rewrite {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return array Array of page URIs as first element and attachment URIs as second element.
 	 */
 	public function page_uri_index() {
-		global $wpdb;
+		global $zcdb;
 
 		// Get pages in order of hierarchy, i.e. children after parents.
-		$pages = $wpdb->get_results( "SELECT ID, post_name, post_parent FROM $wpdb->posts WHERE post_type = 'page' AND post_status != 'auto-draft'" );
+		$pages = $zcdb->get_results( "SELECT ID, post_name, post_parent FROM $zcdb->posts WHERE post_type = 'page' AND post_status != 'auto-draft'" );
 		$posts = get_page_hierarchy( $pages );
 
 		// If we have no pages get out quick.
@@ -445,7 +445,7 @@ class ZC_Rewrite {
 		foreach ( $posts as $id => $post ) {
 			// URL => page name.
 			$uri         = get_page_uri( $id );
-			$attachments = $wpdb->get_results( $wpdb->prepare( "SELECT ID, post_name, post_parent FROM $wpdb->posts WHERE post_type = 'attachment' AND post_parent = %d", $id ) );
+			$attachments = $zcdb->get_results( $zcdb->prepare( "SELECT ID, post_name, post_parent FROM $zcdb->posts WHERE post_type = 'attachment' AND post_parent = %d", $id ) );
 			if ( ! empty( $attachments ) ) {
 				foreach ( $attachments as $attachment ) {
 					$attach_uri                          = get_page_uri( $attachment->ID );

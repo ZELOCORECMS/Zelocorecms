@@ -1129,28 +1129,28 @@ function zc_old_slug_redirect() {
  * @access private
  *
  * @see zc_old_slug_redirect()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $post_type The current post type based on the query vars.
  * @return int The Post ID.
  */
 function _find_post_by_old_slug( $post_type ) {
-	global $wpdb;
+	global $zcdb;
 
-	$query = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta, $wpdb->posts WHERE ID = post_id AND post_type = %s AND meta_key = '_zc_old_slug' AND meta_value = %s", $post_type, get_query_var( 'name' ) );
+	$query = $zcdb->prepare( "SELECT post_id FROM $zcdb->postmeta, $zcdb->posts WHERE ID = post_id AND post_type = %s AND meta_key = '_zc_old_slug' AND meta_value = %s", $post_type, get_query_var( 'name' ) );
 
 	/*
 	 * If year, monthnum, or day have been specified, make our query more precise
 	 * just in case there are multiple identical _zc_old_slug values.
 	 */
 	if ( get_query_var( 'year' ) ) {
-		$query .= $wpdb->prepare( ' AND YEAR(post_date) = %d', get_query_var( 'year' ) );
+		$query .= $zcdb->prepare( ' AND YEAR(post_date) = %d', get_query_var( 'year' ) );
 	}
 	if ( get_query_var( 'monthnum' ) ) {
-		$query .= $wpdb->prepare( ' AND MONTH(post_date) = %d', get_query_var( 'monthnum' ) );
+		$query .= $zcdb->prepare( ' AND MONTH(post_date) = %d', get_query_var( 'monthnum' ) );
 	}
 	if ( get_query_var( 'day' ) ) {
-		$query .= $wpdb->prepare( ' AND DAYOFMONTH(post_date) = %d', get_query_var( 'day' ) );
+		$query .= $zcdb->prepare( ' AND DAYOFMONTH(post_date) = %d', get_query_var( 'day' ) );
 	}
 
 	$key          = md5( $query );
@@ -1160,7 +1160,7 @@ function _find_post_by_old_slug( $post_type ) {
 	if ( false !== $cache ) {
 		$id = $cache;
 	} else {
-		$id = (int) $wpdb->get_var( $query );
+		$id = (int) $zcdb->get_var( $query );
 		zc_cache_set_salted( $cache_key, $id, 'post-queries', $last_changed );
 	}
 
@@ -1174,28 +1174,28 @@ function _find_post_by_old_slug( $post_type ) {
  * @access private
  *
  * @see zc_old_slug_redirect()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $post_type The current post type based on the query vars.
  * @return int The Post ID.
  */
 function _find_post_by_old_date( $post_type ) {
-	global $wpdb;
+	global $zcdb;
 
 	$date_query = '';
 	if ( get_query_var( 'year' ) ) {
-		$date_query .= $wpdb->prepare( ' AND YEAR(pm_date.meta_value) = %d', get_query_var( 'year' ) );
+		$date_query .= $zcdb->prepare( ' AND YEAR(pm_date.meta_value) = %d', get_query_var( 'year' ) );
 	}
 	if ( get_query_var( 'monthnum' ) ) {
-		$date_query .= $wpdb->prepare( ' AND MONTH(pm_date.meta_value) = %d', get_query_var( 'monthnum' ) );
+		$date_query .= $zcdb->prepare( ' AND MONTH(pm_date.meta_value) = %d', get_query_var( 'monthnum' ) );
 	}
 	if ( get_query_var( 'day' ) ) {
-		$date_query .= $wpdb->prepare( ' AND DAYOFMONTH(pm_date.meta_value) = %d', get_query_var( 'day' ) );
+		$date_query .= $zcdb->prepare( ' AND DAYOFMONTH(pm_date.meta_value) = %d', get_query_var( 'day' ) );
 	}
 
 	$id = 0;
 	if ( $date_query ) {
-		$query        = $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta AS pm_date, $wpdb->posts WHERE ID = post_id AND post_type = %s AND meta_key = '_zc_old_date' AND post_name = %s" . $date_query, $post_type, get_query_var( 'name' ) );
+		$query        = $zcdb->prepare( "SELECT post_id FROM $zcdb->postmeta AS pm_date, $zcdb->posts WHERE ID = post_id AND post_type = %s AND meta_key = '_zc_old_date' AND post_name = %s" . $date_query, $post_type, get_query_var( 'name' ) );
 		$key          = md5( $query );
 		$last_changed = zc_cache_get_last_changed( 'posts' );
 		$cache_key    = "find_post_by_old_date:$key";
@@ -1203,10 +1203,10 @@ function _find_post_by_old_date( $post_type ) {
 		if ( false !== $cache ) {
 			$id = $cache;
 		} else {
-			$id = (int) $wpdb->get_var( $query );
+			$id = (int) $zcdb->get_var( $query );
 			if ( ! $id ) {
 				// Check to see if an old slug matches the old date.
-				$id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts, $wpdb->postmeta AS pm_slug, $wpdb->postmeta AS pm_date WHERE ID = pm_slug.post_id AND ID = pm_date.post_id AND post_type = %s AND pm_slug.meta_key = '_zc_old_slug' AND pm_slug.meta_value = %s AND pm_date.meta_key = '_zc_old_date'" . $date_query, $post_type, get_query_var( 'name' ) ) );
+				$id = (int) $zcdb->get_var( $zcdb->prepare( "SELECT ID FROM $zcdb->posts, $zcdb->postmeta AS pm_slug, $zcdb->postmeta AS pm_date WHERE ID = pm_slug.post_id AND ID = pm_date.post_id AND post_type = %s AND pm_slug.meta_key = '_zc_old_slug' AND pm_slug.meta_value = %s AND pm_date.meta_key = '_zc_old_date'" . $date_query, $post_type, get_query_var( 'name' ) ) );
 			}
 			zc_cache_set_salted( $cache_key, $id, 'post-queries', $last_changed );
 		}

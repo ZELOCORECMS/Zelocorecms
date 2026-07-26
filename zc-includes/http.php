@@ -674,14 +674,14 @@ function allowed_http_request_hosts( $is_external, $host ) {
  *
  * @since 3.6.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param bool   $is_external
  * @param string $host
  * @return bool
  */
 function ms_allowed_http_request_hosts( $is_external, $host ) {
-	global $wpdb;
+	global $zcdb;
 	static $queried = array();
 	if ( $is_external ) {
 		return $is_external;
@@ -692,7 +692,7 @@ function ms_allowed_http_request_hosts( $is_external, $host ) {
 	if ( isset( $queried[ $host ] ) ) {
 		return $queried[ $host ];
 	}
-	$queried[ $host ] = (bool) $wpdb->get_var( $wpdb->prepare( "SELECT domain FROM $wpdb->blogs WHERE domain = %s LIMIT 1", $host ) );
+	$queried[ $host ] = (bool) $zcdb->get_var( $zcdb->prepare( "SELECT domain FROM $zcdb->blogs WHERE domain = %s LIMIT 1", $host ) );
 	return $queried[ $host ];
 }
 

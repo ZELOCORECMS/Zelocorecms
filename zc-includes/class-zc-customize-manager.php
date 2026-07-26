@@ -3062,13 +3062,13 @@ final class ZC_Customize_Manager {
 	 * @since 4.9.0
 	 *
 	 * @see zc_trash_post()
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int|ZC_Post $post The changeset post.
 	 * @return mixed A ZC_Post object for the trashed post or an empty value on failure.
 	 */
 	public function trash_changeset_post( $post ) {
-		global $wpdb;
+		global $zcdb;
 
 		$post = get_post( $post );
 
@@ -3100,7 +3100,7 @@ final class ZC_Customize_Manager {
 		add_post_meta( $post_id, '_zc_trash_meta_time', time() );
 
 		$new_status = 'trash';
-		$wpdb->update( $wpdb->posts, array( 'post_status' => $new_status ), array( 'ID' => $post->ID ) );
+		$zcdb->update( $zcdb->posts, array( 'post_status' => $new_status ), array( 'ID' => $post->ID ) );
 		clean_post_cache( $post->ID );
 
 		$post->post_status = $new_status;
@@ -3470,13 +3470,13 @@ final class ZC_Customize_Manager {
 	 * @since 4.7.0
 	 *
 	 * @see _zc_customize_publish_changeset()
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $changeset_post_id ID for customize_changeset post. Defaults to the changeset for the current manager instance.
 	 * @return true|ZC_Error True or error info.
 	 */
 	public function _publish_changeset_values( $changeset_post_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$publishing_changeset_data = $this->get_changeset_post_data( $changeset_post_id );
 		if ( is_zc_error( $publishing_changeset_data ) ) {
@@ -3625,8 +3625,8 @@ final class ZC_Customize_Manager {
 		$revisions = zc_get_post_revisions( $changeset_post_id, array( 'check_enabled' => false ) );
 		foreach ( $revisions as $revision ) {
 			if ( str_contains( $revision->post_name, "{$changeset_post_id}-autosave" ) ) {
-				$wpdb->update(
-					$wpdb->posts,
+				$zcdb->update(
+					$zcdb->posts,
 					array(
 						'post_status' => 'auto-draft',
 						'post_type'   => 'customize_changeset',

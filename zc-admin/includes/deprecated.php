@@ -227,20 +227,20 @@ function use_codepress() {
  *
  * @deprecated 3.1.0 Use get_users()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return array List of user IDs.
  */
 function get_author_user_ids() {
 	_deprecated_function( __FUNCTION__, '3.1.0', 'get_users()' );
 
-	global $wpdb;
+	global $zcdb;
 	if ( !is_multisite() )
-		$level_key = $wpdb->get_blog_prefix() . 'user_level';
+		$level_key = $zcdb->get_blog_prefix() . 'user_level';
 	else
-		$level_key = $wpdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
+		$level_key = $zcdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
 
-	return $wpdb->get_col( $wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s AND meta_value != '0'", $level_key) );
+	return $zcdb->get_col( $zcdb->prepare("SELECT user_id FROM $zcdb->usermeta WHERE meta_key = %s AND meta_value != '0'", $level_key) );
 }
 
 /**
@@ -248,7 +248,7 @@ function get_author_user_ids() {
  *
  * @deprecated 3.1.0 Use get_users()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID.
  * @return array|false List of editable authors. False if no editable users.
@@ -256,7 +256,7 @@ function get_author_user_ids() {
 function get_editable_authors( $user_id ) {
 	_deprecated_function( __FUNCTION__, '3.1.0', 'get_users()' );
 
-	global $wpdb;
+	global $zcdb;
 
 	$editable = get_editable_user_ids( $user_id );
 
@@ -264,7 +264,7 @@ function get_editable_authors( $user_id ) {
 		return false;
 	} else {
 		$editable = join(',', $editable);
-		$authors = $wpdb->get_results( "SELECT * FROM $wpdb->users WHERE ID IN ($editable) ORDER BY display_name" );
+		$authors = $zcdb->get_results( "SELECT * FROM $zcdb->users WHERE ID IN ($editable) ORDER BY display_name" );
 	}
 
 	return apply_filters('get_editable_authors', $authors);
@@ -275,7 +275,7 @@ function get_editable_authors( $user_id ) {
  *
  * @deprecated 3.1.0 Use get_users()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int  $user_id       User ID.
  * @param bool $exclude_zeros Optional. Whether to exclude zeroes. Default true.
@@ -284,7 +284,7 @@ function get_editable_authors( $user_id ) {
 function get_editable_user_ids( $user_id, $exclude_zeros = true, $post_type = 'post' ) {
 	_deprecated_function( __FUNCTION__, '3.1.0', 'get_users()' );
 
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $user = get_userdata( $user_id ) )
 		return array();
@@ -298,15 +298,15 @@ function get_editable_user_ids( $user_id, $exclude_zeros = true, $post_type = 'p
 	}
 
 	if ( !is_multisite() )
-		$level_key = $wpdb->get_blog_prefix() . 'user_level';
+		$level_key = $zcdb->get_blog_prefix() . 'user_level';
 	else
-		$level_key = $wpdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
+		$level_key = $zcdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
 
-	$query = $wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s", $level_key);
+	$query = $zcdb->prepare("SELECT user_id FROM $zcdb->usermeta WHERE meta_key = %s", $level_key);
 	if ( $exclude_zeros )
 		$query .= " AND meta_value != '0'";
 
-	return $wpdb->get_col( $query );
+	return $zcdb->get_col( $query );
 }
 
 /**
@@ -314,19 +314,19 @@ function get_editable_user_ids( $user_id, $exclude_zeros = true, $post_type = 'p
  *
  * @deprecated 3.1.0 Use get_users()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function get_nonauthor_user_ids() {
 	_deprecated_function( __FUNCTION__, '3.1.0', 'get_users()' );
 
-	global $wpdb;
+	global $zcdb;
 
 	if ( !is_multisite() )
-		$level_key = $wpdb->get_blog_prefix() . 'user_level';
+		$level_key = $zcdb->get_blog_prefix() . 'user_level';
 	else
-		$level_key = $wpdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
+		$level_key = $zcdb->get_blog_prefix() . 'capabilities'; // WPMU site admins don't have user_levels.
 
-	return $wpdb->get_col( $wpdb->prepare("SELECT user_id FROM $wpdb->usermeta WHERE meta_key = %s AND meta_value = '0'", $level_key) );
+	return $zcdb->get_col( $zcdb->prepare("SELECT user_id FROM $zcdb->usermeta WHERE meta_key = %s AND meta_value = '0'", $level_key) );
 }
 
 if ( ! class_exists( 'ZC_User_Search', false ) ) :
@@ -526,13 +526,13 @@ class ZC_User_Search {
 	 * @since 2.1.0
 	 * @access public
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function prepare_query() {
-		global $wpdb;
+		global $zcdb;
 		$this->first_user = ($this->page - 1) * $this->users_per_page;
 
-		$this->query_limit = $wpdb->prepare(" LIMIT %d, %d", $this->first_user, $this->users_per_page);
+		$this->query_limit = $zcdb->prepare(" LIMIT %d, %d", $this->first_user, $this->users_per_page);
 		$this->query_orderby = ' ORDER BY user_login';
 
 		$search_sql = '';
@@ -540,21 +540,21 @@ class ZC_User_Search {
 			$searches = array();
 			$search_sql = 'AND (';
 			foreach ( array('user_login', 'user_nicename', 'user_email', 'user_url', 'display_name') as $col )
-				$searches[] = $wpdb->prepare( $col . ' LIKE %s', '%' . like_escape($this->search_term) . '%' );
+				$searches[] = $zcdb->prepare( $col . ' LIKE %s', '%' . like_escape($this->search_term) . '%' );
 			$search_sql .= implode(' OR ', $searches);
 			$search_sql .= ')';
 		}
 
-		$this->query_from = " FROM $wpdb->users";
+		$this->query_from = " FROM $zcdb->users";
 		$this->query_where = " WHERE 1=1 $search_sql";
 
 		if ( $this->role ) {
-			$this->query_from .= " INNER JOIN $wpdb->usermeta ON $wpdb->users.ID = $wpdb->usermeta.user_id";
-			$this->query_where .= $wpdb->prepare(" AND $wpdb->usermeta.meta_key = '{$wpdb->prefix}capabilities' AND $wpdb->usermeta.meta_value LIKE %s", '%' . $this->role . '%');
+			$this->query_from .= " INNER JOIN $zcdb->usermeta ON $zcdb->users.ID = $zcdb->usermeta.user_id";
+			$this->query_where .= $zcdb->prepare(" AND $zcdb->usermeta.meta_key = '{$zcdb->prefix}capabilities' AND $zcdb->usermeta.meta_value LIKE %s", '%' . $this->role . '%');
 		} elseif ( is_multisite() ) {
-			$level_key = $wpdb->prefix . 'capabilities'; // WPMU site admins don't have user_levels.
-			$this->query_from .= ", $wpdb->usermeta";
-			$this->query_where .= " AND $wpdb->users.ID = $wpdb->usermeta.user_id AND meta_key = '{$level_key}'";
+			$level_key = $zcdb->prefix . 'capabilities'; // WPMU site admins don't have user_levels.
+			$this->query_from .= ", $zcdb->usermeta";
+			$this->query_where .= " AND $zcdb->users.ID = $zcdb->usermeta.user_id AND meta_key = '{$level_key}'";
 		}
 
 		do_action_ref_array( 'pre_user_search', array( &$this ) );
@@ -566,15 +566,15 @@ class ZC_User_Search {
 	 * @since 2.1.0
 	 * @access public
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function query() {
-		global $wpdb;
+		global $zcdb;
 
-		$this->results = $wpdb->get_col("SELECT DISTINCT($wpdb->users.ID)" . $this->query_from . $this->query_where . $this->query_orderby . $this->query_limit);
+		$this->results = $zcdb->get_col("SELECT DISTINCT($zcdb->users.ID)" . $this->query_from . $this->query_where . $this->query_orderby . $this->query_limit);
 
 		if ( $this->results )
-			$this->total_users_for_query = $wpdb->get_var("SELECT COUNT(DISTINCT($wpdb->users.ID))" . $this->query_from . $this->query_where); // No limit.
+			$this->total_users_for_query = $zcdb->get_var("SELECT COUNT(DISTINCT($zcdb->users.ID))" . $this->query_from . $this->query_where); // No limit.
 		else
 			$this->search_errors = new ZC_Error('no_matching_users_found', __('No users found.'));
 	}
@@ -684,7 +684,7 @@ endif;
  * @deprecated 3.1.0 Use get_posts()
  * @see get_posts()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $user_id User ID to not retrieve posts from.
  * @param string $type    Optional. Post type to retrieve. Accepts 'draft', 'pending' or 'any' (all).
@@ -694,7 +694,7 @@ endif;
 function get_others_unpublished_posts( $user_id, $type = 'any' ) {
 	_deprecated_function( __FUNCTION__, '3.1.0' );
 
-	global $wpdb;
+	global $zcdb;
 
 	$editable = get_editable_user_ids( $user_id );
 
@@ -709,7 +709,7 @@ function get_others_unpublished_posts( $user_id, $type = 'any' ) {
 		$other_unpubs = '';
 	} else {
 		$editable = join(',', $editable);
-		$other_unpubs = $wpdb->get_results( $wpdb->prepare("SELECT ID, post_title, post_author FROM $wpdb->posts WHERE post_type = 'post' AND $type_sql AND post_author IN ($editable) AND post_author != %d ORDER BY post_modified $dir", $user_id) );
+		$other_unpubs = $zcdb->get_results( $zcdb->prepare("SELECT ID, post_title, post_author FROM $zcdb->posts WHERE post_type = 'post' AND $type_sql AND post_author IN ($editable) AND post_author != %d ORDER BY post_modified $dir", $user_id) );
 	}
 
 	return apply_filters('get_others_drafts', $other_unpubs);

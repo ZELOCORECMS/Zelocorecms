@@ -65,7 +65,7 @@
  *
  * @since 1.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $option        Name of the option to retrieve. Expected to not be SQL-escaped.
  * @param mixed  $default_value Optional. Default value to return if the option does not exist.
@@ -76,7 +76,7 @@
  *               boolean `false` is returned.
  */
 function get_option( $option, $default_value = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_scalar( $option ) ) {
 		$option = trim( $option );
@@ -203,7 +203,7 @@ function get_option( $option, $default_value = false ) {
 
 			if ( false === $value ) {
 
-				$row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option ) );
+				$row = $zcdb->get_row( $zcdb->prepare( "SELECT option_value FROM $zcdb->options WHERE option_name = %s LIMIT 1", $option ) );
 
 				// Has to be get_row() instead of get_var() because of funkiness with 0, false, null values.
 				if ( is_object( $row ) ) {
@@ -219,9 +219,9 @@ function get_option( $option, $default_value = false ) {
 			}
 		}
 	} else {
-		$suppress = $wpdb->suppress_errors();
-		$row      = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option ) );
-		$wpdb->suppress_errors( $suppress );
+		$suppress = $zcdb->suppress_errors();
+		$row      = $zcdb->get_row( $zcdb->prepare( "SELECT option_value FROM $zcdb->options WHERE option_name = %s LIMIT 1", $option ) );
+		$zcdb->suppress_errors( $suppress );
 
 		if ( is_object( $row ) ) {
 			$value = $row->option_value;
@@ -263,12 +263,12 @@ function get_option( $option, $default_value = false ) {
  *
  * @since 6.4.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string[] $options An array of option names to be loaded.
  */
 function zc_prime_option_caches( $options ) {
-	global $wpdb;
+	global $zcdb;
 
 	$alloptions     = zc_load_alloptions();
 	$cached_options = zc_cache_get_multiple( $options, 'options' );
@@ -294,10 +294,10 @@ function zc_prime_option_caches( $options ) {
 		return;
 	}
 
-	$results = $wpdb->get_results(
-		$wpdb->prepare(
+	$results = $zcdb->get_results(
+		$zcdb->prepare(
 			sprintf(
-				"SELECT option_name, option_value FROM $wpdb->options WHERE option_name IN (%s)",
+				"SELECT option_name, option_value FROM $zcdb->options WHERE option_name IN (%s)",
 				implode( ',', array_fill( 0, count( $options_to_prime ), '%s' ) )
 			),
 			$options_to_prime
@@ -386,7 +386,7 @@ function get_options( $options ) {
  * @since 6.4.0
  * @since 6.7.0 The autoload values 'yes' and 'no' are deprecated.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $options Associative array of option names and their autoload values to set. The option names are
  *                       expected to not be SQL-escaped. The autoload values should be boolean values. For backward
@@ -395,7 +395,7 @@ function get_options( $options ) {
  *               was updated.
  */
 function zc_set_option_autoload_values( array $options ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $options ) {
 		return array();
@@ -441,7 +441,7 @@ function zc_set_option_autoload_values( array $options ) {
 	 * If no options are returned, no need to update.
 	 */
 	// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared,ZelocoreCMS.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-	$options_to_update = $wpdb->get_col( $wpdb->prepare( "SELECT option_name FROM $wpdb->options $where", $where_args ) );
+	$options_to_update = $zcdb->get_col( $zcdb->prepare( "SELECT option_name FROM $zcdb->options $where", $where_args ) );
 	if ( ! $options_to_update ) {
 		return $results;
 	}
@@ -458,9 +458,9 @@ function zc_set_option_autoload_values( array $options ) {
 		}
 
 		// Run query to update autoload value for all the options where it is needed.
-		$success = $wpdb->query(
-			$wpdb->prepare(
-				"UPDATE $wpdb->options SET autoload = %s WHERE option_name IN (" . implode( ',', array_fill( 0, count( $grouped_options[ $autoload ] ), '%s' ) ) . ')',
+		$success = $zcdb->query(
+			$zcdb->prepare(
+				"UPDATE $zcdb->options SET autoload = %s WHERE option_name IN (" . implode( ',', array_fill( 0, count( $grouped_options[ $autoload ] ), '%s' ) ) . ')',
 				array_merge(
 					array( $autoload ),
 					$grouped_options[ $autoload ]
@@ -589,14 +589,14 @@ function form_option( $option ) {
  * @since 2.2.0
  * @since 5.3.1 The `$force_cache` parameter was added.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param bool $force_cache Optional. Whether to force an update of the local cache
  *                          from the persistent cache. Default false.
  * @return array List of all options.
  */
 function zc_load_alloptions( $force_cache = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	/**
 	 * Filters the array of alloptions before it is populated.
@@ -621,13 +621,13 @@ function zc_load_alloptions( $force_cache = false ) {
 	}
 
 	if ( ! $alloptions ) {
-		$suppress      = $wpdb->suppress_errors();
-		$alloptions_db = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options WHERE autoload IN ( '" . implode( "', '", esc_sql( zc_autoload_values_to_autoload() ) ) . "' )" );
+		$suppress      = $zcdb->suppress_errors();
+		$alloptions_db = $zcdb->get_results( "SELECT option_name, option_value FROM $zcdb->options WHERE autoload IN ( '" . implode( "', '", esc_sql( zc_autoload_values_to_autoload() ) ) . "' )" );
 
 		if ( ! $alloptions_db ) {
-			$alloptions_db = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options" );
+			$alloptions_db = $zcdb->get_results( "SELECT option_name, option_value FROM $zcdb->options" );
 		}
-		$wpdb->suppress_errors( $suppress );
+		$zcdb->suppress_errors( $suppress );
 
 		$alloptions = array();
 		foreach ( (array) $alloptions_db as $o ) {
@@ -684,13 +684,13 @@ function zc_prime_site_option_caches( array $options ) {
  *
  * @since 6.6.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $network_id ID of the network. Can be null to default to the current network ID.
  * @param string[] $options    An array of option names to be loaded.
  */
 function zc_prime_network_option_caches( $network_id, array $options ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( zc_installing() ) {
 		return;
@@ -745,10 +745,10 @@ function zc_prime_network_option_caches( $network_id, array $options ) {
 
 	$query_args   = $options_to_prime;
 	$query_args[] = $network_id;
-	$results      = $wpdb->get_results(
-		$wpdb->prepare(
+	$results      = $zcdb->get_results(
+		$zcdb->prepare(
 			sprintf(
-				"SELECT meta_key, meta_value FROM $wpdb->sitemeta WHERE meta_key IN (%s) AND site_id = %s",
+				"SELECT meta_key, meta_value FROM $zcdb->sitemeta WHERE meta_key IN (%s) AND site_id = %s",
 				implode( ',', array_fill( 0, count( $options_to_prime ), '%s' ) ),
 				'%d'
 			),
@@ -821,7 +821,7 @@ function zc_load_core_site_options( $network_id = null ) {
  * @since 4.2.0 The `$autoload` parameter was added.
  * @since 6.7.0 The autoload values 'yes' and 'no' are deprecated.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string    $option   Name of the option to update. Expected to not be SQL-escaped.
  * @param mixed     $value    Option value. Must be serializable if non-scalar. Expected to not be SQL-escaped.
@@ -842,7 +842,7 @@ function zc_load_core_site_options( $network_id = null ) {
  * @return bool True if the value was updated, false otherwise.
  */
 function update_option( $option, $value, $autoload = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_scalar( $option ) ) {
 		$option = trim( $option );
@@ -948,7 +948,7 @@ function update_option( $option, $value, $autoload = null ) {
 		$update_args['autoload'] = zc_determine_option_autoload_value( $option, $value, $serialized_value, $autoload );
 	} else {
 		// Retrieve the current autoload value to reevaluate it in case it was set automatically.
-		$raw_autoload = $wpdb->get_var( $wpdb->prepare( "SELECT autoload FROM $wpdb->options WHERE option_name = %s LIMIT 1", $option ) );
+		$raw_autoload = $zcdb->get_var( $zcdb->prepare( "SELECT autoload FROM $zcdb->options WHERE option_name = %s LIMIT 1", $option ) );
 		$allow_values = array( 'auto-on', 'auto-off', 'auto' );
 		if ( in_array( $raw_autoload, $allow_values, true ) ) {
 			$autoload = zc_determine_option_autoload_value( $option, $value, $serialized_value, $autoload );
@@ -958,7 +958,7 @@ function update_option( $option, $value, $autoload = null ) {
 		}
 	}
 
-	$result = $wpdb->update( $wpdb->options, $update_args, array( 'option_name' => $option ) );
+	$result = $zcdb->update( $zcdb->options, $update_args, array( 'option_name' => $option ) );
 	if ( ! $result ) {
 		return false;
 	}
@@ -1046,7 +1046,7 @@ function update_option( $option, $value, $autoload = null ) {
  * @since 6.6.0 The $autoload parameter's default value was changed to null.
  * @since 6.7.0 The autoload values 'yes' and 'no' are deprecated.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string    $option     Name of the option to add. Expected to not be SQL-escaped.
  * @param mixed     $value      Optional. Option value. Must be serializable if non-scalar.
@@ -1065,7 +1065,7 @@ function update_option( $option, $value, $autoload = null ) {
  * @return bool True if the option was added, false otherwise.
  */
 function add_option( $option, $value = '', $deprecated = '', $autoload = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '2.3.0' );
@@ -1137,7 +1137,7 @@ function add_option( $option, $value = '', $deprecated = '', $autoload = null ) 
 	 */
 	do_action( 'add_option', $option, $value );
 
-	$result = $wpdb->query( $wpdb->prepare( "INSERT INTO `$wpdb->options` (`option_name`, `option_value`, `autoload`) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`), `autoload` = VALUES(`autoload`)", $option, $serialized_value, $autoload ) );
+	$result = $zcdb->query( $zcdb->prepare( "INSERT INTO `$zcdb->options` (`option_name`, `option_value`, `autoload`) VALUES (%s, %s, %s) ON DUPLICATE KEY UPDATE `option_name` = VALUES(`option_name`), `option_value` = VALUES(`option_value`), `autoload` = VALUES(`autoload`)", $option, $serialized_value, $autoload ) );
 	if ( ! $result ) {
 		return false;
 	}
@@ -1191,13 +1191,13 @@ function add_option( $option, $value = '', $deprecated = '', $autoload = null ) 
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $option Name of the option to delete. Expected to not be SQL-escaped.
  * @return bool True if the option was deleted, false otherwise.
  */
 function delete_option( $option ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_scalar( $option ) ) {
 		$option = trim( $option );
@@ -1210,7 +1210,7 @@ function delete_option( $option ) {
 	zc_protect_special_option( $option );
 
 	// Get the ID, if no ID then return.
-	$row = $wpdb->get_row( $wpdb->prepare( "SELECT autoload FROM $wpdb->options WHERE option_name = %s", $option ) );
+	$row = $zcdb->get_row( $zcdb->prepare( "SELECT autoload FROM $zcdb->options WHERE option_name = %s", $option ) );
 	if ( is_null( $row ) ) {
 		return false;
 	}
@@ -1224,7 +1224,7 @@ function delete_option( $option ) {
 	 */
 	do_action( 'delete_option', $option );
 
-	$result = $wpdb->delete( $wpdb->options, array( 'option_name' => $option ) );
+	$result = $zcdb->delete( $zcdb->options, array( 'option_name' => $option ) );
 
 	if ( ! zc_installing() ) {
 		if ( in_array( $row->autoload, zc_autoload_values_to_autoload(), true ) ) {
@@ -1629,55 +1629,55 @@ function set_transient( $transient, $value, $expiration = 0 ) {
  *
  * @since 4.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param bool $force_db Optional. Force cleanup to run against the database even when an external object cache is used.
  */
 function delete_expired_transients( $force_db = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $force_db && zc_using_ext_object_cache() ) {
 		return;
 	}
 
-	$wpdb->query(
-		$wpdb->prepare(
-			"DELETE a, b FROM {$wpdb->options} a, {$wpdb->options} b
+	$zcdb->query(
+		$zcdb->prepare(
+			"DELETE a, b FROM {$zcdb->options} a, {$zcdb->options} b
 			WHERE a.option_name LIKE %s
 			AND a.option_name NOT LIKE %s
 			AND b.option_name = CONCAT( '_transient_timeout_', SUBSTRING( a.option_name, 12 ) )
 			AND b.option_value < %d",
-			$wpdb->esc_like( '_transient_' ) . '%',
-			$wpdb->esc_like( '_transient_timeout_' ) . '%',
+			$zcdb->esc_like( '_transient_' ) . '%',
+			$zcdb->esc_like( '_transient_timeout_' ) . '%',
 			time()
 		)
 	);
 
 	if ( ! is_multisite() ) {
 		// Single site stores site transients in the options table.
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE a, b FROM {$wpdb->options} a, {$wpdb->options} b
+		$zcdb->query(
+			$zcdb->prepare(
+				"DELETE a, b FROM {$zcdb->options} a, {$zcdb->options} b
 				WHERE a.option_name LIKE %s
 				AND a.option_name NOT LIKE %s
 				AND b.option_name = CONCAT( '_site_transient_timeout_', SUBSTRING( a.option_name, 17 ) )
 				AND b.option_value < %d",
-				$wpdb->esc_like( '_site_transient_' ) . '%',
-				$wpdb->esc_like( '_site_transient_timeout_' ) . '%',
+				$zcdb->esc_like( '_site_transient_' ) . '%',
+				$zcdb->esc_like( '_site_transient_timeout_' ) . '%',
 				time()
 			)
 		);
 	} elseif ( is_main_site() && is_main_network() ) {
 		// Multisite stores site transients in the sitemeta table.
-		$wpdb->query(
-			$wpdb->prepare(
-				"DELETE a, b FROM {$wpdb->sitemeta} a, {$wpdb->sitemeta} b
+		$zcdb->query(
+			$zcdb->prepare(
+				"DELETE a, b FROM {$zcdb->sitemeta} a, {$zcdb->sitemeta} b
 				WHERE a.meta_key LIKE %s
 				AND a.meta_key NOT LIKE %s
 				AND b.meta_key = CONCAT( '_site_transient_timeout_', SUBSTRING( a.meta_key, 17 ) )
 				AND b.meta_value < %d",
-				$wpdb->esc_like( '_site_transient_' ) . '%',
-				$wpdb->esc_like( '_site_transient_timeout_' ) . '%',
+				$zcdb->esc_like( '_site_transient_' ) . '%',
+				$zcdb->esc_like( '_site_transient_timeout_' ) . '%',
 				time()
 			)
 		);
@@ -1989,7 +1989,7 @@ function update_site_option( $option, $value ) {
  *
  * @see get_option()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $network_id    ID of the network. Can be null to default to the current network ID.
  * @param string   $option        Name of the option to retrieve. Expected to not be SQL-escaped.
@@ -1997,7 +1997,7 @@ function update_site_option( $option, $value ) {
  * @return mixed Value set for the option.
  */
 function get_network_option( $network_id, $option, $default_value = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( $network_id && ! is_numeric( $network_id ) ) {
 		return false;
@@ -2090,7 +2090,7 @@ function get_network_option( $network_id, $option, $default_value = false ) {
 		$value     = zc_cache_get( $cache_key, 'site-options' );
 
 		if ( ! isset( $value ) || false === $value ) {
-			$row = $wpdb->get_row( $wpdb->prepare( "SELECT meta_value FROM $wpdb->sitemeta WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
+			$row = $zcdb->get_row( $zcdb->prepare( "SELECT meta_value FROM $zcdb->sitemeta WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
 
 			// Has to be get_row() instead of get_var() because of funkiness with 0, false, null values.
 			if ( is_object( $row ) ) {
@@ -2142,7 +2142,7 @@ function get_network_option( $network_id, $option, $default_value = false ) {
  *
  * @see add_option()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $network_id ID of the network. Can be null to default to the current network ID.
  * @param string   $option     Name of the option to add. Expected to not be SQL-escaped.
@@ -2150,7 +2150,7 @@ function get_network_option( $network_id, $option, $default_value = false ) {
  * @return bool True if the option was added, false otherwise.
  */
 function add_network_option( $network_id, $option, $value ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( $network_id && ! is_numeric( $network_id ) ) {
 		return false;
@@ -2203,8 +2203,8 @@ function add_network_option( $network_id, $option, $value ) {
 		$value = sanitize_option( $option, $value );
 
 		$serialized_value = maybe_serialize( $value );
-		$result           = $wpdb->insert(
-			$wpdb->sitemeta,
+		$result           = $zcdb->insert(
+			$zcdb->sitemeta,
 			array(
 				'site_id'    => $network_id,
 				'meta_key'   => $option,
@@ -2269,14 +2269,14 @@ function add_network_option( $network_id, $option, $value ) {
  *
  * @see delete_option()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $network_id ID of the network. Can be null to default to the current network ID.
  * @param string   $option     Name of the option to delete. Expected to not be SQL-escaped.
  * @return bool True if the option was deleted, false otherwise.
  */
 function delete_network_option( $network_id, $option ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( $network_id && ! is_numeric( $network_id ) ) {
 		return false;
@@ -2306,15 +2306,15 @@ function delete_network_option( $network_id, $option ) {
 	if ( ! is_multisite() ) {
 		$result = delete_option( $option );
 	} else {
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT meta_id FROM {$wpdb->sitemeta} WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
+		$row = $zcdb->get_row( $zcdb->prepare( "SELECT meta_id FROM {$zcdb->sitemeta} WHERE meta_key = %s AND site_id = %d", $option, $network_id ) );
 		if ( is_null( $row ) || ! $row->meta_id ) {
 			return false;
 		}
 		$cache_key = "$network_id:$option";
 		zc_cache_delete( $cache_key, 'site-options' );
 
-		$result = $wpdb->delete(
-			$wpdb->sitemeta,
+		$result = $zcdb->delete(
+			$zcdb->sitemeta,
 			array(
 				'meta_key' => $option,
 				'site_id'  => $network_id,
@@ -2373,7 +2373,7 @@ function delete_network_option( $network_id, $option ) {
  *
  * @see update_option()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $network_id ID of the network. Can be null to default to the current network ID.
  * @param string   $option     Name of the option. Expected to not be SQL-escaped.
@@ -2381,7 +2381,7 @@ function delete_network_option( $network_id, $option ) {
  * @return bool True if the value was updated, false otherwise.
  */
 function update_network_option( $network_id, $option, $value ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( $network_id && ! is_numeric( $network_id ) ) {
 		return false;
@@ -2446,8 +2446,8 @@ function update_network_option( $network_id, $option, $value ) {
 		$value = sanitize_option( $option, $value );
 
 		$serialized_value = maybe_serialize( $value );
-		$result           = $wpdb->update(
-			$wpdb->sitemeta,
+		$result           = $zcdb->update(
+			$zcdb->sitemeta,
 			array( 'meta_value' => $serialized_value ),
 			array(
 				'site_id'  => $network_id,

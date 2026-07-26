@@ -856,7 +856,7 @@ function unregister_taxonomy_for_object_type( $taxonomy, $object_type ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|int[]       $term_ids   Term ID or array of term IDs of terms that will be used.
  * @param string|string[] $taxonomies String of taxonomy name or Array of string values of taxonomy names.
@@ -869,7 +869,7 @@ function unregister_taxonomy_for_object_type( $taxonomy, $object_type ) {
  *                           ZC_Error if the taxonomy does not exist.
  */
 function get_objects_in_term( $term_ids, $taxonomies, $args = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_array( $term_ids ) ) {
 		$term_ids = array( $term_ids );
@@ -893,13 +893,13 @@ function get_objects_in_term( $term_ids, $taxonomies, $args = array() ) {
 	$taxonomies = "'" . implode( "', '", array_map( 'esc_sql', $taxonomies ) ) . "'";
 	$term_ids   = "'" . implode( "', '", $term_ids ) . "'";
 
-	$sql = "SELECT tr.object_id FROM $wpdb->term_relationships AS tr INNER JOIN $wpdb->term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy IN ($taxonomies) AND tt.term_id IN ($term_ids) ORDER BY tr.object_id $order";
+	$sql = "SELECT tr.object_id FROM $zcdb->term_relationships AS tr INNER JOIN $zcdb->term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id WHERE tt.taxonomy IN ($taxonomies) AND tt.term_id IN ($term_ids) ORDER BY tr.object_id $order";
 
 	$last_changed = zc_cache_get_last_changed( 'terms' );
 	$cache_key    = 'get_objects_in_term:' . md5( $sql );
 	$cache        = zc_cache_get_salted( $cache_key, 'term-queries', $last_changed );
 	if ( false === $cache ) {
-		$object_ids = $wpdb->get_col( $sql );
+		$object_ids = $zcdb->get_col( $sql );
 		zc_cache_set_salted( $cache_key, $object_ids, 'term-queries', $last_changed );
 	} else {
 		$object_ids = (array) $cache;
@@ -936,7 +936,7 @@ function get_tax_sql( $tax_query, $primary_table, $primary_id_column ) {
  * filters.
  *
  * $term ID must be part of $taxonomy, to get from the database. Failure, might
- * be able to be captured by the hooks. Failure would be the same value as $wpdb
+ * be able to be captured by the hooks. Failure would be the same value as $zcdb
  * returns for the get_row method.
  *
  * There are two hooks, one is specifically for each term, named 'get_term', and
@@ -1518,7 +1518,7 @@ function zc_lazyload_term_meta( array $term_ids ) {
  *
  * @since 4.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $term_id Term ID.
  * @return array|false Array with meta data, or false when the meta table is not installed.
@@ -1529,9 +1529,9 @@ function has_term_meta( $term_id ) {
 		return $check;
 	}
 
-	global $wpdb;
+	global $zcdb;
 
-	return $wpdb->get_results( $wpdb->prepare( "SELECT meta_key, meta_value, meta_id, term_id FROM $wpdb->termmeta WHERE term_id = %d ORDER BY meta_key,meta_id", $term_id ), ARRAY_A );
+	return $zcdb->get_results( $zcdb->prepare( "SELECT meta_key, meta_value, meta_id, term_id FROM $zcdb->termmeta WHERE term_id = %d ORDER BY meta_key,meta_id", $term_id ), ARRAY_A );
 }
 
 /**
@@ -2018,7 +2018,7 @@ function zc_delete_object_term_relationships( $object_id, $taxonomies ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int          $term     Term ID.
  * @param string       $taxonomy Taxonomy name.
@@ -2036,7 +2036,7 @@ function zc_delete_object_term_relationships( $object_id, $taxonomies ) {
  *                           deletion of default Category. ZC_Error if the taxonomy does not exist.
  */
 function zc_delete_term( $term, $taxonomy, $args = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	$term = (int) $term;
 
@@ -2099,7 +2099,7 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 		}
 		$parent = $term_obj->parent;
 
-		$edit_ids    = $wpdb->get_results( "SELECT term_id, term_taxonomy_id FROM $wpdb->term_taxonomy WHERE `parent` = " . (int) $term_obj->term_id );
+		$edit_ids    = $zcdb->get_results( "SELECT term_id, term_taxonomy_id FROM $zcdb->term_taxonomy WHERE `parent` = " . (int) $term_obj->term_id );
 		$edit_tt_ids = zc_list_pluck( $edit_ids, 'term_taxonomy_id' );
 
 		/**
@@ -2111,7 +2111,7 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 		 */
 		do_action( 'edit_term_taxonomies', $edit_tt_ids );
 
-		$wpdb->update( $wpdb->term_taxonomy, compact( 'parent' ), array( 'parent' => $term_obj->term_id ) + compact( 'taxonomy' ) );
+		$zcdb->update( $zcdb->term_taxonomy, compact( 'parent' ), array( 'parent' => $term_obj->term_id ) + compact( 'taxonomy' ) );
 
 		// Clean the cache for all child terms.
 		$edit_term_ids = zc_list_pluck( $edit_ids, 'term_id' );
@@ -2130,7 +2130,7 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 	// Get the term before deleting it or its term relationships so we can pass to actions below.
 	$deleted_term = get_term( $term, $taxonomy );
 
-	$object_ids = (array) $wpdb->get_col( $wpdb->prepare( "SELECT object_id FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $tt_id ) );
+	$object_ids = (array) $zcdb->get_col( $zcdb->prepare( "SELECT object_id FROM $zcdb->term_relationships WHERE term_taxonomy_id = %d", $tt_id ) );
 
 	foreach ( $object_ids as $object_id ) {
 		if ( ! isset( $default ) ) {
@@ -2166,7 +2166,7 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 		clean_object_term_cache( $object_ids, $object_type );
 	}
 
-	$term_meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->termmeta WHERE term_id = %d ", $term ) );
+	$term_meta_ids = $zcdb->get_col( $zcdb->prepare( "SELECT meta_id FROM $zcdb->termmeta WHERE term_id = %d ", $term ) );
 	foreach ( $term_meta_ids as $mid ) {
 		delete_metadata_by_mid( 'term', $mid );
 	}
@@ -2180,7 +2180,7 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 	 */
 	do_action( 'delete_term_taxonomy', $tt_id );
 
-	$wpdb->delete( $wpdb->term_taxonomy, array( 'term_taxonomy_id' => $tt_id ) );
+	$zcdb->delete( $zcdb->term_taxonomy, array( 'term_taxonomy_id' => $tt_id ) );
 
 	/**
 	 * Fires immediately after a term taxonomy ID is deleted.
@@ -2192,8 +2192,8 @@ function zc_delete_term( $term, $taxonomy, $args = array() ) {
 	do_action( 'deleted_term_taxonomy', $tt_id );
 
 	// Delete the term if no taxonomies use it.
-	if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_taxonomy WHERE term_id = %d", $term ) ) ) {
-		$wpdb->delete( $wpdb->terms, array( 'term_id' => $term ) );
+	if ( ! $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_taxonomy WHERE term_id = %d", $term ) ) ) {
+		$zcdb->delete( $zcdb->terms, array( 'term_id' => $term ) );
 	}
 
 	clean_term_cache( $term, $taxonomy );
@@ -2403,7 +2403,7 @@ function zc_get_object_terms( $object_ids, $taxonomies, $args = array() ) {
  * If the term already exists on the same hierarchical level,
  * or the term slug and name are not unique, a ZC_Error object will be returned.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @since 2.3.0
  *
@@ -2426,7 +2426,7 @@ function zc_get_object_terms( $object_ids, $taxonomies, $args = array() ) {
  * }
  */
 function zc_insert_term( $term, $taxonomy, $args = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! taxonomy_exists( $taxonomy ) ) {
 		return new ZC_Error( 'invalid_taxonomy', __( 'Invalid taxonomy.' ) );
@@ -2504,7 +2504,7 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 			 * The alias is not in a group, so we create a new one
 			 * and add the alias to it.
 			 */
-			$term_group = $wpdb->get_var( "SELECT MAX(term_group) FROM $wpdb->terms" ) + 1;
+			$term_group = $zcdb->get_var( "SELECT MAX(term_group) FROM $zcdb->terms" ) + 1;
 
 			zc_update_term(
 				$alias->term_id,
@@ -2591,11 +2591,11 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 	 */
 	$data = apply_filters( 'zc_insert_term_data', $data, $taxonomy, $args );
 
-	if ( false === $wpdb->insert( $wpdb->terms, $data ) ) {
-		return new ZC_Error( 'db_insert_error', __( 'Could not insert term into the database.' ), $wpdb->last_error );
+	if ( false === $zcdb->insert( $zcdb->terms, $data ) ) {
+		return new ZC_Error( 'db_insert_error', __( 'Could not insert term into the database.' ), $zcdb->last_error );
 	}
 
-	$term_id = (int) $wpdb->insert_id;
+	$term_id = (int) $zcdb->insert_id;
 
 	// Seems unreachable. However, is used in the case that a term name is provided, which sanitizes to an empty string.
 	if ( empty( $slug ) ) {
@@ -2603,13 +2603,13 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edit_terms', $term_id, $taxonomy );
-		$wpdb->update( $wpdb->terms, compact( 'slug' ), compact( 'term_id' ) );
+		$zcdb->update( $zcdb->terms, compact( 'slug' ), compact( 'term_id' ) );
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edited_terms', $term_id, $taxonomy );
 	}
 
-	$tt_id = $wpdb->get_var( $wpdb->prepare( "SELECT tt.term_taxonomy_id FROM $wpdb->term_taxonomy AS tt INNER JOIN $wpdb->terms AS t ON tt.term_id = t.term_id WHERE tt.taxonomy = %s AND t.term_id = %d", $taxonomy, $term_id ) );
+	$tt_id = $zcdb->get_var( $zcdb->prepare( "SELECT tt.term_taxonomy_id FROM $zcdb->term_taxonomy AS tt INNER JOIN $zcdb->terms AS t ON tt.term_id = t.term_id WHERE tt.taxonomy = %s AND t.term_id = %d", $taxonomy, $term_id ) );
 
 	if ( ! empty( $tt_id ) ) {
 		return array(
@@ -2618,11 +2618,11 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 		);
 	}
 
-	if ( false === $wpdb->insert( $wpdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent' ) + array( 'count' => 0 ) ) ) {
-		return new ZC_Error( 'db_insert_error', __( 'Could not insert term taxonomy into the database.' ), $wpdb->last_error );
+	if ( false === $zcdb->insert( $zcdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent' ) + array( 'count' => 0 ) ) ) {
+		return new ZC_Error( 'db_insert_error', __( 'Could not insert term taxonomy into the database.' ), $zcdb->last_error );
 	}
 
-	$tt_id = (int) $wpdb->insert_id;
+	$tt_id = (int) $zcdb->insert_id;
 
 	/*
 	 * Confidence check: if we just created a term with the same parent + taxonomy + slug but a higher term_id than
@@ -2630,7 +2630,7 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 	 * and term_taxonomy_id of the older term instead. Then return out of the function so that the "create" hooks
 	 * are not fired.
 	 */
-	$duplicate_term = $wpdb->get_row( $wpdb->prepare( "SELECT t.term_id, t.slug, tt.term_taxonomy_id, tt.taxonomy FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON ( tt.term_id = t.term_id ) WHERE t.slug = %s AND tt.parent = %d AND tt.taxonomy = %s AND t.term_id < %d AND tt.term_taxonomy_id != %d", $slug, $parent, $taxonomy, $term_id, $tt_id ) );
+	$duplicate_term = $zcdb->get_row( $zcdb->prepare( "SELECT t.term_id, t.slug, tt.term_taxonomy_id, tt.taxonomy FROM $zcdb->terms AS t INNER JOIN $zcdb->term_taxonomy AS tt ON ( tt.term_id = t.term_id ) WHERE t.slug = %s AND tt.parent = %d AND tt.taxonomy = %s AND t.term_id < %d AND tt.term_taxonomy_id != %d", $slug, $parent, $taxonomy, $term_id, $tt_id ) );
 
 	/**
 	 * Filters the duplicate term check that takes place during term creation.
@@ -2651,8 +2651,8 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
 	$duplicate_term = apply_filters( 'zc_insert_term_duplicate_term_check', $duplicate_term, $term, $taxonomy, $args, $tt_id );
 
 	if ( $duplicate_term ) {
-		$wpdb->delete( $wpdb->terms, array( 'term_id' => $term_id ) );
-		$wpdb->delete( $wpdb->term_taxonomy, array( 'term_taxonomy_id' => $tt_id ) );
+		$zcdb->delete( $zcdb->terms, array( 'term_id' => $term_id ) );
+		$zcdb->delete( $zcdb->term_taxonomy, array( 'term_taxonomy_id' => $tt_id ) );
 
 		$term_id = (int) $duplicate_term->term_id;
 		$tt_id   = (int) $duplicate_term->term_taxonomy_id;
@@ -2807,7 +2807,7 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int              $object_id The object to relate to.
  * @param string|int|array $terms     A single term slug, single term ID, or array of either term slugs or IDs.
@@ -2818,7 +2818,7 @@ function zc_insert_term( $term, $taxonomy, $args = array() ) {
  * @return array|ZC_Error Term taxonomy IDs of the affected terms or ZC_Error on failure.
  */
 function zc_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$object_id = (int) $object_id;
 
@@ -2872,7 +2872,7 @@ function zc_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
 		$tt_id    = $term_info['term_taxonomy_id'];
 		$tt_ids[] = $tt_id;
 
-		if ( $wpdb->get_var( $wpdb->prepare( "SELECT term_taxonomy_id FROM $wpdb->term_relationships WHERE object_id = %d AND term_taxonomy_id = %d", $object_id, $tt_id ) ) ) {
+		if ( $zcdb->get_var( $zcdb->prepare( "SELECT term_taxonomy_id FROM $zcdb->term_relationships WHERE object_id = %d AND term_taxonomy_id = %d", $object_id, $tt_id ) ) ) {
 			continue;
 		}
 
@@ -2888,8 +2888,8 @@ function zc_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
 		 */
 		do_action( 'add_term_relationship', $object_id, $tt_id, $taxonomy );
 
-		$wpdb->insert(
-			$wpdb->term_relationships,
+		$zcdb->insert(
+			$zcdb->term_relationships,
 			array(
 				'object_id'        => $object_id,
 				'term_taxonomy_id' => $tt_id,
@@ -2920,7 +2920,7 @@ function zc_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
 
 		if ( $delete_tt_ids ) {
 			$in_delete_tt_ids = "'" . implode( "', '", $delete_tt_ids ) . "'";
-			$delete_term_ids  = $wpdb->get_col( $wpdb->prepare( "SELECT tt.term_id FROM $wpdb->term_taxonomy AS tt WHERE tt.taxonomy = %s AND tt.term_taxonomy_id IN ($in_delete_tt_ids)", $taxonomy ) );
+			$delete_term_ids  = $zcdb->get_col( $zcdb->prepare( "SELECT tt.term_id FROM $zcdb->term_taxonomy AS tt WHERE tt.taxonomy = %s AND tt.term_taxonomy_id IN ($in_delete_tt_ids)", $taxonomy ) );
 			$delete_term_ids  = array_map( 'intval', $delete_term_ids );
 
 			$remove = zc_remove_object_terms( $object_id, $delete_term_ids, $taxonomy );
@@ -2947,13 +2947,13 @@ function zc_set_object_terms( $object_id, $terms, $taxonomy, $append = false ) {
 
 		foreach ( $tt_ids as $tt_id ) {
 			if ( in_array( (int) $tt_id, $final_tt_ids, true ) ) {
-				$values[] = $wpdb->prepare( '(%d, %d, %d)', $object_id, $tt_id, ++$term_order );
+				$values[] = $zcdb->prepare( '(%d, %d, %d)', $object_id, $tt_id, ++$term_order );
 			}
 		}
 
 		if ( $values ) {
-			if ( false === $wpdb->query( "INSERT INTO $wpdb->term_relationships (object_id, term_taxonomy_id, term_order) VALUES " . implode( ',', $values ) . ' ON DUPLICATE KEY UPDATE term_order = VALUES(term_order)' ) ) {
-				return new ZC_Error( 'db_insert_error', __( 'Could not insert term relationship into the database.' ), $wpdb->last_error );
+			if ( false === $zcdb->query( "INSERT INTO $zcdb->term_relationships (object_id, term_taxonomy_id, term_order) VALUES " . implode( ',', $values ) . ' ON DUPLICATE KEY UPDATE term_order = VALUES(term_order)' ) ) {
+				return new ZC_Error( 'db_insert_error', __( 'Could not insert term relationship into the database.' ), $zcdb->last_error );
 			}
 		}
 	}
@@ -2997,7 +2997,7 @@ function zc_add_object_terms( $object_id, $terms, $taxonomy ) {
  *
  * @since 3.6.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int              $object_id The ID of the object from which the terms will be removed.
  * @param string|int|array $terms     The slug(s) or ID(s) of the term(s) to remove.
@@ -3005,7 +3005,7 @@ function zc_add_object_terms( $object_id, $terms, $taxonomy ) {
  * @return bool|ZC_Error True on success, false or ZC_Error on failure.
  */
 function zc_remove_object_terms( $object_id, $terms, $taxonomy ) {
-	global $wpdb;
+	global $zcdb;
 
 	$object_id = (int) $object_id;
 
@@ -3054,7 +3054,7 @@ function zc_remove_object_terms( $object_id, $terms, $taxonomy ) {
 		 */
 		do_action( 'delete_term_relationships', $object_id, $tt_ids, $taxonomy );
 
-		$deleted = $wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->term_relationships WHERE object_id = %d AND term_taxonomy_id IN ($in_tt_ids)", $object_id ) );
+		$deleted = $zcdb->query( $zcdb->prepare( "DELETE FROM $zcdb->term_relationships WHERE object_id = %d AND term_taxonomy_id IN ($in_tt_ids)", $object_id ) );
 
 		zc_cache_delete( $object_id, $taxonomy . '_relationships' );
 		zc_cache_set_terms_last_changed();
@@ -3096,14 +3096,14 @@ function zc_remove_object_terms( $object_id, $terms, $taxonomy ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $slug The string that will be tried for a unique slug.
  * @param object $term The term object that the `$slug` will belong to.
  * @return string Will return a true unique slug.
  */
 function zc_unique_term_slug( $slug, $term ) {
-	global $wpdb;
+	global $zcdb;
 
 	$needs_suffix  = true;
 	$original_slug = $slug;
@@ -3154,17 +3154,17 @@ function zc_unique_term_slug( $slug, $term ) {
 		}
 
 		if ( ! empty( $term->term_id ) ) {
-			$query = $wpdb->prepare( "SELECT slug FROM $wpdb->terms WHERE slug = %s AND term_id != %d", $slug, $term->term_id );
+			$query = $zcdb->prepare( "SELECT slug FROM $zcdb->terms WHERE slug = %s AND term_id != %d", $slug, $term->term_id );
 		} else {
-			$query = $wpdb->prepare( "SELECT slug FROM $wpdb->terms WHERE slug = %s", $slug );
+			$query = $zcdb->prepare( "SELECT slug FROM $zcdb->terms WHERE slug = %s", $slug );
 		}
 
-		if ( $wpdb->get_var( $query ) ) { // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+		if ( $zcdb->get_var( $query ) ) { // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 			$num = 2;
 			do {
 				$alt_slug = $slug . "-$num";
 				++$num;
-				$slug_check = $wpdb->get_var( $wpdb->prepare( "SELECT slug FROM $wpdb->terms WHERE slug = %s", $alt_slug ) );
+				$slug_check = $zcdb->get_var( $zcdb->prepare( "SELECT slug FROM $zcdb->terms WHERE slug = %s", $alt_slug ) );
 			} while ( $slug_check );
 			$slug = $alt_slug;
 		}
@@ -3201,7 +3201,7 @@ function zc_unique_term_slug( $slug, $term ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int          $term_id  The ID of the term.
  * @param string       $taxonomy The taxonomy of the term.
@@ -3218,7 +3218,7 @@ function zc_unique_term_slug( $slug, $term ) {
  *                        ZC_Error otherwise.
  */
 function zc_update_term( $term_id, $taxonomy, $args = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! taxonomy_exists( $taxonomy ) ) {
 		return new ZC_Error( 'invalid_taxonomy', __( 'Invalid taxonomy.' ) );
@@ -3291,7 +3291,7 @@ function zc_update_term( $term_id, $taxonomy, $args = array() ) {
 			 * The alias is not in a group, so we create a new one
 			 * and add the alias to it.
 			 */
-			$term_group = $wpdb->get_var( "SELECT MAX(term_group) FROM $wpdb->terms" ) + 1;
+			$term_group = $zcdb->get_var( "SELECT MAX(term_group) FROM $zcdb->terms" ) + 1;
 
 			zc_update_term(
 				$alias->term_id,
@@ -3335,7 +3335,7 @@ function zc_update_term( $term_id, $taxonomy, $args = array() ) {
 		}
 	}
 
-	$tt_id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT tt.term_taxonomy_id FROM $wpdb->term_taxonomy AS tt INNER JOIN $wpdb->terms AS t ON tt.term_id = t.term_id WHERE tt.taxonomy = %s AND t.term_id = %d", $taxonomy, $term_id ) );
+	$tt_id = (int) $zcdb->get_var( $zcdb->prepare( "SELECT tt.term_taxonomy_id FROM $zcdb->term_taxonomy AS tt INNER JOIN $zcdb->terms AS t ON tt.term_id = t.term_id WHERE tt.taxonomy = %s AND t.term_id = %d", $taxonomy, $term_id ) );
 
 	// Check whether this is a shared term that needs splitting.
 	$_term_id = _split_shared_term( $term_id, $tt_id );
@@ -3369,11 +3369,11 @@ function zc_update_term( $term_id, $taxonomy, $args = array() ) {
 	 */
 	$data = apply_filters( 'zc_update_term_data', $data, $term_id, $taxonomy, $args );
 
-	$wpdb->update( $wpdb->terms, $data, compact( 'term_id' ) );
+	$zcdb->update( $zcdb->terms, $data, compact( 'term_id' ) );
 
 	if ( empty( $slug ) ) {
 		$slug = sanitize_title( $name, $term_id );
-		$wpdb->update( $wpdb->terms, compact( 'slug' ), compact( 'term_id' ) );
+		$zcdb->update( $zcdb->terms, compact( 'slug' ), compact( 'term_id' ) );
 	}
 
 	/**
@@ -3401,7 +3401,7 @@ function zc_update_term( $term_id, $taxonomy, $args = array() ) {
 	 */
 	do_action( 'edit_term_taxonomy', $tt_id, $taxonomy, $args );
 
-	$wpdb->update( $wpdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent' ), array( 'term_taxonomy_id' => $tt_id ) );
+	$zcdb->update( $zcdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent' ), array( 'term_taxonomy_id' => $tt_id ) );
 
 	/**
 	 * Fires immediately after a term-taxonomy relationship is updated.
@@ -3663,7 +3663,7 @@ function clean_object_term_cache( $object_ids, $object_type ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb                           ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                           ZelocoreCMS database abstraction object.
  * @global bool $_zc_suspend_cache_invalidation
  *
  * @param int|int[] $ids            Single or array of term IDs.
@@ -3673,7 +3673,7 @@ function clean_object_term_cache( $object_ids, $object_type ) {
  *                                  term object caches (false). Default true.
  */
 function clean_term_cache( $ids, $taxonomy = '', $clean_taxonomy = true ) {
-	global $wpdb, $_zc_suspend_cache_invalidation;
+	global $zcdb, $_zc_suspend_cache_invalidation;
 
 	if ( ! empty( $_zc_suspend_cache_invalidation ) ) {
 		return;
@@ -3688,7 +3688,7 @@ function clean_term_cache( $ids, $taxonomy = '', $clean_taxonomy = true ) {
 	if ( empty( $taxonomy ) ) {
 		$tt_ids = array_map( 'intval', $ids );
 		$tt_ids = implode( ', ', $tt_ids );
-		$terms  = $wpdb->get_results( "SELECT term_id, taxonomy FROM $wpdb->term_taxonomy WHERE term_taxonomy_id IN ($tt_ids)" );
+		$terms  = $zcdb->get_results( "SELECT term_id, taxonomy FROM $zcdb->term_taxonomy WHERE term_taxonomy_id IN ($tt_ids)" );
 		$ids    = array();
 
 		foreach ( (array) $terms as $term ) {
@@ -4035,13 +4035,13 @@ function _get_term_children( $term_id, $terms, $taxonomy, &$ancestors = array() 
  * @access private
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param object[]|ZC_Term[] $terms    List of term objects (passed by reference).
  * @param string             $taxonomy Term context.
  */
 function _pad_term_counts( &$terms, $taxonomy ) {
-	global $wpdb;
+	global $zcdb;
 
 	// This function only works for hierarchical taxonomies like post categories.
 	if ( ! is_taxonomy_hierarchical( $taxonomy ) ) {
@@ -4066,7 +4066,7 @@ function _pad_term_counts( &$terms, $taxonomy ) {
 	// Get the object and term IDs and stick them in a lookup table.
 	$tax_obj      = get_taxonomy( $taxonomy );
 	$object_types = esc_sql( $tax_obj->object_type );
-	$results      = $wpdb->get_results( "SELECT object_id, term_taxonomy_id FROM $wpdb->term_relationships INNER JOIN $wpdb->posts ON object_id = ID WHERE term_taxonomy_id IN (" . implode( ',', array_keys( $term_ids ) ) . ") AND post_type IN ('" . implode( "', '", $object_types ) . "') AND post_status = 'publish'" );
+	$results      = $zcdb->get_results( "SELECT object_id, term_taxonomy_id FROM $zcdb->term_relationships INNER JOIN $zcdb->posts ON object_id = ID WHERE term_taxonomy_id IN (" . implode( ',', array_keys( $term_ids ) ) . ") AND post_type IN ('" . implode( "', '", $object_types ) . "') AND post_status = 'publish'" );
 
 	foreach ( $results as $row ) {
 		$id = $term_ids[ $row->term_taxonomy_id ];
@@ -4110,17 +4110,17 @@ function _pad_term_counts( &$terms, $taxonomy ) {
  * @since 6.1.0 This function is no longer marked as "private".
  * @since 6.3.0 Use zc_lazyload_term_meta() for lazy-loading of term meta.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $term_ids          Array of term IDs.
  * @param bool  $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
 function _prime_term_caches( $term_ids, $update_meta_cache = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	$non_cached_ids = _get_non_cached_ids( $term_ids, 'terms' );
 	if ( ! empty( $non_cached_ids ) ) {
-		$fresh_terms = $wpdb->get_results( sprintf( "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE t.term_id IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) );
+		$fresh_terms = $zcdb->get_results( sprintf( "SELECT t.*, tt.* FROM $zcdb->terms AS t INNER JOIN $zcdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE t.term_id IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) );
 
 		update_term_cache( $fresh_terms );
 	}
@@ -4143,13 +4143,13 @@ function _prime_term_caches( $term_ids, $update_meta_cache = true ) {
  * @access private
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[]       $terms    List of term taxonomy IDs.
  * @param ZC_Taxonomy $taxonomy Current taxonomy object of terms.
  */
 function _update_post_term_count( $terms, $taxonomy ) {
-	global $wpdb;
+	global $zcdb;
 
 	$object_types = (array) $taxonomy->object_type;
 
@@ -4187,12 +4187,12 @@ function _update_post_term_count( $terms, $taxonomy ) {
 		// Attachments can be 'inherit' status, we need to base count off the parent's status if so.
 		if ( $check_attachments ) {
 			// phpcs:ignore ZelocoreCMS.DB.PreparedSQLPlaceholders.QuotedDynamicPlaceholderGeneration
-			$count += (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships, $wpdb->posts p1 WHERE p1.ID = $wpdb->term_relationships.object_id AND ( post_status IN ('" . implode( "', '", $post_statuses ) . "') OR ( post_status = 'inherit' AND post_parent > 0 AND ( SELECT post_status FROM $wpdb->posts WHERE ID = p1.post_parent ) IN ('" . implode( "', '", $post_statuses ) . "') ) ) AND post_type = 'attachment' AND term_taxonomy_id = %d", $tt_id ) );
+			$count += (int) $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_relationships, $zcdb->posts p1 WHERE p1.ID = $zcdb->term_relationships.object_id AND ( post_status IN ('" . implode( "', '", $post_statuses ) . "') OR ( post_status = 'inherit' AND post_parent > 0 AND ( SELECT post_status FROM $zcdb->posts WHERE ID = p1.post_parent ) IN ('" . implode( "', '", $post_statuses ) . "') ) ) AND post_type = 'attachment' AND term_taxonomy_id = %d", $tt_id ) );
 		}
 
 		if ( $object_types ) {
 			// phpcs:ignore ZelocoreCMS.DB.PreparedSQLPlaceholders.QuotedDynamicPlaceholderGeneration
-			$count += (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships, $wpdb->posts WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND post_status IN ('" . implode( "', '", $post_statuses ) . "') AND post_type IN ('" . implode( "', '", $object_types ) . "') AND term_taxonomy_id = %d", $tt_id ) );
+			$count += (int) $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_relationships, $zcdb->posts WHERE $zcdb->posts.ID = $zcdb->term_relationships.object_id AND post_status IN ('" . implode( "', '", $post_statuses ) . "') AND post_type IN ('" . implode( "', '", $object_types ) . "') AND term_taxonomy_id = %d", $tt_id ) );
 		}
 
 		/**
@@ -4208,7 +4208,7 @@ function _update_post_term_count( $terms, $taxonomy ) {
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edit_term_taxonomy', $tt_id, $taxonomy->name );
-		$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $tt_id ) );
+		$zcdb->update( $zcdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $tt_id ) );
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edited_term_taxonomy', $tt_id, $taxonomy->name );
@@ -4222,23 +4222,23 @@ function _update_post_term_count( $terms, $taxonomy ) {
  *
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[]       $terms    List of term taxonomy IDs.
  * @param ZC_Taxonomy $taxonomy Current taxonomy object of terms.
  */
 function _update_generic_term_count( $terms, $taxonomy ) {
-	global $wpdb;
+	global $zcdb;
 
 	foreach ( (array) $terms as $term ) {
-		$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
+		$count = $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_relationships WHERE term_taxonomy_id = %d", $term ) );
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'update_term_count', $term, $taxonomy->name, $count );
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edit_term_taxonomy', $term, $taxonomy->name );
-		$wpdb->update( $wpdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
+		$zcdb->update( $zcdb->term_taxonomy, compact( 'count' ), array( 'term_taxonomy_id' => $term ) );
 
 		/** This action is documented in zc-includes/taxonomy.php */
 		do_action( 'edited_term_taxonomy', $term, $taxonomy->name );
@@ -4254,7 +4254,7 @@ function _update_generic_term_count( $terms, $taxonomy ) {
  * @since 4.3.0 Introduced `$record` parameter. Also, `$term_id` and
  *              `$term_taxonomy_id` can now accept objects.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|object $term_id          ID of the shared term, or the shared term object.
  * @param int|object $term_taxonomy_id ID of the term_taxonomy item to receive a new term, or the term_taxonomy object
@@ -4269,7 +4269,7 @@ function _update_generic_term_count( $terms, $taxonomy ) {
  *                      new term_id is returned. A ZC_Error is returned for miscellaneous errors.
  */
 function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_object( $term_id ) ) {
 		$shared_term = $term_id;
@@ -4282,7 +4282,7 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
 	}
 
 	// If there are no shared term_taxonomy rows, there's nothing to do here.
-	$shared_tt_count = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_taxonomy tt WHERE tt.term_id = %d AND tt.term_taxonomy_id != %d", $term_id, $term_taxonomy_id ) );
+	$shared_tt_count = (int) $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_taxonomy tt WHERE tt.term_id = %d AND tt.term_taxonomy_id != %d", $term_id, $term_taxonomy_id ) );
 
 	if ( ! $shared_tt_count ) {
 		return $term_id;
@@ -4292,14 +4292,14 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
 	 * Verify that the term_taxonomy_id passed to the function is actually associated with the term_id.
 	 * If there's a mismatch, it may mean that the term is already split. Return the actual term_id from the db.
 	 */
-	$check_term_id = (int) $wpdb->get_var( $wpdb->prepare( "SELECT term_id FROM $wpdb->term_taxonomy WHERE term_taxonomy_id = %d", $term_taxonomy_id ) );
+	$check_term_id = (int) $zcdb->get_var( $zcdb->prepare( "SELECT term_id FROM $zcdb->term_taxonomy WHERE term_taxonomy_id = %d", $term_taxonomy_id ) );
 	if ( $check_term_id !== $term_id ) {
 		return $check_term_id;
 	}
 
 	// Pull up data about the currently shared slug, which we'll use to populate the new one.
 	if ( empty( $shared_term ) ) {
-		$shared_term = $wpdb->get_row( $wpdb->prepare( "SELECT t.* FROM $wpdb->terms t WHERE t.term_id = %d", $term_id ) );
+		$shared_term = $zcdb->get_row( $zcdb->prepare( "SELECT t.* FROM $zcdb->terms t WHERE t.term_id = %d", $term_id ) );
 	}
 
 	$new_term_data = array(
@@ -4308,29 +4308,29 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
 		'term_group' => $shared_term->term_group,
 	);
 
-	if ( false === $wpdb->insert( $wpdb->terms, $new_term_data ) ) {
-		return new ZC_Error( 'db_insert_error', __( 'Could not split shared term.' ), $wpdb->last_error );
+	if ( false === $zcdb->insert( $zcdb->terms, $new_term_data ) ) {
+		return new ZC_Error( 'db_insert_error', __( 'Could not split shared term.' ), $zcdb->last_error );
 	}
 
-	$new_term_id = (int) $wpdb->insert_id;
+	$new_term_id = (int) $zcdb->insert_id;
 
 	// Update the existing term_taxonomy to point to the newly created term.
-	$wpdb->update(
-		$wpdb->term_taxonomy,
+	$zcdb->update(
+		$zcdb->term_taxonomy,
 		array( 'term_id' => $new_term_id ),
 		array( 'term_taxonomy_id' => $term_taxonomy_id )
 	);
 
 	// Reassign child terms to the new parent.
 	if ( empty( $term_taxonomy ) ) {
-		$term_taxonomy = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->term_taxonomy WHERE term_taxonomy_id = %d", $term_taxonomy_id ) );
+		$term_taxonomy = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->term_taxonomy WHERE term_taxonomy_id = %d", $term_taxonomy_id ) );
 	}
 
-	$children_tt_ids = $wpdb->get_col( $wpdb->prepare( "SELECT term_taxonomy_id FROM $wpdb->term_taxonomy WHERE parent = %d AND taxonomy = %s", $term_id, $term_taxonomy->taxonomy ) );
+	$children_tt_ids = $zcdb->get_col( $zcdb->prepare( "SELECT term_taxonomy_id FROM $zcdb->term_taxonomy WHERE parent = %d AND taxonomy = %s", $term_id, $term_taxonomy->taxonomy ) );
 	if ( ! empty( $children_tt_ids ) ) {
 		foreach ( $children_tt_ids as $child_tt_id ) {
-			$wpdb->update(
-				$wpdb->term_taxonomy,
+			$zcdb->update(
+				$zcdb->term_taxonomy,
 				array( 'parent' => $new_term_id ),
 				array( 'term_taxonomy_id' => $child_tt_id )
 			);
@@ -4350,7 +4350,7 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
 	$taxonomies_to_clean = array( $term_taxonomy->taxonomy );
 
 	// Clean the cache for term taxonomies formerly shared with the current term.
-	$shared_term_taxonomies = $wpdb->get_col( $wpdb->prepare( "SELECT taxonomy FROM $wpdb->term_taxonomy WHERE term_id = %d", $term_id ) );
+	$shared_term_taxonomies = $zcdb->get_col( $zcdb->prepare( "SELECT taxonomy FROM $zcdb->term_taxonomy WHERE term_id = %d", $term_id ) );
 	$taxonomies_to_clean    = array_merge( $taxonomies_to_clean, $shared_term_taxonomies );
 
 	foreach ( $taxonomies_to_clean as $taxonomy_to_clean ) {
@@ -4369,9 +4369,9 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
 	}
 
 	// If we've just split the final shared term, set the "finished" flag.
-	$shared_terms_exist = $wpdb->get_results(
-		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$wpdb->term_taxonomy} tt
-		 LEFT JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+	$shared_terms_exist = $zcdb->get_results(
+		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$zcdb->term_taxonomy} tt
+		 LEFT JOIN {$zcdb->terms} t ON t.term_id = tt.term_id
 		 GROUP BY t.term_id
 		 HAVING term_tt_count > 1
 		 LIMIT 1"
@@ -4400,15 +4400,15 @@ function _split_shared_term( $term_id, $term_taxonomy_id, $record = true ) {
  *
  * @since 4.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function _zc_batch_split_terms() {
-	global $wpdb;
+	global $zcdb;
 
 	$lock_name = 'term_split.lock';
 
 	// Try to lock.
-	$lock_result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'off') /* LOCK */", $lock_name, time() ) );
+	$lock_result = $zcdb->query( $zcdb->prepare( "INSERT IGNORE INTO `$zcdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'off') /* LOCK */", $lock_name, time() ) );
 
 	if ( ! $lock_result ) {
 		$lock_result = get_option( $lock_name );
@@ -4424,9 +4424,9 @@ function _zc_batch_split_terms() {
 	update_option( $lock_name, time() );
 
 	// Get a list of shared terms (those with more than one associated row in term_taxonomy).
-	$shared_terms = $wpdb->get_results(
-		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$wpdb->term_taxonomy} tt
-		 LEFT JOIN {$wpdb->terms} t ON t.term_id = tt.term_id
+	$shared_terms = $zcdb->get_results(
+		"SELECT tt.term_id, t.*, count(*) as term_tt_count FROM {$zcdb->term_taxonomy} tt
+		 LEFT JOIN {$zcdb->terms} t ON t.term_id = tt.term_id
 		 GROUP BY t.term_id
 		 HAVING term_tt_count > 1
 		 LIMIT 10"
@@ -4452,7 +4452,7 @@ function _zc_batch_split_terms() {
 
 	// Get term taxonomy data for all shared terms.
 	$shared_term_ids = implode( ',', array_keys( $shared_terms ) );
-	$shared_tts      = $wpdb->get_results( "SELECT * FROM {$wpdb->term_taxonomy} WHERE `term_id` IN ({$shared_term_ids})" );
+	$shared_tts      = $zcdb->get_results( "SELECT * FROM {$zcdb->term_taxonomy} WHERE `term_id` IN ({$shared_term_ids})" );
 
 	// Split term data recording is slow, so we do it just once, outside the loop.
 	$split_term_data    = get_option( '_split_terms', array() );
@@ -4533,7 +4533,7 @@ function _zc_check_split_default_terms( $term_id, $new_term_id, $term_taxonomy_i
  * @ignore
  * @since 4.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $term_id          ID of the formerly shared term.
  * @param int    $new_term_id      ID of the new term created for the $term_taxonomy_id.
@@ -4541,13 +4541,13 @@ function _zc_check_split_default_terms( $term_id, $new_term_id, $term_taxonomy_i
  * @param string $taxonomy         Taxonomy for the split term.
  */
 function _zc_check_split_terms_in_menus( $term_id, $new_term_id, $term_taxonomy_id, $taxonomy ) {
-	global $wpdb;
-	$post_ids = $wpdb->get_col(
-		$wpdb->prepare(
+	global $zcdb;
+	$post_ids = $zcdb->get_col(
+		$zcdb->prepare(
 			"SELECT m1.post_id
-		FROM {$wpdb->postmeta} AS m1
-			INNER JOIN {$wpdb->postmeta} AS m2 ON ( m2.post_id = m1.post_id )
-			INNER JOIN {$wpdb->postmeta} AS m3 ON ( m3.post_id = m1.post_id )
+		FROM {$zcdb->postmeta} AS m1
+			INNER JOIN {$zcdb->postmeta} AS m2 ON ( m2.post_id = m1.post_id )
+			INNER JOIN {$zcdb->postmeta} AS m3 ON ( m3.post_id = m1.post_id )
 		WHERE ( m1.meta_key = '_menu_item_type' AND m1.meta_value = 'taxonomy' )
 			AND ( m2.meta_key = '_menu_item_object' AND m2.meta_value = %s )
 			AND ( m3.meta_key = '_menu_item_object_id' AND m3.meta_value = %d )",
@@ -4638,20 +4638,20 @@ function zc_get_split_term( $old_term_id, $taxonomy ) {
  *
  * @since 4.4.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $term_id Term ID.
  * @return bool Returns false if a term is not shared between multiple taxonomies or
  *              if splitting shared taxonomy terms is finished.
  */
 function zc_term_is_shared( $term_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( get_option( 'finished_splitting_shared_terms' ) ) {
 		return false;
 	}
 
-	$tt_count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_taxonomy WHERE term_id = %d", $term_id ) );
+	$tt_count = $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_taxonomy WHERE term_id = %d", $term_id ) );
 
 	return $tt_count > 1;
 }

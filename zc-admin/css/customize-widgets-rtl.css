@@ -213,7 +213,7 @@
 .zc-customizer div.mce-tooltip {
 	z-index: 500100 !important;
 }
-.zc-customizer .ui-autocomplete.wplink-autocomplete {
+.zc-customizer .ui-autocomplete.zclink-autocomplete {
 	z-index: 500110; /* originally 100110, but z-index of .zc-full-overlay is 500000 */
 }
 .zc-customizer #zc-link-backdrop {

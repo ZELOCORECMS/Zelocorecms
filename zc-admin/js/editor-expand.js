@@ -262,7 +262,7 @@
 			 * Makes sure the cursor is always visible in the editor.
 			 *
 			 * Makes sure the cursor is kept between the toolbars of the editor and scrolls
-			 * the window when the cursor moves out of the viewport to a wpview.
+			 * the window when the cursor moves out of the viewport to a zcview.
 			 * Setting a buffer > 0 will prevent the browser default.
 			 * Some browsers will scroll to the middle,
 			 * others to the top/bottom of the *window* when moving the cursor out of the viewport.

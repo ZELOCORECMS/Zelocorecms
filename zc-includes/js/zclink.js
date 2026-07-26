@@ -1,5 +1,5 @@
 /**
- * @output zc-includes/js/wplink.js
+ * @output zc-includes/js/zclink.js
  */
 
  /* global wpLink */
@@ -14,7 +14,7 @@
 
 	function getLink() {
 		if ( editor ) {
-			return editor.$( 'a[data-wplink-edit="true"]' );
+			return editor.$( 'a[data-zclink-edit="true"]' );
 		}
 
 		return null;
@@ -69,10 +69,10 @@
 			rivers.elements.on( 'river-select', wpLink.updateFields );
 
 			// Display 'hint' message when search field or 'query-results' box are focused.
-			inputs.search.on( 'focus.wplink', function() {
+			inputs.search.on( 'focus.zclink', function() {
 				inputs.queryNoticeTextDefault.hide();
 				inputs.queryNoticeTextHint.removeClass( 'screen-reader-text' ).show();
-			} ).on( 'blur.wplink', function() {
+			} ).on( 'blur.zclink', function() {
 				inputs.queryNoticeTextDefault.show();
 				inputs.queryNoticeTextHint.addClass( 'screen-reader-text' ).hide();
 			} );
@@ -145,7 +145,7 @@
 
 			wpLink.refresh( url, text );
 
-			$( document ).trigger( 'wplink-open', inputs.wrap );
+			$( document ).trigger( 'zclink-open', inputs.wrap );
 		},
 
 		isMCE: function() {
@@ -294,8 +294,8 @@
 						wpLink.range.select();
 					}
 				} else {
-					if ( editor.plugins.wplink ) {
-						editor.plugins.wplink.close();
+					if ( editor.plugins.zclink ) {
+						editor.plugins.zclink.close();
 					}
 
 					editor.focus();
@@ -307,7 +307,7 @@
 
 			correctedURL = false;
 
-			$( document ).trigger( 'wplink-close', inputs.wrap );
+			$( document ).trigger( 'zclink-close', inputs.wrap );
 		},
 
 		getAttrs: function() {
@@ -443,7 +443,7 @@
 						}
 					}
 
-					attrs['data-wplink-edit'] = null;
+					attrs['data-zclink-edit'] = null;
 					attrs['data-mce-href'] = attrs.href;
 					$link.attr( attrs );
 				}
@@ -455,8 +455,8 @@
 			if ( $link.length ) {
 				editor.selection.select( $link[0] );
 
-				if ( editor.plugins.wplink ) {
-					editor.plugins.wplink.checkLink( $link[0] );
+				if ( editor.plugins.zclink ) {
+					editor.plugins.zclink.checkLink( $link[0] );
 				}
 			}
 

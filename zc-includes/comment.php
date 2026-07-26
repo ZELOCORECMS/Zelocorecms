@@ -24,7 +24,7 @@
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $author       Comment author name.
  * @param string $email        Comment author email.
@@ -37,7 +37,7 @@
  * @return bool If all checks pass, true, otherwise false.
  */
 function check_comment( $author, $email, $url, $comment, $user_ip, $user_agent, $comment_type ) {
-	global $wpdb;
+	global $zcdb;
 
 	// If manual moderation is enabled, skip all checks and return false.
 	if ( '1' === get_option( 'comment_moderation' ) ) {
@@ -130,10 +130,10 @@ function check_comment( $author, $email, $url, $comment, $user_ip, $user_agent, 
 		if ( 'trackback' !== $comment_type && 'pingback' !== $comment_type && '' !== $author && '' !== $email ) {
 			$comment_user = get_user_by( 'email', zc_unslash( $email ) );
 			if ( ! empty( $comment_user->ID ) ) {
-				$ok_to_comment = $wpdb->get_var(
-					$wpdb->prepare(
+				$ok_to_comment = $zcdb->get_var(
+					$zcdb->prepare(
 						"SELECT comment_approved
-						FROM $wpdb->comments
+						FROM $zcdb->comments
 						WHERE user_id = %d
 						AND comment_approved = '1'
 						LIMIT 1",
@@ -142,10 +142,10 @@ function check_comment( $author, $email, $url, $comment, $user_ip, $user_agent, 
 				);
 			} else {
 				// expected_slashed ($author, $email)
-				$ok_to_comment = $wpdb->get_var(
-					$wpdb->prepare(
+				$ok_to_comment = $zcdb->get_var(
+					$zcdb->prepare(
 						"SELECT comment_approved
-						FROM $wpdb->comments
+						FROM $zcdb->comments
 						WHERE comment_author = %s
 						AND comment_author_email = %s
 						AND comment_approved = '1'
@@ -345,13 +345,13 @@ function get_default_comment_status( $post_type = 'post', $comment_type = 'comme
  * @since 4.7.0 Replaced caching the modified date in a local static variable
  *              with the Object Cache API.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $timezone Which timezone to use in reference to 'gmt', 'blog', or 'server' locations.
  * @return string|false Last comment modified date on success, false on failure.
  */
 function get_lastcommentmodified( $timezone = 'server' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$timezone = strtolower( $timezone );
 	$key      = "lastcommentmodified:$timezone";
@@ -363,15 +363,15 @@ function get_lastcommentmodified( $timezone = 'server' ) {
 
 	switch ( $timezone ) {
 		case 'gmt':
-			$comment_modified_date = $wpdb->get_var( "SELECT comment_date_gmt FROM $wpdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1" );
+			$comment_modified_date = $zcdb->get_var( "SELECT comment_date_gmt FROM $zcdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1" );
 			break;
 		case 'blog':
-			$comment_modified_date = $wpdb->get_var( "SELECT comment_date FROM $wpdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1" );
+			$comment_modified_date = $zcdb->get_var( "SELECT comment_date FROM $zcdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1" );
 			break;
 		case 'server':
 			$add_seconds_server = gmdate( 'Z' );
 
-			$comment_modified_date = $wpdb->get_var( $wpdb->prepare( "SELECT DATE_ADD(comment_date_gmt, INTERVAL %s SECOND) FROM $wpdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1", $add_seconds_server ) );
+			$comment_modified_date = $zcdb->get_var( $zcdb->prepare( "SELECT DATE_ADD(comment_date_gmt, INTERVAL %s SECOND) FROM $zcdb->comments WHERE comment_approved = '1' ORDER BY comment_date_gmt DESC LIMIT 1", $add_seconds_server ) );
 			break;
 	}
 
@@ -682,7 +682,7 @@ function sanitize_comment_cookies() {
  *              to return a ZC_Error object instead of dying.
  * @since 5.5.0 The `$avoid_die` parameter was renamed to `$zc_error`.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $commentdata Contains information on the comment.
  * @param bool  $zc_error    When true, a disallowed comment will result in the function
@@ -692,30 +692,30 @@ function sanitize_comment_cookies() {
  *                             If `$zc_error` is true, disallowed comments return a ZC_Error.
  */
 function zc_allow_comment( $commentdata, $zc_error = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	/*
 	 * Simple duplicate check.
 	 * expected_slashed ($comment_post_ID, $comment_author, $comment_author_email, $comment_content)
 	 */
-	$dupe = $wpdb->prepare(
-		"SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_parent = %s AND comment_approved != 'trash' AND ( comment_author = %s ",
+	$dupe = $zcdb->prepare(
+		"SELECT comment_ID FROM $zcdb->comments WHERE comment_post_ID = %d AND comment_parent = %s AND comment_approved != 'trash' AND ( comment_author = %s ",
 		zc_unslash( $commentdata['comment_post_ID'] ),
 		zc_unslash( $commentdata['comment_parent'] ),
 		zc_unslash( $commentdata['comment_author'] )
 	);
 	if ( $commentdata['comment_author_email'] ) {
-		$dupe .= $wpdb->prepare(
+		$dupe .= $zcdb->prepare(
 			'AND comment_author_email = %s ',
 			zc_unslash( $commentdata['comment_author_email'] )
 		);
 	}
-	$dupe .= $wpdb->prepare(
+	$dupe .= $zcdb->prepare(
 		') AND comment_content = %s LIMIT 1',
 		zc_unslash( $commentdata['comment_content'] )
 	);
 
-	$dupe_id = $wpdb->get_var( $dupe );
+	$dupe_id = $zcdb->get_var( $dupe );
 
 	/**
 	 * Filters the ID, if any, of the duplicate comment found when creating a new comment.
@@ -838,7 +838,7 @@ function check_comment_flood_db() {
  *
  * @since 4.7.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param bool   $is_flood  Is a comment flooding occurring?
  * @param string $ip        Comment author's IP address.
@@ -849,7 +849,7 @@ function check_comment_flood_db() {
  * @return bool Whether comment flooding is occurring.
  */
 function zc_check_comment_flood( $is_flood, $ip, $email, $date, $avoid_die = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Another callback has declared a flood. Trust it.
 	if ( true === $is_flood ) {
@@ -871,14 +871,14 @@ function zc_check_comment_flood( $is_flood, $ip, $email, $date, $avoid_die = fal
 		$check_column = '`comment_author_IP`';
 	}
 
-	$sql = $wpdb->prepare(
-		"SELECT `comment_date_gmt` FROM `$wpdb->comments` WHERE `comment_date_gmt` >= %s AND ( $check_column = %s OR `comment_author_email` = %s ) ORDER BY `comment_date_gmt` DESC LIMIT 1",
+	$sql = $zcdb->prepare(
+		"SELECT `comment_date_gmt` FROM `$zcdb->comments` WHERE `comment_date_gmt` >= %s AND ( $check_column = %s OR `comment_author_email` = %s ) ORDER BY `comment_date_gmt` DESC LIMIT 1",
 		$hour_ago,
 		$user,
 		$email
 	);
 
-	$lasttime = $wpdb->get_var( $sql );
+	$lasttime = $zcdb->get_var( $sql );
 
 	if ( $lasttime ) {
 		$time_lastcomment = mysql2date( 'U', $lasttime, false );
@@ -1029,7 +1029,7 @@ function get_comment_pages_count( $comments = null, $per_page = null, $threaded 
  *
  * @since 2.7.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int   $comment_id Comment ID.
  * @param array $args {
@@ -1047,7 +1047,7 @@ function get_comment_pages_count( $comments = null, $per_page = null, $threaded 
  * @return int|null Comment page number or null on error.
  */
 function get_page_of_comment( $comment_id, $args = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	$page = null;
 
@@ -1109,7 +1109,7 @@ function get_page_of_comment( $comment_id, $args = array() ) {
 			'parent'     => 0,
 			'date_query' => array(
 				array(
-					'column' => "$wpdb->comments.comment_date_gmt",
+					'column' => "$zcdb->comments.comment_date_gmt",
 					'before' => $comment->comment_date_gmt,
 				),
 			),
@@ -1199,12 +1199,12 @@ function get_page_of_comment( $comment_id, $args = array() ) {
  *
  * @since 4.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return int[] Array of maximum lengths keyed by field name.
  */
 function zc_get_comment_fields_max_lengths() {
-	global $wpdb;
+	global $zcdb;
 
 	$lengths = array(
 		'comment_author'       => 245,
@@ -1213,9 +1213,9 @@ function zc_get_comment_fields_max_lengths() {
 		'comment_content'      => 65525,
 	);
 
-	if ( $wpdb->is_mysql ) {
+	if ( $zcdb->is_mysql ) {
 		foreach ( $lengths as $column => $length ) {
-			$col_length = $wpdb->get_col_length( $wpdb->comments, $column );
+			$col_length = $zcdb->get_col_length( $zcdb->comments, $column );
 			$max_length = 0;
 
 			// No point if we can't get the DB column lengths.
@@ -1285,20 +1285,20 @@ function zc_check_comment_data_max_lengths( $comment_data ) {
  *
  * @since 6.7.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $comment_data Array of arguments for inserting a comment.
  * @return int|string|ZC_Error The approval status on success (0|1|'spam'|'trash'),
  *                             ZC_Error otherwise.
  */
 function zc_check_comment_data( $comment_data ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! empty( $comment_data['user_id'] ) ) {
 		$user        = get_userdata( $comment_data['user_id'] );
-		$post_author = (int) $wpdb->get_var(
-			$wpdb->prepare(
-				"SELECT post_author FROM $wpdb->posts WHERE ID = %d LIMIT 1",
+		$post_author = (int) $zcdb->get_var(
+			$zcdb->prepare(
+				"SELECT post_author FROM $zcdb->posts WHERE ID = %d LIMIT 1",
 				$comment_data['comment_post_ID']
 			)
 		);
@@ -1499,14 +1499,14 @@ function zc_count_comments( $post_id = 0 ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Comment $comment_id   Comment ID or ZC_Comment object.
  * @param bool           $force_delete Whether to bypass Trash and force deletion. Default false.
  * @return bool True on success, false on failure.
  */
 function zc_delete_comment( $comment_id, $force_delete = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$comment = get_comment( $comment_id );
 	if ( ! $comment ) {
@@ -1529,19 +1529,19 @@ function zc_delete_comment( $comment_id, $force_delete = false ) {
 	do_action( 'delete_comment', $comment->comment_ID, $comment );
 
 	// Move children up a level.
-	$children = $wpdb->get_col( $wpdb->prepare( "SELECT comment_ID FROM $wpdb->comments WHERE comment_parent = %d", $comment->comment_ID ) );
+	$children = $zcdb->get_col( $zcdb->prepare( "SELECT comment_ID FROM $zcdb->comments WHERE comment_parent = %d", $comment->comment_ID ) );
 	if ( ! empty( $children ) ) {
-		$wpdb->update( $wpdb->comments, array( 'comment_parent' => $comment->comment_parent ), array( 'comment_parent' => $comment->comment_ID ) );
+		$zcdb->update( $zcdb->comments, array( 'comment_parent' => $comment->comment_parent ), array( 'comment_parent' => $comment->comment_ID ) );
 		clean_comment_cache( $children );
 	}
 
 	// Delete metadata.
-	$meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->commentmeta WHERE comment_id = %d", $comment->comment_ID ) );
+	$meta_ids = $zcdb->get_col( $zcdb->prepare( "SELECT meta_id FROM $zcdb->commentmeta WHERE comment_id = %d", $comment->comment_ID ) );
 	foreach ( $meta_ids as $mid ) {
 		delete_metadata_by_mid( 'comment', $mid );
 	}
 
-	if ( ! $wpdb->delete( $wpdb->comments, array( 'comment_ID' => $comment->comment_ID ) ) ) {
+	if ( ! $zcdb->delete( $zcdb->comments, array( 'comment_ID' => $comment->comment_ID ) ) ) {
 		return false;
 	}
 
@@ -2066,7 +2066,7 @@ function zc_get_unapproved_comment_author_email() {
  * @since 4.4.0 Introduced the `$comment_meta` argument.
  * @since 5.5.0 Default value for `$comment_type` argument changed to `comment`.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $commentdata {
  *     Array of arguments for inserting a new comment.
@@ -2096,7 +2096,7 @@ function zc_get_unapproved_comment_author_email() {
  * @return int|false The new comment's ID on success, false on failure.
  */
 function zc_insert_comment( $commentdata ) {
-	global $wpdb;
+	global $zcdb;
 
 	$data = zc_unslash( $commentdata );
 
@@ -2138,11 +2138,11 @@ function zc_insert_comment( $commentdata ) {
 		'user_id'
 	);
 
-	if ( ! $wpdb->insert( $wpdb->comments, $compacted ) ) {
+	if ( ! $zcdb->insert( $zcdb->comments, $compacted ) ) {
 		return false;
 	}
 
-	$id = (int) $wpdb->insert_id;
+	$id = (int) $zcdb->insert_id;
 
 	if ( 1 === (int) $comment_approved ) {
 		zc_update_comment_count( $comment_post_id );
@@ -2285,7 +2285,7 @@ function zc_throttle_comment_flood( $block, $time_lastcomment, $time_newcomment 
  * @since 5.5.0 Introduced the `comment_type` argument.
  *
  * @see zc_insert_comment()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $commentdata {
  *     Comment data.
@@ -2312,7 +2312,7 @@ function zc_throttle_comment_flood( $block, $time_lastcomment, $time_newcomment 
  * @return int|false|ZC_Error The ID of the comment on success, false or ZC_Error on failure.
  */
 function zc_new_comment( $commentdata, $zc_error = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	/*
 	 * Normalize `user_ID` to `user_id`, but pass the old key
@@ -2403,7 +2403,7 @@ function zc_new_comment( $commentdata, $zc_error = false ) {
 
 		foreach ( $fields as $field ) {
 			if ( isset( $commentdata[ $field ] ) ) {
-				$commentdata[ $field ] = $wpdb->strip_invalid_text_for_column( $wpdb->comments, $field, $commentdata[ $field ] );
+				$commentdata[ $field ] = $zcdb->strip_invalid_text_for_column( $zcdb->comments, $field, $commentdata[ $field ] );
 			}
 		}
 
@@ -2526,7 +2526,7 @@ function zc_new_comment_via_rest_notify_postauthor( $comment ) {
  *
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Comment $comment_id     Comment ID or ZC_Comment object.
  * @param string         $comment_status New comment status, either 'hold', 'approve', 'spam', or 'trash'.
@@ -2534,7 +2534,7 @@ function zc_new_comment_via_rest_notify_postauthor( $comment ) {
  * @return bool|ZC_Error True on success, false or ZC_Error on failure.
  */
 function zc_set_comment_status( $comment_id, $comment_status, $zc_error = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	switch ( $comment_status ) {
 		case 'hold':
@@ -2558,9 +2558,9 @@ function zc_set_comment_status( $comment_id, $comment_status, $zc_error = false 
 
 	$comment_old = clone get_comment( $comment_id );
 
-	if ( ! $wpdb->update( $wpdb->comments, array( 'comment_approved' => $status ), array( 'comment_ID' => $comment_old->comment_ID ) ) ) {
+	if ( ! $zcdb->update( $zcdb->comments, array( 'comment_approved' => $status ), array( 'comment_ID' => $comment_old->comment_ID ) ) ) {
 		if ( $zc_error ) {
-			return new ZC_Error( 'db_update_error', __( 'Could not update comment status.' ), $wpdb->last_error );
+			return new ZC_Error( 'db_update_error', __( 'Could not update comment status.' ), $zcdb->last_error );
 		} else {
 			return false;
 		}
@@ -2600,7 +2600,7 @@ function zc_set_comment_status( $comment_id, $comment_status, $zc_error = false 
  * @since 5.5.0 The return values for an invalid comment or post ID
  *              were changed to false instead of 0.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $commentarr Contains information on the comment.
  * @param bool  $zc_error   Optional. Whether to return a ZC_Error on failure. Default false.
@@ -2608,7 +2608,7 @@ function zc_set_comment_status( $comment_id, $comment_status, $zc_error = false 
  *                            False or a ZC_Error object on failure.
  */
 function zc_update_comment( $commentarr, $zc_error = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	// First, get all of the original fields.
 	$comment = get_comment( $commentarr['comment_ID'], ARRAY_A );
@@ -2721,11 +2721,11 @@ function zc_update_comment( $commentarr, $zc_error = false ) {
 
 	$data = zc_array_slice_assoc( $data, $keys );
 
-	$result = $wpdb->update( $wpdb->comments, $data, array( 'comment_ID' => $comment_id ) );
+	$result = $zcdb->update( $zcdb->comments, $data, array( 'comment_ID' => $comment_id ) );
 
 	if ( false === $result ) {
 		if ( $zc_error ) {
-			return new ZC_Error( 'db_update_error', __( 'Could not update comment in the database.' ), $wpdb->last_error );
+			return new ZC_Error( 'db_update_error', __( 'Could not update comment in the database.' ), $zcdb->last_error );
 		} else {
 			return false;
 		}
@@ -2838,13 +2838,13 @@ function zc_update_comment_count( $post_id, $do_deferred = false ) {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $post_id Post ID
  * @return bool True on success, false if the post does not exist.
  */
 function zc_update_comment_count_now( $post_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post_id = (int) $post_id;
 
@@ -2875,12 +2875,12 @@ function zc_update_comment_count_now( $post_id ) {
 	$new = apply_filters( 'pre_zc_update_comment_count_now', null, $old, $post_id );
 
 	if ( is_null( $new ) ) {
-		$new = (int) $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved = '1' AND comment_type != 'note'", $post_id ) );
+		$new = (int) $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->comments WHERE comment_post_ID = %d AND comment_approved = '1' AND comment_type != 'note'", $post_id ) );
 	} else {
 		$new = (int) $new;
 	}
 
-	$wpdb->update( $wpdb->posts, array( 'comment_count' => $new ), array( 'ID' => $post_id ) );
+	$zcdb->update( $zcdb->posts, array( 'comment_count' => $new ), array( 'ID' => $post_id ) );
 
 	clean_post_cache( $post );
 
@@ -3086,13 +3086,13 @@ function do_all_trackbacks() {
  * @since 1.5.0
  * @since 4.7.0 `$post` can be a ZC_Post object.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Post $post Post ID or object to do trackbacks on.
  * @return void|false Returns false on failure.
  */
 function do_trackbacks( $post ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -3104,7 +3104,7 @@ function do_trackbacks( $post ) {
 	$pinged  = get_pung( $post );
 
 	if ( empty( $to_ping ) ) {
-		$wpdb->update( $wpdb->posts, array( 'to_ping' => '' ), array( 'ID' => $post->ID ) );
+		$zcdb->update( $zcdb->posts, array( 'to_ping' => '' ), array( 'ID' => $post->ID ) );
 		return;
 	}
 
@@ -3129,9 +3129,9 @@ function do_trackbacks( $post ) {
 			trackback( $tb_ping, $post_title, $excerpt, $post->ID );
 			$pinged[] = $tb_ping;
 		} else {
-			$wpdb->query(
-				$wpdb->prepare(
-					"UPDATE $wpdb->posts SET to_ping = TRIM(REPLACE(to_ping, %s, '')) WHERE ID = %d",
+			$zcdb->query(
+				$zcdb->prepare(
+					"UPDATE $zcdb->posts SET to_ping = TRIM(REPLACE(to_ping, %s, '')) WHERE ID = %d",
 					$tb_ping,
 					$post->ID
 				)
@@ -3307,7 +3307,7 @@ function privacy_ping_filter( $sites ) {
  *
  * @since 0.71
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $trackback_url URL to send trackbacks.
  * @param string $title         Title of post.
@@ -3316,7 +3316,7 @@ function privacy_ping_filter( $sites ) {
  * @return int|false|void Database query from update.
  */
 function trackback( $trackback_url, $title, $excerpt, $post_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $trackback_url ) ) {
 		return;
@@ -3337,8 +3337,8 @@ function trackback( $trackback_url, $title, $excerpt, $post_id ) {
 		return;
 	}
 
-	$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET pinged = CONCAT(pinged, '\n', %s) WHERE ID = %d", $trackback_url, $post_id ) );
-	return $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET to_ping = TRIM(REPLACE(to_ping, %s, '')) WHERE ID = %d", $trackback_url, $post_id ) );
+	$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET pinged = CONCAT(pinged, '\n', %s) WHERE ID = %d", $trackback_url, $post_id ) );
+	return $zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET to_ping = TRIM(REPLACE(to_ping, %s, '')) WHERE ID = %d", $trackback_url, $post_id ) );
 }
 
 /**
@@ -3466,17 +3466,17 @@ function update_comment_cache( $comments, $update_meta_cache = true ) {
  * @since 6.3.0 Use zc_lazyload_comment_meta() for lazy-loading of comment meta.
  *
  * @see update_comment_cache()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[] $comment_ids       Array of comment IDs.
  * @param bool  $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
 function _prime_comment_caches( $comment_ids, $update_meta_cache = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	$non_cached_ids = _get_non_cached_ids( $comment_ids, 'comment' );
 	if ( ! empty( $non_cached_ids ) ) {
-		$fresh_comments = $wpdb->get_results( sprintf( "SELECT $wpdb->comments.* FROM $wpdb->comments WHERE comment_ID IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) );
+		$fresh_comments = $zcdb->get_results( sprintf( "SELECT $zcdb->comments.* FROM $zcdb->comments WHERE comment_ID IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) );
 
 		update_comment_cache( $fresh_comments, false );
 	}
@@ -3955,7 +3955,7 @@ function zc_register_comment_personal_data_eraser( $erasers ) {
  *
  * @since 4.9.6
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $email_address The comment author email address.
  * @param int    $page          Comment page number.
@@ -3969,7 +3969,7 @@ function zc_register_comment_personal_data_eraser( $erasers ) {
  * }
  */
 function zc_comments_personal_data_eraser( $email_address, $page = 1 ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $email_address ) ) {
 		return array(
@@ -4041,7 +4041,7 @@ function zc_comments_personal_data_eraser( $email_address, $page = 1 ) {
 			'comment_ID' => $comment_id,
 		);
 
-		$updated = $wpdb->update( $wpdb->comments, $anonymized_comment, $args );
+		$updated = $zcdb->update( $zcdb->comments, $anonymized_comment, $args );
 
 		if ( $updated ) {
 			$items_removed = true;
@@ -4075,15 +4075,15 @@ function zc_cache_set_comments_last_changed() {
  *
  * @since 5.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function _zc_batch_update_comment_type() {
-	global $wpdb;
+	global $zcdb;
 
 	$lock_name = 'update_comment_type.lock';
 
 	// Try to lock.
-	$lock_result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'no') /* LOCK */", $lock_name, time() ) );
+	$lock_result = $zcdb->query( $zcdb->prepare( "INSERT IGNORE INTO `$zcdb->options` ( `option_name`, `option_value`, `autoload` ) VALUES (%s, %s, 'no') /* LOCK */", $lock_name, time() ) );
 
 	if ( ! $lock_result ) {
 		$lock_result = get_option( $lock_name );
@@ -4099,8 +4099,8 @@ function _zc_batch_update_comment_type() {
 	update_option( $lock_name, time() );
 
 	// Check if there's still an empty comment type.
-	$empty_comment_type = $wpdb->get_var(
-		"SELECT comment_ID FROM $wpdb->comments
+	$empty_comment_type = $zcdb->get_var(
+		"SELECT comment_ID FROM $zcdb->comments
 		WHERE comment_type = ''
 		LIMIT 1"
 	);
@@ -4125,10 +4125,10 @@ function _zc_batch_update_comment_type() {
 	$comment_batch_size = (int) apply_filters( 'zc_update_comment_type_batch_size', 100 );
 
 	// Get the IDs of the comments to update.
-	$comment_ids = $wpdb->get_col(
-		$wpdb->prepare(
+	$comment_ids = $zcdb->get_col(
+		$zcdb->prepare(
 			"SELECT comment_ID
-			FROM {$wpdb->comments}
+			FROM {$zcdb->comments}
 			WHERE comment_type = ''
 			ORDER BY comment_ID DESC
 			LIMIT %d",
@@ -4140,8 +4140,8 @@ function _zc_batch_update_comment_type() {
 		$comment_id_list = implode( ',', $comment_ids );
 
 		// Update the `comment_type` field value to be `comment` for the next batch of comments.
-		$wpdb->query(
-			"UPDATE {$wpdb->comments}
+		$zcdb->query(
+			"UPDATE {$zcdb->comments}
 			SET comment_type = 'comment'
 			WHERE comment_type = ''
 			AND comment_ID IN ({$comment_id_list})" // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared

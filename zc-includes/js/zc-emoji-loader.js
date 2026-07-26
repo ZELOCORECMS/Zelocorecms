@@ -13,7 +13,7 @@
  * @property {?object} source
  * @property {?string} source.concatemoji
  * @property {?string} source.twemoji
- * @property {?string} source.wpemoji
+ * @property {?string} source.zcemoji
  */
 
 const settings = /** @type {WPEmojiSettings} */ (
@@ -21,7 +21,7 @@ const settings = /** @type {WPEmojiSettings} */ (
 );
 
 // For compatibility with other scripts that read from this global, in particular zc-includes/js/zc-emoji.js (source file: js/_enqueues/zc/emoji.js).
-window._wpemojiSettings = settings;
+window._zcemojiSettings = settings;
 
 /**
  * Support tests.
@@ -428,9 +428,9 @@ new Promise( ( resolve ) => {
 
 			if ( src.concatemoji ) {
 				addScript( src.concatemoji );
-			} else if ( src.wpemoji && src.twemoji ) {
+			} else if ( src.zcemoji && src.twemoji ) {
 				addScript( src.twemoji );
-				addScript( src.wpemoji );
+				addScript( src.zcemoji );
 			}
 		}
 	} );

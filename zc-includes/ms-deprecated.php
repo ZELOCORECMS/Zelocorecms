@@ -179,7 +179,7 @@ function validate_email( $email, $check_domain = true) {
  * @deprecated 3.0.0 Use zc_get_sites()
  * @see zc_get_sites()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $start      Optional. Offset for retrieving the blog list. Default 0.
  * @param int    $num        Optional. Number of blogs to list. Default 10.
@@ -188,13 +188,13 @@ function validate_email( $email, $check_domain = true) {
 function get_blog_list( $start = 0, $num = 10, $deprecated = '' ) {
 	_deprecated_function( __FUNCTION__, '3.0.0', 'zc_get_sites()' );
 
-	global $wpdb;
-	$blogs = $wpdb->get_results( $wpdb->prepare( "SELECT blog_id, domain, path FROM $wpdb->blogs WHERE site_id = %d AND public = '1' AND archived = '0' AND mature = '0' AND spam = '0' AND deleted = '0' ORDER BY registered DESC", get_current_network_id() ), ARRAY_A );
+	global $zcdb;
+	$blogs = $zcdb->get_results( $zcdb->prepare( "SELECT blog_id, domain, path FROM $zcdb->blogs WHERE site_id = %d AND public = '1' AND archived = '0' AND mature = '0' AND spam = '0' AND deleted = '0' ORDER BY registered DESC", get_current_network_id() ), ARRAY_A );
 
 	$blog_list = array();
 	foreach ( (array) $blogs as $details ) {
 		$blog_list[ $details['blog_id'] ] = $details;
-		$blog_list[ $details['blog_id'] ]['postcount'] = $wpdb->get_var( "SELECT COUNT(ID) FROM " . $wpdb->get_blog_prefix( $details['blog_id'] ). "posts WHERE post_status='publish' AND post_type='post'" );
+		$blog_list[ $details['blog_id'] ]['postcount'] = $zcdb->get_var( "SELECT COUNT(ID) FROM " . $zcdb->get_blog_prefix( $details['blog_id'] ). "posts WHERE post_status='publish' AND post_type='post'" );
 	}
 
 	if ( ! $blog_list ) {
@@ -406,7 +406,7 @@ function create_empty_blog( $domain, $path, $weblog_title, $site_id = 1 ) {
 		return __( '<strong>Error:</strong> Site URL you&#8217;ve entered is already taken.' );
 
 	/*
-	 * Need to back up wpdb table names, and create a new zc_blogs entry for new blog.
+	 * Need to back up zcdb table names, and create a new zc_blogs entry for new blog.
 	 * Need to get blog_id from zc_blogs, and create new table names.
 	 * Must restore table names at the end of function.
 	 */
@@ -427,7 +427,7 @@ function create_empty_blog( $domain, $path, $weblog_title, $site_id = 1 ) {
  * @since MU (3.0.0)
  * @deprecated 4.4.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $domain Optional. Network domain.
  * @param string $path   Optional. Network path.
@@ -436,7 +436,7 @@ function create_empty_blog( $domain, $path, $weblog_title, $site_id = 1 ) {
 function get_admin_users_for_domain( $domain = '', $path = '' ) {
 	_deprecated_function( __FUNCTION__, '4.4.0' );
 
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $domain ) {
 		$network_id = get_current_network_id();
@@ -451,7 +451,7 @@ function get_admin_users_for_domain( $domain = '', $path = '' ) {
 	}
 
 	if ( $network_id )
-		return $wpdb->get_results( $wpdb->prepare( "SELECT u.ID, u.user_login, u.user_pass FROM $wpdb->users AS u, $wpdb->sitemeta AS sm WHERE sm.meta_key = 'admin_user_id' AND u.ID = sm.meta_value AND sm.site_id = %d", $network_id ), ARRAY_A );
+		return $zcdb->get_results( $zcdb->prepare( "SELECT u.ID, u.user_login, u.user_pass FROM $zcdb->users AS u, $zcdb->sitemeta AS sm WHERE sm.meta_key = 'admin_user_id' AND u.ID = sm.meta_value AND sm.site_id = %d", $network_id ), ARRAY_A );
 
 	return false;
 }
@@ -533,7 +533,7 @@ function zc_get_sites( $args = array() ) {
  * @since MU (3.0.0)
  * @deprecated 4.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $key
  * @param int    $user_id Optional. Defaults to current user.
@@ -541,7 +541,7 @@ function zc_get_sites( $args = array() ) {
  * @return bool
  */
 function is_user_option_local( $key, $user_id = 0, $blog_id = 0 ) {
-	global $wpdb;
+	global $zcdb;
 
 	_deprecated_function( __FUNCTION__, '4.9.0' );
 
@@ -549,7 +549,7 @@ function is_user_option_local( $key, $user_id = 0, $blog_id = 0 ) {
 	if ( $blog_id == 0 ) {
 		$blog_id = get_current_blog_id();
 	}
-	$local_key = $wpdb->get_blog_prefix( $blog_id ) . $key;
+	$local_key = $zcdb->get_blog_prefix( $blog_id ) . $key;
 
 	return isset( $current_user->$local_key );
 }
@@ -592,20 +592,20 @@ function insert_blog($domain, $path, $site_id) {
  * Install an empty blog.
  *
  * Creates the new blog tables and options. If calling this function
- * directly, be sure to use switch_to_blog() first, so that $wpdb
+ * directly, be sure to use switch_to_blog() first, so that $zcdb
  * points to the new blog.
  *
  * @since MU (3.0.0)
  * @deprecated 5.1.0
  *
- * @global wpdb     $wpdb     ZelocoreCMS database abstraction object.
+ * @global zcdb     $zcdb     ZelocoreCMS database abstraction object.
  * @global ZC_Roles $zc_roles ZelocoreCMS role management object.
  *
  * @param int    $blog_id    The value returned by zc_insert_site().
  * @param string $blog_title The title of the new site.
  */
 function install_blog( $blog_id, $blog_title = '' ) {
-	global $wpdb, $zc_roles;
+	global $zcdb, $zc_roles;
 
 	_deprecated_function( __FUNCTION__, '5.1.0' );
 
@@ -614,11 +614,11 @@ function install_blog( $blog_id, $blog_title = '' ) {
 
 	require_once ABSPATH . 'zc-admin/includes/upgrade.php';
 
-	$suppress = $wpdb->suppress_errors();
-	if ( $wpdb->get_results( "DESCRIBE {$wpdb->posts}" ) ) {
+	$suppress = $zcdb->suppress_errors();
+	if ( $zcdb->get_results( "DESCRIBE {$zcdb->posts}" ) ) {
 		die( '<h1>' . __( 'Already Installed' ) . '</h1><p>' . __( 'You appear to have already installed ZelocoreCMS. To reinstall please clear your old database tables first.' ) . '</p></body></html>' );
 	}
-	$wpdb->suppress_errors( $suppress );
+	$zcdb->suppress_errors( $suppress );
 
 	$url = get_blogaddress_by_id( $blog_id );
 
@@ -655,7 +655,7 @@ function install_blog( $blog_id, $blog_title = '' ) {
 	update_option( 'admin_email', '' );
 
 	// Remove all permissions.
-	$table_prefix = $wpdb->get_blog_prefix();
+	$table_prefix = $zcdb->get_blog_prefix();
 	delete_metadata( 'user', 0, $table_prefix . 'user_level', null, true );   // Delete all.
 	delete_metadata( 'user', 0, $table_prefix . 'capabilities', null, true ); // Delete all.
 }
@@ -669,23 +669,23 @@ function install_blog( $blog_id, $blog_title = '' ) {
  * @deprecated MU
  * @deprecated Use zc_install_defaults()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $blog_id Ignored in this function.
  * @param int $user_id
  */
 function install_blog_defaults( $blog_id, $user_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	_deprecated_function( __FUNCTION__, 'MU' );
 
 	require_once ABSPATH . 'zc-admin/includes/upgrade.php';
 
-	$suppress = $wpdb->suppress_errors();
+	$suppress = $zcdb->suppress_errors();
 
 	zc_install_defaults( $user_id );
 
-	$wpdb->suppress_errors( $suppress );
+	$zcdb->suppress_errors( $suppress );
 }
 
 /**
@@ -698,7 +698,7 @@ function install_blog_defaults( $blog_id, $user_id ) {
  * @deprecated 5.3.0 Use zc_update_user()
  * @see zc_update_user()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $id         The user ID.
  * @param string $pref       The column in the zc_users table to update the user's status
@@ -708,7 +708,7 @@ function install_blog_defaults( $blog_id, $user_id ) {
  * @return int   The initially passed $value.
  */
 function update_user_status( $id, $pref, $value, $deprecated = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	_deprecated_function( __FUNCTION__, '5.3.0', 'zc_update_user()' );
 
@@ -716,7 +716,7 @@ function update_user_status( $id, $pref, $value, $deprecated = null ) {
 		_deprecated_argument( __FUNCTION__, '3.0.2' );
 	}
 
-	$wpdb->update( $wpdb->users, array( sanitize_key( $pref ) => $value ), array( 'ID' => $id ) );
+	$zcdb->update( $zcdb->users, array( sanitize_key( $pref ) => $value ), array( 'ID' => $id ) );
 
 	$user = new ZC_User( $id );
 	clean_user_cache( $user );

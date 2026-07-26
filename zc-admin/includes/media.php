@@ -36,13 +36,13 @@ function media_upload_tabs() {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $tabs Associative array of default tab names.
  * @return array $tabs Filtered tabs with gallery if post has image attachment.
  */
 function update_gallery_tab( $tabs ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! isset( $_REQUEST['post_id'] ) ) {
 		unset( $tabs['gallery'] );
@@ -52,7 +52,7 @@ function update_gallery_tab( $tabs ) {
 	$post_id = (int) $_REQUEST['post_id'];
 
 	if ( $post_id ) {
-		$attachments = (int) $wpdb->get_var( $wpdb->prepare( "SELECT count(*) FROM $wpdb->posts WHERE post_type = 'attachment' AND post_status != 'trash' AND post_parent = %d", $post_id ) );
+		$attachments = (int) $zcdb->get_var( $zcdb->prepare( "SELECT count(*) FROM $zcdb->posts WHERE post_type = 'attachment' AND post_status != 'trash' AND post_parent = %d", $post_id ) );
 	}
 
 	if ( empty( $attachments ) ) {
@@ -2711,8 +2711,8 @@ function media_upload_gallery_form( $errors ) {
 	</tbody></table>
 
 	<p class="ml-submit">
-	<input type="button" class="button" style="display:none;" onMouseDown="wpgallery.update();" name="insert-gallery" id="insert-gallery" value="<?php esc_attr_e( 'Insert gallery' ); ?>" />
-	<input type="button" class="button" style="display:none;" onMouseDown="wpgallery.update();" name="update-gallery" id="update-gallery" value="<?php esc_attr_e( 'Update gallery settings' ); ?>" />
+	<input type="button" class="button" style="display:none;" onMouseDown="zcgallery.update();" name="insert-gallery" id="insert-gallery" value="<?php esc_attr_e( 'Insert gallery' ); ?>" />
+	<input type="button" class="button" style="display:none;" onMouseDown="zcgallery.update();" name="update-gallery" id="update-gallery" value="<?php esc_attr_e( 'Update gallery settings' ); ?>" />
 	</p>
 	</div>
 	</form>
@@ -2724,7 +2724,7 @@ function media_upload_gallery_form( $errors ) {
  *
  * @since 2.5.0
  *
- * @global wpdb      $wpdb            ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb            ZelocoreCMS database abstraction object.
  * @global ZC_Query  $zc_query        ZelocoreCMS Query object.
  * @global ZC_Locale $zc_locale       ZelocoreCMS date and time locale object.
  * @global string    $type
@@ -2734,7 +2734,7 @@ function media_upload_gallery_form( $errors ) {
  * @param array $errors
  */
 function media_upload_library_form( $errors ) {
-	global $wpdb, $zc_query, $zc_locale, $type, $tab, $post_mime_types;
+	global $zcdb, $zc_query, $zc_locale, $type, $tab, $post_mime_types;
 
 	media_upload_header();
 
@@ -2869,9 +2869,9 @@ function media_upload_library_form( $errors ) {
 
 	<div class="alignleft actions">
 		<?php
-		$months = $wpdb->get_results(
+		$months = $zcdb->get_results(
 			"SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_type = 'attachment'
 			ORDER BY post_date DESC"
 		);
@@ -3830,14 +3830,14 @@ function zc_get_media_creation_timestamp( $metadata ) {
  *
  * @since 4.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $parent_id Attachment parent ID.
  * @param string $action    Optional. Attach/detach action. Accepts 'attach' or 'detach'.
  *                          Default 'attach'.
  */
 function zc_media_attach_action( $parent_id, $action = 'attach' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $parent_id ) {
 		return;
@@ -3863,9 +3863,9 @@ function zc_media_attach_action( $parent_id, $action = 'attach' ) {
 		$ids_string = implode( ',', $ids );
 
 		if ( 'attach' === $action ) {
-			$result = $wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET post_parent = %d WHERE post_type = 'attachment' AND ID IN ( $ids_string )", $parent_id ) );
+			$result = $zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET post_parent = %d WHERE post_type = 'attachment' AND ID IN ( $ids_string )", $parent_id ) );
 		} else {
-			$result = $wpdb->query( "UPDATE $wpdb->posts SET post_parent = 0 WHERE post_type = 'attachment' AND ID IN ( $ids_string )" );
+			$result = $zcdb->query( "UPDATE $zcdb->posts SET post_parent = 0 WHERE post_type = 'attachment' AND ID IN ( $ids_string )" );
 		}
 	}
 

@@ -33,8 +33,8 @@ if ( is_multisite() ) {
 require_once __DIR__ . '/includes/network.php';
 
 // We need to create references to ms global tables to enable Network.
-foreach ( $wpdb->tables( 'ms_global' ) as $table => $prefixed_table ) {
-	$wpdb->$table = $prefixed_table;
+foreach ( $zcdb->tables( 'ms_global' ) as $table => $prefixed_table ) {
+	$zcdb->$table = $prefixed_table;
 }
 
 if ( ! network_domain_check() && ( ! defined( 'ZC_ALLOW_MULTISITE' ) || ! ZC_ALLOW_MULTISITE ) ) {

@@ -12,15 +12,15 @@
  *
  * @since 3.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return string|false Base domain if network exists, otherwise false.
  */
 function network_domain_check() {
-	global $wpdb;
+	global $zcdb;
 
-	if ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->site ) ) ) ) {
-		return $wpdb->get_var( "SELECT domain FROM $wpdb->site ORDER BY id ASC LIMIT 1" );
+	if ( $zcdb->get_var( $zcdb->prepare( 'SHOW TABLES LIKE %s', $zcdb->esc_like( $zcdb->site ) ) ) ) {
+		return $zcdb->get_var( "SELECT domain FROM $zcdb->site ORDER BY id ASC LIMIT 1" );
 	}
 
 	return false;
@@ -47,12 +47,12 @@ function allow_subdomain_install() {
  *
  * @since 3.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return bool Whether subdirectory installation is allowed
  */
 function allow_subdirectory_install() {
-	global $wpdb;
+	global $zcdb;
 
 	/**
 	 * Filters whether to enable the subdirectory installation feature in Multisite.
@@ -70,7 +70,7 @@ function allow_subdirectory_install() {
 		return true;
 	}
 
-	$post = $wpdb->get_row( "SELECT ID FROM $wpdb->posts WHERE post_date < DATE_SUB(NOW(), INTERVAL 1 MONTH) AND post_status = 'publish'" );
+	$post = $zcdb->get_row( "SELECT ID FROM $zcdb->posts WHERE post_date < DATE_SUB(NOW(), INTERVAL 1 MONTH) AND post_status = 'publish'" );
 	if ( empty( $post ) ) {
 		return true;
 	}
@@ -404,13 +404,13 @@ function network_step1( $errors = false ) {
  *
  * @since 3.0.0
  *
- * @global wpdb $wpdb     ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb     ZelocoreCMS database abstraction object.
  * @global bool $is_nginx Whether the server software is Nginx or something else.
  *
  * @param false|ZC_Error $errors Optional. Error object. Default false.
  */
 function network_step2( $errors = false ) {
-	global $wpdb, $is_nginx;
+	global $zcdb, $is_nginx;
 
 	$hostname          = get_clean_basedomain();
 	$slashed_home      = trailingslashit( get_option( 'home' ) );
@@ -450,7 +450,7 @@ function network_step2( $errors = false ) {
 	<p><?php _e( 'The original configuration steps are shown here for reference.' ); ?></p>
 			<?php
 		} else {
-			$subdomain_install = (bool) $wpdb->get_var( "SELECT meta_value FROM $wpdb->sitemeta WHERE site_id = 1 AND meta_key = 'subdomain_install'" );
+			$subdomain_install = (bool) $zcdb->get_var( "SELECT meta_value FROM $zcdb->sitemeta WHERE site_id = 1 AND meta_key = 'subdomain_install'" );
 
 			zc_admin_notice(
 				'<strong>' . __( 'Warning:' ) . '</strong> ' . __( 'An existing ZelocoreCMS network was detected.' ),

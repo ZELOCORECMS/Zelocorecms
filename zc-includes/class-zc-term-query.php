@@ -340,13 +340,13 @@ class ZC_Term_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return ZC_Term[]|int[]|string[]|string Array of terms, or number of terms as numeric string
 	 *                                         when 'count' is passed to `$args['fields']`.
 	 */
 	public function get_terms() {
-		global $wpdb;
+		global $zcdb;
 
 		$this->parse_query( $this->query_vars );
 		$args = &$this->query_vars;
@@ -577,16 +577,16 @@ class ZC_Term_Query {
 		}
 
 		if ( ! empty( $args['name__like'] ) ) {
-			$this->sql_clauses['where']['name__like'] = $wpdb->prepare(
+			$this->sql_clauses['where']['name__like'] = $zcdb->prepare(
 				't.name LIKE %s',
-				'%' . $wpdb->esc_like( $args['name__like'] ) . '%'
+				'%' . $zcdb->esc_like( $args['name__like'] ) . '%'
 			);
 		}
 
 		if ( ! empty( $args['description__like'] ) ) {
-			$this->sql_clauses['where']['description__like'] = $wpdb->prepare(
+			$this->sql_clauses['where']['description__like'] = $zcdb->prepare(
 				'tt.description LIKE %s',
-				'%' . $wpdb->esc_like( $args['description__like'] ) . '%'
+				'%' . $zcdb->esc_like( $args['description__like'] ) . '%'
 			);
 		}
 
@@ -695,10 +695,10 @@ class ZC_Term_Query {
 		 */
 		$fields = implode( ', ', apply_filters( 'get_terms_fields', $selects, $args, $taxonomies ) );
 
-		$join .= " INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id";
+		$join .= " INNER JOIN $zcdb->term_taxonomy AS tt ON t.term_id = tt.term_id";
 
 		if ( ! empty( $this->query_vars['object_ids'] ) ) {
-			$join    .= " INNER JOIN {$wpdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+			$join    .= " INNER JOIN {$zcdb->term_relationships} AS tr ON tr.term_taxonomy_id = tt.term_taxonomy_id";
 			$distinct = 'DISTINCT';
 		}
 
@@ -742,7 +742,7 @@ class ZC_Term_Query {
 		}
 
 		$this->sql_clauses['select']  = "SELECT $distinct $fields";
-		$this->sql_clauses['from']    = "FROM $wpdb->terms AS t $join";
+		$this->sql_clauses['from']    = "FROM $zcdb->terms AS t $join";
 		$this->sql_clauses['orderby'] = $orderby ? "$orderby $order" : '';
 		$this->sql_clauses['limits']  = $limits;
 
@@ -802,14 +802,14 @@ class ZC_Term_Query {
 		}
 
 		if ( 'count' === $_fields ) {
-			$count = $wpdb->get_var( $this->request ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+			$count = $zcdb->get_var( $this->request ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 			if ( $args['cache_results'] ) {
 				zc_cache_set_salted( $cache_key, $count, 'term-queries', $last_changed );
 			}
 			return $count;
 		}
 
-		$terms = $wpdb->get_results( $this->request ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+		$terms = $zcdb->get_results( $this->request ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 
 		if ( empty( $terms ) ) {
 			$this->terms = array();
@@ -1097,17 +1097,17 @@ class ZC_Term_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $search Search string.
 	 * @return string Search SQL.
 	 */
 	protected function get_search_sql( $search ) {
-		global $wpdb;
+		global $zcdb;
 
-		$like = '%' . $wpdb->esc_like( $search ) . '%';
+		$like = '%' . $zcdb->esc_like( $search ) . '%';
 
-		return $wpdb->prepare( '((t.name LIKE %s) OR (t.slug LIKE %s))', $like, $like );
+		return $zcdb->prepare( '((t.name LIKE %s) OR (t.slug LIKE %s))', $like, $like );
 	}
 
 	/**
@@ -1152,7 +1152,7 @@ class ZC_Term_Query {
 	 *
 	 * @since 6.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array  $args ZC_Term_Query arguments.
 	 * @param string $sql  SQL statement.
@@ -1160,7 +1160,7 @@ class ZC_Term_Query {
 	 * @return string Cache key.
 	 */
 	protected function generate_cache_key( array $args, $sql ) {
-		global $wpdb;
+		global $zcdb;
 		// $args can be anything. Only use the args defined in defaults to compute the key.
 		$cache_args = zc_array_slice_assoc( $args, array_keys( $this->query_var_defaults ) );
 
@@ -1170,8 +1170,8 @@ class ZC_Term_Query {
 			$cache_args['fields'] = 'all';
 		}
 
-		// Replace wpdb placeholder in the SQL statement used by the cache key.
-		$sql = $wpdb->remove_placeholder_escape( $sql );
+		// Replace zcdb placeholder in the SQL statement used by the cache key.
+		$sql = $zcdb->remove_placeholder_escape( $sql );
 
 		$key = md5( serialize( $cache_args ) . $sql );
 

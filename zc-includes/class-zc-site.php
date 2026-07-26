@@ -150,13 +150,13 @@ final class ZC_Site {
 	 *
 	 * @since 4.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $site_id The ID of the site to retrieve.
 	 * @return ZC_Site|false The site's object if found. False if not.
 	 */
 	public static function get_instance( $site_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$site_id = (int) $site_id;
 		if ( ! $site_id ) {
@@ -166,7 +166,7 @@ final class ZC_Site {
 		$_site = zc_cache_get( $site_id, 'sites' );
 
 		if ( false === $_site ) {
-			$_site = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->blogs} WHERE blog_id = %d LIMIT 1", $site_id ) );
+			$_site = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM {$zcdb->blogs} WHERE blog_id = %d LIMIT 1", $site_id ) );
 
 			if ( empty( $_site ) || is_zc_error( $_site ) ) {
 				$_site = -1;

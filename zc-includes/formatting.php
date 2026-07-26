@@ -4437,7 +4437,7 @@ function _deep_replace( $search, $subject ) {
 /**
  * Escapes data for use in a MySQL query.
  *
- * Usually you should prepare queries using wpdb::prepare().
+ * Usually you should prepare queries using zcdb::prepare().
  * Sometimes, spot-escaping is required or useful. One example
  * is preparing an array for use in an IN clause.
  *
@@ -4448,14 +4448,14 @@ function _deep_replace( $search, $subject ) {
  *
  * @since 2.8.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|array $data Unescaped data.
  * @return string|array Escaped data, in the same type as supplied.
  */
 function esc_sql( $data ) {
-	global $wpdb;
-	return $wpdb->_escape( $data );
+	global $zcdb;
+	return $zcdb->_escape( $data );
 }
 
 /**
@@ -4843,14 +4843,14 @@ function zc_make_link_relative( $link ) {
  *
  * @since 2.0.5
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $option The name of the option.
  * @param mixed  $value  The unsanitized value.
  * @return mixed Sanitized value.
  */
 function sanitize_option( $option, $value ) {
-	global $wpdb;
+	global $zcdb;
 
 	$original_value = $value;
 	$error          = null;
@@ -4858,7 +4858,7 @@ function sanitize_option( $option, $value ) {
 	switch ( $option ) {
 		case 'admin_email':
 		case 'new_admin_email':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -4916,9 +4916,9 @@ function sanitize_option( $option, $value ) {
 
 		case 'blogdescription':
 		case 'blogname':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( $value !== $original_value ) {
-				$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', zc_encode_emoji( $original_value ) );
+				$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', zc_encode_emoji( $original_value ) );
 			}
 
 			if ( is_zc_error( $value ) ) {
@@ -4951,7 +4951,7 @@ function sanitize_option( $option, $value ) {
 		case 'mailserver_login':
 		case 'mailserver_pass':
 		case 'upload_path':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -4976,7 +4976,7 @@ function sanitize_option( $option, $value ) {
 			break;
 
 		case 'siteurl':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -4989,7 +4989,7 @@ function sanitize_option( $option, $value ) {
 			break;
 
 		case 'home':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -5012,7 +5012,7 @@ function sanitize_option( $option, $value ) {
 			break;
 
 		case 'illegal_names':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -5030,7 +5030,7 @@ function sanitize_option( $option, $value ) {
 
 		case 'limited_email_domains':
 		case 'banned_email_domains':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -5062,7 +5062,7 @@ function sanitize_option( $option, $value ) {
 		case 'permalink_structure':
 		case 'category_base':
 		case 'tag_base':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -5089,7 +5089,7 @@ function sanitize_option( $option, $value ) {
 
 		case 'moderation_keys':
 		case 'disallowed_keys':
-			$value = $wpdb->strip_invalid_text_for_column( $wpdb->options, 'option_value', $value );
+			$value = $zcdb->strip_invalid_text_for_column( $zcdb->options, 'option_value', $value );
 			if ( is_zc_error( $value ) ) {
 				$error = $value->get_error_message();
 			} else {
@@ -5973,7 +5973,7 @@ function _print_emoji_detection_script() {
 	if ( SCRIPT_DEBUG ) {
 		$settings['source'] = array(
 			/** This filter is documented in zc-includes/class-zc-scripts.php */
-			'wpemoji' => apply_filters( 'script_loader_src', includes_url( "js/zc-emoji.js?$version" ), 'wpemoji' ),
+			'zcemoji' => apply_filters( 'script_loader_src', includes_url( "js/zc-emoji.js?$version" ), 'zcemoji' ),
 			/** This filter is documented in zc-includes/class-zc-scripts.php */
 			'twemoji' => apply_filters( 'script_loader_src', includes_url( "js/twemoji.js?$version" ), 'twemoji' ),
 		);

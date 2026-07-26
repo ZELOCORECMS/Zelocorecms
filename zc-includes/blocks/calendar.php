@@ -128,13 +128,13 @@ function block_core_calendar_has_published_posts() {
  *
  * @since 5.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return bool Has any published posts or not.
  */
 function block_core_calendar_update_has_published_posts() {
-	global $wpdb;
-	$has_published_posts = (bool) $wpdb->get_var( "SELECT 1 as test FROM {$wpdb->posts} WHERE post_type = 'post' AND post_status = 'publish' LIMIT 1" );
+	global $zcdb;
+	$has_published_posts = (bool) $zcdb->get_var( "SELECT 1 as test FROM {$zcdb->posts} WHERE post_type = 'post' AND post_status = 'publish' LIMIT 1" );
 	update_option( 'zc_calendar_block_has_published_posts', $has_published_posts );
 	return $has_published_posts;
 }

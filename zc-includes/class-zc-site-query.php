@@ -277,13 +277,13 @@ class ZC_Site_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return ZC_Site[]|int[]|int List of ZC_Site objects, a list of site IDs when 'fields' is set to 'ids',
 	 *                             or the number of sites when 'count' is passed as a query var.
 	 */
 	public function get_sites() {
-		global $wpdb;
+		global $zcdb;
 
 		$this->parse_query();
 
@@ -303,7 +303,7 @@ class ZC_Site_Query {
 		// Reparse query vars, in case they were modified in a 'pre_get_sites' callback.
 		$this->meta_query->parse_query_vars( $this->query_vars );
 		if ( ! empty( $this->meta_query->queries ) ) {
-			$this->meta_query_clauses = $this->meta_query->get_sql( 'blog', $wpdb->blogs, 'blog_id', $this );
+			$this->meta_query_clauses = $this->meta_query->get_sql( 'blog', $zcdb->blogs, 'blog_id', $this );
 		}
 
 		$site_data = null;
@@ -433,12 +433,12 @@ class ZC_Site_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return int|array A single count of site IDs if a count query. An array of site IDs if a full query.
 	 */
 	protected function get_site_ids() {
-		global $wpdb;
+		global $zcdb;
 
 		$order = $this->parse_order( $this->query_vars['order'] );
 
@@ -480,7 +480,7 @@ class ZC_Site_Query {
 
 			$orderby = implode( ', ', $orderby_array );
 		} else {
-			$orderby = "{$wpdb->blogs}.blog_id $order";
+			$orderby = "{$zcdb->blogs}.blog_id $order";
 		}
 
 		$number = absint( $this->query_vars['number'] );
@@ -498,29 +498,29 @@ class ZC_Site_Query {
 		if ( $this->query_vars['count'] ) {
 			$fields = 'COUNT(*)';
 		} else {
-			$fields = "{$wpdb->blogs}.blog_id";
+			$fields = "{$zcdb->blogs}.blog_id";
 		}
 
 		// Parse site IDs for an IN clause.
 		$site_id = absint( $this->query_vars['ID'] );
 		if ( ! empty( $site_id ) ) {
-			$this->sql_clauses['where']['ID'] = $wpdb->prepare( "{$wpdb->blogs}.blog_id = %d", $site_id );
+			$this->sql_clauses['where']['ID'] = $zcdb->prepare( "{$zcdb->blogs}.blog_id = %d", $site_id );
 		}
 
 		// Parse site IDs for an IN clause.
 		if ( ! empty( $this->query_vars['site__in'] ) ) {
-			$this->sql_clauses['where']['site__in'] = "{$wpdb->blogs}.blog_id IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['site__in'] ) ) . ' )';
+			$this->sql_clauses['where']['site__in'] = "{$zcdb->blogs}.blog_id IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['site__in'] ) ) . ' )';
 		}
 
 		// Parse site IDs for a NOT IN clause.
 		if ( ! empty( $this->query_vars['site__not_in'] ) ) {
-			$this->sql_clauses['where']['site__not_in'] = "{$wpdb->blogs}.blog_id NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['site__not_in'] ) ) . ' )';
+			$this->sql_clauses['where']['site__not_in'] = "{$zcdb->blogs}.blog_id NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['site__not_in'] ) ) . ' )';
 		}
 
 		$network_id = absint( $this->query_vars['network_id'] );
 
 		if ( ! empty( $network_id ) ) {
-			$this->sql_clauses['where']['network_id'] = $wpdb->prepare( 'site_id = %d', $network_id );
+			$this->sql_clauses['where']['network_id'] = $zcdb->prepare( 'site_id = %d', $network_id );
 		}
 
 		// Parse site network IDs for an IN clause.
@@ -534,61 +534,61 @@ class ZC_Site_Query {
 		}
 
 		if ( ! empty( $this->query_vars['domain'] ) ) {
-			$this->sql_clauses['where']['domain'] = $wpdb->prepare( 'domain = %s', $this->query_vars['domain'] );
+			$this->sql_clauses['where']['domain'] = $zcdb->prepare( 'domain = %s', $this->query_vars['domain'] );
 		}
 
 		// Parse site domain for an IN clause.
 		if ( is_array( $this->query_vars['domain__in'] ) ) {
-			$this->sql_clauses['where']['domain__in'] = "domain IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['domain__in'] ) ) . "' )";
+			$this->sql_clauses['where']['domain__in'] = "domain IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['domain__in'] ) ) . "' )";
 		}
 
 		// Parse site domain for a NOT IN clause.
 		if ( is_array( $this->query_vars['domain__not_in'] ) ) {
-			$this->sql_clauses['where']['domain__not_in'] = "domain NOT IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['domain__not_in'] ) ) . "' )";
+			$this->sql_clauses['where']['domain__not_in'] = "domain NOT IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['domain__not_in'] ) ) . "' )";
 		}
 
 		if ( ! empty( $this->query_vars['path'] ) ) {
-			$this->sql_clauses['where']['path'] = $wpdb->prepare( 'path = %s', $this->query_vars['path'] );
+			$this->sql_clauses['where']['path'] = $zcdb->prepare( 'path = %s', $this->query_vars['path'] );
 		}
 
 		// Parse site path for an IN clause.
 		if ( is_array( $this->query_vars['path__in'] ) ) {
-			$this->sql_clauses['where']['path__in'] = "path IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['path__in'] ) ) . "' )";
+			$this->sql_clauses['where']['path__in'] = "path IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['path__in'] ) ) . "' )";
 		}
 
 		// Parse site path for a NOT IN clause.
 		if ( is_array( $this->query_vars['path__not_in'] ) ) {
-			$this->sql_clauses['where']['path__not_in'] = "path NOT IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['path__not_in'] ) ) . "' )";
+			$this->sql_clauses['where']['path__not_in'] = "path NOT IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['path__not_in'] ) ) . "' )";
 		}
 
 		if ( is_numeric( $this->query_vars['archived'] ) ) {
 			$archived                               = absint( $this->query_vars['archived'] );
-			$this->sql_clauses['where']['archived'] = $wpdb->prepare( 'archived = %s ', absint( $archived ) );
+			$this->sql_clauses['where']['archived'] = $zcdb->prepare( 'archived = %s ', absint( $archived ) );
 		}
 
 		if ( is_numeric( $this->query_vars['mature'] ) ) {
 			$mature                               = absint( $this->query_vars['mature'] );
-			$this->sql_clauses['where']['mature'] = $wpdb->prepare( 'mature = %d ', $mature );
+			$this->sql_clauses['where']['mature'] = $zcdb->prepare( 'mature = %d ', $mature );
 		}
 
 		if ( is_numeric( $this->query_vars['spam'] ) ) {
 			$spam                               = absint( $this->query_vars['spam'] );
-			$this->sql_clauses['where']['spam'] = $wpdb->prepare( 'spam = %d ', $spam );
+			$this->sql_clauses['where']['spam'] = $zcdb->prepare( 'spam = %d ', $spam );
 		}
 
 		if ( is_numeric( $this->query_vars['deleted'] ) ) {
 			$deleted                               = absint( $this->query_vars['deleted'] );
-			$this->sql_clauses['where']['deleted'] = $wpdb->prepare( 'deleted = %d ', $deleted );
+			$this->sql_clauses['where']['deleted'] = $zcdb->prepare( 'deleted = %d ', $deleted );
 		}
 
 		if ( is_numeric( $this->query_vars['public'] ) ) {
 			$public                               = absint( $this->query_vars['public'] );
-			$this->sql_clauses['where']['public'] = $wpdb->prepare( 'public = %d ', $public );
+			$this->sql_clauses['where']['public'] = $zcdb->prepare( 'public = %d ', $public );
 		}
 
 		if ( is_numeric( $this->query_vars['lang_id'] ) ) {
 			$lang_id                               = absint( $this->query_vars['lang_id'] );
-			$this->sql_clauses['where']['lang_id'] = $wpdb->prepare( 'lang_id = %d ', $lang_id );
+			$this->sql_clauses['where']['lang_id'] = $zcdb->prepare( 'lang_id = %d ', $lang_id );
 		}
 
 		// Parse site language IDs for an IN clause.
@@ -647,7 +647,7 @@ class ZC_Site_Query {
 			$this->sql_clauses['where']['meta_query'] = preg_replace( '/^\s*AND\s*/', '', $this->meta_query_clauses['where'] );
 
 			if ( ! $this->query_vars['count'] ) {
-				$groupby = "{$wpdb->blogs}.blog_id";
+				$groupby = "{$zcdb->blogs}.blog_id";
 			}
 		}
 
@@ -699,7 +699,7 @@ class ZC_Site_Query {
 		}
 
 		$this->sql_clauses['select']  = "SELECT $found_rows $fields";
-		$this->sql_clauses['from']    = "FROM $wpdb->blogs $join";
+		$this->sql_clauses['from']    = "FROM $zcdb->blogs $join";
 		$this->sql_clauses['groupby'] = $groupby;
 		$this->sql_clauses['orderby'] = $orderby;
 		$this->sql_clauses['limits']  = $limits;
@@ -714,10 +714,10 @@ class ZC_Site_Query {
 			 {$this->sql_clauses['limits']}";
 
 		if ( $this->query_vars['count'] ) {
-			return (int) $wpdb->get_var( $this->request );
+			return (int) $zcdb->get_var( $this->request );
 		}
 
-		$site_ids = $wpdb->get_col( $this->request );
+		$site_ids = $zcdb->get_col( $this->request );
 
 		return array_map( 'intval', $site_ids );
 	}
@@ -728,10 +728,10 @@ class ZC_Site_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	private function set_found_sites() {
-		global $wpdb;
+		global $zcdb;
 
 		if ( $this->query_vars['number'] && ! $this->query_vars['no_found_rows'] ) {
 			/**
@@ -744,7 +744,7 @@ class ZC_Site_Query {
 			 */
 			$found_sites_query = apply_filters( 'found_sites_query', 'SELECT FOUND_ROWS()', $this );
 
-			$this->found_sites = (int) $wpdb->get_var( $found_sites_query );
+			$this->found_sites = (int) $zcdb->get_var( $found_sites_query );
 		}
 	}
 
@@ -753,24 +753,24 @@ class ZC_Site_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string   $search  Search string.
 	 * @param string[] $columns Array of columns to search.
 	 * @return string Search SQL.
 	 */
 	protected function get_search_sql( $search, $columns ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( str_contains( $search, '*' ) ) {
-			$like = '%' . implode( '%', array_map( array( $wpdb, 'esc_like' ), explode( '*', $search ) ) ) . '%';
+			$like = '%' . implode( '%', array_map( array( $zcdb, 'esc_like' ), explode( '*', $search ) ) ) . '%';
 		} else {
-			$like = '%' . $wpdb->esc_like( $search ) . '%';
+			$like = '%' . $zcdb->esc_like( $search ) . '%';
 		}
 
 		$searches = array();
 		foreach ( $columns as $column ) {
-			$searches[] = $wpdb->prepare( "$column LIKE %s", $like );
+			$searches[] = $zcdb->prepare( "$column LIKE %s", $like );
 		}
 
 		return '(' . implode( ' OR ', $searches ) . ')';
@@ -781,24 +781,24 @@ class ZC_Site_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $orderby Alias for the field to order by.
 	 * @return string|false Value to used in the ORDER clause. False otherwise.
 	 */
 	protected function parse_orderby( $orderby ) {
-		global $wpdb;
+		global $zcdb;
 
 		$parsed = false;
 
 		switch ( $orderby ) {
 			case 'site__in':
 				$site__in = implode( ',', array_map( 'absint', $this->query_vars['site__in'] ) );
-				$parsed   = "FIELD( {$wpdb->blogs}.blog_id, $site__in )";
+				$parsed   = "FIELD( {$zcdb->blogs}.blog_id, $site__in )";
 				break;
 			case 'network__in':
 				$network__in = implode( ',', array_map( 'absint', $this->query_vars['network__in'] ) );
-				$parsed      = "FIELD( {$wpdb->blogs}.site_id, $network__in )";
+				$parsed      = "FIELD( {$zcdb->blogs}.site_id, $network__in )";
 				break;
 			case 'domain':
 			case 'last_updated':
@@ -821,7 +821,7 @@ class ZC_Site_Query {
 				$parsed = 'CHAR_LENGTH(path)';
 				break;
 			case 'id':
-				$parsed = "{$wpdb->blogs}.blog_id";
+				$parsed = "{$zcdb->blogs}.blog_id";
 				break;
 		}
 

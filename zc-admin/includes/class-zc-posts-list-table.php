@@ -66,12 +66,12 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 	 * @see ZC_List_Table::__construct() for more information on default arguments.
 	 *
 	 * @global ZC_Post_Type $post_type_object Global post type object.
-	 * @global wpdb         $wpdb             ZelocoreCMS database abstraction object.
+	 * @global zcdb         $zcdb             ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $args An associative array of arguments.
 	 */
 	public function __construct( $args = array() ) {
-		global $post_type_object, $wpdb;
+		global $post_type_object, $zcdb;
 
 		parent::__construct(
 			array(
@@ -89,10 +89,10 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 			)
 		);
 
-		$this->user_posts_count = (int) $wpdb->get_var(
-			$wpdb->prepare(
+		$this->user_posts_count = (int) $zcdb->get_var(
+			$zcdb->prepare(
 				"SELECT COUNT( 1 )
-				FROM $wpdb->posts
+				FROM $zcdb->posts
 				WHERE post_type = %s
 				AND post_status NOT IN ( '" . implode( "','", $exclude_states ) . "' )
 				AND post_author = %d",
@@ -114,10 +114,10 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 		if ( 'post' === $post_type && $sticky_posts ) {
 			$sticky_posts = implode( ', ', array_map( 'absint', (array) $sticky_posts ) );
 
-			$this->sticky_posts_count = (int) $wpdb->get_var(
-				$wpdb->prepare(
+			$this->sticky_posts_count = (int) $zcdb->get_var(
+				$zcdb->prepare(
 					"SELECT COUNT( 1 )
-					FROM $wpdb->posts
+					FROM $zcdb->posts
 					WHERE post_type = %s
 					AND post_status NOT IN ('trash', 'auto-draft')
 					AND ID IN ($sticky_posts)",
@@ -840,14 +840,14 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 	}
 
 	/**
-	 * @global wpdb    $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb    $zcdb ZelocoreCMS database abstraction object.
 	 * @global ZC_Post $post Global post object.
 	 * @param array $pages
 	 * @param int   $pagenum
 	 * @param int   $per_page
 	 */
 	private function _display_rows_hierarchical( $pages, $pagenum = 1, $per_page = 20 ) {
-		global $wpdb;
+		global $zcdb;
 
 		$level = 0;
 
@@ -874,7 +874,7 @@ class ZC_Posts_List_Table extends ZC_List_Table {
 				// Catch and repair bad pages.
 				if ( $page->post_parent === $page->ID ) {
 					$page->post_parent = 0;
-					$wpdb->update( $wpdb->posts, array( 'post_parent' => 0 ), array( 'ID' => $page->ID ) );
+					$zcdb->update( $zcdb->posts, array( 'post_parent' => 0 ), array( 'ID' => $page->ID ) );
 					clean_post_cache( $page );
 				}
 

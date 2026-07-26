@@ -1031,7 +1031,7 @@ function get_links($category = -1, $before = '', $after = '<br />', $between = '
  * Output entire list of links by category.
  *
  * Output a list of all links, listed by category, using the settings in
- * $wpdb->linkcategories and output it as a nested HTML unordered list.
+ * $zcdb->linkcategories and output it as a nested HTML unordered list.
  *
  * @since 1.0.1
  * @deprecated 2.1.0 Use zc_list_bookmarks()
@@ -2222,7 +2222,7 @@ function unregister_widget_control($id) {
  * @deprecated 3.0.0 Use delete_user_meta()
  * @see delete_user_meta()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID.
  * @param string $meta_key Metadata key.
@@ -2231,7 +2231,7 @@ function unregister_widget_control($id) {
  */
 function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
 	_deprecated_function( __FUNCTION__, '3.0.0', 'delete_user_meta()' );
-	global $wpdb;
+	global $zcdb;
 	if ( !is_numeric( $user_id ) )
 		return false;
 	$meta_key = preg_replace('|[^a-z0-9_]|i', '', $meta_key);
@@ -2240,15 +2240,15 @@ function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
 		$meta_value = serialize($meta_value);
 	$meta_value = trim( $meta_value );
 
-	$cur = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
+	$cur = $zcdb->get_row( $zcdb->prepare("SELECT * FROM $zcdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 
 	if ( $cur && $cur->umeta_id )
 		do_action( 'delete_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
 	if ( ! empty($meta_value) )
-		$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s AND meta_value = %s", $user_id, $meta_key, $meta_value) );
+		$zcdb->query( $zcdb->prepare("DELETE FROM $zcdb->usermeta WHERE user_id = %d AND meta_key = %s AND meta_value = %s", $user_id, $meta_key, $meta_value) );
 	else
-		$wpdb->query( $wpdb->prepare("DELETE FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
+		$zcdb->query( $zcdb->prepare("DELETE FROM $zcdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 
 	clean_user_cache( $user_id );
 	zc_cache_delete( $user_id, 'user_meta' );
@@ -2271,7 +2271,7 @@ function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
  * @deprecated 3.0.0 Use get_user_meta()
  * @see get_user_meta()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID
  * @param string $meta_key Optional. Metadata key. Default empty.
@@ -2279,7 +2279,7 @@ function delete_usermeta( $user_id, $meta_key, $meta_value = '' ) {
  */
 function get_usermeta( $user_id, $meta_key = '' ) {
 	_deprecated_function( __FUNCTION__, '3.0.0', 'get_user_meta()' );
-	global $wpdb;
+	global $zcdb;
 	$user_id = (int) $user_id;
 
 	if ( !$user_id )
@@ -2292,9 +2292,9 @@ function get_usermeta( $user_id, $meta_key = '' ) {
 		if ( false !== $user && isset($user->$meta_key) )
 			$metas = array($user->$meta_key);
 		else
-			$metas = $wpdb->get_col( $wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
+			$metas = $zcdb->get_col( $zcdb->prepare("SELECT meta_value FROM $zcdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 	} else {
-		$metas = $wpdb->get_col( $wpdb->prepare("SELECT meta_value FROM $wpdb->usermeta WHERE user_id = %d", $user_id) );
+		$metas = $zcdb->get_col( $zcdb->prepare("SELECT meta_value FROM $zcdb->usermeta WHERE user_id = %d", $user_id) );
 	}
 
 	if ( empty($metas) ) {
@@ -2325,7 +2325,7 @@ function get_usermeta( $user_id, $meta_key = '' ) {
  * @deprecated 3.0.0 Use update_user_meta()
  * @see update_user_meta()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID
  * @param string $meta_key Metadata key.
@@ -2334,7 +2334,7 @@ function get_usermeta( $user_id, $meta_key = '' ) {
  */
 function update_usermeta( $user_id, $meta_key, $meta_value ) {
 	_deprecated_function( __FUNCTION__, '3.0.0', 'update_user_meta()' );
-	global $wpdb;
+	global $zcdb;
 	if ( !is_numeric( $user_id ) )
 		return false;
 	$meta_key = preg_replace('|[^a-z0-9_]|i', '', $meta_key);
@@ -2348,15 +2348,15 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 		return delete_usermeta($user_id, $meta_key);
 	}
 
-	$cur = $wpdb->get_row( $wpdb->prepare("SELECT * FROM $wpdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
+	$cur = $zcdb->get_row( $zcdb->prepare("SELECT * FROM $zcdb->usermeta WHERE user_id = %d AND meta_key = %s", $user_id, $meta_key) );
 
 	if ( $cur )
 		do_action( 'update_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
 	if ( !$cur )
-		$wpdb->insert($wpdb->usermeta, compact('user_id', 'meta_key', 'meta_value') );
+		$zcdb->insert($zcdb->usermeta, compact('user_id', 'meta_key', 'meta_value') );
 	elseif ( $cur->meta_value != $meta_value )
-		$wpdb->update($wpdb->usermeta, compact('meta_value'), compact('user_id', 'meta_key') );
+		$zcdb->update($zcdb->usermeta, compact('meta_value'), compact('user_id', 'meta_key') );
 	else
 		return false;
 
@@ -2364,7 +2364,7 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 	zc_cache_delete( $user_id, 'user_meta' );
 
 	if ( !$cur )
-		do_action( 'added_usermeta', $wpdb->insert_id, $user_id, $meta_key, $meta_value );
+		do_action( 'added_usermeta', $zcdb->insert_id, $user_id, $meta_key, $meta_value );
 	else
 		do_action( 'updated_usermeta', $cur->umeta_id, $user_id, $meta_key, $meta_value );
 
@@ -2381,7 +2381,7 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
  * @deprecated 3.1.0 Use get_users()
  * @see get_users()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $id Site ID.
  * @return array List of users that are part of that site ID
@@ -2389,12 +2389,12 @@ function update_usermeta( $user_id, $meta_key, $meta_value ) {
 function get_users_of_blog( $id = '' ) {
 	_deprecated_function( __FUNCTION__, '3.1.0', 'get_users()' );
 
-	global $wpdb;
+	global $zcdb;
 	if ( empty( $id ) ) {
 		$id = get_current_blog_id();
 	}
-	$blog_prefix = $wpdb->get_blog_prefix($id);
-	$users = $wpdb->get_results( "SELECT user_id, user_id AS ID, user_login, display_name, user_email, meta_value FROM $wpdb->users, $wpdb->usermeta WHERE {$wpdb->users}.ID = {$wpdb->usermeta}.user_id AND meta_key = '{$blog_prefix}capabilities' ORDER BY {$wpdb->usermeta}.user_id" );
+	$blog_prefix = $zcdb->get_blog_prefix($id);
+	$users = $zcdb->get_results( "SELECT user_id, user_id AS ID, user_login, display_name, user_email, meta_value FROM $zcdb->users, $zcdb->usermeta WHERE {$zcdb->users}.ID = {$zcdb->usermeta}.user_id AND meta_key = '{$blog_prefix}capabilities' ORDER BY {$zcdb->usermeta}.user_id" );
 	return $users;
 }
 
@@ -3442,7 +3442,7 @@ function default_topic_count_text( $count ) {
 /**
  * Formerly used to escape strings before inserting into the DB.
  *
- * Has not performed this function for many, many years. Use wpdb::prepare() instead.
+ * Has not performed this function for many, many years. Use zcdb::prepare() instead.
  *
  * @since 0.71
  * @deprecated 3.9.0
@@ -3459,14 +3459,14 @@ function format_to_post( $content ) {
  * Formerly used to escape strings before searching the DB. It was poorly documented and never worked as described.
  *
  * @since 2.5.0
- * @deprecated 4.0.0 Use wpdb::esc_like()
- * @see wpdb::esc_like()
+ * @deprecated 4.0.0 Use zcdb::esc_like()
+ * @see zcdb::esc_like()
  *
  * @param string $text The text to be escaped.
  * @return string text, safe for inclusion in LIKE query.
  */
 function like_escape($text) {
-	_deprecated_function( __FUNCTION__, '4.0.0', 'wpdb::esc_like()' );
+	_deprecated_function( __FUNCTION__, '4.0.0', 'zcdb::esc_like()' );
 	return str_replace( array( "%", "_" ), array( "\\%", "\\_" ), $text );
 }
 
@@ -4561,7 +4561,7 @@ function _filter_query_attachment_filenames( $clauses ) {
  * @since 3.0.0 The `$post_type` parameter was added.
  * @deprecated 6.2.0 Use ZC_Query.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string       $page_title Page title.
  * @param string       $output     Optional. The required return type. One of OBJECT, ARRAY_A, or ARRAY_N, which
@@ -4572,22 +4572,22 @@ function _filter_query_attachment_filenames( $clauses ) {
  */
 function get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' ) {
 	_deprecated_function( __FUNCTION__, '6.2.0', 'ZC_Query' );
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_array( $post_type ) ) {
 		$post_type           = esc_sql( $post_type );
 		$post_type_in_string = "'" . implode( "','", $post_type ) . "'";
-		$sql                 = $wpdb->prepare(
+		$sql                 = $zcdb->prepare(
 			"SELECT ID
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_title = %s
 			AND post_type IN ($post_type_in_string)",
 			$page_title
 		);
 	} else {
-		$sql = $wpdb->prepare(
+		$sql = $zcdb->prepare(
 			"SELECT ID
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_title = %s
 			AND post_type = %s",
 			$page_title,
@@ -4595,7 +4595,7 @@ function get_page_by_title( $page_title, $output = OBJECT, $post_type = 'page' )
 		);
 	}
 
-	$page = $wpdb->get_var( $sql );
+	$page = $zcdb->get_var( $sql );
 
 	if ( $page ) {
 		return get_post( $page, $output );

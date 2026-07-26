@@ -262,7 +262,7 @@ if ( $doaction ) {
 	$post_ids = array();
 
 	if ( 'delete_all' === $doaction ) {
-		$post_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_type='attachment' AND post_status = 'trash'" );
+		$post_ids = $zcdb->get_col( "SELECT ID FROM $zcdb->posts WHERE post_type='attachment' AND post_status = 'trash'" );
 		$doaction = 'delete';
 	} elseif ( isset( $_REQUEST['media'] ) ) {
 		$post_ids = $_REQUEST['media'];

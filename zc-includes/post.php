@@ -2373,7 +2373,7 @@ function get_post_types_by_support( $feature, $operator = 'and' ) {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $post_id   Optional. Post ID to change post type. Default 0.
  * @param string $post_type Optional. Post type. Accepts 'post' or 'page' to
@@ -2381,10 +2381,10 @@ function get_post_types_by_support( $feature, $operator = 'and' ) {
  * @return int|false Amount of rows changed. Should be 1 for success and 0 for failure.
  */
 function set_post_type( $post_id = 0, $post_type = 'post' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post_type = sanitize_post_field( 'post_type', $post_type, $post_id, 'db' );
-	$return    = $wpdb->update( $wpdb->posts, array( 'post_type' => $post_type ), array( 'ID' => $post_id ) );
+	$return    = $zcdb->update( $zcdb->posts, array( 'post_type' => $post_type ), array( 'ID' => $post_id ) );
 
 	clean_post_cache( $post_id );
 
@@ -3392,7 +3392,7 @@ function _count_posts_cache_key( $type = 'post', $perm = '' ) {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $type Optional. Post type to retrieve count. Default 'post'.
  * @param string $perm Optional. 'readable' or empty. Default empty.
@@ -3400,7 +3400,7 @@ function _count_posts_cache_key( $type = 'post', $perm = '' ) {
  *                  or an empty object if the post type does not exist.
  */
 function zc_count_posts( $type = 'post', $perm = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! post_type_exists( $type ) ) {
 		return new stdClass();
@@ -3431,11 +3431,11 @@ function zc_count_posts( $type = 'post', $perm = '' ) {
 			SELECT post_status, COUNT(*) AS num_posts
 			FROM (
 				SELECT post_status
-				FROM {$wpdb->posts}
+				FROM {$zcdb->posts}
 				WHERE post_type = %s AND post_status != 'private'
 				UNION ALL
 				SELECT post_status
-				FROM {$wpdb->posts}
+				FROM {$zcdb->posts}
 				WHERE post_type = %s AND post_status = 'private' AND post_author = %d
 			) AS filtered_posts
 		";
@@ -3443,7 +3443,7 @@ function zc_count_posts( $type = 'post', $perm = '' ) {
 	} else {
 		$query = "
 			SELECT post_status, COUNT(*) AS num_posts
-			FROM {$wpdb->posts}
+			FROM {$zcdb->posts}
 			WHERE post_type = %s
 		";
 		$args  = array( $type );
@@ -3451,8 +3451,8 @@ function zc_count_posts( $type = 'post', $perm = '' ) {
 
 	$query .= ' GROUP BY post_status';
 
-	$results = (array) $wpdb->get_results(
-		$wpdb->prepare( $query, ...$args ), // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared -- Placeholders are used in the string contained in the variable.
+	$results = (array) $zcdb->get_results(
+		$zcdb->prepare( $query, ...$args ), // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared -- Placeholders are used in the string contained in the variable.
 		ARRAY_A
 	);
 	$counts  = array_fill_keys( get_post_stati(), 0 );
@@ -3488,14 +3488,14 @@ function zc_count_posts( $type = 'post', $perm = '' ) {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|string[] $mime_type Optional. Array or comma-separated list of
  *                                   MIME patterns. Default empty.
  * @return stdClass An object containing the attachment counts by mime type.
  */
 function zc_count_attachments( $mime_type = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$cache_key = sprintf(
 		'attachments%s',
@@ -3506,13 +3506,13 @@ function zc_count_attachments( $mime_type = '' ) {
 
 	if ( false === $counts ) {
 		$and   = zc_post_mime_type_where( $mime_type );
-		$count = $wpdb->get_results( "SELECT post_mime_type, COUNT( * ) AS num_posts FROM $wpdb->posts WHERE post_type = 'attachment' AND post_status != 'trash' $and GROUP BY post_mime_type", ARRAY_A );
+		$count = $zcdb->get_results( "SELECT post_mime_type, COUNT( * ) AS num_posts FROM $zcdb->posts WHERE post_type = 'attachment' AND post_status != 'trash' $and GROUP BY post_mime_type", ARRAY_A );
 
 		$counts = array();
 		foreach ( (array) $count as $row ) {
 			$counts[ $row['post_mime_type'] ] = $row['num_posts'];
 		}
-		$counts['trash'] = $wpdb->get_var( "SELECT COUNT( * ) FROM $wpdb->posts WHERE post_type = 'attachment' AND post_status = 'trash' $and" );
+		$counts['trash'] = $zcdb->get_var( "SELECT COUNT( * ) FROM $zcdb->posts WHERE post_type = 'attachment' AND post_status = 'trash' $and" );
 
 		zc_cache_set( $cache_key, (object) $counts, 'counts' );
 	}
@@ -3760,7 +3760,7 @@ function zc_post_mime_type_where( $post_mime_types, $table_alias = '' ) {
  *
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  * @see zc_delete_attachment()
  * @see zc_trash_post()
  *
@@ -3770,7 +3770,7 @@ function zc_post_mime_type_where( $post_mime_types, $table_alias = '' ) {
  * @return ZC_Post|false|null Post data on success, false or null on failure.
  */
 function zc_delete_post( $post_id = 0, $force_delete = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post_id = (int) $post_id;
 	if ( $post_id <= 0 ) {
@@ -3778,7 +3778,7 @@ function zc_delete_post( $post_id = 0, $force_delete = false ) {
 		return false;
 	}
 
-	$post = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post_id ) );
+	$post = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->posts WHERE ID = %d", $post_id ) );
 
 	if ( ! $post ) {
 		return $post;
@@ -3834,22 +3834,22 @@ function zc_delete_post( $post_id = 0, $force_delete = false ) {
 
 	if ( is_post_type_hierarchical( $post->post_type ) ) {
 		// Point children of this page to its parent, also clean the cache of affected children.
-		$children_query = $wpdb->prepare(
-			"SELECT * FROM $wpdb->posts WHERE post_parent = %d AND post_type = %s",
+		$children_query = $zcdb->prepare(
+			"SELECT * FROM $zcdb->posts WHERE post_parent = %d AND post_type = %s",
 			$post_id,
 			$post->post_type
 		);
 
-		$children = $wpdb->get_results( $children_query );
+		$children = $zcdb->get_results( $children_query );
 
 		if ( $children ) {
-			$wpdb->update( $wpdb->posts, $parent_data, $parent_where + array( 'post_type' => $post->post_type ) );
+			$zcdb->update( $zcdb->posts, $parent_data, $parent_where + array( 'post_type' => $post->post_type ) );
 		}
 	}
 
 	// Do raw query. zc_get_post_revisions() is filtered.
-	$revision_ids = $wpdb->get_col(
-		$wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_parent = %d AND post_type = 'revision'", $post_id )
+	$revision_ids = $zcdb->get_col(
+		$zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_parent = %d AND post_type = 'revision'", $post_id )
 	);
 
 	// Use zc_delete_post (via zc_delete_post_revision) again. Ensures any meta/misplaced data gets cleaned up.
@@ -3858,12 +3858,12 @@ function zc_delete_post( $post_id = 0, $force_delete = false ) {
 	}
 
 	// Point all attachments to this post up one level.
-	$wpdb->update( $wpdb->posts, $parent_data, $parent_where + array( 'post_type' => 'attachment' ) );
+	$zcdb->update( $zcdb->posts, $parent_data, $parent_where + array( 'post_type' => 'attachment' ) );
 
 	zc_defer_comment_counting( true );
 
-	$comment_ids = $wpdb->get_col(
-		$wpdb->prepare( "SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = %d ORDER BY comment_ID DESC", $post_id )
+	$comment_ids = $zcdb->get_col(
+		$zcdb->prepare( "SELECT comment_ID FROM $zcdb->comments WHERE comment_post_ID = %d ORDER BY comment_ID DESC", $post_id )
 	);
 
 	foreach ( $comment_ids as $comment_id ) {
@@ -3872,8 +3872,8 @@ function zc_delete_post( $post_id = 0, $force_delete = false ) {
 
 	zc_defer_comment_counting( false );
 
-	$post_meta_ids = $wpdb->get_col(
-		$wpdb->prepare( "SELECT meta_id FROM $wpdb->postmeta WHERE post_id = %d ", $post_id )
+	$post_meta_ids = $zcdb->get_col(
+		$zcdb->prepare( "SELECT meta_id FROM $zcdb->postmeta WHERE post_id = %d ", $post_id )
 	);
 
 	foreach ( $post_meta_ids as $mid ) {
@@ -3904,7 +3904,7 @@ function zc_delete_post( $post_id = 0, $force_delete = false ) {
 	 */
 	do_action( 'delete_post', $post_id, $post );
 
-	$result = $wpdb->delete( $wpdb->posts, array( 'ID' => $post_id ) );
+	$result = $zcdb->delete( $zcdb->posts, array( 'ID' => $post_id ) );
 	if ( ! $result ) {
 		return false;
 	}
@@ -4182,13 +4182,13 @@ function zc_untrash_post( $post_id = 0 ) {
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Post|null $post Optional. Post ID or post object. Defaults to global $post.
  * @return mixed|void False on failure.
  */
 function zc_trash_post_comments( $post = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -4207,7 +4207,7 @@ function zc_trash_post_comments( $post = null ) {
 	 */
 	do_action( 'trash_post_comments', $post_id );
 
-	$comments = $wpdb->get_results( $wpdb->prepare( "SELECT comment_ID, comment_approved FROM $wpdb->comments WHERE comment_post_ID = %d", $post_id ) );
+	$comments = $zcdb->get_results( $zcdb->prepare( "SELECT comment_ID, comment_approved FROM $zcdb->comments WHERE comment_post_ID = %d", $post_id ) );
 
 	if ( ! $comments ) {
 		return;
@@ -4221,7 +4221,7 @@ function zc_trash_post_comments( $post = null ) {
 	add_post_meta( $post_id, '_zc_trash_meta_comments_status', $statuses );
 
 	// Set status for all comments to post-trashed.
-	$result = $wpdb->update( $wpdb->comments, array( 'comment_approved' => 'post-trashed' ), array( 'comment_post_ID' => $post_id ) );
+	$result = $zcdb->update( $zcdb->comments, array( 'comment_approved' => 'post-trashed' ), array( 'comment_post_ID' => $post_id ) );
 
 	clean_comment_cache( array_keys( $statuses ) );
 
@@ -4243,13 +4243,13 @@ function zc_trash_post_comments( $post = null ) {
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Post|null $post Optional. Post ID or post object. Defaults to global $post.
  * @return true|void
  */
 function zc_untrash_post_comments( $post = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -4286,7 +4286,7 @@ function zc_untrash_post_comments( $post = null ) {
 			$status = '0';
 		}
 		$comments_in = implode( ', ', array_map( 'intval', $comments ) );
-		$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->comments SET comment_approved = %s WHERE comment_ID IN ($comments_in)", $status ) );
+		$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->comments SET comment_approved = %s WHERE comment_ID IN ($comments_in)", $status ) );
 	}
 
 	clean_comment_cache( array_keys( $statuses ) );
@@ -4449,7 +4449,7 @@ function zc_get_recent_posts( $args = array(), $output = ARRAY_A ) {
  * @since 5.6.0 Added the `$fire_after_hooks` parameter.
  *
  * @see sanitize_post()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $postarr {
  *     An array of elements that make up a post to update or insert.
@@ -4503,7 +4503,7 @@ function zc_get_recent_posts( $args = array(), $output = ARRAY_A ) {
  * @return int|ZC_Error The post ID on success. The value 0 or ZC_Error on failure.
  */
 function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Capture original pre-sanitized array for passing into filters.
 	$unsanitized_postarr = $postarr;
@@ -4844,7 +4844,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 
 	foreach ( $emoji_fields as $emoji_field ) {
 		if ( isset( $data[ $emoji_field ] ) ) {
-			$charset = $wpdb->get_col_charset( $wpdb->posts, $emoji_field );
+			$charset = $zcdb->get_col_charset( $zcdb->posts, $emoji_field );
 
 			// The 'utf8' character set is a deprecated alias of 'utf8mb3'. See <https://dev.mysql.com/doc/refman/8.4/en/charset-unicode-utf8.html>.
 			if ( 'utf8' === $charset || 'utf8mb3' === $charset ) {
@@ -4899,7 +4899,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 		 */
 		do_action( 'pre_post_update', $post_id, $data );
 
-		if ( false === $wpdb->update( $wpdb->posts, $data, $where ) ) {
+		if ( false === $zcdb->update( $zcdb->posts, $data, $where ) ) {
 			if ( $zc_error ) {
 				if ( 'attachment' === $post_type ) {
 					$message = __( 'Could not update attachment in the database.' );
@@ -4907,7 +4907,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 					$message = __( 'Could not update post in the database.' );
 				}
 
-				return new ZC_Error( 'db_update_error', $message, $wpdb->last_error );
+				return new ZC_Error( 'db_update_error', $message, $zcdb->last_error );
 			} else {
 				return 0;
 			}
@@ -4917,7 +4917,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 		if ( ! empty( $import_id ) ) {
 			$import_id = (int) $import_id;
 
-			if ( ! $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE ID = %d", $import_id ) ) ) {
+			if ( ! $zcdb->get_var( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE ID = %d", $import_id ) ) ) {
 				$data['ID'] = $import_id;
 			}
 		}
@@ -4931,7 +4931,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 		 */
 		do_action( 'pre_post_insert', $data );
 
-		if ( false === $wpdb->insert( $wpdb->posts, $data ) ) {
+		if ( false === $zcdb->insert( $zcdb->posts, $data ) ) {
 			if ( $zc_error ) {
 				if ( 'attachment' === $post_type ) {
 					$message = __( 'Could not insert attachment into the database.' );
@@ -4939,13 +4939,13 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 					$message = __( 'Could not insert post into the database.' );
 				}
 
-				return new ZC_Error( 'db_insert_error', $message, $wpdb->last_error );
+				return new ZC_Error( 'db_insert_error', $message, $zcdb->last_error );
 			} else {
 				return 0;
 			}
 		}
 
-		$post_id = (int) $wpdb->insert_id;
+		$post_id = (int) $zcdb->insert_id;
 
 		// Use the newly generated $post_id.
 		$where = array( 'ID' => $post_id );
@@ -4954,7 +4954,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 	if ( empty( $data['post_name'] ) && ! in_array( $data['post_status'], array( 'draft', 'pending', 'auto-draft' ), true ) ) {
 		$data['post_name'] = zc_unique_post_slug( sanitize_title( $data['post_title'], $post_id ), $post_id, $data['post_status'], $post_type, $post_parent );
 
-		$wpdb->update( $wpdb->posts, array( 'post_name' => $data['post_name'] ), $where );
+		$zcdb->update( $zcdb->posts, array( 'post_name' => $data['post_name'] ), $where );
 		clean_post_cache( $post_id );
 	}
 
@@ -5025,7 +5025,7 @@ function zc_insert_post( $postarr, $zc_error = false, $fire_after_hooks = true )
 
 	// Set GUID.
 	if ( ! $update && '' === $current_guid ) {
-		$wpdb->update( $wpdb->posts, array( 'guid' => get_permalink( $post_id ) ), $where );
+		$zcdb->update( $zcdb->posts, array( 'guid' => get_permalink( $post_id ) ), $where );
 	}
 
 	if ( 'attachment' === $postarr['post_type'] ) {
@@ -5300,12 +5300,12 @@ function zc_update_post( $postarr = array(), $zc_error = false, $fire_after_hook
  *
  * @since 2.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Post $post Post ID or post object.
  */
 function zc_publish_post( $post ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -5346,7 +5346,7 @@ function zc_publish_post( $post ) {
 		zc_set_post_terms( $post->ID, array( $default_term_id ), $taxonomy );
 	}
 
-	$wpdb->update( $wpdb->posts, array( 'post_status' => 'publish' ), array( 'ID' => $post->ID ) );
+	$zcdb->update( $zcdb->posts, array( 'post_status' => 'publish' ), array( 'ID' => $post->ID ) );
 
 	clean_post_cache( $post->ID );
 
@@ -5450,7 +5450,7 @@ function zc_resolve_post_date( $post_date = '', $post_date_gmt = '' ) {
  *
  * @since 2.8.0
  *
- * @global wpdb       $wpdb       ZelocoreCMS database abstraction object.
+ * @global zcdb       $zcdb       ZelocoreCMS database abstraction object.
  * @global ZC_Rewrite $zc_rewrite ZelocoreCMS rewrite component.
  *
  * @param string $slug        The desired slug (post_name).
@@ -5487,7 +5487,7 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 		return $override_slug;
 	}
 
-	global $wpdb, $zc_rewrite;
+	global $zcdb, $zc_rewrite;
 
 	$original_slug = $slug;
 
@@ -5498,8 +5498,8 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 
 	if ( 'attachment' === $post_type ) {
 		// Attachment slugs must be unique across all types.
-		$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND ID != %d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_id ) );
+		$check_sql       = "SELECT post_name FROM $zcdb->posts WHERE post_name = %s AND ID != %d LIMIT 1";
+		$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $slug, $post_id ) );
 
 		/**
 		 * Filters whether the post slug would make a bad attachment slug.
@@ -5518,7 +5518,7 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 			$suffix = 2;
 			do {
 				$alt_post_name   = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_id ) );
+				$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $alt_post_name, $post_id ) );
 				++$suffix;
 			} while ( $post_name_check );
 			$slug = $alt_post_name;
@@ -5532,8 +5532,8 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 		 * Page slugs must be unique within their own trees. Pages are in a separate
 		 * namespace than posts so page slugs are allowed to overlap post slugs.
 		 */
-		$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND post_type IN ( %s, 'attachment' ) AND ID != %d AND post_parent = %d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_id, $post_parent ) );
+		$check_sql       = "SELECT post_name FROM $zcdb->posts WHERE post_name = %s AND post_type IN ( %s, 'attachment' ) AND ID != %d AND post_parent = %d LIMIT 1";
+		$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $slug, $post_type, $post_id, $post_parent ) );
 
 		/**
 		 * Filters whether the post slug would make a bad hierarchical post slug.
@@ -5555,15 +5555,15 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 			$suffix = 2;
 			do {
 				$alt_post_name   = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id, $post_parent ) );
+				$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id, $post_parent ) );
 				++$suffix;
 			} while ( $post_name_check );
 			$slug = $alt_post_name;
 		}
 	} else {
 		// Post slugs must be unique across all posts.
-		$check_sql       = "SELECT post_name FROM $wpdb->posts WHERE post_name = %s AND post_type = %s AND ID != %d LIMIT 1";
-		$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $slug, $post_type, $post_id ) );
+		$check_sql       = "SELECT post_name FROM $zcdb->posts WHERE post_name = %s AND post_type = %s AND ID != %d LIMIT 1";
+		$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $slug, $post_type, $post_id ) );
 
 		$post = get_post( $post_id );
 
@@ -5611,7 +5611,7 @@ function zc_unique_post_slug( $slug, $post_id, $post_status, $post_type, $post_p
 			$suffix = 2;
 			do {
 				$alt_post_name   = _truncate_post_slug( $slug, 200 - ( strlen( $suffix ) + 1 ) ) . "-$suffix";
-				$post_name_check = $wpdb->get_var( $wpdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id ) );
+				$post_name_check = $zcdb->get_var( $zcdb->prepare( $check_sql, $alt_post_name, $post_type, $post_id ) );
 				++$suffix;
 			} while ( $post_name_check );
 			$slug = $alt_post_name;
@@ -5927,14 +5927,14 @@ function zc_after_insert_post( $post, $update, $post_before ) {
  * @since 4.7.0 `$post` can be a ZC_Post object.
  * @since 4.7.0 `$uri` can be an array of URIs.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Post  $post Post ID or post object.
  * @param string|array $uri  Ping URI or array of URIs.
  * @return int|false How many rows were updated.
  */
 function add_ping( $post, $uri ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -5961,7 +5961,7 @@ function add_ping( $post, $uri ) {
 	 */
 	$new = apply_filters( 'add_ping', $new );
 
-	$return = $wpdb->update( $wpdb->posts, array( 'pinged' => $new ), array( 'ID' => $post->ID ) );
+	$return = $zcdb->update( $zcdb->posts, array( 'pinged' => $new ), array( 'ID' => $post->ID ) );
 	clean_post_cache( $post->ID );
 	return $return;
 }
@@ -6098,16 +6098,16 @@ function trackback_url_list( $tb_list, $post_id ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return string[] List of page IDs as strings.
  */
 function get_all_page_ids() {
-	global $wpdb;
+	global $zcdb;
 
 	$page_ids = zc_cache_get( 'all_page_ids', 'posts' );
 	if ( ! is_array( $page_ids ) ) {
-		$page_ids = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_type = 'page'" );
+		$page_ids = $zcdb->get_col( "SELECT ID FROM $zcdb->posts WHERE post_type = 'page'" );
 		zc_cache_add( 'all_page_ids', $page_ids, 'posts' );
 	}
 
@@ -6139,7 +6139,7 @@ function get_page( $page, $output = OBJECT, $filter = 'raw' ) {
  *
  * @since 2.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string       $page_path Page path.
  * @param string       $output    Optional. The required return type. One of OBJECT, ARRAY_A, or ARRAY_N, which
@@ -6149,7 +6149,7 @@ function get_page( $page, $output = OBJECT, $filter = 'raw' ) {
  * @return ZC_Post|array|null ZC_Post (or array) on success, or null on failure.
  */
 function get_page_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$last_changed = zc_cache_get_last_changed( 'posts' );
 
@@ -6184,12 +6184,12 @@ function get_page_by_path( $page_path, $output = OBJECT, $post_type = 'page' ) {
 	$post_type_in_string = "'" . implode( "','", $post_types ) . "'";
 	$sql                 = "
 		SELECT ID, post_name, post_parent, post_type
-		FROM $wpdb->posts
+		FROM $zcdb->posts
 		WHERE post_name IN ($in_string)
 		AND post_type IN ($post_type_in_string)
 	";
 
-	$pages = $wpdb->get_results( $sql, OBJECT_K );
+	$pages = $zcdb->get_results( $sql, OBJECT_K );
 
 	$revparts = array_reverse( $parts );
 
@@ -6677,7 +6677,7 @@ function zc_insert_attachment( $args, $file = false, $parent_post_id = 0, $zc_er
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int  $post_id      Attachment ID.
  * @param bool $force_delete Optional. Whether to bypass Trash and force deletion.
@@ -6685,9 +6685,9 @@ function zc_insert_attachment( $args, $file = false, $parent_post_id = 0, $zc_er
  * @return ZC_Post|false|null Post data on success, false or null on failure.
  */
 function zc_delete_attachment( $post_id, $force_delete = false ) {
-	global $wpdb;
+	global $zcdb;
 
-	$post = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d", $post_id ) );
+	$post = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->posts WHERE ID = %d", $post_id ) );
 
 	if ( ! $post ) {
 		return $post;
@@ -6747,21 +6747,21 @@ function zc_delete_attachment( $post_id, $force_delete = false ) {
 
 	zc_defer_comment_counting( true );
 
-	$comment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT comment_ID FROM $wpdb->comments WHERE comment_post_ID = %d ORDER BY comment_ID DESC", $post_id ) );
+	$comment_ids = $zcdb->get_col( $zcdb->prepare( "SELECT comment_ID FROM $zcdb->comments WHERE comment_post_ID = %d ORDER BY comment_ID DESC", $post_id ) );
 	foreach ( $comment_ids as $comment_id ) {
 		zc_delete_comment( $comment_id, true );
 	}
 
 	zc_defer_comment_counting( false );
 
-	$post_meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->postmeta WHERE post_id = %d ", $post_id ) );
+	$post_meta_ids = $zcdb->get_col( $zcdb->prepare( "SELECT meta_id FROM $zcdb->postmeta WHERE post_id = %d ", $post_id ) );
 	foreach ( $post_meta_ids as $mid ) {
 		delete_metadata_by_mid( 'post', $mid );
 	}
 
 	/** This action is documented in zc-includes/post.php */
 	do_action( 'delete_post', $post_id, $post );
-	$result = $wpdb->delete( $wpdb->posts, array( 'ID' => $post_id ) );
+	$result = $zcdb->delete( $zcdb->posts, array( 'ID' => $post_id ) );
 	if ( ! $result ) {
 		return false;
 	}
@@ -6780,7 +6780,7 @@ function zc_delete_attachment( $post_id, $force_delete = false ) {
  *
  * @since 4.9.7
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $post_id      Attachment ID.
  * @param array  $meta         The attachment's meta data.
@@ -6789,14 +6789,14 @@ function zc_delete_attachment( $post_id, $force_delete = false ) {
  * @return bool True on success, false on failure.
  */
 function zc_delete_attachment_files( $post_id, $meta, $backup_sizes, $file ) {
-	global $wpdb;
+	global $zcdb;
 
 	$uploadpath = zc_get_upload_dir();
 	$deleted    = true;
 
 	if ( ! empty( $meta['thumb'] ) ) {
 		// Don't delete the thumb if another attachment uses it.
-		if ( ! $wpdb->get_row( $wpdb->prepare( "SELECT meta_id FROM $wpdb->postmeta WHERE meta_key = '_zc_attachment_metadata' AND meta_value LIKE %s AND post_id <> %d", '%' . $wpdb->esc_like( $meta['thumb'] ) . '%', $post_id ) ) ) {
+		if ( ! $zcdb->get_row( $zcdb->prepare( "SELECT meta_id FROM $zcdb->postmeta WHERE meta_key = '_zc_attachment_metadata' AND meta_value LIKE %s AND post_id <> %d", '%' . $zcdb->esc_like( $meta['thumb'] ) . '%', $post_id ) ) ) {
 			$thumbfile = str_replace( zc_basename( $file ), $meta['thumb'], $file );
 
 			if ( ! empty( $thumbfile ) ) {
@@ -7441,7 +7441,7 @@ function get_private_posts_cap_sql( $post_type ) {
  * @since 4.3.0 Introduced the ability to pass an array of post types to `$post_type`.
  *
  * @see get_private_posts_cap_sql()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|string[] $post_type   Single post type or an array of post types.
  * @param bool            $full        Optional. Returns a full WHERE statement instead of just
@@ -7452,7 +7452,7 @@ function get_private_posts_cap_sql( $post_type ) {
  * @return string SQL WHERE code that can be added to a query.
  */
 function get_posts_by_author_sql( $post_type, $full = true, $post_author = null, $public_only = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_array( $post_type ) ) {
 		$post_types = $post_type;
@@ -7511,7 +7511,7 @@ function get_posts_by_author_sql( $post_type, $full = true, $post_author = null,
 	$sql = '( ' . implode( ' OR ', $post_type_clauses ) . ' )';
 
 	if ( null !== $post_author ) {
-		$sql .= $wpdb->prepare( ' AND post_author = %d', $post_author );
+		$sql .= $zcdb->prepare( ' AND post_author = %d', $post_author );
 	}
 
 	if ( $full ) {
@@ -7621,7 +7621,7 @@ function get_lastpostmodified( $timezone = 'server', $post_type = 'any' ) {
  * @since 4.4.0 The `$post_type` argument was added.
  * @access private
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $timezone  The timezone for the timestamp. See get_lastpostdate().
  *                          for information on accepted values.
@@ -7630,7 +7630,7 @@ function get_lastpostmodified( $timezone = 'server', $post_type = 'any' ) {
  * @return string|false The timestamp in 'Y-m-d H:i:s' format, or false on failure.
  */
 function _get_last_post_time( $timezone, $field, $post_type = 'any' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! in_array( $field, array( 'date', 'modified' ), true ) ) {
 		return false;
@@ -7650,7 +7650,7 @@ function _get_last_post_time( $timezone, $field, $post_type = 'any' ) {
 
 	if ( 'any' === $post_type ) {
 		$post_types = get_post_types( array( 'public' => true ) );
-		array_walk( $post_types, array( $wpdb, 'escape_by_ref' ) );
+		array_walk( $post_types, array( $zcdb, 'escape_by_ref' ) );
 		$post_types = "'" . implode( "', '", $post_types ) . "'";
 	} else {
 		$post_types = "'" . sanitize_key( $post_type ) . "'";
@@ -7658,14 +7658,14 @@ function _get_last_post_time( $timezone, $field, $post_type = 'any' ) {
 
 	switch ( $timezone ) {
 		case 'gmt':
-			$date = $wpdb->get_var( "SELECT post_{$field}_gmt FROM $wpdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
+			$date = $zcdb->get_var( "SELECT post_{$field}_gmt FROM $zcdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
 			break;
 		case 'blog':
-			$date = $wpdb->get_var( "SELECT post_{$field} FROM $wpdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
+			$date = $zcdb->get_var( "SELECT post_{$field} FROM $zcdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
 			break;
 		case 'server':
 			$add_seconds_server = gmdate( 'Z' );
-			$date               = $wpdb->get_var( "SELECT DATE_ADD(post_{$field}_gmt, INTERVAL '$add_seconds_server' SECOND) FROM $wpdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
+			$date               = $zcdb->get_var( "SELECT DATE_ADD(post_{$field}_gmt, INTERVAL '$add_seconds_server' SECOND) FROM $zcdb->posts WHERE post_status = 'publish' AND post_type IN ({$post_types}) ORDER BY post_{$field}_gmt DESC LIMIT 1" );
 			break;
 	}
 
@@ -7922,19 +7922,19 @@ function clean_attachment_cache( $id, $clean_terms = false ) {
  * @access private
  *
  * @see zc_clear_scheduled_hook()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string  $new_status New post status.
  * @param string  $old_status Previous post status.
  * @param ZC_Post $post       Post object.
  */
 function _transition_post_status( $new_status, $old_status, $post ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( 'publish' !== $old_status && 'publish' === $new_status ) {
 		// Reset GUID if transitioning to publish and it is empty.
 		if ( '' === get_the_guid( $post->ID ) ) {
-			$wpdb->update( $wpdb->posts, array( 'guid' => get_permalink( $post->ID ) ), array( 'ID' => $post->ID ) );
+			$zcdb->update( $zcdb->posts, array( 'guid' => get_permalink( $post->ID ) ), array( 'ID' => $post->ID ) );
 		}
 
 		/**
@@ -8145,13 +8145,13 @@ function delete_post_thumbnail( $post ) {
  *
  * @since 3.4.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function zc_delete_auto_drafts() {
-	global $wpdb;
+	global $zcdb;
 
 	// Cleanup old auto-drafts more than 7 days old.
-	$old_posts = $wpdb->get_col( "SELECT ID FROM $wpdb->posts WHERE post_status = 'auto-draft' AND DATE_SUB( NOW(), INTERVAL 7 DAY ) > post_date" );
+	$old_posts = $zcdb->get_col( "SELECT ID FROM $zcdb->posts WHERE post_status = 'auto-draft' AND DATE_SUB( NOW(), INTERVAL 7 DAY ) > post_date" );
 	foreach ( (array) $old_posts as $delete ) {
 		// Force delete.
 		zc_delete_post( $delete, true );
@@ -8262,18 +8262,18 @@ function _update_term_count_on_transition_post_status( $new_status, $old_status,
  * @see update_postmeta_cache()
  * @see update_object_term_cache()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[] $ids               ID list.
  * @param bool  $update_term_cache Optional. Whether to update the term cache. Default true.
  * @param bool  $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
 function _prime_post_caches( $ids, $update_term_cache = true, $update_meta_cache = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	$non_cached_ids = _get_non_cached_ids( $ids, 'posts' );
 	if ( ! empty( $non_cached_ids ) ) {
-		$fresh_posts = $wpdb->get_results( sprintf( "SELECT $wpdb->posts.* FROM $wpdb->posts WHERE ID IN (%s)", implode( ',', $non_cached_ids ) ) );
+		$fresh_posts = $zcdb->get_results( sprintf( "SELECT $zcdb->posts.* FROM $zcdb->posts WHERE ID IN (%s)", implode( ',', $non_cached_ids ) ) );
 
 		if ( $fresh_posts ) {
 			// Despite the name, update_post_cache() expects an array rather than a single post.
@@ -8297,12 +8297,12 @@ function _prime_post_caches( $ids, $update_term_cache = true, $update_meta_cache
  *
  * @since 6.4.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[] $ids ID list.
  */
 function _prime_post_parent_id_caches( array $ids ) {
-	global $wpdb;
+	global $zcdb;
 
 	$ids = array_filter( $ids, '_validate_cache_id' );
 	$ids = array_unique( array_map( 'intval', $ids ), SORT_NUMERIC );
@@ -8326,7 +8326,7 @@ function _prime_post_parent_id_caches( array $ids ) {
 	}
 
 	if ( ! empty( $non_cached_ids ) ) {
-		$fresh_posts = $wpdb->get_results( sprintf( "SELECT $wpdb->posts.ID, $wpdb->posts.post_parent FROM $wpdb->posts WHERE ID IN (%s)", implode( ',', $non_cached_ids ) ) );
+		$fresh_posts = $zcdb->get_results( sprintf( "SELECT $zcdb->posts.ID, $zcdb->posts.post_parent FROM $zcdb->posts WHERE ID IN (%s)", implode( ',', $non_cached_ids ) ) );
 
 		if ( $fresh_posts ) {
 			$post_parent_data = array();
@@ -8382,13 +8382,13 @@ function zc_add_trashed_suffix_to_post_name_for_trashed_posts( $post_name, $post
  * @since 4.5.0
  * @access private
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param ZC_Post $post The post.
  * @return string New slug for the post.
  */
 function zc_add_trashed_suffix_to_post_name_for_post( $post ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post( $post );
 
@@ -8397,7 +8397,7 @@ function zc_add_trashed_suffix_to_post_name_for_post( $post ) {
 	}
 	add_post_meta( $post->ID, '_zc_desired_post_slug', $post->post_name );
 	$post_name = _truncate_post_slug( $post->post_name, 191 ) . '__trashed';
-	$wpdb->update( $wpdb->posts, array( 'post_name' => $post_name ), array( 'ID' => $post->ID ) );
+	$zcdb->update( $zcdb->posts, array( 'post_name' => $post_name ), array( 'ID' => $post->ID ) );
 	clean_post_cache( $post->ID );
 	return $post_name;
 }
@@ -8416,13 +8416,13 @@ function zc_cache_set_posts_last_changed() {
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $type
  * @return string[] An array of MIME types.
  */
 function get_available_post_mime_types( $type = 'attachment' ) {
-	global $wpdb;
+	global $zcdb;
 
 	/**
 	 * Filters the list of available post MIME types for the given post type.
@@ -8435,7 +8435,7 @@ function get_available_post_mime_types( $type = 'attachment' ) {
 	$mime_types = apply_filters( 'pre_get_available_post_mime_types', null, $type );
 
 	if ( ! is_array( $mime_types ) ) {
-		$mime_types = $wpdb->get_col( $wpdb->prepare( "SELECT DISTINCT post_mime_type FROM $wpdb->posts WHERE post_type = %s AND post_mime_type != ''", $type ) );
+		$mime_types = $zcdb->get_col( $zcdb->prepare( "SELECT DISTINCT post_mime_type FROM $zcdb->posts WHERE post_type = %s AND post_mime_type != ''", $type ) );
 	}
 
 	// Remove nulls from returned $mime_types.

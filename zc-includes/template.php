@@ -767,7 +767,7 @@ function locate_template( $template_names, $load = false, $load_once = true, $ar
  * @global bool       $zc_did_header
  * @global ZC_Query   $zc_query      ZelocoreCMS Query object.
  * @global ZC_Rewrite $zc_rewrite    ZelocoreCMS rewrite component.
- * @global wpdb       $wpdb          ZelocoreCMS database abstraction object.
+ * @global zcdb       $zcdb          ZelocoreCMS database abstraction object.
  * @global string     $zc_version
  * @global ZC         $zc            Current ZelocoreCMS environment instance.
  * @global int        $id
@@ -780,7 +780,7 @@ function locate_template( $template_names, $load = false, $load_once = true, $ar
  *                               Default empty array.
  */
 function load_template( $_template_file, $load_once = true, $args = array() ) {
-	global $posts, $post, $zc_did_header, $zc_query, $zc_rewrite, $wpdb, $zc_version, $zc, $id, $comment, $user_ID;
+	global $posts, $post, $zc_did_header, $zc_query, $zc_rewrite, $zcdb, $zc_version, $zc, $id, $comment, $user_ID;
 
 	if ( is_array( $zc_query->query_vars ) ) {
 		/*

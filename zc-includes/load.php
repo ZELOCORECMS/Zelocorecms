@@ -697,22 +697,22 @@ function zc_set_lang_dir() {
 }
 
 /**
- * Loads the database class file and instantiates the `$wpdb` global.
+ * Loads the database class file and instantiates the `$zcdb` global.
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function require_zc_db() {
-	global $wpdb;
+	global $zcdb;
 
-	require_once ABSPATH . ZCINC . '/class-wpdb.php';
+	require_once ABSPATH . ZCINC . '/class-zcdb.php';
 
 	if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) ) {
 		require_once ZC_CONTENT_DIR . '/db.php';
 	}
 
-	if ( isset( $wpdb ) ) {
+	if ( isset( $zcdb ) ) {
 		return;
 	}
 
@@ -721,7 +721,7 @@ function require_zc_db() {
 	$dbname     = defined( 'DB_NAME' ) ? DB_NAME : '';
 	$dbhost     = defined( 'DB_HOST' ) ? DB_HOST : '';
 
-	$wpdb = new wpdb( $dbuser, $dbpassword, $dbname, $dbhost );
+	$zcdb = new zcdb( $dbuser, $dbpassword, $dbname, $dbhost );
 }
 
 /**
@@ -733,17 +733,17 @@ function require_zc_db() {
  * @since 3.0.0
  * @access private
  *
- * @global wpdb   $wpdb         ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb         ZelocoreCMS database abstraction object.
  * @global string $table_prefix The database table prefix.
  */
-function zc_set_wpdb_vars() {
-	global $wpdb, $table_prefix;
+function zc_set_zcdb_vars() {
+	global $zcdb, $table_prefix;
 
-	if ( ! empty( $wpdb->error ) ) {
+	if ( ! empty( $zcdb->error ) ) {
 		dead_db();
 	}
 
-	$wpdb->field_types = array(
+	$zcdb->field_types = array(
 		'post_author'      => '%d',
 		'post_parent'      => '%d',
 		'menu_order'       => '%d',
@@ -781,7 +781,7 @@ function zc_set_wpdb_vars() {
 		'spam'             => '%d',
 	);
 
-	$prefix = $wpdb->set_prefix( $table_prefix );
+	$prefix = $zcdb->set_prefix( $table_prefix );
 
 	if ( is_zc_error( $prefix ) ) {
 		zc_load_translations_early();
@@ -1283,7 +1283,7 @@ function zc_set_internal_encoding() {
  * @access private
  */
 function zc_magic_quotes() {
-	// Escape with wpdb.
+	// Escape with zcdb.
 	$_GET    = add_magic_quotes( $_GET );
 	$_POST   = add_magic_quotes( $_POST );
 	$_COOKIE = add_magic_quotes( $_COOKIE );

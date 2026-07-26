@@ -26,12 +26,12 @@
  * using the undo shortcut, or the undo button in the toolbar.
  *
  * Setting for the patterns can be overridden by plugins by using the `tiny_mce_before_init` PHP filter.
- * The setting name is `wptextpattern` and the value is an object containing override arrays for each
+ * The setting name is `zctextpattern` and the value is an object containing override arrays for each
  * patterns group. There are three groups: "space", "enter", and "inline". Example (PHP):
  *
- * add_filter( 'tiny_mce_before_init', 'my_mce_init_wptextpattern' );
- * function my_mce_init_wptextpattern( $init ) {
- *   $init['wptextpattern'] = zc_json_encode( array(
+ * add_filter( 'tiny_mce_before_init', 'my_mce_init_zctextpattern' );
+ * function my_mce_init_zctextpattern( $init ) {
+ *   $init['zctextpattern'] = zc_json_encode( array(
  *      'inline' => array(
  *        array( 'delimiter' => '**', 'format' => 'bold' ),
  *        array( 'delimiter' => '__', 'format' => 'italic' ),
@@ -60,9 +60,9 @@
 		return string.replace( /[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&' );
 	}
 
-	tinymce.PluginManager.add( 'wptextpattern', function( editor ) {
+	tinymce.PluginManager.add( 'zctextpattern', function( editor ) {
 		var VK = tinymce.util.VK;
-		var settings = editor.settings.wptextpattern || {};
+		var settings = editor.settings.zctextpattern || {};
 
 		var spacePatterns = settings.space || [
 			{ regExp: /^[*-]\s/, cmd: 'InsertUnorderedList' },

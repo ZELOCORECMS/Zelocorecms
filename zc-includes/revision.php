@@ -992,19 +992,19 @@ function _zc_get_post_revision_version( $revision ) {
  * @since 3.6.0
  * @access private
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param ZC_Post $post      Post object.
  * @param array   $revisions Current revisions of the post.
  * @return bool true if the revisions were upgraded, false if problems.
  */
 function _zc_upgrade_revisions_of_post( $post, $revisions ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Add post option exclusively.
 	$lock   = "revision-upgrade-{$post->ID}";
 	$now    = time();
-	$result = $wpdb->query( $wpdb->prepare( "INSERT IGNORE INTO `$wpdb->options` (`option_name`, `option_value`, `autoload`) VALUES (%s, %s, 'off') /* LOCK */", $lock, $now ) );
+	$result = $zcdb->query( $zcdb->prepare( "INSERT IGNORE INTO `$zcdb->options` (`option_name`, `option_value`, `autoload`) VALUES (%s, %s, 'off') /* LOCK */", $lock, $now ) );
 
 	if ( ! $result ) {
 		// If we couldn't get a lock, see how old the previous lock is.
@@ -1072,7 +1072,7 @@ function _zc_upgrade_revisions_of_post( $post, $revisions ) {
 		}
 
 		// Upgrade this revision.
-		$result = $wpdb->update( $wpdb->posts, $update, array( 'ID' => $this_revision->ID ) );
+		$result = $zcdb->update( $zcdb->posts, $update, array( 'ID' => $this_revision->ID ) );
 
 		if ( $result ) {
 			zc_cache_delete( $this_revision->ID, 'posts' );

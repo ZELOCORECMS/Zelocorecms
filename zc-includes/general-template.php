@@ -1968,7 +1968,7 @@ function get_archives_link( $url, $text, $format = 'html', $before = '', $after 
  *
  * @see get_archives_link()
  *
- * @global wpdb      $wpdb      ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb      ZelocoreCMS database abstraction object.
  * @global ZC_Locale $zc_locale ZelocoreCMS date and time locale object.
  *
  * @param string|array $args {
@@ -2000,7 +2000,7 @@ function get_archives_link( $url, $text, $format = 'html', $before = '', $after 
  * @return void|string Void if 'echo' argument is true, archive links if 'echo' is false.
  */
 function zc_get_archives( $args = '' ) {
-	global $wpdb, $zc_locale;
+	global $zcdb, $zc_locale;
 
 	$defaults = array(
 		'type'            => 'monthly',
@@ -2055,7 +2055,7 @@ function zc_get_archives( $args = '' ) {
 	// This is what will separate dates on weekly archive links.
 	$archive_week_separator = '&#8211;';
 
-	$sql_where = $wpdb->prepare( "WHERE post_type = %s AND post_status = 'publish'", $parsed_args['post_type'] );
+	$sql_where = $zcdb->prepare( "WHERE post_type = %s AND post_status = 'publish'", $parsed_args['post_type'] );
 
 	/**
 	 * Filters the SQL WHERE clause for retrieving archives.
@@ -2084,12 +2084,12 @@ function zc_get_archives( $args = '' ) {
 	$limit = $parsed_args['limit'];
 
 	if ( 'monthly' === $parsed_args['type'] ) {
-		$query   = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
+		$query   = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, count(ID) as posts FROM $zcdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date) ORDER BY post_date $order $limit";
 		$key     = md5( $query );
 		$key     = "zc_get_archives:$key";
 		$results = zc_cache_get_salted( $key, 'post-queries', $last_changed );
 		if ( ! $results ) {
-			$results = $wpdb->get_results( $query );
+			$results = $zcdb->get_results( $query );
 			zc_cache_set_salted( $key, $results, 'post-queries', $last_changed );
 		}
 		if ( $results ) {
@@ -2109,12 +2109,12 @@ function zc_get_archives( $args = '' ) {
 			}
 		}
 	} elseif ( 'yearly' === $parsed_args['type'] ) {
-		$query   = "SELECT YEAR(post_date) AS `year`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date) ORDER BY post_date $order $limit";
+		$query   = "SELECT YEAR(post_date) AS `year`, count(ID) as posts FROM $zcdb->posts $join $where GROUP BY YEAR(post_date) ORDER BY post_date $order $limit";
 		$key     = md5( $query );
 		$key     = "zc_get_archives:$key";
 		$results = zc_cache_get_salted( $key, 'post-queries', $last_changed );
 		if ( ! $results ) {
-			$results = $wpdb->get_results( $query );
+			$results = $zcdb->get_results( $query );
 			zc_cache_set_salted( $key, $results, 'post-queries', $last_changed );
 		}
 		if ( $results ) {
@@ -2133,12 +2133,12 @@ function zc_get_archives( $args = '' ) {
 			}
 		}
 	} elseif ( 'daily' === $parsed_args['type'] ) {
-		$query   = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, DAYOFMONTH(post_date) AS `dayofmonth`, count(ID) as posts FROM $wpdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date), DAYOFMONTH(post_date) ORDER BY post_date $order $limit";
+		$query   = "SELECT YEAR(post_date) AS `year`, MONTH(post_date) AS `month`, DAYOFMONTH(post_date) AS `dayofmonth`, count(ID) as posts FROM $zcdb->posts $join $where GROUP BY YEAR(post_date), MONTH(post_date), DAYOFMONTH(post_date) ORDER BY post_date $order $limit";
 		$key     = md5( $query );
 		$key     = "zc_get_archives:$key";
 		$results = zc_cache_get_salted( $key, 'post-queries', $last_changed );
 		if ( ! $results ) {
-			$results = $wpdb->get_results( $query );
+			$results = $zcdb->get_results( $query );
 			zc_cache_set_salted( $key, $results, 'post-queries', $last_changed );
 		}
 		if ( $results ) {
@@ -2159,12 +2159,12 @@ function zc_get_archives( $args = '' ) {
 		}
 	} elseif ( 'weekly' === $parsed_args['type'] ) {
 		$week    = _zc_mysql_week( '`post_date`' );
-		$query   = "SELECT DISTINCT $week AS `week`, YEAR( `post_date` ) AS `yr`, DATE_FORMAT( `post_date`, '%Y-%m-%d' ) AS `yyyymmdd`, count( `ID` ) AS `posts` FROM `$wpdb->posts` $join $where GROUP BY $week, YEAR( `post_date` ) ORDER BY `post_date` $order $limit";
+		$query   = "SELECT DISTINCT $week AS `week`, YEAR( `post_date` ) AS `yr`, DATE_FORMAT( `post_date`, '%Y-%m-%d' ) AS `yyyymmdd`, count( `ID` ) AS `posts` FROM `$zcdb->posts` $join $where GROUP BY $week, YEAR( `post_date` ) ORDER BY `post_date` $order $limit";
 		$key     = md5( $query );
 		$key     = "zc_get_archives:$key";
 		$results = zc_cache_get_salted( $key, 'post-queries', $last_changed );
 		if ( ! $results ) {
-			$results = $wpdb->get_results( $query );
+			$results = $zcdb->get_results( $query );
 			zc_cache_set_salted( $key, $results, 'post-queries', $last_changed );
 		}
 		$arc_w_last = '';
@@ -2198,12 +2198,12 @@ function zc_get_archives( $args = '' ) {
 		}
 	} elseif ( ( 'postbypost' === $parsed_args['type'] ) || ( 'alpha' === $parsed_args['type'] ) ) {
 		$orderby = ( 'alpha' === $parsed_args['type'] ) ? 'post_title ASC ' : 'post_date DESC, ID DESC ';
-		$query   = "SELECT * FROM $wpdb->posts $join $where ORDER BY $orderby $limit";
+		$query   = "SELECT * FROM $zcdb->posts $join $where ORDER BY $orderby $limit";
 		$key     = md5( $query );
 		$key     = "zc_get_archives:$key";
 		$results = zc_cache_get_salted( $key, 'post-queries', $last_changed );
 		if ( ! $results ) {
-			$results = $wpdb->get_results( $query );
+			$results = $zcdb->get_results( $query );
 			zc_cache_set_salted( $key, $results, 'post-queries', $last_changed );
 		}
 		if ( $results ) {
@@ -2253,7 +2253,7 @@ function calendar_week_mod( $num ) {
  * @since 6.8.0 Added the `$args` parameter, with backward compatibility
  *              for the replaced `$initial` and `$display` parameters.
  *
- * @global wpdb      $wpdb      ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb      ZelocoreCMS database abstraction object.
  * @global int       $m
  * @global int       $monthnum
  * @global int       $year
@@ -2270,7 +2270,7 @@ function calendar_week_mod( $num ) {
  * @return void|string Void if `$display` argument is true, calendar HTML if `$display` is false.
  */
 function get_calendar( $args = array() ) {
-	global $wpdb, $m, $monthnum, $year, $zc_locale, $posts;
+	global $zcdb, $m, $monthnum, $year, $zc_locale, $posts;
 
 	$defaults = array(
 		'initial'   => true,
@@ -2364,10 +2364,10 @@ function get_calendar( $args = array() ) {
 
 	// Quick check. If we have no posts at all, abort!
 	if ( ! $posts ) {
-		$gotsome = $wpdb->get_var(
-			$wpdb->prepare(
+		$gotsome = $zcdb->get_var(
+			$zcdb->prepare(
 				"SELECT 1 as test
-				FROM $wpdb->posts
+				FROM $zcdb->posts
 				WHERE post_type = %s
 				AND post_status = 'publish'
 				LIMIT 1",
@@ -2394,8 +2394,8 @@ function get_calendar( $args = array() ) {
 		$thisyear = (int) substr( $m, 0, 4 );
 		// It seems MySQL's weeks disagree with PHP's.
 		$d         = ( ( $w - 1 ) * 7 ) + 6;
-		$thismonth = (int) $wpdb->get_var(
-			$wpdb->prepare(
+		$thismonth = (int) $zcdb->get_var(
+			$zcdb->prepare(
 				"SELECT DATE_FORMAT((DATE_ADD('%d0101', INTERVAL %d DAY) ), '%%m')",
 				$thisyear,
 				$d
@@ -2417,10 +2417,10 @@ function get_calendar( $args = array() ) {
 	$last_day  = gmdate( 't', $unixmonth );
 
 	// Get the next and previous month and year with at least one post.
-	$previous = $wpdb->get_row(
-		$wpdb->prepare(
+	$previous = $zcdb->get_row(
+		$zcdb->prepare(
 			"SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_date < '%d-%d-01'
 			AND post_type = %s AND post_status = 'publish'
 			ORDER BY post_date DESC
@@ -2431,10 +2431,10 @@ function get_calendar( $args = array() ) {
 		)
 	);
 
-	$next = $wpdb->get_row(
-		$wpdb->prepare(
+	$next = $zcdb->get_row(
+		$zcdb->prepare(
 			"SELECT MONTH(post_date) AS month, YEAR(post_date) AS year
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_date > '%d-%d-%d 23:59:59'
 			AND post_type = %s AND post_status = 'publish'
 			ORDER BY post_date ASC
@@ -2478,10 +2478,10 @@ function get_calendar( $args = array() ) {
 	$daywithpost = array();
 
 	// Get days with posts.
-	$dayswithposts = $wpdb->get_results(
-		$wpdb->prepare(
+	$dayswithposts = $zcdb->get_results(
+		$zcdb->prepare(
 			"SELECT DISTINCT DAYOFMONTH(post_date)
-			FROM $wpdb->posts WHERE post_date >= '%d-%d-01 00:00:00'
+			FROM $zcdb->posts WHERE post_date >= '%d-%d-01 00:00:00'
 			AND post_type = %s AND post_status = 'publish'
 			AND post_date <= '%d-%d-%d 23:59:59'",
 			$thisyear,

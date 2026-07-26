@@ -21,7 +21,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *
  * @since 2.3.0
  *
- * @global wpdb   $wpdb             ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb             ZelocoreCMS database abstraction object.
  * @global string $zc_local_package Locale code of the package.
  *
  * @param array $extra_stats Extra statistics to report to the ZelocoreCMS.org API.
@@ -29,7 +29,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  *                           Defaults to false, true if $extra_stats is set.
  */
 function zc_version_check( $extra_stats = array(), $force_check = false ) {
-	global $wpdb, $zc_local_package;
+	global $zcdb, $zc_local_package;
 
 	if ( zc_installing() ) {
 		return;
@@ -76,10 +76,10 @@ function zc_version_check( $extra_stats = array(), $force_check = false ) {
 	$current->last_checked = time();
 	set_site_transient( 'update_core', $current );
 
-	if ( method_exists( $wpdb, 'db_server_info' ) ) {
-		$mysql_version = $wpdb->db_server_info();
-	} elseif ( method_exists( $wpdb, 'db_version' ) ) {
-		$mysql_version = preg_replace( '/[^0-9.].*/', '', $wpdb->db_version() );
+	if ( method_exists( $zcdb, 'db_server_info' ) ) {
+		$mysql_version = $zcdb->db_server_info();
+	} elseif ( method_exists( $zcdb, 'db_version' ) ) {
+		$mysql_version = preg_replace( '/[^0-9.].*/', '', $zcdb->db_version() );
 	} else {
 		$mysql_version = 'N/A';
 	}
@@ -116,9 +116,9 @@ function zc_version_check( $extra_stats = array(), $force_check = false ) {
 	);
 
 	// Check for default tables using the MyISAM engine.
-	$table_names   = implode( "','", $wpdb->tables() );
-	$myisam_tables = $wpdb->get_results(
-		$wpdb->prepare(
+	$table_names   = implode( "','", $zcdb->tables() );
+	$myisam_tables = $zcdb->get_results(
+		$zcdb->prepare(
 			// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- This query cannot use interpolation.
 			"SELECT TABLE_NAME FROM information_schema.TABLES WHERE TABLE_SCHEMA = %s AND TABLE_NAME IN ('$table_names') AND ENGINE = %s;",
 			DB_NAME,
@@ -128,7 +128,7 @@ function zc_version_check( $extra_stats = array(), $force_check = false ) {
 	);
 
 	if ( ! empty( $myisam_tables ) ) {
-		$all_unprefixed_tables = $wpdb->tables( 'all', false );
+		$all_unprefixed_tables = $zcdb->tables( 'all', false );
 
 		// Including the table prefix is not necessary.
 		$unprefixed_myisam_tables = array_reduce(

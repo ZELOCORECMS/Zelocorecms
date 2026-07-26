@@ -3241,7 +3241,7 @@ class zc_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 2.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $args {
 	 *     Method arguments. Note: arguments must be ordered as documented.
@@ -3253,7 +3253,7 @@ class zc_xmlrpc_server extends IXR_Server {
 	 * @return array|IXR_Error
 	 */
 	public function zc_getPageList( $args ) {
-		global $wpdb;
+		global $zcdb;
 
 		$this->escape( $args );
 
@@ -3273,7 +3273,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		do_action( 'xmlrpc_call', 'zc.getPageList', $args, $this );
 
 		// Get list of page IDs and titles.
-		$page_list = $wpdb->get_results(
+		$page_list = $zcdb->get_results(
 			"
 			SELECT ID page_id,
 				post_title page_title,
@@ -3281,7 +3281,7 @@ class zc_xmlrpc_server extends IXR_Server {
 				post_date_gmt,
 				post_date,
 				post_status
-			FROM {$wpdb->posts}
+			FROM {$zcdb->posts}
 			WHERE post_type = 'page'
 			ORDER BY ID
 		"
@@ -5730,20 +5730,20 @@ class zc_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 2.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int    $post_id      Post ID.
 	 * @param string $post_content Post Content for attachment.
 	 */
 	public function attach_uploads( $post_id, $post_content ) {
-		global $wpdb;
+		global $zcdb;
 
 		// Find any unattached files.
-		$attachments = $wpdb->get_results( "SELECT ID, guid FROM {$wpdb->posts} WHERE post_parent = '0' AND post_type = 'attachment'" );
+		$attachments = $zcdb->get_results( "SELECT ID, guid FROM {$zcdb->posts} WHERE post_parent = '0' AND post_type = 'attachment'" );
 		if ( is_array( $attachments ) ) {
 			foreach ( $attachments as $file ) {
 				if ( ! empty( $file->guid ) && str_contains( $post_content, $file->guid ) ) {
-					$wpdb->update( $wpdb->posts, array( 'post_parent' => $post_id ), array( 'ID' => $file->ID ) );
+					$zcdb->update( $zcdb->posts, array( 'post_parent' => $post_id ), array( 'ID' => $file->ID ) );
 				}
 			}
 		}
@@ -6805,13 +6805,13 @@ class zc_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $post_id
 	 * @return array|IXR_Error
 	 */
 	public function mt_getTrackbackPings( $post_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
 		do_action( 'xmlrpc_call', 'mt.getTrackbackPings', $post_id, $this );
@@ -6822,7 +6822,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			return new IXR_Error( 404, __( 'Sorry, no such post.' ) );
 		}
 
-		$comments = $wpdb->get_results( $wpdb->prepare( "SELECT comment_author_url, comment_content, comment_author_IP, comment_type FROM $wpdb->comments WHERE comment_post_ID = %d", $post_id ) );
+		$comments = $zcdb->get_results( $zcdb->prepare( "SELECT comment_author_url, comment_content, comment_author_IP, comment_type FROM $zcdb->comments WHERE comment_post_ID = %d", $post_id ) );
 
 		if ( ! $comments ) {
 			return array();
@@ -6901,7 +6901,7 @@ class zc_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $args {
 	 *     Method arguments. Note: arguments must be ordered as documented.
@@ -6912,7 +6912,7 @@ class zc_xmlrpc_server extends IXR_Server {
 	 * @return string|IXR_Error
 	 */
 	public function pingback_ping( $args ) {
-		global $wpdb;
+		global $zcdb;
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
 		do_action( 'xmlrpc_call', 'pingback.ping', $args, $this );
@@ -6972,8 +6972,8 @@ class zc_xmlrpc_server extends IXR_Server {
 			} elseif ( is_string( $urltest['fragment'] ) ) {
 				// ...or a string #title, a little more complicated.
 				$title   = preg_replace( '/[^a-z0-9]/i', '.', $urltest['fragment'] );
-				$sql     = $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_title RLIKE %s", $title );
-				$post_id = $wpdb->get_var( $sql );
+				$sql     = $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_title RLIKE %s", $title );
+				$post_id = $zcdb->get_var( $sql );
 				if ( ! $post_id ) {
 					// Returning unknown error '0' is better than die()'ing.
 					return $this->pingback_error( 0, '' );
@@ -7001,7 +7001,7 @@ class zc_xmlrpc_server extends IXR_Server {
 		}
 
 		// Let's check that the remote site didn't already pingback this entry.
-		if ( $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s", $post_id, $pagelinkedfrom ) ) ) {
+		if ( $zcdb->get_results( $zcdb->prepare( "SELECT * FROM $zcdb->comments WHERE comment_post_ID = %d AND comment_author_url = %s", $post_id, $pagelinkedfrom ) ) ) {
 			return $this->pingback_error( 48, __( 'The pingback has already been registered.' ) );
 		}
 
@@ -7163,13 +7163,13 @@ class zc_xmlrpc_server extends IXR_Server {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $url
 	 * @return array|IXR_Error
 	 */
 	public function pingback_extensions_getPingbacks( $url ) {
-		global $wpdb;
+		global $zcdb;
 
 		/** This action is documented in zc-includes/class-zc-xmlrpc-server.php */
 		do_action( 'xmlrpc_call', 'pingback.extensions.getPingbacks', $url, $this );
@@ -7189,7 +7189,7 @@ class zc_xmlrpc_server extends IXR_Server {
 			return $this->pingback_error( 32, __( 'The specified target URL does not exist.' ) );
 		}
 
-		$comments = $wpdb->get_results( $wpdb->prepare( "SELECT comment_author_url, comment_content, comment_author_IP, comment_type FROM $wpdb->comments WHERE comment_post_ID = %d", $post_id ) );
+		$comments = $zcdb->get_results( $zcdb->prepare( "SELECT comment_author_url, comment_content, comment_author_IP, comment_type FROM $zcdb->comments WHERE comment_post_ID = %d", $post_id ) );
 
 		if ( ! $comments ) {
 			return array();

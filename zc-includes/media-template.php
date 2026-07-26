@@ -1533,7 +1533,7 @@ function zc_print_media_templates() {
 				<# } ); #>
 			</div>
 		<# } else { #>
-			<div class="wpview-error">
+			<div class="zcview-error">
 				<div class="dashicons dashicons-format-gallery"></div><p><?php _e( 'No items found.' ); ?></p>
 			</div>
 		<# } #>

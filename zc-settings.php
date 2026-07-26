@@ -129,10 +129,10 @@ require ABSPATH . ZCINC . '/l10n/class-zc-translation-file-php.php';
 /**
  * @since 0.71
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
-global $wpdb;
-// Include the wpdb class and, if present, a db.php database drop-in.
+global $zcdb;
+// Include the zcdb class and, if present, a db.php database drop-in.
 require_zc_db();
 
 /**
@@ -145,7 +145,7 @@ if ( ! isset( $GLOBALS['table_prefix'] ) ) {
 }
 
 // Set the database table prefix and the format specifiers for database table columns.
-zc_set_wpdb_vars();
+zc_set_zcdb_vars();
 
 // Start the ZelocoreCMS object cache, or an external object cache if the drop-in is present.
 zc_start_object_cache();

@@ -292,4 +292,4 @@
 	 */
 	window.zc.emoji = new wpEmoji();
 
-} )( window, window._wpemojiSettings );
+} )( window, window._zcemojiSettings );

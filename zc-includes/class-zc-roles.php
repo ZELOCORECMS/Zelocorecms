@@ -110,7 +110,7 @@ class ZC_Roles {
 	/**
 	 * Sets up the object properties.
 	 *
-	 * The role key is set to the current prefix for the $wpdb object with
+	 * The role key is set to the current prefix for the $zcdb object with
 	 * 'user_roles' appended. If the $zc_user_roles global is set, then it will
 	 * be used and the role option will not be updated or used.
 	 *
@@ -127,7 +127,7 @@ class ZC_Roles {
 	 * Reinitializes the object.
 	 *
 	 * Recreates the role objects. This is typically called only by switch_to_blog()
-	 * after switching wpdb to a new site ID.
+	 * after switching zcdb to a new site ID.
 	 *
 	 * @since 3.5.0
 	 * @deprecated 4.7.0 Use ZC_Roles::for_site()
@@ -326,12 +326,12 @@ class ZC_Roles {
 	 *
 	 * @since 4.9.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $site_id Site ID to initialize roles for. Default is the current site.
 	 */
 	public function for_site( $site_id = null ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( ! empty( $site_id ) ) {
 			$this->site_id = absint( $site_id );
@@ -339,7 +339,7 @@ class ZC_Roles {
 			$this->site_id = get_current_blog_id();
 		}
 
-		$this->role_key = $wpdb->get_blog_prefix( $this->site_id ) . 'user_roles';
+		$this->role_key = $zcdb->get_blog_prefix( $this->site_id ) . 'user_roles';
 
 		if ( ! empty( $this->roles ) && ! $this->use_db ) {
 			return;

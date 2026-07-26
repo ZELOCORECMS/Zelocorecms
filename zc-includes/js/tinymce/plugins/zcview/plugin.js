@@ -2,7 +2,7 @@
  * ZelocoreCMS View plugin.
  */
 ( function( tinymce ) {
-	tinymce.PluginManager.add( 'wpview', function( editor ) {
+	tinymce.PluginManager.add( 'zcview', function( editor ) {
 		function noop () {}
 
 		// Set this here as zc-tinymce.js may be loaded too early.
@@ -16,7 +16,7 @@
 
 		// Check if a node is a view or not.
 		function isView( node ) {
-			return editor.dom.hasClass( node, 'wpview' );
+			return editor.dom.hasClass( node, 'zcview' );
 		}
 
 		// Replace view tags with their text.
@@ -25,13 +25,13 @@
 				return '<p>' + window.decodeURIComponent( $1 ) + '</p>';
 			}
 
-			if ( ! content || content.indexOf( ' data-wpview-' ) === -1 ) {
+			if ( ! content || content.indexOf( ' data-zcview-' ) === -1 ) {
 				return content;
 			}
 
 			return content
-				.replace( /<div[^>]+data-wpview-text="([^"]+)"[^>]*>(?:\.|[\s\S]+?wpview-end[^>]+>\s*<\/span>\s*)?<\/div>/g, callback )
-				.replace( /<p[^>]+data-wpview-marker="([^"]+)"[^>]*>[\s\S]*?<\/p>/g, callback );
+				.replace( /<div[^>]+data-zcview-text="([^"]+)"[^>]*>(?:\.|[\s\S]+?zcview-end[^>]+>\s*<\/span>\s*)?<\/div>/g, callback )
+				.replace( /<p[^>]+data-zcview-marker="([^"]+)"[^>]*>[\s\S]*?<\/p>/g, callback );
 		}
 
 		editor.on( 'init', function() {
@@ -51,7 +51,7 @@
 			editor.on( 'zc-body-class-change', function() {
 				var className = editor.getBody().className;
 
-				editor.$( 'iframe[class="wpview-sandbox"]' ).each( function( i, iframe ) {
+				editor.$( 'iframe[class="zcview-sandbox"]' ).each( function( i, iframe ) {
 					// Make sure it is a local iframe.
 					// jshint scripturl: true
 					if ( ! iframe.src || iframe.src === 'javascript:""' ) {
@@ -101,7 +101,7 @@
 
 		// Empty view nodes for easier processing.
 		editor.on( 'preprocess hide', function( event ) {
-			editor.$( 'div[data-wpview-text], p[data-wpview-marker]', event.node ).each( function( i, node ) {
+			editor.$( 'div[data-zcview-text], p[data-zcview-marker]', event.node ).each( function( i, node ) {
 				node.innerHTML = '.';
 			} );
 		}, true );
@@ -111,7 +111,7 @@
 			event.content = resetViews( event.content );
 		} );
 
-		// Prevent adding of undo levels when replacing wpview markers
+		// Prevent adding of undo levels when replacing zcview markers
 		// or when there are changes only in the (non-editable) previews.
 		editor.on( 'beforeaddundo', function( event ) {
 			var lastContent;
@@ -126,8 +126,8 @@
 			if (
 				! newContent ||
 				! lastContent ||
-				newContent.indexOf( ' data-wpview-' ) === -1 ||
-				lastContent.indexOf( ' data-wpview-' ) === -1
+				newContent.indexOf( ' data-zcview-' ) === -1 ||
+				lastContent.indexOf( ' data-zcview-' ) === -1
 			) {
 				return;
 			}
@@ -141,7 +141,7 @@
 		editor.on( 'drop objectselected', function( event ) {
 			if ( isView( event.targetClone ) ) {
 				event.targetClone = editor.getDoc().createTextNode(
-					window.decodeURIComponent( editor.dom.getAttrib( event.targetClone, 'data-wpview-text' ) )
+					window.decodeURIComponent( editor.dom.getAttrib( event.targetClone, 'data-zcview-text' ) )
 				);
 			}
 		} );
@@ -162,7 +162,7 @@
 		// Show the view type in the element path.
 		editor.on( 'resolvename', function( event ) {
 			if ( isView( event.target ) ) {
-				event.name = editor.dom.getAttrib( event.target, 'data-wpview-type' ) || 'object';
+				event.name = editor.dom.getAttrib( event.target, 'data-zcview-type' ) || 'object';
 			}
 		} );
 

@@ -685,12 +685,12 @@ function _list_meta_row( $entry, &$count ) {
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param ZC_Post $post Optional. The post being edited.
  */
 function meta_form( $post = null ) {
-	global $wpdb;
+	global $zcdb;
 	$post = get_post( $post );
 
 	/**
@@ -717,15 +717,15 @@ function meta_form( $post = null ) {
 		 */
 		$limit = apply_filters( 'postmeta_form_limit', 30 );
 
-		$keys = $wpdb->get_col(
-			$wpdb->prepare(
+		$keys = $zcdb->get_col(
+			$zcdb->prepare(
 				"SELECT DISTINCT meta_key
-				FROM $wpdb->postmeta
+				FROM $zcdb->postmeta
 				WHERE meta_key NOT BETWEEN '_' AND '_z'
 				HAVING meta_key NOT LIKE %s
 				ORDER BY meta_key
 				LIMIT %d",
-				$wpdb->esc_like( '_' ) . '%',
+				$zcdb->esc_like( '_' ) . '%',
 				$limit
 			)
 		);
@@ -923,7 +923,7 @@ function page_template_dropdown( $default_template = '', $post_type = 'page' ) {
  * @since 1.5.0
  * @since 4.4.0 `$post` argument was added.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int         $default_page Optional. The default page ID to be pre-selected. Default 0.
  * @param int         $parent_page  Optional. The parent page ID. Default 0.
@@ -932,13 +932,13 @@ function page_template_dropdown( $default_template = '', $post_type = 'page' ) {
  * @return void|false Void on success, false if the page has no children.
  */
 function parent_dropdown( $default_page = 0, $parent_page = 0, $level = 0, $post = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post  = get_post( $post );
-	$items = $wpdb->get_results(
-		$wpdb->prepare(
+	$items = $zcdb->get_results(
+		$zcdb->prepare(
 			"SELECT ID, post_parent, post_title
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_parent = %d AND post_type = 'page'
 			ORDER BY menu_order",
 			$parent_page

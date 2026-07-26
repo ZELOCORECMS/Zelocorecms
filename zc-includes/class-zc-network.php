@@ -87,13 +87,13 @@ class ZC_Network {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $network_id The ID of the network to retrieve.
 	 * @return ZC_Network|false The network's object if found. False if not.
 	 */
 	public static function get_instance( $network_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$network_id = (int) $network_id;
 		if ( ! $network_id ) {
@@ -103,7 +103,7 @@ class ZC_Network {
 		$_network = zc_cache_get( $network_id, 'networks' );
 
 		if ( false === $_network ) {
-			$_network = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM {$wpdb->site} WHERE id = %d LIMIT 1", $network_id ) );
+			$_network = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM {$zcdb->site} WHERE id = %d LIMIT 1", $network_id ) );
 
 			if ( empty( $_network ) || is_zc_error( $_network ) ) {
 				$_network = -1;

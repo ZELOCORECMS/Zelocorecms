@@ -16,7 +16,7 @@
  * @since 2.0.0
  * @since 4.4.0 Added the `$timezone` parameter.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $comment_author Author of the comment.
  * @param string $comment_date   Date of the comment.
@@ -24,16 +24,16 @@
  * @return string|null Comment post ID on success.
  */
 function comment_exists( $comment_author, $comment_date, $timezone = 'blog' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$date_field = 'comment_date';
 	if ( 'gmt' === $timezone ) {
 		$date_field = 'comment_date_gmt';
 	}
 
-	return $wpdb->get_var(
-		$wpdb->prepare(
-			"SELECT comment_post_ID FROM $wpdb->comments
+	return $zcdb->get_var(
+		$zcdb->prepare(
+			"SELECT comment_post_ID FROM $zcdb->comments
 			WHERE comment_author = %s AND $date_field = %s",
 			stripslashes( $comment_author ),
 			stripslashes( $comment_date )
@@ -140,13 +140,13 @@ function get_comment_to_edit( $id ) {
  * @since 2.3.0
  * @since 6.9.0 Exclude the 'note' comment type from the count.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|int[] $post_id Either a single Post ID or an array of Post IDs
  * @return int|int[] Either a single Posts pending comments as an int or an array of ints keyed on the Post IDs
  */
 function get_pending_comments_num( $post_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	$single = false;
 	if ( ! is_array( $post_id ) ) {
@@ -158,7 +158,7 @@ function get_pending_comments_num( $post_id ) {
 	$post_id_array = array_map( 'intval', $post_id_array );
 	$post_id_in    = "'" . implode( "', '", $post_id_array ) . "'";
 
-	$pending = $wpdb->get_results( "SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $wpdb->comments WHERE comment_post_ID IN ( $post_id_in ) AND comment_approved = '0' AND comment_type != 'note' GROUP BY comment_post_ID", ARRAY_A );
+	$pending = $zcdb->get_results( "SELECT comment_post_ID, COUNT(comment_ID) as num_comments FROM $zcdb->comments WHERE comment_post_ID IN ( $post_id_in ) AND comment_approved = '0' AND comment_type != 'note' GROUP BY comment_post_ID", ARRAY_A );
 
 	if ( $single ) {
 		if ( empty( $pending ) ) {

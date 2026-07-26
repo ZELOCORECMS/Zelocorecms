@@ -12,20 +12,20 @@
  *
  *     check_column( 'zc_links', 'link_description', 'mediumtext' );
  *
- *     if ( check_column( $wpdb->comments, 'comment_author', 'tinytext' ) ) {
+ *     if ( check_column( $zcdb->comments, 'comment_author', 'tinytext' ) ) {
  *         echo "ok\n";
  *     }
  *
  *     // Check the column.
- *     if ( ! check_column( $wpdb->links, 'link_description', 'varchar( 255 )' ) ) {
- *         $ddl = "ALTER TABLE $wpdb->links MODIFY COLUMN link_description varchar(255) NOT NULL DEFAULT '' ";
- *         $q = $wpdb->query( $ddl );
+ *     if ( ! check_column( $zcdb->links, 'link_description', 'varchar( 255 )' ) ) {
+ *         $ddl = "ALTER TABLE $zcdb->links MODIFY COLUMN link_description varchar(255) NOT NULL DEFAULT '' ";
+ *         $q = $zcdb->query( $ddl );
  *     }
  *
  *     $error_count = 0;
- *     $tablename   = $wpdb->links;
+ *     $tablename   = $zcdb->links;
  *
- *     if ( check_column( $wpdb->links, 'link_description', 'varchar( 255 )' ) ) {
+ *     if ( check_column( $zcdb->links, 'link_description', 'varchar( 255 )' ) ) {
  *         $res .= $tablename . ' - ok <br />';
  *     } else {
  *         $res .= 'There was a problem with ' . $tablename . '<br />';
@@ -45,16 +45,16 @@ if ( ! function_exists( 'maybe_create_table' ) ) :
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $table_name Database table name.
 	 * @param string $create_ddl SQL statement to create table.
 	 * @return bool True on success or if the table already exists. False on failure.
 	 */
 	function maybe_create_table( $table_name, $create_ddl ) {
-		global $wpdb;
+		global $zcdb;
 
-		foreach ( $wpdb->get_col( 'SHOW TABLES', 0 ) as $table ) {
+		foreach ( $zcdb->get_col( 'SHOW TABLES', 0 ) as $table ) {
 			if ( $table === $table_name ) {
 				return true;
 			}
@@ -62,10 +62,10 @@ if ( ! function_exists( 'maybe_create_table' ) ) :
 
 		// Didn't find it, so try to create it.
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared -- No applicable variables for this query.
-		$wpdb->query( $create_ddl );
+		$zcdb->query( $create_ddl );
 
 		// We cannot directly tell whether this succeeded!
-		foreach ( $wpdb->get_col( 'SHOW TABLES', 0 ) as $table ) {
+		foreach ( $zcdb->get_col( 'SHOW TABLES', 0 ) as $table ) {
 			if ( $table === $table_name ) {
 				return true;
 			}
@@ -81,7 +81,7 @@ if ( ! function_exists( 'maybe_add_column' ) ) :
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $table_name  Database table name.
 	 * @param string $column_name Table column name.
@@ -89,10 +89,10 @@ if ( ! function_exists( 'maybe_add_column' ) ) :
 	 * @return bool True on success or if the column already exists. False on failure.
 	 */
 	function maybe_add_column( $table_name, $column_name, $create_ddl ) {
-		global $wpdb;
+		global $zcdb;
 
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- Cannot be prepared. Fetches columns for table names.
-		foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+		foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 			if ( $column === $column_name ) {
 				return true;
 			}
@@ -100,11 +100,11 @@ if ( ! function_exists( 'maybe_add_column' ) ) :
 
 		// Didn't find it, so try to create it.
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared -- No applicable variables for this query.
-		$wpdb->query( $create_ddl );
+		$zcdb->query( $create_ddl );
 
 		// We cannot directly tell whether this succeeded!
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- Cannot be prepared. Fetches columns for table names.
-		foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+		foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 			if ( $column === $column_name ) {
 				return true;
 			}
@@ -119,7 +119,7 @@ endif;
  *
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table_name  Database table name.
  * @param string $column_name Table column name.
@@ -127,19 +127,19 @@ endif;
  * @return bool True on success or if the column doesn't exist. False on failure.
  */
 function maybe_drop_column( $table_name, $column_name, $drop_ddl ) {
-	global $wpdb;
+	global $zcdb;
 
 	// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- Cannot be prepared. Fetches columns for table names.
-	foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+	foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 		if ( $column === $column_name ) {
 
 			// Found it, so try to drop it.
 			// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared -- No applicable variables for this query.
-			$wpdb->query( $drop_ddl );
+			$zcdb->query( $drop_ddl );
 
 			// We cannot directly tell whether this succeeded!
 			// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- Cannot be prepared. Fetches columns for table names.
-			foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+			foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 				if ( $column === $column_name ) {
 					return false;
 				}
@@ -169,7 +169,7 @@ function maybe_drop_column( $table_name, $column_name, $drop_ddl ) {
  *
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table_name    Database table name.
  * @param string $col_name      Table column name.
@@ -181,12 +181,12 @@ function maybe_drop_column( $table_name, $column_name, $drop_ddl ) {
  * @return bool True, if matches. False, if not matching.
  */
 function check_column( $table_name, $col_name, $col_type, $is_null = null, $key = null, $default_value = null, $extra = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	$diffs = 0;
 
 	// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- Cannot be prepared. Fetches columns for table names.
-	$results = $wpdb->get_results( "DESC $table_name" );
+	$results = $zcdb->get_results( "DESC $table_name" );
 
 	foreach ( $results as $row ) {
 

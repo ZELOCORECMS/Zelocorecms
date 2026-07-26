@@ -422,7 +422,7 @@ function get_author_posts_url( $author_id, $author_nicename = '' ) {
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|array $args {
  *     Optional. Array or string of default arguments.
@@ -452,7 +452,7 @@ function get_author_posts_url( $author_id, $author_nicename = '' ) {
  * @return void|string Void if 'echo' argument is true, list of authors if 'echo' is false.
  */
 function zc_list_authors( $args = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$defaults = array(
 		'orderby'       => 'name',
@@ -503,9 +503,9 @@ function zc_list_authors( $args = '' ) {
 
 	if ( ! is_array( $post_counts ) ) {
 		$post_counts       = array();
-		$post_counts_query = $wpdb->get_results(
+		$post_counts_query = $zcdb->get_results(
 			"SELECT DISTINCT post_author, COUNT(ID) AS count
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE " . get_private_posts_cap_sql( 'post' ) . '
 			GROUP BY post_author'
 		);
@@ -612,16 +612,16 @@ function zc_list_authors( $args = '' ) {
  *
  * @since 3.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return bool Whether or not we have more than one author
  */
 function is_multi_author() {
-	global $wpdb;
+	global $zcdb;
 
 	$is_multi_author = get_transient( 'is_multi_author' );
 	if ( false === $is_multi_author ) {
-		$rows            = (array) $wpdb->get_col( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'publish' LIMIT 2" );
+		$rows            = (array) $zcdb->get_col( "SELECT DISTINCT post_author FROM $zcdb->posts WHERE post_type = 'post' AND post_status = 'publish' LIMIT 2" );
 		$is_multi_author = 1 < count( $rows ) ? 1 : 0;
 		set_transient( 'is_multi_author', $is_multi_author );
 	}

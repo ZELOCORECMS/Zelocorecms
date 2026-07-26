@@ -137,13 +137,13 @@ function zcmu_delete_blog( $blog_id, $drop = false ) {
  *
  * @since 3.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $id The user ID.
  * @return bool True if the user was deleted, false otherwise.
  */
 function zcmu_delete_user( $id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_numeric( $id ) ) {
 		return false;
@@ -180,13 +180,13 @@ function zcmu_delete_user( $id ) {
 			switch_to_blog( $blog->userblog_id );
 			remove_user_from_blog( $id, $blog->userblog_id );
 
-			$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d", $id ) );
+			$post_ids = $zcdb->get_col( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_author = %d", $id ) );
 			foreach ( (array) $post_ids as $post_id ) {
 				zc_delete_post( $post_id );
 			}
 
 			// Clean links.
-			$link_ids = $wpdb->get_col( $wpdb->prepare( "SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id ) );
+			$link_ids = $zcdb->get_col( $zcdb->prepare( "SELECT link_id FROM $zcdb->links WHERE link_owner = %d", $id ) );
 
 			if ( $link_ids ) {
 				foreach ( $link_ids as $link_id ) {
@@ -198,12 +198,12 @@ function zcmu_delete_user( $id ) {
 		}
 	}
 
-	$meta = $wpdb->get_col( $wpdb->prepare( "SELECT umeta_id FROM $wpdb->usermeta WHERE user_id = %d", $id ) );
+	$meta = $zcdb->get_col( $zcdb->prepare( "SELECT umeta_id FROM $zcdb->usermeta WHERE user_id = %d", $id ) );
 	foreach ( $meta as $mid ) {
 		delete_metadata_by_mid( 'user', $mid );
 	}
 
-	$wpdb->delete( $wpdb->users, array( 'ID' => $id ) );
+	$zcdb->delete( $zcdb->users, array( 'ID' => $id ) );
 
 	clean_user_cache( $user );
 

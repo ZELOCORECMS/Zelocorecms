@@ -84,7 +84,7 @@
 		}
 	} ) );
 
-	tinymce.PluginManager.add( 'wplink', function( editor ) {
+	tinymce.PluginManager.add( 'zclink', function( editor ) {
 		var toolbar;
 		var editToolbar;
 		var previewInstance;
@@ -132,8 +132,8 @@
 
 				if ( $element.attr( 'href' ) === '_zc_link_placeholder' ) {
 					editor.dom.remove( element, true );
-				} else if ( $element.attr( 'data-wplink-edit' ) ) {
-					$element.attr( 'data-wplink-edit', null );
+				} else if ( $element.attr( 'data-zclink-edit' ) ) {
+					$element.attr( 'data-zclink-edit', null );
 				}
 			});
 		}
@@ -145,10 +145,10 @@
 				}
 
 				if ( dataAttr ) {
-					tag = tag.replace( / data-wplink-edit="true"/g, '' );
+					tag = tag.replace( / data-zclink-edit="true"/g, '' );
 				}
 
-				tag = tag.replace( / data-wplink-url-error="true"/g, '' );
+				tag = tag.replace( / data-zclink-url-error="true"/g, '' );
 
 				return tag + text + '</a>';
 			});
@@ -166,10 +166,10 @@
 
 			if ( /^http/i.test( href ) && ( ! urlRegex1.test( href ) || ! urlRegex2.test( href ) ) ) {
 				hasLinkError = true;
-				$link.attr( 'data-wplink-url-error', 'true' );
+				$link.attr( 'data-zclink-url-error', 'true' );
 				speak( editor.translate( 'Warning: the link has been inserted but may have errors. Please test it.' ), 'assertive' );
 			} else {
-				$link.removeAttr( 'data-wplink-url-error' );
+				$link.removeAttr( 'data-zclink-url-error' );
 			}
 		}
 
@@ -237,7 +237,7 @@
 				editor.nodeChanged();
 			}
 
-			editor.dom.setAttribs( linkNode, { 'data-wplink-edit': true } );
+			editor.dom.setAttribs( linkNode, { 'data-zclink-edit': true } );
 		} );
 
 		editor.addCommand( 'zc_link_apply', function() {
@@ -268,7 +268,7 @@
 					href = 'http://' + href;
 				}
 
-				editor.dom.setAttribs( linkNode, { href: href, 'data-wplink-edit': null } );
+				editor.dom.setAttribs( linkNode, { href: href, 'data-zclink-edit': null } );
 
 				if ( ! tinymce.trim( linkNode.innerHTML ) ) {
 					editor.$( linkNode ).text( text || href );
@@ -500,7 +500,7 @@
 					} )
 					// Returns a jQuery object containing the menu element.
 					.autocomplete( 'widget' )
-						.addClass( 'wplink-autocomplete' )
+						.addClass( 'zclink-autocomplete' )
 						.attr( 'role', 'listbox' )
 						.removeAttr( 'tabindex' ) // Remove the `tabindex=0` attribute added by jQuery UI.
 						/*
@@ -543,7 +543,7 @@
 			if ( linkNode ) {
 				$linkNode = editor.$( linkNode );
 				href = $linkNode.attr( 'href' );
-				edit = $linkNode.attr( 'data-wplink-edit' );
+				edit = $linkNode.attr( 'data-zclink-edit' );
 
 				if ( href === '_zc_link_placeholder' || edit ) {
 					if ( href !== '_zc_link_placeholder' && ! inputInstance.getURL() ) {
@@ -557,10 +557,10 @@
 					event.element = linkNode;
 					event.toolbar = toolbar;
 
-					if ( $linkNode.attr( 'data-wplink-url-error' ) === 'true' ) {
-						toolbar.$el.find( '.zc-link-preview a' ).addClass( 'wplink-url-error' );
+					if ( $linkNode.attr( 'data-zclink-url-error' ) === 'true' ) {
+						toolbar.$el.find( '.zc-link-preview a' ).addClass( 'zclink-url-error' );
 					} else {
-						toolbar.$el.find( '.zc-link-preview a' ).removeClass( 'wplink-url-error' );
+						toolbar.$el.find( '.zc-link-preview a' ).removeClass( 'zclink-url-error' );
 						hasLinkError = false;
 					}
 				}

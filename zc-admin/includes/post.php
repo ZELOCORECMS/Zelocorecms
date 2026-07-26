@@ -246,14 +246,14 @@ function _zc_get_allowed_postdata( $post_data = null ) {
  *
  * @since 1.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array|null $post_data Optional. The array of post data to process.
  *                              Defaults to the `$_POST` superglobal.
  * @return int Post ID.
  */
 function edit_post( $post_data = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $post_data ) ) {
 		$post_data = &$_POST;
@@ -449,12 +449,12 @@ function edit_post( $post_data = null ) {
 	$success = zc_update_post( $translated );
 
 	// If the save failed, see if we can confidence check the main fields and try again.
-	if ( ! $success && is_callable( array( $wpdb, 'strip_invalid_text_for_column' ) ) ) {
+	if ( ! $success && is_callable( array( $zcdb, 'strip_invalid_text_for_column' ) ) ) {
 		$fields = array( 'post_title', 'post_content', 'post_excerpt' );
 
 		foreach ( $fields as $field ) {
 			if ( isset( $translated[ $field ] ) ) {
-				$translated[ $field ] = $wpdb->strip_invalid_text_for_column( $wpdb->posts, $field, $translated[ $field ] );
+				$translated[ $field ] = $zcdb->strip_invalid_text_for_column( $zcdb->posts, $field, $translated[ $field ] );
 			}
 		}
 
@@ -485,7 +485,7 @@ function edit_post( $post_data = null ) {
  *
  * @since 2.7.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array|null $post_data Optional. The array of post data to process.
  *                              Defaults to the `$_POST` superglobal.
@@ -498,7 +498,7 @@ function edit_post( $post_data = null ) {
  * }
  */
 function bulk_edit_posts( $post_data = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $post_data ) ) {
 		$post_data = &$_POST;
@@ -586,7 +586,7 @@ function bulk_edit_posts( $post_data = null ) {
 
 	if ( isset( $post_data['post_parent'] ) && (int) $post_data['post_parent'] ) {
 		$parent   = (int) $post_data['post_parent'];
-		$pages    = $wpdb->get_results( "SELECT ID, post_parent FROM $wpdb->posts WHERE post_type = 'page'" );
+		$pages    = $zcdb->get_results( "SELECT ID, post_parent FROM $zcdb->posts WHERE post_type = 'page'" );
 		$children = array();
 
 		for ( $i = 0; $i < 50 && $parent > 0; $i++ ) {
@@ -846,7 +846,7 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) 
  * @since 5.2.0 Added the `$type` parameter.
  * @since 5.8.0 Added the `$status` parameter.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $title   Post title.
  * @param string $content Optional. Post content.
@@ -856,7 +856,7 @@ function get_default_post_to_edit( $post_type = 'post', $create_in_db = false ) 
  * @return int Post ID if post exists, 0 otherwise.
  */
 function post_exists( $title, $content = '', $date = '', $type = '', $status = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post_title   = zc_unslash( sanitize_post_field( 'post_title', $title, 0, 'db' ) );
 	$post_content = zc_unslash( sanitize_post_field( 'post_content', $content, 0, 'db' ) );
@@ -864,7 +864,7 @@ function post_exists( $title, $content = '', $date = '', $type = '', $status = '
 	$post_type    = zc_unslash( sanitize_post_field( 'post_type', $type, 0, 'db' ) );
 	$post_status  = zc_unslash( sanitize_post_field( 'post_status', $status, 0, 'db' ) );
 
-	$query = "SELECT ID FROM $wpdb->posts WHERE 1=1";
+	$query = "SELECT ID FROM $zcdb->posts WHERE 1=1";
 	$args  = array();
 
 	if ( ! empty( $date ) ) {
@@ -893,7 +893,7 @@ function post_exists( $title, $content = '', $date = '', $type = '', $status = '
 	}
 
 	if ( ! empty( $args ) ) {
-		return (int) $wpdb->get_var( $wpdb->prepare( $query, $args ) );
+		return (int) $zcdb->get_var( $zcdb->prepare( $query, $args ) );
 	}
 
 	return 0;
@@ -1057,16 +1057,16 @@ function delete_meta( $mid ) {
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return string[] Array of meta key names.
  */
 function get_meta_keys() {
-	global $wpdb;
+	global $zcdb;
 
-	$keys = $wpdb->get_col(
+	$keys = $zcdb->get_col(
 		"SELECT meta_key
-		FROM $wpdb->postmeta
+		FROM $zcdb->postmeta
 		GROUP BY meta_key
 		ORDER BY meta_key"
 	);
@@ -1091,7 +1091,7 @@ function get_post_meta_by_id( $mid ) {
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $post_id A post ID.
  * @return array[] {
@@ -1108,12 +1108,12 @@ function get_post_meta_by_id( $mid ) {
  * }
  */
 function has_meta( $post_id ) {
-	global $wpdb;
+	global $zcdb;
 
-	return $wpdb->get_results(
-		$wpdb->prepare(
+	return $zcdb->get_results(
+		$zcdb->prepare(
 			"SELECT meta_key, meta_value, meta_id, post_id
-			FROM $wpdb->postmeta WHERE post_id = %d
+			FROM $zcdb->postmeta WHERE post_id = %d
 			ORDER BY meta_key,meta_id",
 			$post_id
 		),

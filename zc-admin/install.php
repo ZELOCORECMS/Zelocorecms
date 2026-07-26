@@ -40,8 +40,8 @@ require_once ABSPATH . 'zc-admin/includes/upgrade.php';
 /** Load ZelocoreCMS Translation Install API */
 require_once ABSPATH . 'zc-admin/includes/translation-install.php';
 
-/** Load wpdb */
-require_once ABSPATH . ZCINC . '/class-wpdb.php';
+/** Load zcdb */
+require_once ABSPATH . ZCINC . '/class-zcdb.php';
 
 nocache_headers();
 
@@ -83,14 +83,14 @@ function display_header( $body_classes = '' ) {
  *
  * @since 2.8.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|null $error Error message to display, if any.
  */
 function display_setup_form( $error = null ) {
-	global $wpdb;
+	global $zcdb;
 
-	$user_table = ( $wpdb->get_var( $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->users ) ) ) !== null );
+	$user_table = ( $zcdb->get_var( $zcdb->prepare( 'SHOW TABLES LIKE %s', $zcdb->esc_like( $zcdb->users ) ) ) !== null );
 
 	// Ensure that sites appear in search engines by default.
 	$blog_public = 1;
@@ -228,12 +228,12 @@ if ( is_blog_installed() ) {
  * @global string   $required_php_version    The minimum required PHP version string.
  * @global string[] $required_php_extensions The names of required PHP extensions.
  * @global string   $required_mysql_version  The minimum required MySQL version string.
- * @global wpdb     $wpdb                    ZelocoreCMS database abstraction object.
+ * @global zcdb     $zcdb                    ZelocoreCMS database abstraction object.
  */
-global $zc_version, $required_php_version, $required_php_extensions, $required_mysql_version, $wpdb;
+global $zc_version, $required_php_version, $required_php_extensions, $required_mysql_version, $zcdb;
 
 $php_version   = PHP_VERSION;
-$mysql_version = $wpdb->db_version();
+$mysql_version = $zcdb->db_version();
 $php_compat    = version_compare( $php_version, $required_php_version, '>=' );
 $mysql_compat  = version_compare( $mysql_version, $required_mysql_version, '>=' ) || file_exists( ZC_CONTENT_DIR . '/db.php' );
 
@@ -314,7 +314,7 @@ if ( isset( $required_php_extensions ) && is_array( $required_php_extensions ) )
 	}
 }
 
-if ( ! is_string( $wpdb->base_prefix ) || '' === $wpdb->base_prefix ) {
+if ( ! is_string( $zcdb->base_prefix ) || '' === $zcdb->base_prefix ) {
 	display_header();
 	die(
 		'<h1>' . __( 'Configuration Error' ) . '</h1>' .
@@ -342,7 +342,7 @@ if ( defined( 'DO_NOT_UPGRADE_GLOBAL_TABLES' ) ) {
 /**
  * @global string    $zc_local_package Locale code of the package.
  * @global ZC_Locale $zc_locale        ZelocoreCMS date and time locale object.
- * @global wpdb      $wpdb             ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb             ZelocoreCMS database abstraction object.
  */
 $language = '';
 if ( ! empty( $_REQUEST['language'] ) ) {
@@ -399,8 +399,8 @@ switch ( $step ) {
 			$loaded_language = 'en_US';
 		}
 
-		if ( ! empty( $wpdb->error ) ) {
-			zc_die( $wpdb->error->get_error_message() );
+		if ( ! empty( $zcdb->error ) ) {
+			zc_die( $zcdb->error->get_error_message() );
 		}
 
 		$scripts_to_print[] = 'user-profile';
@@ -438,7 +438,7 @@ switch ( $step ) {
 		}
 
 		if ( false === $error ) {
-			$wpdb->show_errors();
+			$zcdb->show_errors();
 			$result = zc_install( $weblog_title, $user_name, $admin_email, $public, '', zc_slash( $admin_password ), $loaded_language );
 			?>
 

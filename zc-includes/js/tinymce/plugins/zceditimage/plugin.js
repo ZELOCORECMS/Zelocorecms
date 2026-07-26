@@ -1,5 +1,5 @@
 /* global tinymce */
-tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
+tinymce.PluginManager.add( 'zceditimage', function( editor ) {
 	var toolbar, serializer, touchOnImage, pasteInCaption,
 		each = tinymce.each,
 		trim = tinymce.trim,
@@ -168,7 +168,7 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 			}
 
 			width = parseInt( width, 10 );
-			if ( ! editor.getParam( 'wpeditimage_html5_captions' ) ) {
+			if ( ! editor.getParam( 'zceditimage_html5_captions' ) ) {
 				width += 10;
 			}
 
@@ -442,7 +442,7 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 				className += ' ' + imageData.captionClassName.replace( /[<>&]+/g,  '' );
 			}
 
-			if ( ! editor.getParam( 'wpeditimage_html5_captions' ) ) {
+			if ( ! editor.getParam( 'zceditimage_html5_captions' ) ) {
 				width = parseInt( width, 10 );
 				width += 10;
 			}
@@ -598,7 +598,7 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 
 	editor.on( 'init', function() {
 		var dom = editor.dom,
-			captionClass = editor.getParam( 'wpeditimage_html5_captions' ) ? 'html5-captions' : 'html4-captions';
+			captionClass = editor.getParam( 'zceditimage_html5_captions' ) ? 'html5-captions' : 'html4-captions';
 
 		dom.addClass( editor.getBody(), captionClass );
 
@@ -634,7 +634,7 @@ tinymce.PluginManager.add( 'wpeditimage', function( editor ) {
 					if ( width ) {
 						width = parseInt( width, 10 );
 
-						if ( ! editor.getParam( 'wpeditimage_html5_captions' ) ) {
+						if ( ! editor.getParam( 'zceditimage_html5_captions' ) ) {
 							width += 10;
 						}
 

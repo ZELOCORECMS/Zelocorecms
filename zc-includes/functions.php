@@ -879,14 +879,14 @@ function zc_extract_urls( $content ) {
  * @since 5.6.0 The `$content` parameter is no longer optional, but passing `null` to skip it
  *              is still supported.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|null $content Post content. If `null`, the `post_content` field from `$post` is used.
  * @param int|ZC_Post $post    Post ID or post object.
  * @return void|false Void on success, false if the post is not found.
  */
 function do_enclose( $content, $post ) {
-	global $wpdb;
+	global $zcdb;
 
 	// @todo Tidy this code and make the debug code optional.
 	require_once ABSPATH . ZCINC . '/class-IXR.php';
@@ -909,7 +909,7 @@ function do_enclose( $content, $post ) {
 	foreach ( $pung as $link_test ) {
 		// Link is no longer in post.
 		if ( ! in_array( $link_test, $post_links_temp, true ) ) {
-			$mids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = 'enclosure' AND meta_value LIKE %s", $post->ID, $wpdb->esc_like( $link_test ) . '%' ) );
+			$mids = $zcdb->get_col( $zcdb->prepare( "SELECT meta_id FROM $zcdb->postmeta WHERE post_id = %d AND meta_key = 'enclosure' AND meta_value LIKE %s", $post->ID, $zcdb->esc_like( $link_test ) . '%' ) );
 			foreach ( $mids as $mid ) {
 				delete_metadata_by_mid( 'post', $mid );
 			}
@@ -947,7 +947,7 @@ function do_enclose( $content, $post ) {
 	foreach ( (array) $post_links as $url ) {
 		$url = strip_fragment_from_url( $url );
 
-		if ( '' !== $url && ! $wpdb->get_var( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE post_id = %d AND meta_key = 'enclosure' AND meta_value LIKE %s", $post->ID, $wpdb->esc_like( $url ) . '%' ) ) ) {
+		if ( '' !== $url && ! $zcdb->get_var( $zcdb->prepare( "SELECT post_id FROM $zcdb->postmeta WHERE post_id = %d AND meta_key = 'enclosure' AND meta_value LIKE %s", $post->ID, $zcdb->esc_like( $url ) . '%' ) ) ) {
 
 			$headers = zc_get_http_headers( $url );
 			if ( $headers ) {
@@ -1569,13 +1569,13 @@ function cache_javascript_headers() {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return int Number of database queries.
  */
 function get_num_queries() {
-	global $wpdb;
-	return $wpdb->num_queries;
+	global $zcdb;
+	return $zcdb->num_queries;
 }
 
 /**
@@ -1766,12 +1766,12 @@ function do_favicon() {
  *
  * @since 2.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return bool Whether the site is already installed.
  */
 function is_blog_installed() {
-	global $wpdb;
+	global $zcdb;
 
 	/*
 	 * Check cache first. If options table goes away and we have true
@@ -1781,7 +1781,7 @@ function is_blog_installed() {
 		return true;
 	}
 
-	$suppress = $wpdb->suppress_errors();
+	$suppress = $zcdb->suppress_errors();
 
 	if ( ! zc_installing() ) {
 		$alloptions = zc_load_alloptions();
@@ -1789,12 +1789,12 @@ function is_blog_installed() {
 
 	// If siteurl is not set to autoload, check it specifically.
 	if ( ! isset( $alloptions['siteurl'] ) ) {
-		$installed = $wpdb->get_var( "SELECT option_value FROM $wpdb->options WHERE option_name = 'siteurl'" );
+		$installed = $zcdb->get_var( "SELECT option_value FROM $zcdb->options WHERE option_name = 'siteurl'" );
 	} else {
 		$installed = $alloptions['siteurl'];
 	}
 
-	$wpdb->suppress_errors( $suppress );
+	$zcdb->suppress_errors( $suppress );
 
 	$installed = ! empty( $installed );
 	zc_cache_set( 'is_blog_installed', $installed );
@@ -1808,14 +1808,14 @@ function is_blog_installed() {
 		return true;
 	}
 
-	$suppress = $wpdb->suppress_errors();
+	$suppress = $zcdb->suppress_errors();
 
 	/*
 	 * Loop over the ZC tables. If none exist, then scratch installation is allowed.
 	 * If one or more exist, suggest table repair since we got here because the
 	 * options table could not be accessed.
 	 */
-	$zc_tables = $wpdb->tables();
+	$zc_tables = $zcdb->tables();
 	foreach ( $zc_tables as $table ) {
 		// The existence of custom user tables shouldn't suggest an unwise state or prevent a clean installation.
 		if ( defined( 'CUSTOM_USER_TABLE' ) && CUSTOM_USER_TABLE === $table ) {
@@ -1826,9 +1826,9 @@ function is_blog_installed() {
 			continue;
 		}
 
-		$described_table = $wpdb->get_results( "DESCRIBE $table;" );
+		$described_table = $zcdb->get_results( "DESCRIBE $table;" );
 		if (
-			( ! $described_table && empty( $wpdb->last_error ) ) ||
+			( ! $described_table && empty( $zcdb->last_error ) ) ||
 			( is_array( $described_table ) && 0 === count( $described_table ) )
 		) {
 			continue;
@@ -1839,7 +1839,7 @@ function is_blog_installed() {
 		zc_load_translations_early();
 
 		// Die with a DB error.
-		$wpdb->error = sprintf(
+		$zcdb->error = sprintf(
 			/* translators: %s: Database repair URL. */
 			__( 'One or more database tables are unavailable. The database may need to be <a href="%s">repaired</a>.' ),
 			'maint/repair.php?referrer=is_blog_installed'
@@ -1848,7 +1848,7 @@ function is_blog_installed() {
 		dead_db();
 	}
 
-	$wpdb->suppress_errors( $suppress );
+	$zcdb->suppress_errors( $suppress );
 
 	zc_cache_set( 'is_blog_installed', false );
 
@@ -5510,10 +5510,10 @@ function zc_ob_end_flush_all() {
  *
  * @since 2.3.2
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function dead_db() {
-	global $wpdb;
+	global $zcdb;
 
 	zc_load_translations_early();
 
@@ -5525,7 +5525,7 @@ function dead_db() {
 
 	// If installing or in the admin, provide the verbose message.
 	if ( zc_installing() || defined( 'ZC_ADMIN' ) ) {
-		zc_die( $wpdb->error );
+		zc_die( $zcdb->error );
 	}
 
 	// Otherwise, be terse.
@@ -6552,12 +6552,12 @@ function get_main_network_id() {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return bool True if site meta is supported, false otherwise.
  */
 function is_site_meta_supported() {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_multisite() ) {
 		return false;
@@ -6567,7 +6567,7 @@ function is_site_meta_supported() {
 
 	$supported = get_network_option( $network_id, 'site_meta_supported', false );
 	if ( false === $supported ) {
-		$supported = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->blogmeta}'" ) ? 1 : 0;
+		$supported = $zcdb->get_var( "SHOW TABLES LIKE '{$zcdb->blogmeta}'" ) ? 1 : 0;
 
 		update_network_option( $network_id, 'site_meta_supported', $supported );
 	}
@@ -6879,14 +6879,14 @@ function _cleanup_header_comment( $str ) {
  *
  * @since 2.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function zc_scheduled_delete() {
-	global $wpdb;
+	global $zcdb;
 
 	$delete_timestamp = time() - ( DAY_IN_SECONDS * EMPTY_TRASH_DAYS );
 
-	$posts_to_delete = $wpdb->get_results( $wpdb->prepare( "SELECT post_id FROM $wpdb->postmeta WHERE meta_key = '_zc_trash_meta_time' AND meta_value < %d", $delete_timestamp ), ARRAY_A );
+	$posts_to_delete = $zcdb->get_results( $zcdb->prepare( "SELECT post_id FROM $zcdb->postmeta WHERE meta_key = '_zc_trash_meta_time' AND meta_value < %d", $delete_timestamp ), ARRAY_A );
 
 	foreach ( (array) $posts_to_delete as $post ) {
 		$post_id = (int) $post['post_id'];
@@ -6904,7 +6904,7 @@ function zc_scheduled_delete() {
 		}
 	}
 
-	$comments_to_delete = $wpdb->get_results( $wpdb->prepare( "SELECT comment_id FROM $wpdb->commentmeta WHERE meta_key = '_zc_trash_meta_time' AND meta_value < %d", $delete_timestamp ), ARRAY_A );
+	$comments_to_delete = $zcdb->get_results( $zcdb->prepare( "SELECT comment_id FROM $zcdb->commentmeta WHERE meta_key = '_zc_trash_meta_time' AND meta_value < %d", $delete_timestamp ), ARRAY_A );
 
 	foreach ( (array) $comments_to_delete as $comment ) {
 		$comment_id = (int) $comment['comment_id'];

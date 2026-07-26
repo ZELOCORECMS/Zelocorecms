@@ -318,14 +318,14 @@ switch ( $zc_list_table->current_action() ) {
 		$users_have_content = (bool) apply_filters( 'users_have_additional_content', false, $user_ids );
 
 		if ( $user_ids && ! $users_have_content ) {
-			if ( $wpdb->get_var(
-				"SELECT ID FROM {$wpdb->posts}
+			if ( $zcdb->get_var(
+				"SELECT ID FROM {$zcdb->posts}
 				WHERE post_author IN( " . implode( ',', $user_ids ) . ' )
 				LIMIT 1'
 			) ) {
 				$users_have_content = true;
-			} elseif ( $wpdb->get_var(
-				"SELECT link_id FROM {$wpdb->links}
+			} elseif ( $zcdb->get_var(
+				"SELECT link_id FROM {$zcdb->links}
 				WHERE link_owner IN( " . implode( ',', $user_ids ) . ' )
 				LIMIT 1'
 			) ) {

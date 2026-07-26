@@ -95,7 +95,7 @@ if ( ! defined( 'ZC_ALLOW_REPAIR' ) || ! ZC_ALLOW_REPAIR ) {
 	$okay     = true;
 	$problems = array();
 
-	$tables = $wpdb->tables();
+	$tables = $zcdb->tables();
 
 	/**
 	 * Filters additional database tables to repair.
@@ -108,7 +108,7 @@ if ( ! defined( 'ZC_ALLOW_REPAIR' ) || ! ZC_ALLOW_REPAIR ) {
 
 	// Loop over the tables, checking and repairing as needed.
 	foreach ( $tables as $table ) {
-		$check = $wpdb->get_row( $wpdb->prepare( 'CHECK TABLE %i', $table ) );
+		$check = $zcdb->get_row( $zcdb->prepare( 'CHECK TABLE %i', $table ) );
 
 		echo '<p>';
 		if ( 'OK' === $check->Msg_text ) {
@@ -118,7 +118,7 @@ if ( ! defined( 'ZC_ALLOW_REPAIR' ) || ! ZC_ALLOW_REPAIR ) {
 			/* translators: 1: Table name, 2: Error message. */
 			printf( __( 'The %1$s table is not okay. It is reporting the following error: %2$s. ZelocoreCMS will attempt to repair this table&hellip;' ), "<code>$table</code>", "<code>$check->Msg_text</code>" );
 
-			$repair = $wpdb->get_row( $wpdb->prepare( 'REPAIR TABLE %i', $table ) );
+			$repair = $zcdb->get_row( $zcdb->prepare( 'REPAIR TABLE %i', $table ) );
 
 			echo '<br />&nbsp;&nbsp;&nbsp;&nbsp;';
 			if ( 'OK' === $repair->Msg_text ) {
@@ -133,14 +133,14 @@ if ( ! defined( 'ZC_ALLOW_REPAIR' ) || ! ZC_ALLOW_REPAIR ) {
 		}
 
 		if ( $okay && $optimize ) {
-			$analyze = $wpdb->get_row( $wpdb->prepare( 'ANALYZE TABLE %i', $table ) );
+			$analyze = $zcdb->get_row( $zcdb->prepare( 'ANALYZE TABLE %i', $table ) );
 
 			echo '<br />&nbsp;&nbsp;&nbsp;&nbsp;';
 			if ( 'Table is already up to date' === $analyze->Msg_text ) {
 				/* translators: %s: Table name. */
 				printf( __( 'The %s table is already optimized.' ), "<code>$table</code>" );
 			} else {
-				$optimize = $wpdb->get_row( $wpdb->prepare( 'OPTIMIZE TABLE %i', $table ) );
+				$optimize = $zcdb->get_row( $zcdb->prepare( 'OPTIMIZE TABLE %i', $table ) );
 
 				echo '<br />&nbsp;&nbsp;&nbsp;&nbsp;';
 				if ( 'OK' === $optimize->Msg_text || 'Table is already up to date' === $optimize->Msg_text ) {

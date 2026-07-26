@@ -1415,13 +1415,13 @@ class ZC_Query {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $query_vars Query variables.
 	 * @return string WHERE clause.
 	 */
 	protected function parse_search( &$query_vars ) {
-		global $wpdb;
+		global $zcdb;
 
 		$search = '';
 
@@ -1501,19 +1501,19 @@ class ZC_Query {
 			}
 
 			if ( $n && ! $exclude ) {
-				$like                                 = '%' . $wpdb->esc_like( $term ) . '%';
-				$query_vars['search_orderby_title'][] = $wpdb->prepare( "{$wpdb->posts}.post_title LIKE %s", $like );
+				$like                                 = '%' . $zcdb->esc_like( $term ) . '%';
+				$query_vars['search_orderby_title'][] = $zcdb->prepare( "{$zcdb->posts}.post_title LIKE %s", $like );
 			}
 
-			$like = $n . $wpdb->esc_like( $term ) . $n;
+			$like = $n . $zcdb->esc_like( $term ) . $n;
 
 			$search_columns_parts = array();
 			foreach ( $search_columns as $search_column ) {
-				$search_columns_parts[ $search_column ] = $wpdb->prepare( "({$wpdb->posts}.$search_column $like_op %s)", $like );
+				$search_columns_parts[ $search_column ] = $zcdb->prepare( "({$zcdb->posts}.$search_column $like_op %s)", $like );
 			}
 
 			if ( ! empty( $this->allow_query_attachment_by_filename ) ) {
-				$search_columns_parts['attachment'] = $wpdb->prepare( "(sq1.meta_value $like_op %s)", $like );
+				$search_columns_parts['attachment'] = $zcdb->prepare( "(sq1.meta_value $like_op %s)", $like );
 			}
 
 			$search .= "$searchand(" . implode( " $andor_op ", $search_columns_parts ) . ')';
@@ -1524,7 +1524,7 @@ class ZC_Query {
 		if ( ! empty( $search ) ) {
 			$search = " AND ({$search}) ";
 			if ( ! is_user_logged_in() ) {
-				$search .= " AND ({$wpdb->posts}.post_password = '') ";
+				$search .= " AND ({$zcdb->posts}.post_password = '') ";
 			}
 		}
 
@@ -1621,13 +1621,13 @@ class ZC_Query {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $query_vars Query variables.
 	 * @return string ORDER BY clause.
 	 */
 	protected function parse_search_order( &$query_vars ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( $query_vars['search_terms_count'] > 1 ) {
 			$num_terms = count( $query_vars['search_orderby_title'] );
@@ -1635,14 +1635,14 @@ class ZC_Query {
 			// If the search terms contain negative queries, don't bother ordering by sentence matches.
 			$like = '';
 			if ( ! preg_match( '/(?:\s|^)\-/', $query_vars['s'] ) ) {
-				$like = '%' . $wpdb->esc_like( $query_vars['s'] ) . '%';
+				$like = '%' . $zcdb->esc_like( $query_vars['s'] ) . '%';
 			}
 
 			$search_orderby = '';
 
 			// Sentence match in 'post_title'.
 			if ( $like ) {
-				$search_orderby .= $wpdb->prepare( "WHEN {$wpdb->posts}.post_title LIKE %s THEN 1 ", $like );
+				$search_orderby .= $zcdb->prepare( "WHEN {$zcdb->posts}.post_title LIKE %s THEN 1 ", $like );
 			}
 
 			/*
@@ -1660,8 +1660,8 @@ class ZC_Query {
 
 			// Sentence match in 'post_content' and 'post_excerpt'.
 			if ( $like ) {
-				$search_orderby .= $wpdb->prepare( "WHEN {$wpdb->posts}.post_excerpt LIKE %s THEN 4 ", $like );
-				$search_orderby .= $wpdb->prepare( "WHEN {$wpdb->posts}.post_content LIKE %s THEN 5 ", $like );
+				$search_orderby .= $zcdb->prepare( "WHEN {$zcdb->posts}.post_excerpt LIKE %s THEN 4 ", $like );
+				$search_orderby .= $zcdb->prepare( "WHEN {$zcdb->posts}.post_content LIKE %s THEN 5 ", $like );
 			}
 
 			if ( $search_orderby ) {
@@ -1680,13 +1680,13 @@ class ZC_Query {
 	 *
 	 * @since 4.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $orderby Alias for the field to order by.
 	 * @return string|false Table-prefixed value to used in the ORDER clause. False otherwise.
 	 */
 	protected function parse_orderby( $orderby ) {
-		global $wpdb;
+		global $zcdb;
 
 		// Used to filter values.
 		$allowed_keys = array(
@@ -1754,7 +1754,7 @@ class ZC_Query {
 			case 'ID':
 			case 'menu_order':
 			case 'comment_count':
-				$orderby_clause = "{$wpdb->posts}.{$orderby}";
+				$orderby_clause = "{$zcdb->posts}.{$orderby}";
 				break;
 			case 'rand':
 				$orderby_clause = 'RAND()';
@@ -1772,19 +1772,19 @@ class ZC_Query {
 				break;
 			case 'post__in':
 				if ( ! empty( $this->query_vars['post__in'] ) ) {
-					$orderby_clause = "FIELD({$wpdb->posts}.ID," . implode( ',', array_map( 'absint', $this->query_vars['post__in'] ) ) . ')';
+					$orderby_clause = "FIELD({$zcdb->posts}.ID," . implode( ',', array_map( 'absint', $this->query_vars['post__in'] ) ) . ')';
 				}
 				break;
 			case 'post_parent__in':
 				if ( ! empty( $this->query_vars['post_parent__in'] ) ) {
-					$orderby_clause = "FIELD( {$wpdb->posts}.post_parent," . implode( ', ', array_map( 'absint', $this->query_vars['post_parent__in'] ) ) . ' )';
+					$orderby_clause = "FIELD( {$zcdb->posts}.post_parent," . implode( ', ', array_map( 'absint', $this->query_vars['post_parent__in'] ) ) . ' )';
 				}
 				break;
 			case 'post_name__in':
 				if ( ! empty( $this->query_vars['post_name__in'] ) ) {
 					$post_name__in        = array_map( 'sanitize_title_for_query', $this->query_vars['post_name__in'] );
 					$post_name__in_string = "'" . implode( "','", $post_name__in ) . "'";
-					$orderby_clause       = "FIELD( {$wpdb->posts}.post_name," . $post_name__in_string . ' )';
+					$orderby_clause       = "FIELD( {$zcdb->posts}.post_name," . $post_name__in_string . ' )';
 				}
 				break;
 			default:
@@ -1796,7 +1796,7 @@ class ZC_Query {
 					$orderby_clause = $orderby;
 				} else {
 					// Default: order by post field.
-					$orderby_clause = "{$wpdb->posts}.post_" . sanitize_key( $orderby );
+					$orderby_clause = "{$zcdb->posts}.post_" . sanitize_key( $orderby );
 				}
 
 				break;
@@ -1883,12 +1883,12 @@ class ZC_Query {
 	 *
 	 * @since 1.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return ZC_Post[]|int[] Array of post objects or post IDs.
 	 */
 	public function get_posts() {
-		global $wpdb;
+		global $zcdb;
 
 		$this->parse_query();
 
@@ -2058,10 +2058,10 @@ class ZC_Query {
 
 		switch ( $query_vars['fields'] ) {
 			case 'ids':
-				$fields = "{$wpdb->posts}.ID";
+				$fields = "{$zcdb->posts}.ID";
 				break;
 			case 'id=>parent':
-				$fields = "{$wpdb->posts}.ID, {$wpdb->posts}.post_parent";
+				$fields = "{$zcdb->posts}.ID, {$zcdb->posts}.post_parent";
 				break;
 			case '':
 				/*
@@ -2073,29 +2073,29 @@ class ZC_Query {
 				$query_vars['fields'] = 'all';
 				// Falls through.
 			default:
-				$fields = "{$wpdb->posts}.*";
+				$fields = "{$zcdb->posts}.*";
 		}
 
 		if ( '' !== $query_vars['menu_order'] ) {
-			$where .= " AND {$wpdb->posts}.menu_order = " . $query_vars['menu_order'];
+			$where .= " AND {$zcdb->posts}.menu_order = " . $query_vars['menu_order'];
 		}
 		// The "m" parameter is meant for months but accepts datetimes of varying specificity.
 		if ( $query_vars['m'] ) {
-			$where .= " AND YEAR({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 0, 4 );
+			$where .= " AND YEAR({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 0, 4 );
 			if ( strlen( $query_vars['m'] ) > 5 ) {
-				$where .= " AND MONTH({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 4, 2 );
+				$where .= " AND MONTH({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 4, 2 );
 			}
 			if ( strlen( $query_vars['m'] ) > 7 ) {
-				$where .= " AND DAYOFMONTH({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 6, 2 );
+				$where .= " AND DAYOFMONTH({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 6, 2 );
 			}
 			if ( strlen( $query_vars['m'] ) > 9 ) {
-				$where .= " AND HOUR({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 8, 2 );
+				$where .= " AND HOUR({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 8, 2 );
 			}
 			if ( strlen( $query_vars['m'] ) > 11 ) {
-				$where .= " AND MINUTE({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 10, 2 );
+				$where .= " AND MINUTE({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 10, 2 );
 			}
 			if ( strlen( $query_vars['m'] ) > 13 ) {
-				$where .= " AND SECOND({$wpdb->posts}.post_date)=" . substr( $query_vars['m'], 12, 2 );
+				$where .= " AND SECOND({$zcdb->posts}.post_date)=" . substr( $query_vars['m'], 12, 2 );
 			}
 		}
 
@@ -2166,13 +2166,13 @@ class ZC_Query {
 		}
 
 		if ( '' !== $query_vars['title'] ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_title = %s", stripslashes( $query_vars['title'] ) );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_title = %s", stripslashes( $query_vars['title'] ) );
 		}
 
 		// Parameters related to 'post_name'.
 		if ( '' !== $query_vars['name'] ) {
 			$query_vars['name'] = sanitize_title_for_query( $query_vars['name'] );
-			$where             .= " AND {$wpdb->posts}.post_name = '" . $query_vars['name'] . "'";
+			$where             .= " AND {$zcdb->posts}.post_name = '" . $query_vars['name'] . "'";
 		} elseif ( '' !== $query_vars['pagename'] ) {
 			if ( isset( $this->queried_object_id ) ) {
 				$reqpage = $this->queried_object_id;
@@ -2204,7 +2204,7 @@ class ZC_Query {
 			if ( ( 'page' !== get_option( 'show_on_front' ) ) || empty( $page_for_posts ) || ( $reqpage != $page_for_posts ) ) {
 				$query_vars['pagename'] = sanitize_title_for_query( zc_basename( $query_vars['pagename'] ) );
 				$query_vars['name']     = $query_vars['pagename'];
-				$where                 .= " AND ({$wpdb->posts}.ID = '$reqpage')";
+				$where                 .= " AND ({$zcdb->posts}.ID = '$reqpage')";
 				$reqpage_obj            = get_post( $reqpage );
 				if ( is_object( $reqpage_obj ) && 'attachment' === $reqpage_obj->post_type ) {
 					$this->is_attachment         = true;
@@ -2217,14 +2217,14 @@ class ZC_Query {
 		} elseif ( '' !== $query_vars['attachment'] ) {
 			$query_vars['attachment'] = sanitize_title_for_query( zc_basename( $query_vars['attachment'] ) );
 			$query_vars['name']       = $query_vars['attachment'];
-			$where                   .= " AND {$wpdb->posts}.post_name = '" . $query_vars['attachment'] . "'";
+			$where                   .= " AND {$zcdb->posts}.post_name = '" . $query_vars['attachment'] . "'";
 		} elseif ( is_array( $query_vars['post_name__in'] ) && ! empty( $query_vars['post_name__in'] ) ) {
 			$query_vars['post_name__in'] = array_map( 'sanitize_title_for_query', $query_vars['post_name__in'] );
 			// Duplicate array before sorting to allow for the orderby clause.
 			$post_name__in_for_where = array_unique( $query_vars['post_name__in'] );
 			sort( $post_name__in_for_where );
 			$post_name__in = "'" . implode( "','", $post_name__in_for_where ) . "'";
-			$where        .= " AND {$wpdb->posts}.post_name IN ($post_name__in)";
+			$where        .= " AND {$zcdb->posts}.post_name IN ($post_name__in)";
 		}
 
 		// If an attachment is requested by number, let it supersede any post number.
@@ -2234,39 +2234,39 @@ class ZC_Query {
 
 		// If a post number is specified, load that post.
 		if ( $query_vars['p'] ) {
-			$where .= " AND {$wpdb->posts}.ID = " . $query_vars['p'];
+			$where .= " AND {$zcdb->posts}.ID = " . $query_vars['p'];
 		} elseif ( $query_vars['post__in'] ) {
 			// Duplicate array before sorting to allow for the orderby clause.
 			$post__in_for_where = $query_vars['post__in'];
 			$post__in_for_where = array_unique( array_map( 'absint', $post__in_for_where ) );
 			sort( $post__in_for_where );
 			$post__in = implode( ',', array_map( 'absint', $post__in_for_where ) );
-			$where   .= " AND {$wpdb->posts}.ID IN ($post__in)";
+			$where   .= " AND {$zcdb->posts}.ID IN ($post__in)";
 		} elseif ( $query_vars['post__not_in'] ) {
 			sort( $query_vars['post__not_in'] );
 			$post__not_in = implode( ',', array_map( 'absint', $query_vars['post__not_in'] ) );
-			$where       .= " AND {$wpdb->posts}.ID NOT IN ($post__not_in)";
+			$where       .= " AND {$zcdb->posts}.ID NOT IN ($post__not_in)";
 		}
 
 		if ( is_numeric( $query_vars['post_parent'] ) ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_parent = %d ", $query_vars['post_parent'] );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_parent = %d ", $query_vars['post_parent'] );
 		} elseif ( $query_vars['post_parent__in'] ) {
 			// Duplicate array before sorting to allow for the orderby clause.
 			$post_parent__in_for_where = $query_vars['post_parent__in'];
 			$post_parent__in_for_where = array_unique( array_map( 'absint', $post_parent__in_for_where ) );
 			sort( $post_parent__in_for_where );
 			$post_parent__in = implode( ',', array_map( 'absint', $post_parent__in_for_where ) );
-			$where          .= " AND {$wpdb->posts}.post_parent IN ($post_parent__in)";
+			$where          .= " AND {$zcdb->posts}.post_parent IN ($post_parent__in)";
 		} elseif ( $query_vars['post_parent__not_in'] ) {
 			sort( $query_vars['post_parent__not_in'] );
 			$post_parent__not_in = implode( ',', array_map( 'absint', $query_vars['post_parent__not_in'] ) );
-			$where              .= " AND {$wpdb->posts}.post_parent NOT IN ($post_parent__not_in)";
+			$where              .= " AND {$zcdb->posts}.post_parent NOT IN ($post_parent__not_in)";
 		}
 
 		if ( $query_vars['page_id'] ) {
 			if ( ( 'page' !== get_option( 'show_on_front' ) ) || ( get_option( 'page_for_posts' ) != $query_vars['page_id'] ) ) {
 				$query_vars['p'] = $query_vars['page_id'];
-				$where           = " AND {$wpdb->posts}.ID = " . $query_vars['page_id'];
+				$where           = " AND {$zcdb->posts}.ID = " . $query_vars['page_id'];
 			}
 		}
 
@@ -2291,7 +2291,7 @@ class ZC_Query {
 		if ( ! $this->is_singular ) {
 			$this->parse_tax_query( $query_vars );
 
-			$clauses = $this->tax_query->get_sql( $wpdb->posts, 'ID' );
+			$clauses = $this->tax_query->get_sql( $zcdb->posts, 'ID' );
 
 			$join  .= $clauses['join'];
 			$where .= $clauses['where'];
@@ -2380,7 +2380,7 @@ class ZC_Query {
 		}
 
 		if ( ! empty( $this->tax_query->queries ) || ! empty( $this->meta_query->queries ) || ! empty( $this->allow_query_attachment_by_filename ) ) {
-			$groupby = "{$wpdb->posts}.ID";
+			$groupby = "{$zcdb->posts}.ID";
 		}
 
 		// Author/user stuff.
@@ -2401,7 +2401,7 @@ class ZC_Query {
 			if ( count( $author__not_in_id_list ) > 0 ) {
 				sort( $author__not_in_id_list );
 				$where .= sprintf(
-					" AND {$wpdb->posts}.post_author NOT IN (%s) ",
+					" AND {$zcdb->posts}.post_author NOT IN (%s) ",
 					implode( ',', $author__not_in_id_list )
 				);
 				/** Update the query var for stable cache key generation in {@see self::generate_cache_key()}. */
@@ -2413,7 +2413,7 @@ class ZC_Query {
 				sort( $query_vars['author__in'] );
 			}
 			$author__in = implode( ',', array_map( 'absint', array_unique( (array) $query_vars['author__in'] ) ) );
-			$where     .= " AND {$wpdb->posts}.post_author IN ($author__in) ";
+			$where     .= " AND {$zcdb->posts}.post_author IN ($author__in) ";
 		}
 
 		// Author stuff for nice URLs.
@@ -2432,7 +2432,7 @@ class ZC_Query {
 			if ( $query_vars['author'] ) {
 				$query_vars['author'] = $query_vars['author']->ID;
 			}
-			$whichauthor .= " AND ({$wpdb->posts}.post_author = " . absint( $query_vars['author'] ) . ')';
+			$whichauthor .= " AND ({$zcdb->posts}.post_author = " . absint( $query_vars['author'] ) . ')';
 		}
 
 		// Matching by comment count.
@@ -2458,23 +2458,23 @@ class ZC_Query {
 					$query_vars['comment_count']['compare'] = '=';
 				}
 
-				$where .= $wpdb->prepare( " AND {$wpdb->posts}.comment_count {$query_vars['comment_count']['compare']} %d", $query_vars['comment_count']['value'] );
+				$where .= $zcdb->prepare( " AND {$zcdb->posts}.comment_count {$query_vars['comment_count']['compare']} %d", $query_vars['comment_count']['value'] );
 			}
 		}
 
 		// MIME-Type stuff for attachment browsing.
 
 		if ( isset( $query_vars['post_mime_type'] ) && '' !== $query_vars['post_mime_type'] ) {
-			$whichmimetype = zc_post_mime_type_where( $query_vars['post_mime_type'], $wpdb->posts );
+			$whichmimetype = zc_post_mime_type_where( $query_vars['post_mime_type'], $zcdb->posts );
 		}
 		$where .= $search . $whichauthor . $whichmimetype;
 
 		if ( ! empty( $this->allow_query_attachment_by_filename ) ) {
-			$join .= " LEFT JOIN {$wpdb->postmeta} AS sq1 ON ( {$wpdb->posts}.ID = sq1.post_id AND sq1.meta_key = '_zc_attached_file' )";
+			$join .= " LEFT JOIN {$zcdb->postmeta} AS sq1 ON ( {$zcdb->posts}.ID = sq1.post_id AND sq1.meta_key = '_zc_attached_file' )";
 		}
 
 		if ( ! empty( $this->meta_query->queries ) ) {
-			$clauses = $this->meta_query->get_sql( 'post', $wpdb->posts, 'ID', $this );
+			$clauses = $this->meta_query->get_sql( 'post', $zcdb->posts, 'ID', $this );
 			$join   .= $clauses['join'];
 			$where  .= $clauses['where'];
 		}
@@ -2501,7 +2501,7 @@ class ZC_Query {
 			if ( isset( $query_vars['orderby'] ) && ( is_array( $query_vars['orderby'] ) || false === $query_vars['orderby'] ) ) {
 				$orderby = '';
 			} else {
-				$orderby = "{$wpdb->posts}.post_date " . $query_vars['order'];
+				$orderby = "{$zcdb->posts}.post_date " . $query_vars['order'];
 			}
 		} elseif ( 'none' === $query_vars['orderby'] ) {
 			$orderby = '';
@@ -2536,7 +2536,7 @@ class ZC_Query {
 				$orderby = implode( ' ' . $query_vars['order'] . ', ', $orderby_array );
 
 				if ( empty( $orderby ) ) {
-					$orderby = "{$wpdb->posts}.post_date " . $query_vars['order'];
+					$orderby = "{$zcdb->posts}.post_date " . $query_vars['order'];
 				} elseif ( ! empty( $query_vars['order'] ) ) {
 					$orderby .= " {$query_vars['order']}";
 				}
@@ -2580,20 +2580,20 @@ class ZC_Query {
 		}
 
 		if ( isset( $query_vars['post_password'] ) ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_password = %s", $query_vars['post_password'] );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_password = %s", $query_vars['post_password'] );
 			if ( empty( $query_vars['perm'] ) ) {
 				$query_vars['perm'] = 'readable';
 			}
 		} elseif ( isset( $query_vars['has_password'] ) ) {
-			$where .= sprintf( " AND {$wpdb->posts}.post_password %s ''", $query_vars['has_password'] ? '!=' : '=' );
+			$where .= sprintf( " AND {$zcdb->posts}.post_password %s ''", $query_vars['has_password'] ? '!=' : '=' );
 		}
 
 		if ( ! empty( $query_vars['comment_status'] ) ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.comment_status = %s ", $query_vars['comment_status'] );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.comment_status = %s ", $query_vars['comment_status'] );
 		}
 
 		if ( ! empty( $query_vars['ping_status'] ) ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.ping_status = %s ", $query_vars['ping_status'] );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.ping_status = %s ", $query_vars['ping_status'] );
 		}
 
 		$skip_post_status = false;
@@ -2603,23 +2603,23 @@ class ZC_Query {
 				$post_type_where  = ' AND 1=0 ';
 				$skip_post_status = true;
 			} else {
-				$post_type_where = " AND {$wpdb->posts}.post_type IN ('" . implode( "', '", array_map( 'esc_sql', $in_search_post_types ) ) . "')";
+				$post_type_where = " AND {$zcdb->posts}.post_type IN ('" . implode( "', '", array_map( 'esc_sql', $in_search_post_types ) ) . "')";
 			}
 		} elseif ( ! empty( $post_type ) && is_array( $post_type ) ) {
 			// Sort post types to ensure same cache key generation.
 			sort( $post_type );
-			$post_type_where = " AND {$wpdb->posts}.post_type IN ('" . implode( "', '", esc_sql( $post_type ) ) . "')";
+			$post_type_where = " AND {$zcdb->posts}.post_type IN ('" . implode( "', '", esc_sql( $post_type ) ) . "')";
 		} elseif ( ! empty( $post_type ) ) {
-			$post_type_where  = $wpdb->prepare( " AND {$wpdb->posts}.post_type = %s", $post_type );
+			$post_type_where  = $zcdb->prepare( " AND {$zcdb->posts}.post_type = %s", $post_type );
 			$post_type_object = get_post_type_object( $post_type );
 		} elseif ( $this->is_attachment ) {
-			$post_type_where  = " AND {$wpdb->posts}.post_type = 'attachment'";
+			$post_type_where  = " AND {$zcdb->posts}.post_type = 'attachment'";
 			$post_type_object = get_post_type_object( 'attachment' );
 		} elseif ( $this->is_page ) {
-			$post_type_where  = " AND {$wpdb->posts}.post_type = 'page'";
+			$post_type_where  = " AND {$zcdb->posts}.post_type = 'page'";
 			$post_type_object = get_post_type_object( 'page' );
 		} else {
-			$post_type_where  = " AND {$wpdb->posts}.post_type = 'post'";
+			$post_type_where  = " AND {$zcdb->posts}.post_type = 'post'";
 			$post_type_object = get_post_type_object( 'post' );
 		}
 
@@ -2655,16 +2655,16 @@ class ZC_Query {
 			if ( in_array( 'any', $q_status, true ) ) {
 				foreach ( get_post_stati( array( 'exclude_from_search' => true ) ) as $status ) {
 					if ( ! in_array( $status, $q_status, true ) ) {
-						$e_status[] = "{$wpdb->posts}.post_status <> '$status'";
+						$e_status[] = "{$zcdb->posts}.post_status <> '$status'";
 					}
 				}
 			} else {
 				foreach ( get_post_stati() as $status ) {
 					if ( in_array( $status, $q_status, true ) ) {
 						if ( 'private' === $status ) {
-							$p_status[] = "{$wpdb->posts}.post_status = '$status'";
+							$p_status[] = "{$zcdb->posts}.post_status = '$status'";
 						} else {
-							$r_status[] = "{$wpdb->posts}.post_status = '$status'";
+							$r_status[] = "{$zcdb->posts}.post_status = '$status'";
 						}
 					}
 				}
@@ -2680,22 +2680,22 @@ class ZC_Query {
 			}
 			if ( ! empty( $r_status ) ) {
 				if ( ! empty( $query_vars['perm'] ) && 'editable' === $query_vars['perm'] && ! current_user_can( $edit_others_cap ) ) {
-					$statuswheres[] = "({$wpdb->posts}.post_author = $user_id " . 'AND (' . implode( ' OR ', $r_status ) . '))';
+					$statuswheres[] = "({$zcdb->posts}.post_author = $user_id " . 'AND (' . implode( ' OR ', $r_status ) . '))';
 				} else {
 					$statuswheres[] = '(' . implode( ' OR ', $r_status ) . ')';
 				}
 			}
 			if ( ! empty( $p_status ) ) {
 				if ( ! empty( $query_vars['perm'] ) && 'readable' === $query_vars['perm'] && ! current_user_can( $read_private_cap ) ) {
-					$statuswheres[] = "({$wpdb->posts}.post_author = $user_id " . 'AND (' . implode( ' OR ', $p_status ) . '))';
+					$statuswheres[] = "({$zcdb->posts}.post_author = $user_id " . 'AND (' . implode( ' OR ', $p_status ) . '))';
 				} else {
 					$statuswheres[] = '(' . implode( ' OR ', $p_status ) . ')';
 				}
 			}
 			if ( $post_status_join ) {
-				$join .= " LEFT JOIN {$wpdb->posts} AS p2 ON ({$wpdb->posts}.post_parent = p2.ID) ";
+				$join .= " LEFT JOIN {$zcdb->posts} AS p2 ON ({$zcdb->posts}.post_parent = p2.ID) ";
 				foreach ( $statuswheres as $index => $statuswhere ) {
-					$statuswheres[ $index ] = "($statuswhere OR ({$wpdb->posts}.post_status = 'inherit' AND " . str_replace( $wpdb->posts, 'p2', $statuswhere ) . '))';
+					$statuswheres[ $index ] = "($statuswhere OR ({$zcdb->posts}.post_status = 'inherit' AND " . str_replace( $zcdb->posts, 'p2', $statuswhere ) . '))';
 				}
 			}
 			$where_status = implode( ' OR ', $statuswheres );
@@ -2721,13 +2721,13 @@ class ZC_Query {
 
 					$queried_post_type_object = get_post_type_object( $queried_post_type );
 
-					$type_where = '(' . $wpdb->prepare( "{$wpdb->posts}.post_type = %s AND (", $queried_post_type );
+					$type_where = '(' . $zcdb->prepare( "{$zcdb->posts}.post_type = %s AND (", $queried_post_type );
 
 					// Public statuses.
 					$public_statuses = get_post_stati( array( 'public' => true ) );
 					$status_clauses  = array();
 					foreach ( $public_statuses as $public_status ) {
-						$status_clauses[] = "{$wpdb->posts}.post_status = '$public_status'";
+						$status_clauses[] = "{$zcdb->posts}.post_status = '$public_status'";
 					}
 					$type_where .= implode( ' OR ', $status_clauses );
 
@@ -2740,7 +2740,7 @@ class ZC_Query {
 							)
 						);
 						foreach ( $admin_all_statuses as $admin_all_status ) {
-							$type_where .= " OR {$wpdb->posts}.post_status = '$admin_all_status'";
+							$type_where .= " OR {$zcdb->posts}.post_status = '$admin_all_status'";
 						}
 					}
 
@@ -2749,7 +2749,7 @@ class ZC_Query {
 						$read_private_cap = $queried_post_type_object->cap->read_private_posts;
 						$private_statuses = get_post_stati( array( 'private' => true ) );
 						foreach ( $private_statuses as $private_status ) {
-							$type_where .= current_user_can( $read_private_cap ) ? " \nOR {$wpdb->posts}.post_status = '$private_status'" : " \nOR ({$wpdb->posts}.post_author = $user_id AND {$wpdb->posts}.post_status = '$private_status')";
+							$type_where .= current_user_can( $read_private_cap ) ? " \nOR {$zcdb->posts}.post_status = '$private_status'" : " \nOR ({$zcdb->posts}.post_author = $user_id AND {$zcdb->posts}.post_status = '$private_status')";
 						}
 					}
 
@@ -2814,11 +2814,11 @@ class ZC_Query {
 		// Comments feeds.
 		if ( $this->is_comment_feed && ! $this->is_singular ) {
 			if ( $this->is_archive || $this->is_search ) {
-				$cjoin    = "JOIN {$wpdb->posts} ON ( {$wpdb->comments}.comment_post_ID = {$wpdb->posts}.ID ) $join ";
+				$cjoin    = "JOIN {$zcdb->posts} ON ( {$zcdb->comments}.comment_post_ID = {$zcdb->posts}.ID ) $join ";
 				$cwhere   = "WHERE comment_approved = '1' $where";
-				$cgroupby = "{$wpdb->comments}.comment_id";
+				$cgroupby = "{$zcdb->comments}.comment_id";
 			} else { // Other non-singular, e.g. front.
-				$cjoin    = "JOIN {$wpdb->posts} ON ( {$wpdb->comments}.comment_post_ID = {$wpdb->posts}.ID )";
+				$cjoin    = "JOIN {$zcdb->posts} ON ( {$zcdb->comments}.comment_post_ID = {$zcdb->posts}.ID )";
 				$cwhere   = "WHERE ( post_status = 'publish' OR ( post_status = 'inherit' AND post_type = 'attachment' ) ) AND comment_approved = '1'";
 				$cgroupby = '';
 			}
@@ -2879,7 +2879,7 @@ class ZC_Query {
 			$corderby = ( ! empty( $corderby ) ) ? 'ORDER BY ' . $corderby : '';
 			$climits  = ( ! empty( $climits ) ) ? $climits : '';
 
-			$comments_request = "SELECT $distinct {$wpdb->comments}.comment_ID FROM {$wpdb->comments} $cjoin $cwhere $cgroupby $corderby $climits";
+			$comments_request = "SELECT $distinct {$zcdb->comments}.comment_ID FROM {$zcdb->comments} $cjoin $cwhere $cgroupby $corderby $climits";
 
 			$key          = md5( $comments_request );
 			$last_changed = array(
@@ -2890,7 +2890,7 @@ class ZC_Query {
 			$cache_key   = "comment_feed:$key";
 			$comment_ids = zc_cache_get_salted( $cache_key, 'comment-queries', $last_changed );
 			if ( false === $comment_ids ) {
-				$comment_ids = $wpdb->get_col( $comments_request );
+				$comment_ids = $zcdb->get_col( $comments_request );
 				zc_cache_set_salted( $cache_key, $comment_ids, 'comment-queries', $last_changed );
 			}
 			_prime_comment_caches( $comment_ids );
@@ -2909,7 +2909,7 @@ class ZC_Query {
 			$post_ids = implode( ',', $post_ids );
 			$join     = '';
 			if ( $post_ids ) {
-				$where = "AND {$wpdb->posts}.ID IN ($post_ids) ";
+				$where = "AND {$zcdb->posts}.ID IN ($post_ids) ";
 			} else {
 				$where = 'AND 0';
 			}
@@ -3187,7 +3187,7 @@ class ZC_Query {
 		 */
 		$old_request =
 			"SELECT $found_rows $distinct $fields
-					 FROM {$wpdb->posts} $join
+					 FROM {$zcdb->posts} $join
 					 WHERE 1=1 $where
 					 $groupby
 					 $orderby
@@ -3240,9 +3240,9 @@ class ZC_Query {
 		$id_query_is_cacheable = ! str_contains( strtoupper( $orderby ), ' RAND(' );
 
 		$cacheable_field_values = array(
-			"{$wpdb->posts}.*",
-			"{$wpdb->posts}.ID, {$wpdb->posts}.post_parent",
-			"{$wpdb->posts}.ID",
+			"{$zcdb->posts}.*",
+			"{$zcdb->posts}.ID, {$zcdb->posts}.post_parent",
+			"{$zcdb->posts}.ID",
 		);
 
 		if ( ! in_array( $fields, $cacheable_field_values, true ) ) {
@@ -3255,7 +3255,7 @@ class ZC_Query {
 		}
 
 		if ( $query_vars['cache_results'] && $id_query_is_cacheable ) {
-			$new_request = str_replace( $fields, "{$wpdb->posts}.*", $this->request );
+			$new_request = str_replace( $fields, "{$zcdb->posts}.*", $this->request );
 			$cache_key   = $this->generate_cache_key( $query_vars, $new_request );
 
 			$cache_found = false;
@@ -3306,7 +3306,7 @@ class ZC_Query {
 
 		if ( 'ids' === $query_vars['fields'] ) {
 			if ( null === $this->posts ) {
-				$this->posts = $wpdb->get_col( $this->request );
+				$this->posts = $zcdb->get_col( $this->request );
 			}
 
 			/** @var int[] */
@@ -3329,7 +3329,7 @@ class ZC_Query {
 
 		if ( 'id=>parent' === $query_vars['fields'] ) {
 			if ( null === $this->posts ) {
-				$this->posts = $wpdb->get_results( $this->request );
+				$this->posts = $zcdb->get_results( $this->request );
 			}
 
 			$this->post_count = count( $this->posts );
@@ -3365,7 +3365,7 @@ class ZC_Query {
 			return $post_parents;
 		}
 
-		$is_unfiltered_query = $old_request === $this->request && "{$wpdb->posts}.*" === $fields;
+		$is_unfiltered_query = $old_request === $this->request && "{$zcdb->posts}.*" === $fields;
 
 		if ( null === $this->posts ) {
 			$split_the_query = (
@@ -3408,8 +3408,8 @@ class ZC_Query {
 
 				// Beginning of the string is on a new line to prevent leading whitespace. See https://core.trac.zelocorecms.org/ticket/56841.
 				$this->request =
-					"SELECT $found_rows $distinct {$wpdb->posts}.ID
-					 FROM {$wpdb->posts} $join
+					"SELECT $found_rows $distinct {$zcdb->posts}.ID
+					 FROM {$zcdb->posts} $join
 					 WHERE 1=1 $where
 					 $groupby
 					 $orderby
@@ -3425,7 +3425,7 @@ class ZC_Query {
 				 */
 				$this->request = apply_filters( 'posts_request_ids', $this->request, $this );
 
-				$post_ids = $wpdb->get_col( $this->request );
+				$post_ids = $zcdb->get_col( $this->request );
 
 				if ( $post_ids ) {
 					$this->posts = $post_ids;
@@ -3435,7 +3435,7 @@ class ZC_Query {
 					$this->posts = array();
 				}
 			} else {
-				$this->posts = $wpdb->get_results( $this->request );
+				$this->posts = $zcdb->get_results( $this->request );
 				$this->set_found_posts( $query_vars, $limits );
 			}
 		}
@@ -3490,7 +3490,7 @@ class ZC_Query {
 			/** This filter is documented in zc-includes/class-zc-query.php */
 			$climits = apply_filters_ref_array( 'comment_feed_limits', array( 'LIMIT ' . get_option( 'posts_per_rss' ), &$this ) );
 
-			$comments_request = "SELECT {$wpdb->comments}.comment_ID FROM {$wpdb->comments} $cjoin $cwhere $cgroupby $corderby $climits";
+			$comments_request = "SELECT {$zcdb->comments}.comment_ID FROM {$zcdb->comments} $cjoin $cwhere $cgroupby $corderby $climits";
 
 			$comment_key          = md5( $comments_request );
 			$comment_last_changed = zc_cache_get_last_changed( 'comment' );
@@ -3498,7 +3498,7 @@ class ZC_Query {
 			$comment_cache_key = "comment_feed:$comment_key";
 			$comment_ids       = zc_cache_get_salted( $comment_cache_key, 'comment-queries', $comment_last_changed );
 			if ( false === $comment_ids ) {
-				$comment_ids = $wpdb->get_col( $comments_request );
+				$comment_ids = $zcdb->get_col( $comments_request );
 				zc_cache_set_salted( $comment_cache_key, $comment_ids, 'comment-queries', $comment_last_changed );
 			}
 			_prime_comment_caches( $comment_ids );
@@ -3672,13 +3672,13 @@ class ZC_Query {
 	 *
 	 * @since 3.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array  $query_vars Query variables.
 	 * @param string $limits     LIMIT clauses of the query.
 	 */
 	private function set_found_posts( $query_vars, $limits ) {
-		global $wpdb;
+		global $zcdb;
 
 		/*
 		 * Bail if posts is an empty array. Continue if posts is an empty string,
@@ -3699,7 +3699,7 @@ class ZC_Query {
 			 */
 			$found_posts_query = apply_filters_ref_array( 'found_posts_query', array( 'SELECT FOUND_ROWS()', &$this ) );
 
-			$this->found_posts = (int) $wpdb->get_var( $found_posts_query );
+			$this->found_posts = (int) $zcdb->get_var( $found_posts_query );
 		} else {
 			if ( is_array( $this->posts ) ) {
 				$this->found_posts = count( $this->posts );
@@ -4970,14 +4970,14 @@ class ZC_Query {
 	 *
 	 * @since 6.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array  $args Query arguments.
 	 * @param string $sql  SQL statement.
 	 * @return string Cache key.
 	 */
 	protected function generate_cache_key( array $args, $sql ) {
-		global $wpdb;
+		global $zcdb;
 
 		unset(
 			$args['cache_results'],
@@ -5042,28 +5042,28 @@ class ZC_Query {
 			$args['orderby'] = 'date';
 		}
 
-		$placeholder = $wpdb->placeholder_escape();
+		$placeholder = $zcdb->placeholder_escape();
 		array_walk_recursive(
 			$args,
 			/*
-			 * Replace wpdb placeholders with the string used in the database
+			 * Replace zcdb placeholders with the string used in the database
 			 * query to avoid unreachable cache keys. This is necessary because
 			 * the placeholder is randomly generated in each request.
 			 *
 			 * $value is passed by reference to allow it to be modified.
 			 * array_walk_recursive() does not return an array.
 			 */
-			static function ( &$value ) use ( $wpdb, $placeholder ) {
+			static function ( &$value ) use ( $zcdb, $placeholder ) {
 				if ( is_string( $value ) && str_contains( $value, $placeholder ) ) {
-					$value = $wpdb->remove_placeholder_escape( $value );
+					$value = $zcdb->remove_placeholder_escape( $value );
 				}
 			}
 		);
 
 		ksort( $args );
 
-		// Replace wpdb placeholder in the SQL statement used by the cache key.
-		$sql = $wpdb->remove_placeholder_escape( $sql );
+		// Replace zcdb placeholder in the SQL statement used by the cache key.
+		$sql = $zcdb->remove_placeholder_escape( $sql );
 		$key = md5( serialize( $args ) . $sql );
 
 		$this->query_cache_key = "zc_query:$key";

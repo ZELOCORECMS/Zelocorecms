@@ -1759,7 +1759,7 @@ div.zc-link-preview a {
 	cursor: pointer;
 }
 
-div.zc-link-preview a.wplink-url-error {
+div.zc-link-preview a.zclink-url-error {
 	color: #d63638;
 }
 
@@ -1797,7 +1797,7 @@ div.zc-link-input input {
 	margin-right: 2px;
 }
 
-.ui-autocomplete.wplink-autocomplete {
+.ui-autocomplete.zclink-autocomplete {
 	z-index: 100110;
 	max-height: 200px;
 	overflow-y: auto;
@@ -1810,7 +1810,7 @@ div.zc-link-input input {
 	background-color: #fff;
 }
 
-.ui-autocomplete.wplink-autocomplete li {
+.ui-autocomplete.zclink-autocomplete li {
 	margin-bottom: 0;
 	padding: 4px 10px;
 	clear: both;
@@ -1818,11 +1818,11 @@ div.zc-link-input input {
 	text-align: left;
 }
 
-.ui-autocomplete.wplink-autocomplete li .zc-editor-float-right {
+.ui-autocomplete.zclink-autocomplete li .zc-editor-float-right {
 	float: right;
 }
 
-.ui-autocomplete.wplink-autocomplete li.ui-state-focus {
+.ui-autocomplete.zclink-autocomplete li.ui-state-focus {
 	background-color: #dcdcde;
 	cursor: pointer;
 }

@@ -169,14 +169,14 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 	 *
 	 * @since 2.1.0
 	 *
-	 * @global wpdb       $wpdb         ZelocoreCMS database abstraction object.
+	 * @global zcdb       $zcdb         ZelocoreCMS database abstraction object.
 	 * @global ZC_Rewrite $zc_rewrite   ZelocoreCMS rewrite component.
 	 * @global string     $table_prefix The database table prefix.
 	 *
 	 * @param int $user_id User ID.
 	 */
 	function zc_install_defaults( $user_id ) {
-		global $wpdb, $zc_rewrite, $table_prefix;
+		global $zcdb, $zc_rewrite, $table_prefix;
 
 		// Default category.
 		$cat_name = __( 'Uncategorized' );
@@ -185,8 +185,8 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 
 		$cat_id = 1;
 
-		$wpdb->insert(
-			$wpdb->terms,
+		$zcdb->insert(
+			$zcdb->terms,
 			array(
 				'term_id'    => $cat_id,
 				'name'       => $cat_name,
@@ -194,8 +194,8 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 				'term_group' => 0,
 			)
 		);
-		$wpdb->insert(
-			$wpdb->term_taxonomy,
+		$zcdb->insert(
+			$zcdb->term_taxonomy,
 			array(
 				'term_id'     => $cat_id,
 				'taxonomy'    => 'category',
@@ -204,7 +204,7 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 				'count'       => 1,
 			)
 		);
-		$cat_tt_id = $wpdb->insert_id;
+		$cat_tt_id = $zcdb->insert_id;
 
 		// First post.
 		$now             = current_time( 'mysql' );
@@ -236,8 +236,8 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 			"</p>\n<!-- /zc:paragraph -->";
 		}
 
-		$wpdb->insert(
-			$wpdb->posts,
+		$zcdb->insert(
+			$zcdb->posts,
 			array(
 				'post_author'           => $user_id,
 				'post_date'             => $now,
@@ -261,8 +261,8 @@ if ( ! function_exists( 'zc_install_defaults' ) ) :
 			update_posts_count();
 		}
 
-		$wpdb->insert(
-			$wpdb->term_relationships,
+		$zcdb->insert(
+			$zcdb->term_relationships,
 			array(
 				'term_taxonomy_id' => $cat_tt_id,
 				'object_id'        => 1,
@@ -290,8 +290,8 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 			/* translators: The localized Gravatar URL. */
 			esc_url( __( 'https://gravatar.com/' ) )
 		);
-		$wpdb->insert(
-			$wpdb->comments,
+		$zcdb->insert(
+			$zcdb->comments,
 			array(
 				'comment_post_ID'      => 1,
 				'comment_author'       => $first_comment_author,
@@ -340,8 +340,8 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 		}
 
 		$first_post_guid = get_option( 'home' ) . '/?page_id=2';
-		$wpdb->insert(
-			$wpdb->posts,
+		$zcdb->insert(
+			$zcdb->posts,
 			array(
 				'post_author'           => $user_id,
 				'post_date'             => $now,
@@ -361,8 +361,8 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 				'post_content_filtered' => '',
 			)
 		);
-		$wpdb->insert(
-			$wpdb->postmeta,
+		$zcdb->insert(
+			$zcdb->postmeta,
 			array(
 				'post_id'    => 2,
 				'meta_key'   => '_zc_page_template',
@@ -385,8 +385,8 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 		if ( ! empty( $privacy_policy_content ) ) {
 			$privacy_policy_guid = get_option( 'home' ) . '/?page_id=3';
 
-			$wpdb->insert(
-				$wpdb->posts,
+			$zcdb->insert(
+				$zcdb->posts,
 				array(
 					'post_author'           => $user_id,
 					'post_date'             => $now,
@@ -407,8 +407,8 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 					'post_content_filtered' => '',
 				)
 			);
-			$wpdb->insert(
-				$wpdb->postmeta,
+			$zcdb->insert(
+				$zcdb->postmeta,
 				array(
 					'post_id'    => 3,
 					'meta_key'   => '_zc_page_template',
@@ -459,22 +459,22 @@ Commenter avatars come from <a href="%s">Gravatar</a>.'
 			$zc_rewrite->flush_rules();
 
 			$user = new ZC_User( $user_id );
-			$wpdb->update( $wpdb->options, array( 'option_value' => $user->user_email ), array( 'option_name' => 'admin_email' ) );
+			$zcdb->update( $zcdb->options, array( 'option_value' => $user->user_email ), array( 'option_name' => 'admin_email' ) );
 
 			// Remove all perms except for the login user.
-			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE user_id != %d AND meta_key = %s", $user_id, $table_prefix . 'user_level' ) );
-			$wpdb->query( $wpdb->prepare( "DELETE FROM $wpdb->usermeta WHERE user_id != %d AND meta_key = %s", $user_id, $table_prefix . 'capabilities' ) );
+			$zcdb->query( $zcdb->prepare( "DELETE FROM $zcdb->usermeta WHERE user_id != %d AND meta_key = %s", $user_id, $table_prefix . 'user_level' ) );
+			$zcdb->query( $zcdb->prepare( "DELETE FROM $zcdb->usermeta WHERE user_id != %d AND meta_key = %s", $user_id, $table_prefix . 'capabilities' ) );
 
 			/*
 			 * Delete any caps that snuck into the previously active blog. (Hardcoded to blog 1 for now.)
 			 * TODO: Get previous_blog_id.
 			 */
 			if ( ! is_super_admin( $user_id ) && 1 !== $user_id ) {
-				$wpdb->delete(
-					$wpdb->usermeta,
+				$zcdb->delete(
+					$zcdb->usermeta,
 					array(
 						'user_id'  => $user_id,
-						'meta_key' => $wpdb->base_prefix . '1_capabilities',
+						'meta_key' => $zcdb->base_prefix . '1_capabilities',
 					)
 				);
 			}
@@ -904,37 +904,37 @@ function upgrade_all() {
  * @ignore
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_100() {
-	global $wpdb;
+	global $zcdb;
 
 	// Get the title and ID of every post, post_name to check if it already has a value.
-	$posts = $wpdb->get_results( "SELECT ID, post_title, post_name FROM $wpdb->posts WHERE post_name = ''" );
+	$posts = $zcdb->get_results( "SELECT ID, post_title, post_name FROM $zcdb->posts WHERE post_name = ''" );
 	if ( $posts ) {
 		foreach ( $posts as $post ) {
 			if ( '' === $post->post_name ) {
 				$newtitle = sanitize_title( $post->post_title );
-				$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET post_name = %s WHERE ID = %d", $newtitle, $post->ID ) );
+				$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET post_name = %s WHERE ID = %d", $newtitle, $post->ID ) );
 			}
 		}
 	}
 
-	$categories = $wpdb->get_results( "SELECT cat_ID, cat_name, category_nicename FROM $wpdb->categories" );
+	$categories = $zcdb->get_results( "SELECT cat_ID, cat_name, category_nicename FROM $zcdb->categories" );
 	foreach ( $categories as $category ) {
 		if ( '' === $category->category_nicename ) {
 			$newtitle = sanitize_title( $category->cat_name );
-			$wpdb->update( $wpdb->categories, array( 'category_nicename' => $newtitle ), array( 'cat_ID' => $category->cat_ID ) );
+			$zcdb->update( $zcdb->categories, array( 'category_nicename' => $newtitle ), array( 'cat_ID' => $category->cat_ID ) );
 		}
 	}
 
-	$sql = "UPDATE $wpdb->options
+	$sql = "UPDATE $zcdb->options
 		SET option_value = REPLACE(option_value, 'zc-links/links-images/', 'zc-images/links/')
 		WHERE option_name LIKE %s
 		AND option_value LIKE %s";
-	$wpdb->query( $wpdb->prepare( $sql, $wpdb->esc_like( 'links_rating_image' ) . '%', $wpdb->esc_like( 'zc-links/links-images/' ) . '%' ) );
+	$zcdb->query( $zcdb->prepare( $sql, $zcdb->esc_like( 'links_rating_image' ) . '%', $zcdb->esc_like( 'zc-links/links-images/' ) . '%' ) );
 
-	$done_ids = $wpdb->get_results( "SELECT DISTINCT post_id FROM $wpdb->post2cat" );
+	$done_ids = $zcdb->get_results( "SELECT DISTINCT post_id FROM $zcdb->post2cat" );
 	if ( $done_ids ) :
 		$done_posts = array();
 		foreach ( $done_ids as $done_id ) :
@@ -945,14 +945,14 @@ function upgrade_100() {
 		$catwhere = '';
 	endif;
 
-	$allposts = $wpdb->get_results( "SELECT ID, post_category FROM $wpdb->posts WHERE post_category != '0' $catwhere" );
+	$allposts = $zcdb->get_results( "SELECT ID, post_category FROM $zcdb->posts WHERE post_category != '0' $catwhere" );
 	if ( $allposts ) :
 		foreach ( $allposts as $post ) {
 			// Check to see if it's already been imported.
-			$cat = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->post2cat WHERE post_id = %d AND category_id = %d", $post->ID, $post->post_category ) );
+			$cat = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->post2cat WHERE post_id = %d AND category_id = %d", $post->ID, $post->post_category ) );
 			if ( ! $cat && 0 !== (int) $post->post_category ) { // If there's no result.
-				$wpdb->insert(
-					$wpdb->post2cat,
+				$zcdb->insert(
+					$zcdb->post2cat,
 					array(
 						'post_id'     => $post->ID,
 						'category_id' => $post->post_category,
@@ -969,19 +969,19 @@ function upgrade_100() {
  * @ignore
  * @since 1.0.1
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_101() {
-	global $wpdb;
+	global $zcdb;
 
 	// Clean up indices, add a few.
-	add_clean_index( $wpdb->posts, 'post_name' );
-	add_clean_index( $wpdb->posts, 'post_status' );
-	add_clean_index( $wpdb->categories, 'category_nicename' );
-	add_clean_index( $wpdb->comments, 'comment_approved' );
-	add_clean_index( $wpdb->comments, 'comment_post_ID' );
-	add_clean_index( $wpdb->links, 'link_category' );
-	add_clean_index( $wpdb->links, 'link_visible' );
+	add_clean_index( $zcdb->posts, 'post_name' );
+	add_clean_index( $zcdb->posts, 'post_status' );
+	add_clean_index( $zcdb->categories, 'category_nicename' );
+	add_clean_index( $zcdb->comments, 'comment_approved' );
+	add_clean_index( $zcdb->comments, 'comment_post_ID' );
+	add_clean_index( $zcdb->links, 'link_category' );
+	add_clean_index( $zcdb->links, 'link_visible' );
 }
 
 /**
@@ -991,17 +991,17 @@ function upgrade_101() {
  * @since 1.2.0
  * @since 6.8.0 User passwords are no longer hashed with md5.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_110() {
-	global $wpdb;
+	global $zcdb;
 
 	// Set user_nicename.
-	$users = $wpdb->get_results( "SELECT ID, user_nickname, user_nicename FROM $wpdb->users" );
+	$users = $zcdb->get_results( "SELECT ID, user_nickname, user_nicename FROM $zcdb->users" );
 	foreach ( $users as $user ) {
 		if ( '' === $user->user_nicename ) {
 			$newname = sanitize_title( $user->user_nickname );
-			$wpdb->update( $wpdb->users, array( 'user_nicename' => $newname ), array( 'ID' => $user->ID ) );
+			$zcdb->update( $zcdb->users, array( 'user_nicename' => $newname ), array( 'ID' => $user->ID ) );
 		}
 	}
 
@@ -1027,18 +1027,18 @@ function upgrade_110() {
 	 * MAX(post_date_gmt) can't be '0000-00-00 00:00:00'.
 	 * <michel_v> I just slapped myself silly for not thinking about it earlier.
 	 */
-	$got_gmt_fields = ( '0000-00-00 00:00:00' !== $wpdb->get_var( "SELECT MAX(post_date_gmt) FROM $wpdb->posts" ) );
+	$got_gmt_fields = ( '0000-00-00 00:00:00' !== $zcdb->get_var( "SELECT MAX(post_date_gmt) FROM $zcdb->posts" ) );
 
 	if ( ! $got_gmt_fields ) {
 
 		// Add or subtract time to all dates, to get GMT dates.
 		$add_hours   = (int) $diff_gmt_weblogger;
 		$add_minutes = (int) ( 60 * ( $diff_gmt_weblogger - $add_hours ) );
-		$wpdb->query( "UPDATE $wpdb->posts SET post_date_gmt = DATE_ADD(post_date, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
-		$wpdb->query( "UPDATE $wpdb->posts SET post_modified = post_date" );
-		$wpdb->query( "UPDATE $wpdb->posts SET post_modified_gmt = DATE_ADD(post_modified, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE) WHERE post_modified != '0000-00-00 00:00:00'" );
-		$wpdb->query( "UPDATE $wpdb->comments SET comment_date_gmt = DATE_ADD(comment_date, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
-		$wpdb->query( "UPDATE $wpdb->users SET user_registered = DATE_ADD(user_registered, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
+		$zcdb->query( "UPDATE $zcdb->posts SET post_date_gmt = DATE_ADD(post_date, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
+		$zcdb->query( "UPDATE $zcdb->posts SET post_modified = post_date" );
+		$zcdb->query( "UPDATE $zcdb->posts SET post_modified_gmt = DATE_ADD(post_modified, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE) WHERE post_modified != '0000-00-00 00:00:00'" );
+		$zcdb->query( "UPDATE $zcdb->comments SET comment_date_gmt = DATE_ADD(comment_date, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
+		$zcdb->query( "UPDATE $zcdb->users SET user_registered = DATE_ADD(user_registered, INTERVAL '$add_hours:$add_minutes' HOUR_MINUTE)" );
 	}
 }
 
@@ -1048,13 +1048,13 @@ function upgrade_110() {
  * @ignore
  * @since 1.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_130() {
-	global $wpdb;
+	global $zcdb;
 
 	// Remove extraneous backslashes.
-	$posts = $wpdb->get_results( "SELECT ID, post_title, post_content, post_excerpt, guid, post_date, post_name, post_status, post_author FROM $wpdb->posts" );
+	$posts = $zcdb->get_results( "SELECT ID, post_title, post_content, post_excerpt, guid, post_date, post_name, post_status, post_author FROM $zcdb->posts" );
 	if ( $posts ) {
 		foreach ( $posts as $post ) {
 			$post_content = addslashes( deslash( $post->post_content ) );
@@ -1066,30 +1066,30 @@ function upgrade_130() {
 				$guid = $post->guid;
 			}
 
-			$wpdb->update( $wpdb->posts, compact( 'post_title', 'post_content', 'post_excerpt', 'guid' ), array( 'ID' => $post->ID ) );
+			$zcdb->update( $zcdb->posts, compact( 'post_title', 'post_content', 'post_excerpt', 'guid' ), array( 'ID' => $post->ID ) );
 
 		}
 	}
 
 	// Remove extraneous backslashes.
-	$comments = $wpdb->get_results( "SELECT comment_ID, comment_author, comment_content FROM $wpdb->comments" );
+	$comments = $zcdb->get_results( "SELECT comment_ID, comment_author, comment_content FROM $zcdb->comments" );
 	if ( $comments ) {
 		foreach ( $comments as $comment ) {
 			$comment_content = deslash( $comment->comment_content );
 			$comment_author  = deslash( $comment->comment_author );
 
-			$wpdb->update( $wpdb->comments, compact( 'comment_content', 'comment_author' ), array( 'comment_ID' => $comment->comment_ID ) );
+			$zcdb->update( $zcdb->comments, compact( 'comment_content', 'comment_author' ), array( 'comment_ID' => $comment->comment_ID ) );
 		}
 	}
 
 	// Remove extraneous backslashes.
-	$links = $wpdb->get_results( "SELECT link_id, link_name, link_description FROM $wpdb->links" );
+	$links = $zcdb->get_results( "SELECT link_id, link_name, link_description FROM $zcdb->links" );
 	if ( $links ) {
 		foreach ( $links as $link ) {
 			$link_name        = deslash( $link->link_name );
 			$link_description = deslash( $link->link_description );
 
-			$wpdb->update( $wpdb->links, compact( 'link_name', 'link_description' ), array( 'link_id' => $link->link_id ) );
+			$zcdb->update( $zcdb->links, compact( 'link_name', 'link_description' ), array( 'link_id' => $link->link_id ) );
 		}
 	}
 
@@ -1105,24 +1105,24 @@ function upgrade_130() {
 	}
 
 	// Obsolete tables.
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'optionvalues' );
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'optiontypes' );
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'optiongroups' );
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'optiongroup_options' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'optionvalues' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'optiontypes' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'optiongroups' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'optiongroup_options' );
 
 	// Update comments table to use comment_type.
-	$wpdb->query( "UPDATE $wpdb->comments SET comment_type='trackback', comment_content = REPLACE(comment_content, '<trackback />', '') WHERE comment_content LIKE '<trackback />%'" );
-	$wpdb->query( "UPDATE $wpdb->comments SET comment_type='pingback', comment_content = REPLACE(comment_content, '<pingback />', '') WHERE comment_content LIKE '<pingback />%'" );
+	$zcdb->query( "UPDATE $zcdb->comments SET comment_type='trackback', comment_content = REPLACE(comment_content, '<trackback />', '') WHERE comment_content LIKE '<trackback />%'" );
+	$zcdb->query( "UPDATE $zcdb->comments SET comment_type='pingback', comment_content = REPLACE(comment_content, '<pingback />', '') WHERE comment_content LIKE '<pingback />%'" );
 
 	// Some versions have multiple duplicate option_name rows with the same values.
-	$options = $wpdb->get_results( "SELECT option_name, COUNT(option_name) AS dupes FROM `$wpdb->options` GROUP BY option_name" );
+	$options = $zcdb->get_results( "SELECT option_name, COUNT(option_name) AS dupes FROM `$zcdb->options` GROUP BY option_name" );
 	foreach ( $options as $option ) {
 		if ( $option->dupes > 1 ) { // Could this be done in the query?
 			$limit    = $option->dupes - 1;
-			$dupe_ids = $wpdb->get_col( $wpdb->prepare( "SELECT option_id FROM $wpdb->options WHERE option_name = %s LIMIT %d", $option->option_name, $limit ) );
+			$dupe_ids = $zcdb->get_col( $zcdb->prepare( "SELECT option_id FROM $zcdb->options WHERE option_name = %s LIMIT %d", $option->option_name, $limit ) );
 			if ( $dupe_ids ) {
 				$dupe_ids = implode( ',', $dupe_ids );
-				$wpdb->query( "DELETE FROM $wpdb->options WHERE option_id IN ($dupe_ids)" );
+				$zcdb->query( "DELETE FROM $zcdb->options WHERE option_id IN ($dupe_ids)" );
 			}
 		}
 	}
@@ -1136,15 +1136,15 @@ function upgrade_130() {
  * @ignore
  * @since 2.0.0
  *
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  * @global int  $zc_current_db_version The old (current) database version.
  */
 function upgrade_160() {
-	global $wpdb, $zc_current_db_version;
+	global $zcdb, $zc_current_db_version;
 
 	populate_roles_160();
 
-	$users = $wpdb->get_results( "SELECT * FROM $wpdb->users" );
+	$users = $zcdb->get_results( "SELECT * FROM $zcdb->users" );
 	foreach ( $users as $user ) :
 		if ( ! empty( $user->user_firstname ) ) {
 			update_user_meta( $user->ID, 'first_name', zc_slash( $user->user_firstname ) );
@@ -1156,7 +1156,7 @@ function upgrade_160() {
 			update_user_meta( $user->ID, 'nickname', zc_slash( $user->user_nickname ) );
 		}
 		if ( ! empty( $user->user_level ) ) {
-			update_user_meta( $user->ID, $wpdb->prefix . 'user_level', $user->user_level );
+			update_user_meta( $user->ID, $zcdb->prefix . 'user_level', $user->user_level );
 		}
 		if ( ! empty( $user->user_icq ) ) {
 			update_user_meta( $user->ID, 'icq', zc_slash( $user->user_icq ) );
@@ -1197,30 +1197,30 @@ function upgrade_160() {
 			if ( ! $idmode ) {
 				$id = $user->user_nickname;
 			}
-			$wpdb->update( $wpdb->users, array( 'display_name' => $id ), array( 'ID' => $user->ID ) );
+			$zcdb->update( $zcdb->users, array( 'display_name' => $id ), array( 'ID' => $user->ID ) );
 		endif;
 
 		// FIXME: RESET_CAPS is temporary code to reset roles and caps if flag is set.
-		$caps = get_user_meta( $user->ID, $wpdb->prefix . 'capabilities' );
+		$caps = get_user_meta( $user->ID, $zcdb->prefix . 'capabilities' );
 		if ( empty( $caps ) || defined( 'RESET_CAPS' ) ) {
-			$level = get_user_meta( $user->ID, $wpdb->prefix . 'user_level', true );
+			$level = get_user_meta( $user->ID, $zcdb->prefix . 'user_level', true );
 			$role  = translate_level_to_role( $level );
-			update_user_meta( $user->ID, $wpdb->prefix . 'capabilities', array( $role => true ) );
+			update_user_meta( $user->ID, $zcdb->prefix . 'capabilities', array( $role => true ) );
 		}
 
 	endforeach;
 	$old_user_fields = array( 'user_firstname', 'user_lastname', 'user_icq', 'user_aim', 'user_msn', 'user_yim', 'user_idmode', 'user_ip', 'user_domain', 'user_browser', 'user_description', 'user_nickname', 'user_level' );
-	$wpdb->hide_errors();
+	$zcdb->hide_errors();
 	foreach ( $old_user_fields as $old ) {
-		$wpdb->query( "ALTER TABLE $wpdb->users DROP $old" );
+		$zcdb->query( "ALTER TABLE $zcdb->users DROP $old" );
 	}
-	$wpdb->show_errors();
+	$zcdb->show_errors();
 
 	// Populate comment_count field of posts table.
-	$comments = $wpdb->get_results( "SELECT comment_post_ID, COUNT(*) as c FROM $wpdb->comments WHERE comment_approved = '1' GROUP BY comment_post_ID" );
+	$comments = $zcdb->get_results( "SELECT comment_post_ID, COUNT(*) as c FROM $zcdb->comments WHERE comment_approved = '1' GROUP BY comment_post_ID" );
 	if ( is_array( $comments ) ) {
 		foreach ( $comments as $comment ) {
-			$wpdb->update( $wpdb->posts, array( 'comment_count' => $comment->c ), array( 'ID' => $comment->comment_post_ID ) );
+			$zcdb->update( $zcdb->posts, array( 'comment_count' => $comment->c ), array( 'ID' => $comment->comment_post_ID ) );
 		}
 	}
 
@@ -1229,10 +1229,10 @@ function upgrade_160() {
 	 * and put the mime type in post_type instead of post_mime_type.
 	 */
 	if ( $zc_current_db_version > 2541 && $zc_current_db_version <= 3091 ) {
-		$objects = $wpdb->get_results( "SELECT ID, post_type FROM $wpdb->posts WHERE post_status = 'object'" );
+		$objects = $zcdb->get_results( "SELECT ID, post_type FROM $zcdb->posts WHERE post_status = 'object'" );
 		foreach ( $objects as $object ) {
-			$wpdb->update(
-				$wpdb->posts,
+			$zcdb->update(
+				$zcdb->posts,
 				array(
 					'post_status'    => 'attachment',
 					'post_mime_type' => $object->post_type,
@@ -1256,14 +1256,14 @@ function upgrade_160() {
  * @since 2.1.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_210() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 3506 ) {
 		// Update status and type.
-		$posts = $wpdb->get_results( "SELECT ID, post_status FROM $wpdb->posts" );
+		$posts = $zcdb->get_results( "SELECT ID, post_status FROM $zcdb->posts" );
 
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
@@ -1278,7 +1278,7 @@ function upgrade_210() {
 					$type   = 'attachment';
 				}
 
-				$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET post_status = %s, post_type = %s WHERE ID = %d", $status, $type, $post->ID ) );
+				$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET post_status = %s, post_type = %s WHERE ID = %d", $status, $type, $post->ID ) );
 			}
 		}
 	}
@@ -1290,9 +1290,9 @@ function upgrade_210() {
 	if ( $zc_current_db_version < 3531 ) {
 		// Give future posts a post_status of future.
 		$now = gmdate( 'Y-m-d H:i:59' );
-		$wpdb->query( "UPDATE $wpdb->posts SET post_status = 'future' WHERE post_status = 'publish' AND post_date_gmt > '$now'" );
+		$zcdb->query( "UPDATE $zcdb->posts SET post_status = 'future' WHERE post_status = 'publish' AND post_date_gmt > '$now'" );
 
-		$posts = $wpdb->get_results( "SELECT ID, post_date FROM $wpdb->posts WHERE post_status ='future'" );
+		$posts = $zcdb->get_results( "SELECT ID, post_date FROM $zcdb->posts WHERE post_status ='future'" );
 		if ( ! empty( $posts ) ) {
 			foreach ( $posts as $post ) {
 				zc_schedule_single_event( mysql2date( 'U', $post->post_date, false ), 'publish_future_post', array( $post->ID ) );
@@ -1308,10 +1308,10 @@ function upgrade_210() {
  * @since 2.3.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_230() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 5200 ) {
 		populate_roles_230();
@@ -1320,7 +1320,7 @@ function upgrade_230() {
 	// Convert categories to terms.
 	$tt_ids     = array();
 	$have_tags  = false;
-	$categories = $wpdb->get_results( "SELECT * FROM $wpdb->categories ORDER BY cat_ID" );
+	$categories = $zcdb->get_results( "SELECT * FROM $zcdb->categories ORDER BY cat_ID" );
 	foreach ( $categories as $category ) {
 		$term_id     = (int) $category->cat_ID;
 		$name        = $category->cat_name;
@@ -1330,7 +1330,7 @@ function upgrade_230() {
 		$term_group  = 0;
 
 		// Associate terms with the same slug in a term group and make slugs unique.
-		$exists = $wpdb->get_results( $wpdb->prepare( "SELECT term_id, term_group FROM $wpdb->terms WHERE slug = %s", $slug ) );
+		$exists = $zcdb->get_results( $zcdb->prepare( "SELECT term_id, term_group FROM $zcdb->terms WHERE slug = %s", $slug ) );
 		if ( $exists ) {
 			$term_group = $exists[0]->term_group;
 			$id         = $exists[0]->term_id;
@@ -1338,20 +1338,20 @@ function upgrade_230() {
 			do {
 				$alt_slug = $slug . "-$num";
 				++$num;
-				$slug_check = $wpdb->get_var( $wpdb->prepare( "SELECT slug FROM $wpdb->terms WHERE slug = %s", $alt_slug ) );
+				$slug_check = $zcdb->get_var( $zcdb->prepare( "SELECT slug FROM $zcdb->terms WHERE slug = %s", $alt_slug ) );
 			} while ( $slug_check );
 
 			$slug = $alt_slug;
 
 			if ( empty( $term_group ) ) {
-				$term_group = $wpdb->get_var( "SELECT MAX(term_group) FROM $wpdb->terms GROUP BY term_group" ) + 1;
-				$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->terms SET term_group = %d WHERE term_id = %d", $term_group, $id ) );
+				$term_group = $zcdb->get_var( "SELECT MAX(term_group) FROM $zcdb->terms GROUP BY term_group" ) + 1;
+				$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->terms SET term_group = %d WHERE term_id = %d", $term_group, $id ) );
 			}
 		}
 
-		$wpdb->query(
-			$wpdb->prepare(
-				"INSERT INTO $wpdb->terms (term_id, name, slug, term_group) VALUES
+		$zcdb->query(
+			$zcdb->prepare(
+				"INSERT INTO $zcdb->terms (term_id, name, slug, term_group) VALUES
 		(%d, %s, %s, %d)",
 				$term_id,
 				$name,
@@ -1364,30 +1364,30 @@ function upgrade_230() {
 		if ( ! empty( $category->category_count ) ) {
 			$count    = (int) $category->category_count;
 			$taxonomy = 'category';
-			$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->term_taxonomy (term_id, taxonomy, description, parent, count) VALUES ( %d, %s, %s, %d, %d)", $term_id, $taxonomy, $description, $parent, $count ) );
-			$tt_ids[ $term_id ][ $taxonomy ] = (int) $wpdb->insert_id;
+			$zcdb->query( $zcdb->prepare( "INSERT INTO $zcdb->term_taxonomy (term_id, taxonomy, description, parent, count) VALUES ( %d, %s, %s, %d, %d)", $term_id, $taxonomy, $description, $parent, $count ) );
+			$tt_ids[ $term_id ][ $taxonomy ] = (int) $zcdb->insert_id;
 		}
 
 		if ( ! empty( $category->link_count ) ) {
 			$count    = (int) $category->link_count;
 			$taxonomy = 'link_category';
-			$wpdb->query( $wpdb->prepare( "INSERT INTO $wpdb->term_taxonomy (term_id, taxonomy, description, parent, count) VALUES ( %d, %s, %s, %d, %d)", $term_id, $taxonomy, $description, $parent, $count ) );
-			$tt_ids[ $term_id ][ $taxonomy ] = (int) $wpdb->insert_id;
+			$zcdb->query( $zcdb->prepare( "INSERT INTO $zcdb->term_taxonomy (term_id, taxonomy, description, parent, count) VALUES ( %d, %s, %s, %d, %d)", $term_id, $taxonomy, $description, $parent, $count ) );
+			$tt_ids[ $term_id ][ $taxonomy ] = (int) $zcdb->insert_id;
 		}
 
 		if ( ! empty( $category->tag_count ) ) {
 			$have_tags = true;
 			$count     = (int) $category->tag_count;
 			$taxonomy  = 'post_tag';
-			$wpdb->insert( $wpdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent', 'count' ) );
-			$tt_ids[ $term_id ][ $taxonomy ] = (int) $wpdb->insert_id;
+			$zcdb->insert( $zcdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent', 'count' ) );
+			$tt_ids[ $term_id ][ $taxonomy ] = (int) $zcdb->insert_id;
 		}
 
 		if ( empty( $count ) ) {
 			$count    = 0;
 			$taxonomy = 'category';
-			$wpdb->insert( $wpdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent', 'count' ) );
-			$tt_ids[ $term_id ][ $taxonomy ] = (int) $wpdb->insert_id;
+			$zcdb->insert( $zcdb->term_taxonomy, compact( 'term_id', 'taxonomy', 'description', 'parent', 'count' ) );
+			$tt_ids[ $term_id ][ $taxonomy ] = (int) $zcdb->insert_id;
 		}
 	}
 
@@ -1396,7 +1396,7 @@ function upgrade_230() {
 		$select .= ', rel_type';
 	}
 
-	$posts = $wpdb->get_results( "SELECT $select FROM $wpdb->post2cat GROUP BY post_id, category_id" );
+	$posts = $zcdb->get_results( "SELECT $select FROM $zcdb->post2cat GROUP BY post_id, category_id" );
 	foreach ( $posts as $post ) {
 		$post_id  = (int) $post->post_id;
 		$term_id  = (int) $post->category_id;
@@ -1409,8 +1409,8 @@ function upgrade_230() {
 			continue;
 		}
 
-		$wpdb->insert(
-			$wpdb->term_relationships,
+		$zcdb->insert(
+			$zcdb->term_relationships,
 			array(
 				'object_id'        => $post_id,
 				'term_taxonomy_id' => $tt_id,
@@ -1427,7 +1427,7 @@ function upgrade_230() {
 		$link_cat_id_map  = array();
 		$default_link_cat = 0;
 		$tt_ids           = array();
-		$link_cats        = $wpdb->get_results( 'SELECT cat_id, cat_name FROM ' . $wpdb->prefix . 'linkcategories' );
+		$link_cats        = $zcdb->get_results( 'SELECT cat_id, cat_name FROM ' . $zcdb->prefix . 'linkcategories' );
 		foreach ( $link_cats as $category ) {
 			$cat_id     = (int) $category->cat_id;
 			$term_id    = 0;
@@ -1436,22 +1436,22 @@ function upgrade_230() {
 			$term_group = 0;
 
 			// Associate terms with the same slug in a term group and make slugs unique.
-			$exists = $wpdb->get_results( $wpdb->prepare( "SELECT term_id, term_group FROM $wpdb->terms WHERE slug = %s", $slug ) );
+			$exists = $zcdb->get_results( $zcdb->prepare( "SELECT term_id, term_group FROM $zcdb->terms WHERE slug = %s", $slug ) );
 			if ( $exists ) {
 				$term_group = $exists[0]->term_group;
 				$term_id    = $exists[0]->term_id;
 			}
 
 			if ( empty( $term_id ) ) {
-				$wpdb->insert( $wpdb->terms, compact( 'name', 'slug', 'term_group' ) );
-				$term_id = (int) $wpdb->insert_id;
+				$zcdb->insert( $zcdb->terms, compact( 'name', 'slug', 'term_group' ) );
+				$term_id = (int) $zcdb->insert_id;
 			}
 
 			$link_cat_id_map[ $cat_id ] = $term_id;
 			$default_link_cat           = $term_id;
 
-			$wpdb->insert(
-				$wpdb->term_taxonomy,
+			$zcdb->insert(
+				$zcdb->term_taxonomy,
 				array(
 					'term_id'     => $term_id,
 					'taxonomy'    => 'link_category',
@@ -1460,11 +1460,11 @@ function upgrade_230() {
 					'count'       => 0,
 				)
 			);
-			$tt_ids[ $term_id ] = (int) $wpdb->insert_id;
+			$tt_ids[ $term_id ] = (int) $zcdb->insert_id;
 		}
 
 		// Associate links to categories.
-		$links = $wpdb->get_results( "SELECT link_id, link_category FROM $wpdb->links" );
+		$links = $zcdb->get_results( "SELECT link_id, link_category FROM $zcdb->links" );
 		if ( ! empty( $links ) ) {
 			foreach ( $links as $link ) {
 				if ( 0 === (int) $link->link_category ) {
@@ -1479,8 +1479,8 @@ function upgrade_230() {
 					continue;
 				}
 
-				$wpdb->insert(
-					$wpdb->term_relationships,
+				$zcdb->insert(
+					$zcdb->term_relationships,
 					array(
 						'object_id'        => $link->link_id,
 						'term_taxonomy_id' => $tt_id,
@@ -1492,7 +1492,7 @@ function upgrade_230() {
 		// Set default to the last category we grabbed during the upgrade loop.
 		update_option( 'default_link_category', $default_link_cat );
 	} else {
-		$links = $wpdb->get_results( "SELECT link_id, category_id FROM $wpdb->link2cat GROUP BY link_id, category_id" );
+		$links = $zcdb->get_results( "SELECT link_id, category_id FROM $zcdb->link2cat GROUP BY link_id, category_id" );
 		foreach ( $links as $link ) {
 			$link_id  = (int) $link->link_id;
 			$term_id  = (int) $link->category_id;
@@ -1501,8 +1501,8 @@ function upgrade_230() {
 			if ( empty( $tt_id ) ) {
 				continue;
 			}
-			$wpdb->insert(
-				$wpdb->term_relationships,
+			$zcdb->insert(
+				$zcdb->term_relationships,
 				array(
 					'object_id'        => $link_id,
 					'term_taxonomy_id' => $tt_id,
@@ -1513,18 +1513,18 @@ function upgrade_230() {
 
 	if ( $zc_current_db_version < 4772 ) {
 		// Obsolete linkcategories table.
-		$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'linkcategories' );
+		$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'linkcategories' );
 	}
 
 	// Recalculate all counts.
-	$terms = $wpdb->get_results( "SELECT term_taxonomy_id, taxonomy FROM $wpdb->term_taxonomy" );
+	$terms = $zcdb->get_results( "SELECT term_taxonomy_id, taxonomy FROM $zcdb->term_taxonomy" );
 	foreach ( (array) $terms as $term ) {
 		if ( 'post_tag' === $term->taxonomy || 'category' === $term->taxonomy ) {
-			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships, $wpdb->posts WHERE $wpdb->posts.ID = $wpdb->term_relationships.object_id AND post_status = 'publish' AND post_type = 'post' AND term_taxonomy_id = %d", $term->term_taxonomy_id ) );
+			$count = $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_relationships, $zcdb->posts WHERE $zcdb->posts.ID = $zcdb->term_relationships.object_id AND post_status = 'publish' AND post_type = 'post' AND term_taxonomy_id = %d", $term->term_taxonomy_id ) );
 		} else {
-			$count = $wpdb->get_var( $wpdb->prepare( "SELECT COUNT(*) FROM $wpdb->term_relationships WHERE term_taxonomy_id = %d", $term->term_taxonomy_id ) );
+			$count = $zcdb->get_var( $zcdb->prepare( "SELECT COUNT(*) FROM $zcdb->term_relationships WHERE term_taxonomy_id = %d", $term->term_taxonomy_id ) );
 		}
-		$wpdb->update( $wpdb->term_taxonomy, array( 'count' => $count ), array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
+		$zcdb->update( $zcdb->term_taxonomy, array( 'count' => $count ), array( 'term_taxonomy_id' => $term->term_taxonomy_id ) );
 	}
 }
 
@@ -1534,16 +1534,16 @@ function upgrade_230() {
  * @ignore
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_230_options_table() {
-	global $wpdb;
+	global $zcdb;
 	$old_options_fields = array( 'option_can_override', 'option_type', 'option_width', 'option_height', 'option_description', 'option_admin_level' );
-	$wpdb->hide_errors();
+	$zcdb->hide_errors();
 	foreach ( $old_options_fields as $old ) {
-		$wpdb->query( "ALTER TABLE $wpdb->options DROP $old" );
+		$zcdb->query( "ALTER TABLE $zcdb->options DROP $old" );
 	}
-	$wpdb->show_errors();
+	$zcdb->show_errors();
 }
 
 /**
@@ -1552,13 +1552,13 @@ function upgrade_230_options_table() {
  * @ignore
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_230_old_tables() {
-	global $wpdb;
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'categories' );
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'link2cat' );
-	$wpdb->query( 'DROP TABLE IF EXISTS ' . $wpdb->prefix . 'post2cat' );
+	global $zcdb;
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'categories' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'link2cat' );
+	$zcdb->query( 'DROP TABLE IF EXISTS ' . $zcdb->prefix . 'post2cat' );
 }
 
 /**
@@ -1567,12 +1567,12 @@ function upgrade_230_old_tables() {
  * @ignore
  * @since 2.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_old_slugs() {
 	// Upgrade people who were using the Redirect Old Slugs plugin.
-	global $wpdb;
-	$wpdb->query( "UPDATE $wpdb->postmeta SET meta_key = '_zc_old_slug' WHERE meta_key = 'old_slug'" );
+	global $zcdb;
+	$zcdb->query( "UPDATE $zcdb->postmeta SET meta_key = '_zc_old_slug' WHERE meta_key = 'old_slug'" );
 }
 
 /**
@@ -1597,12 +1597,12 @@ function upgrade_250() {
  * @ignore
  * @since 2.5.2
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_252() {
-	global $wpdb;
+	global $zcdb;
 
-	$wpdb->query( "UPDATE $wpdb->users SET user_activation_key = ''" );
+	$zcdb->query( "UPDATE $zcdb->users SET user_activation_key = ''" );
 }
 
 /**
@@ -1628,10 +1628,10 @@ function upgrade_260() {
  * @since 2.7.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_270() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 8980 ) {
 		populate_roles_270();
@@ -1639,7 +1639,7 @@ function upgrade_270() {
 
 	// Update post_date for unpublished posts with empty timestamp.
 	if ( $zc_current_db_version < 8921 ) {
-		$wpdb->query( "UPDATE $wpdb->posts SET post_date = post_modified WHERE post_date = '0000-00-00 00:00:00'" );
+		$zcdb->query( "UPDATE $zcdb->posts SET post_date = post_modified WHERE post_date = '0000-00-00 00:00:00'" );
 	}
 }
 
@@ -1650,17 +1650,17 @@ function upgrade_270() {
  * @since 2.8.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_280() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 10360 ) {
 		populate_roles_280();
 	}
 	if ( is_multisite() ) {
 		$start = 0;
-		while ( $rows = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options ORDER BY option_id LIMIT $start, 20" ) ) {
+		while ( $rows = $zcdb->get_results( "SELECT option_name, option_value FROM $zcdb->options ORDER BY option_id LIMIT $start, 20" ) ) {
 			foreach ( $rows as $row ) {
 				$value = maybe_unserialize( $row->option_value );
 				if ( $value === $row->option_value ) {
@@ -1706,10 +1706,10 @@ function upgrade_290() {
  * @since 3.0.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_300() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 15093 ) {
 		populate_roles_300();
@@ -1721,7 +1721,7 @@ function upgrade_300() {
 
 	// 3.0 screen options key name changes.
 	if ( zc_should_upgrade_global_tables() ) {
-		$sql    = "DELETE FROM $wpdb->usermeta
+		$sql    = "DELETE FROM $zcdb->usermeta
 			WHERE meta_key LIKE %s
 			OR meta_key LIKE %s
 			OR meta_key LIKE %s
@@ -1734,16 +1734,16 @@ function upgrade_300() {
 			OR meta_key = 'manageeditcolumnshidden'
 			OR meta_key = 'categories_per_page'
 			OR meta_key = 'edit_tags_per_page'";
-		$prefix = $wpdb->esc_like( $wpdb->base_prefix );
-		$wpdb->query(
-			$wpdb->prepare(
+		$prefix = $zcdb->esc_like( $zcdb->base_prefix );
+		$zcdb->query(
+			$zcdb->prepare(
 				$sql,
-				$prefix . '%' . $wpdb->esc_like( 'meta-box-hidden' ) . '%',
-				$prefix . '%' . $wpdb->esc_like( 'closedpostboxes' ) . '%',
-				$prefix . '%' . $wpdb->esc_like( 'manage-' ) . '%' . $wpdb->esc_like( '-columns-hidden' ) . '%',
-				$prefix . '%' . $wpdb->esc_like( 'meta-box-order' ) . '%',
-				$prefix . '%' . $wpdb->esc_like( 'metaboxorder' ) . '%',
-				$prefix . '%' . $wpdb->esc_like( 'screen_layout' ) . '%'
+				$prefix . '%' . $zcdb->esc_like( 'meta-box-hidden' ) . '%',
+				$prefix . '%' . $zcdb->esc_like( 'closedpostboxes' ) . '%',
+				$prefix . '%' . $zcdb->esc_like( 'manage-' ) . '%' . $zcdb->esc_like( '-columns-hidden' ) . '%',
+				$prefix . '%' . $zcdb->esc_like( 'meta-box-order' ) . '%',
+				$prefix . '%' . $zcdb->esc_like( 'metaboxorder' ) . '%',
+				$prefix . '%' . $zcdb->esc_like( 'screen_layout' ) . '%'
 			)
 		);
 	}
@@ -1756,15 +1756,15 @@ function upgrade_300() {
  * @since 3.3.0
  *
  * @global int   $zc_current_db_version The old (current) database version.
- * @global wpdb  $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb  $zcdb                  ZelocoreCMS database abstraction object.
  * @global array $zc_registered_widgets
  * @global array $sidebars_widgets
  */
 function upgrade_330() {
-	global $zc_current_db_version, $wpdb, $zc_registered_widgets, $sidebars_widgets;
+	global $zc_current_db_version, $zcdb, $zc_registered_widgets, $sidebars_widgets;
 
 	if ( $zc_current_db_version < 19061 && zc_should_upgrade_global_tables() ) {
-		$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key IN ('show_admin_bar_admin', 'plugins_last_view')" );
+		$zcdb->query( "DELETE FROM $zcdb->usermeta WHERE meta_key IN ('show_admin_bar_admin', 'plugins_last_view')" );
 	}
 
 	if ( $zc_current_db_version >= 11548 ) {
@@ -1840,29 +1840,29 @@ function upgrade_330() {
  * @since 3.4.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_340() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 19798 ) {
-		$wpdb->hide_errors();
-		$wpdb->query( "ALTER TABLE $wpdb->options DROP COLUMN blog_id" );
-		$wpdb->show_errors();
+		$zcdb->hide_errors();
+		$zcdb->query( "ALTER TABLE $zcdb->options DROP COLUMN blog_id" );
+		$zcdb->show_errors();
 	}
 
 	if ( $zc_current_db_version < 19799 ) {
-		$wpdb->hide_errors();
-		$wpdb->query( "ALTER TABLE $wpdb->comments DROP INDEX comment_approved" );
-		$wpdb->show_errors();
+		$zcdb->hide_errors();
+		$zcdb->query( "ALTER TABLE $zcdb->comments DROP INDEX comment_approved" );
+		$zcdb->show_errors();
 	}
 
 	if ( $zc_current_db_version < 20022 && zc_should_upgrade_global_tables() ) {
-		$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key = 'themes_last_view'" );
+		$zcdb->query( "DELETE FROM $zcdb->usermeta WHERE meta_key = 'themes_last_view'" );
 	}
 
 	if ( $zc_current_db_version < 20080 ) {
-		if ( 'yes' === $wpdb->get_var( "SELECT autoload FROM $wpdb->options WHERE option_name = 'uninstall_plugins'" ) ) {
+		if ( 'yes' === $zcdb->get_var( "SELECT autoload FROM $zcdb->options WHERE option_name = 'uninstall_plugins'" ) ) {
 			$uninstall_plugins = get_option( 'uninstall_plugins' );
 			delete_option( 'uninstall_plugins' );
 			add_option( 'uninstall_plugins', $uninstall_plugins, null, false );
@@ -1877,12 +1877,12 @@ function upgrade_340() {
  * @since 3.5.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_350() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
-	if ( $zc_current_db_version < 22006 && $wpdb->get_var( "SELECT link_id FROM $wpdb->links LIMIT 1" ) ) {
+	if ( $zc_current_db_version < 22006 && $zcdb->get_var( "SELECT link_id FROM $zcdb->links LIMIT 1" ) ) {
 		update_option( 'link_manager_enabled', 1 ); // Previously set to 0 by populate_options().
 	}
 
@@ -1895,7 +1895,7 @@ function upgrade_350() {
 		}
 		if ( $meta_keys ) {
 			$meta_keys = implode( "', '", $meta_keys );
-			$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key IN ('$meta_keys')" );
+			$zcdb->query( "DELETE FROM $zcdb->usermeta WHERE meta_key IN ('$meta_keys')" );
 		}
 	}
 
@@ -1992,10 +1992,10 @@ function upgrade_420() {}
  * @since 4.3.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_430() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 32364 ) {
 		upgrade_430_fix_comments();
@@ -2007,13 +2007,13 @@ function upgrade_430() {
 		zc_schedule_single_event( time() + ( 1 * MINUTE_IN_SECONDS ), 'zc_split_shared_term_batch' );
 	}
 
-	if ( $zc_current_db_version < 33055 && 'utf8mb4' === $wpdb->charset ) {
+	if ( $zc_current_db_version < 33055 && 'utf8mb4' === $zcdb->charset ) {
 		if ( is_multisite() ) {
-			$tables = $wpdb->tables( 'blog' );
+			$tables = $zcdb->tables( 'blog' );
 		} else {
-			$tables = $wpdb->tables( 'all' );
+			$tables = $zcdb->tables( 'all' );
 			if ( ! zc_should_upgrade_global_tables() ) {
-				$global_tables = $wpdb->tables( 'global' );
+				$global_tables = $zcdb->tables( 'global' );
 				$tables        = array_diff_assoc( $tables, $global_tables );
 			}
 		}
@@ -2030,12 +2030,12 @@ function upgrade_430() {
  * @ignore
  * @since 4.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function upgrade_430_fix_comments() {
-	global $wpdb;
+	global $zcdb;
 
-	$content_length = $wpdb->get_col_length( $wpdb->comments, 'comment_content' );
+	$content_length = $zcdb->get_col_length( $zcdb->comments, 'comment_content' );
 
 	if ( is_zc_error( $content_length ) ) {
 		return;
@@ -2061,8 +2061,8 @@ function upgrade_430_fix_comments() {
 
 	$allowed_length = (int) $content_length['length'] - 10;
 
-	$comments = $wpdb->get_results(
-		"SELECT `comment_ID` FROM `{$wpdb->comments}`
+	$comments = $zcdb->get_results(
+		"SELECT `comment_ID` FROM `{$zcdb->comments}`
 			WHERE `comment_date_gmt` > '2015-04-26'
 			AND LENGTH( `comment_content` ) >= {$allowed_length}
 			AND ( `comment_content` LIKE '%<%' OR `comment_content` LIKE '%>%' )"
@@ -2095,13 +2095,13 @@ function upgrade_431() {
  * @since 4.4.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_440() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 34030 ) {
-		$wpdb->query( "ALTER TABLE {$wpdb->options} MODIFY option_name VARCHAR(191)" );
+		$zcdb->query( "ALTER TABLE {$zcdb->options} MODIFY option_name VARCHAR(191)" );
 	}
 
 	// Remove the unused 'add_users' role.
@@ -2120,10 +2120,10 @@ function upgrade_440() {
  * @since 4.5.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_450() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 36180 ) {
 		zc_clear_scheduled_hook( 'zc_maybe_auto_update' );
@@ -2131,11 +2131,11 @@ function upgrade_450() {
 
 	// Remove unused email confirmation options, moved to usermeta.
 	if ( $zc_current_db_version < 36679 && is_multisite() ) {
-		$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name REGEXP '^[0-9]+_new_email$'" );
+		$zcdb->query( "DELETE FROM $zcdb->options WHERE option_name REGEXP '^[0-9]+_new_email$'" );
 	}
 
 	// Remove unused user setting for wpLink.
-	delete_user_setting( 'wplink' );
+	delete_user_setting( 'zclink' );
 }
 
 /**
@@ -2256,19 +2256,19 @@ function upgrade_550() {
  * @since 5.6.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_560() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 49572 ) {
 		/*
 		 * Clean up the `post_category` column removed from schema in version 2.8.0.
 		 * Its presence may conflict with `ZC_Post::__get()`.
 		 */
-		$post_category_exists = $wpdb->get_var( "SHOW COLUMNS FROM $wpdb->posts LIKE 'post_category'" );
+		$post_category_exists = $zcdb->get_var( "SHOW COLUMNS FROM $zcdb->posts LIKE 'post_category'" );
 		if ( ! is_null( $post_category_exists ) ) {
-			$wpdb->query( "ALTER TABLE $wpdb->posts DROP COLUMN `post_category`" );
+			$zcdb->query( "ALTER TABLE $zcdb->posts DROP COLUMN `post_category`" );
 		}
 
 		/*
@@ -2292,9 +2292,9 @@ function upgrade_560() {
 	}
 
 	if ( $zc_current_db_version < 49752 ) {
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT 1 FROM {$wpdb->usermeta} WHERE meta_key = %s LIMIT 1",
+		$results = $zcdb->get_results(
+			$zcdb->prepare(
+				"SELECT 1 FROM {$zcdb->usermeta} WHERE meta_key = %s LIMIT 1",
 				ZC_Application_Passwords::USERMETA_KEY_APPLICATION_PASSWORDS
 			)
 		);
@@ -2397,20 +2397,20 @@ function upgrade_640() {
  * @since 6.5.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_650() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	if ( $zc_current_db_version < 57155 ) {
 		$stylesheet = get_stylesheet();
 
 		// Set autoload=no for all themes except the current one.
-		$theme_mods_options = $wpdb->get_col(
-			$wpdb->prepare(
-				"SELECT option_name FROM $wpdb->options WHERE autoload = 'yes' AND option_name != %s AND option_name LIKE %s",
+		$theme_mods_options = $zcdb->get_col(
+			$zcdb->prepare(
+				"SELECT option_name FROM $zcdb->options WHERE autoload = 'yes' AND option_name != %s AND option_name LIKE %s",
 				"theme_mods_$stylesheet",
-				$wpdb->esc_like( 'theme_mods_' ) . '%'
+				$zcdb->esc_like( 'theme_mods_' ) . '%'
 			)
 		);
 
@@ -2492,15 +2492,15 @@ function upgrade_682() {
  * @since 7.0.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_700() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	// Migrate users with 'fresh' admin color to 'modern'.
 	if ( $zc_current_db_version < 61644 ) {
-		$wpdb->update(
-			$wpdb->usermeta,
+		$zcdb->update(
+			$zcdb->usermeta,
 			array( 'meta_value' => 'modern' ),
 			array(
 				'meta_key'   => 'admin_color',
@@ -2516,10 +2516,10 @@ function upgrade_700() {
  * @since 3.0.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function upgrade_network() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	// Always clear expired transients.
 	delete_expired_transients( true );
@@ -2541,7 +2541,7 @@ function upgrade_network() {
 		delete_site_option( 'deactivated_sitewide_plugins' );
 
 		$start = 0;
-		while ( $rows = $wpdb->get_results( "SELECT meta_key, meta_value FROM {$wpdb->sitemeta} ORDER BY meta_id LIMIT $start, 20" ) ) {
+		while ( $rows = $zcdb->get_results( "SELECT meta_key, meta_value FROM {$zcdb->sitemeta} ORDER BY meta_id LIMIT $start, 20" ) ) {
 			foreach ( $rows as $row ) {
 				$value = $row->meta_value;
 				if ( ! @unserialize( $value ) ) {
@@ -2605,17 +2605,17 @@ function upgrade_network() {
 	}
 
 	// 4.2.0
-	if ( $zc_current_db_version < 31351 && 'utf8mb4' === $wpdb->charset ) {
+	if ( $zc_current_db_version < 31351 && 'utf8mb4' === $zcdb->charset ) {
 		if ( zc_should_upgrade_global_tables() ) {
-			$wpdb->query( "ALTER TABLE $wpdb->usermeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
-			$wpdb->query( "ALTER TABLE $wpdb->site DROP INDEX domain, ADD INDEX domain(domain(140),path(51))" );
-			$wpdb->query( "ALTER TABLE $wpdb->sitemeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
-			$wpdb->query( "ALTER TABLE $wpdb->signups DROP INDEX domain_path, ADD INDEX domain_path(domain(140),path(51))" );
+			$zcdb->query( "ALTER TABLE $zcdb->usermeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+			$zcdb->query( "ALTER TABLE $zcdb->site DROP INDEX domain, ADD INDEX domain(domain(140),path(51))" );
+			$zcdb->query( "ALTER TABLE $zcdb->sitemeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+			$zcdb->query( "ALTER TABLE $zcdb->signups DROP INDEX domain_path, ADD INDEX domain_path(domain(140),path(51))" );
 
-			$tables = $wpdb->tables( 'global' );
+			$tables = $zcdb->tables( 'global' );
 
 			// sitecategories may not exist.
-			if ( ! $wpdb->get_var( "SHOW TABLES LIKE '{$tables['sitecategories']}'" ) ) {
+			if ( ! $zcdb->get_var( "SHOW TABLES LIKE '{$tables['sitecategories']}'" ) ) {
 				unset( $tables['sitecategories'] );
 			}
 
@@ -2626,10 +2626,10 @@ function upgrade_network() {
 	}
 
 	// 4.3.0
-	if ( $zc_current_db_version < 33055 && 'utf8mb4' === $wpdb->charset ) {
+	if ( $zc_current_db_version < 33055 && 'utf8mb4' === $zcdb->charset ) {
 		if ( zc_should_upgrade_global_tables() ) {
 			$upgrade = false;
-			$indexes = $wpdb->get_results( "SHOW INDEXES FROM $wpdb->signups" );
+			$indexes = $zcdb->get_results( "SHOW INDEXES FROM $zcdb->signups" );
 			foreach ( $indexes as $index ) {
 				if ( 'domain_path' === $index->Key_name && 'domain' === $index->Column_name && '140' !== $index->Sub_part ) {
 					$upgrade = true;
@@ -2638,13 +2638,13 @@ function upgrade_network() {
 			}
 
 			if ( $upgrade ) {
-				$wpdb->query( "ALTER TABLE $wpdb->signups DROP INDEX domain_path, ADD INDEX domain_path(domain(140),path(51))" );
+				$zcdb->query( "ALTER TABLE $zcdb->signups DROP INDEX domain_path, ADD INDEX domain_path(domain(140),path(51))" );
 			}
 
-			$tables = $wpdb->tables( 'global' );
+			$tables = $zcdb->tables( 'global' );
 
 			// sitecategories may not exist.
-			if ( ! $wpdb->get_var( "SHOW TABLES LIKE '{$tables['sitecategories']}'" ) ) {
+			if ( ! $zcdb->get_var( "SHOW TABLES LIKE '{$tables['sitecategories']}'" ) ) {
 				unset( $tables['sitecategories'] );
 			}
 
@@ -2675,26 +2675,26 @@ function upgrade_network() {
  *
  * @since 1.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table_name Database table name.
  * @param string $create_ddl SQL statement to create table.
  * @return bool True on success or if the table already exists. False on failure.
  */
 function maybe_create_table( $table_name, $create_ddl ) {
-	global $wpdb;
+	global $zcdb;
 
-	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $table_name ) );
+	$query = $zcdb->prepare( 'SHOW TABLES LIKE %s', $zcdb->esc_like( $table_name ) );
 
-	if ( $wpdb->get_var( $query ) === $table_name ) {
+	if ( $zcdb->get_var( $query ) === $table_name ) {
 		return true;
 	}
 
 	// Didn't find it, so try to create it.
-	$wpdb->query( $create_ddl );
+	$zcdb->query( $create_ddl );
 
 	// We cannot directly tell that whether this succeeded!
-	if ( $wpdb->get_var( $query ) === $table_name ) {
+	if ( $zcdb->get_var( $query ) === $table_name ) {
 		return true;
 	}
 
@@ -2706,25 +2706,25 @@ function maybe_create_table( $table_name, $create_ddl ) {
  *
  * @since 1.0.1
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table Database table name.
  * @param string $index Index name to drop.
  * @return true True, when finished.
  */
 function drop_index( $table, $index ) {
-	global $wpdb;
+	global $zcdb;
 
-	$wpdb->hide_errors();
+	$zcdb->hide_errors();
 
-	$wpdb->query( "ALTER TABLE `$table` DROP INDEX `$index`" );
+	$zcdb->query( "ALTER TABLE `$table` DROP INDEX `$index`" );
 
 	// Now we need to take out all the extra ones we may have created.
 	for ( $i = 0; $i < 25; $i++ ) {
-		$wpdb->query( "ALTER TABLE `$table` DROP INDEX `{$index}_$i`" );
+		$zcdb->query( "ALTER TABLE `$table` DROP INDEX `{$index}_$i`" );
 	}
 
-	$wpdb->show_errors();
+	$zcdb->show_errors();
 
 	return true;
 }
@@ -2734,17 +2734,17 @@ function drop_index( $table, $index ) {
  *
  * @since 1.0.1
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table Database table name.
  * @param string $index Database table index column.
  * @return true True, when done with execution.
  */
 function add_clean_index( $table, $index ) {
-	global $wpdb;
+	global $zcdb;
 
 	drop_index( $table, $index );
-	$wpdb->query( "ALTER TABLE `$table` ADD INDEX ( `$index` )" );
+	$zcdb->query( "ALTER TABLE `$table` ADD INDEX ( `$index` )" );
 
 	return true;
 }
@@ -2754,7 +2754,7 @@ function add_clean_index( $table, $index ) {
  *
  * @since 1.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table_name  Database table name.
  * @param string $column_name Table column name.
@@ -2762,19 +2762,19 @@ function add_clean_index( $table, $index ) {
  * @return bool True on success or if the column already exists. False on failure.
  */
 function maybe_add_column( $table_name, $column_name, $create_ddl ) {
-	global $wpdb;
+	global $zcdb;
 
-	foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+	foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 		if ( $column === $column_name ) {
 			return true;
 		}
 	}
 
 	// Didn't find it, so try to create it.
-	$wpdb->query( $create_ddl );
+	$zcdb->query( $create_ddl );
 
 	// We cannot directly tell that whether this succeeded!
-	foreach ( $wpdb->get_col( "DESC $table_name", 0 ) as $column ) {
+	foreach ( $zcdb->get_col( "DESC $table_name", 0 ) as $column ) {
 		if ( $column === $column_name ) {
 			return true;
 		}
@@ -2788,15 +2788,15 @@ function maybe_add_column( $table_name, $column_name, $create_ddl ) {
  *
  * @since 4.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $table The table to convert.
  * @return bool True if the table was converted, false if it wasn't.
  */
 function maybe_convert_table_to_utf8mb4( $table ) {
-	global $wpdb;
+	global $zcdb;
 
-	$results = $wpdb->get_results( "SHOW FULL COLUMNS FROM `$table`" );
+	$results = $zcdb->get_results( "SHOW FULL COLUMNS FROM `$table`" );
 	if ( ! $results ) {
 		return false;
 	}
@@ -2812,7 +2812,7 @@ function maybe_convert_table_to_utf8mb4( $table ) {
 		}
 	}
 
-	$table_details = $wpdb->get_row( "SHOW TABLE STATUS LIKE '$table'" );
+	$table_details = $zcdb->get_row( "SHOW TABLE STATUS LIKE '$table'" );
 	if ( ! $table_details ) {
 		return false;
 	}
@@ -2823,7 +2823,7 @@ function maybe_convert_table_to_utf8mb4( $table ) {
 		return true;
 	}
 
-	return $wpdb->query( "ALTER TABLE $table CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" );
+	return $zcdb->query( "ALTER TABLE $table CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci" );
 }
 
 /**
@@ -2831,14 +2831,14 @@ function maybe_convert_table_to_utf8mb4( $table ) {
  *
  * @since 1.2.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return stdClass List of options.
  */
 function get_alloptions_110() {
-	global $wpdb;
+	global $zcdb;
 	$all_options = new stdClass();
-	$options     = $wpdb->get_results( "SELECT option_name, option_value FROM $wpdb->options" );
+	$options     = $zcdb->get_results( "SELECT option_name, option_value FROM $zcdb->options" );
 	if ( $options ) {
 		foreach ( $options as $option ) {
 			if ( 'siteurl' === $option->option_name || 'home' === $option->option_name || 'category_base' === $option->option_name ) {
@@ -2857,13 +2857,13 @@ function get_alloptions_110() {
  * @since 1.5.1
  * @access private
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $setting Option name.
  * @return mixed Option value.
  */
 function __get_option( $setting ) { // phpcs:ignore ZelocoreCMS.NamingConventions.ValidFunctionName.FunctionDoubleUnderscore,PHPCompatibility.FunctionNameRestrictions.ReservedFunctionNames.FunctionDoubleUnderscore
-	global $wpdb;
+	global $zcdb;
 
 	if ( 'home' === $setting && defined( 'ZC_HOME' ) ) {
 		return untrailingslashit( ZC_HOME );
@@ -2873,7 +2873,7 @@ function __get_option( $setting ) { // phpcs:ignore ZelocoreCMS.NamingConvention
 		return untrailingslashit( ZC_SITEURL );
 	}
 
-	$option = $wpdb->get_var( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s", $setting ) );
+	$option = $zcdb->get_var( $zcdb->prepare( "SELECT option_value FROM $zcdb->options WHERE option_name = %s", $setting ) );
 
 	if ( 'home' === $setting && ! $option ) {
 		return __get_option( 'siteurl' );
@@ -2924,7 +2924,7 @@ function deslash( $content ) {
  * @since 6.1.0 Ignores display width for integer data types on MySQL 8.0.17 or later,
  *              to match MySQL behavior. Note: This does not affect MariaDB.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string[]|string $queries Optional. The query to run. Can be multiple queries
  *                                 in an array, or a string of queries separated by
@@ -2934,7 +2934,7 @@ function deslash( $content ) {
  * @return string[] Strings containing the results of the various update queries.
  */
 function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore ZelocoreCMS.NamingConventions.ValidFunctionName.FunctionNameInvalid
-	global $wpdb;
+	global $zcdb;
 
 	if ( in_array( $queries, array( '', 'all', 'blog', 'global', 'ms_global' ), true ) ) {
 		$queries = zc_get_db_schema( $queries );
@@ -3011,9 +3011,9 @@ function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore ZelocoreCMS
 	$blob_fields = array( 'tinyblob', 'blob', 'mediumblob', 'longblob' );
 	$int_fields  = array( 'tinyint', 'smallint', 'mediumint', 'int', 'integer', 'bigint' );
 
-	$global_tables  = $wpdb->tables( 'global' );
-	$db_version     = $wpdb->db_version();
-	$db_server_info = $wpdb->db_server_info();
+	$global_tables  = $zcdb->tables( 'global' );
+	$db_version     = $zcdb->db_version();
+	$db_server_info = $zcdb->db_server_info();
 
 	foreach ( $cqueries as $table => $qry ) {
 		// Upgrade global tables only for the main site. Don't upgrade at all if conditions are not optimal.
@@ -3023,9 +3023,9 @@ function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore ZelocoreCMS
 		}
 
 		// Fetch the table column structure from the database.
-		$suppress    = $wpdb->suppress_errors();
-		$tablefields = $wpdb->get_results( "DESCRIBE {$table};" );
-		$wpdb->suppress_errors( $suppress );
+		$suppress    = $zcdb->suppress_errors();
+		$tablefields = $zcdb->get_results( "DESCRIBE {$table};" );
+		$zcdb->suppress_errors( $suppress );
 
 		if ( ! $tablefields ) {
 			continue;
@@ -3267,7 +3267,7 @@ function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore ZelocoreCMS
 		}
 
 		// Index stuff goes here. Fetch the table index structure from the database.
-		$tableindices = $wpdb->get_results( "SHOW INDEX FROM {$table};" );
+		$tableindices = $zcdb->get_results( "SHOW INDEX FROM {$table};" );
 
 		if ( $tableindices ) {
 			// Clear the index array.
@@ -3350,7 +3350,7 @@ function dbDelta( $queries = '', $execute = true ) { // phpcs:ignore ZelocoreCMS
 	$allqueries = array_merge( $cqueries, $iqueries );
 	if ( $execute ) {
 		foreach ( $allqueries as $query ) {
-			$wpdb->query( $query );
+			$zcdb->query( $query );
 		}
 	}
 
@@ -3676,11 +3676,11 @@ function translate_level_to_role( $level ) {
  *
  * @since 2.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function zc_check_mysql_version() {
-	global $wpdb;
-	$result = $wpdb->check_database_version();
+	global $zcdb;
+	$result = $zcdb->check_database_version();
 	if ( is_zc_error( $result ) ) {
 		zc_die( $result );
 	}
@@ -3709,12 +3709,12 @@ function maybe_disable_automattic_widgets() {
  * @since 3.5.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function maybe_disable_link_manager() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
-	if ( $zc_current_db_version >= 22006 && get_option( 'link_manager_enabled' ) && ! $wpdb->get_var( "SELECT link_id FROM $wpdb->links LIMIT 1" ) ) {
+	if ( $zc_current_db_version >= 22006 && get_option( 'link_manager_enabled' ) && ! $zcdb->get_var( "SELECT link_id FROM $zcdb->links LIMIT 1" ) ) {
 		update_option( 'link_manager_enabled', 0 );
 	}
 }
@@ -3725,21 +3725,21 @@ function maybe_disable_link_manager() {
  * @since 2.9.0
  *
  * @global int  $zc_current_db_version The old (current) database version.
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  */
 function pre_schema_upgrade() {
-	global $zc_current_db_version, $wpdb;
+	global $zc_current_db_version, $zcdb;
 
 	// Upgrade versions prior to 2.9.
 	if ( $zc_current_db_version < 11557 ) {
 		// Delete duplicate options. Keep the option with the highest option_id.
-		$wpdb->query( "DELETE o1 FROM $wpdb->options AS o1 JOIN $wpdb->options AS o2 USING (`option_name`) WHERE o2.option_id > o1.option_id" );
+		$zcdb->query( "DELETE o1 FROM $zcdb->options AS o1 JOIN $zcdb->options AS o2 USING (`option_name`) WHERE o2.option_id > o1.option_id" );
 
 		// Drop the old primary key and add the new.
-		$wpdb->query( "ALTER TABLE $wpdb->options DROP PRIMARY KEY, ADD PRIMARY KEY(option_id)" );
+		$zcdb->query( "ALTER TABLE $zcdb->options DROP PRIMARY KEY, ADD PRIMARY KEY(option_id)" );
 
 		// Drop the old option_name index. dbDelta() doesn't do the drop.
-		$wpdb->query( "ALTER TABLE $wpdb->options DROP INDEX option_name" );
+		$zcdb->query( "ALTER TABLE $zcdb->options DROP INDEX option_name" );
 	}
 
 	// Multisite schema upgrades.
@@ -3748,49 +3748,49 @@ function pre_schema_upgrade() {
 		// Upgrade versions prior to 3.7.
 		if ( $zc_current_db_version < 25179 ) {
 			// New primary key for signups.
-			$wpdb->query( "ALTER TABLE $wpdb->signups ADD signup_id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST" );
-			$wpdb->query( "ALTER TABLE $wpdb->signups DROP INDEX domain" );
+			$zcdb->query( "ALTER TABLE $zcdb->signups ADD signup_id BIGINT(20) NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST" );
+			$zcdb->query( "ALTER TABLE $zcdb->signups DROP INDEX domain" );
 		}
 
 		if ( $zc_current_db_version < 25448 ) {
 			// Convert archived from enum to tinyint.
-			$wpdb->query( "ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived varchar(1) NOT NULL default '0'" );
-			$wpdb->query( "ALTER TABLE $wpdb->blogs CHANGE COLUMN archived archived tinyint(2) NOT NULL default 0" );
+			$zcdb->query( "ALTER TABLE $zcdb->blogs CHANGE COLUMN archived archived varchar(1) NOT NULL default '0'" );
+			$zcdb->query( "ALTER TABLE $zcdb->blogs CHANGE COLUMN archived archived tinyint(2) NOT NULL default 0" );
 		}
 
 		// Upgrade versions prior to 6.9
 		if ( $zc_current_db_version < 60497 ) {
 			// Convert ID columns from signed to unsigned
-			$wpdb->query( "ALTER TABLE $wpdb->blogs MODIFY blog_id bigint(20) unsigned NOT NULL auto_increment" );
-			$wpdb->query( "ALTER TABLE $wpdb->blogs MODIFY site_id bigint(20) unsigned NOT NULL default 0" );
-			$wpdb->query( "ALTER TABLE $wpdb->blogmeta MODIFY blog_id bigint(20) unsigned NOT NULL default 0" );
-			$wpdb->query( "ALTER TABLE $wpdb->registration_log MODIFY ID bigint(20) unsigned NOT NULL auto_increment" );
-			$wpdb->query( "ALTER TABLE $wpdb->registration_log MODIFY blog_id bigint(20) unsigned NOT NULL default 0" );
-			$wpdb->query( "ALTER TABLE $wpdb->site MODIFY id bigint(20) unsigned NOT NULL auto_increment" );
-			$wpdb->query( "ALTER TABLE $wpdb->sitemeta MODIFY meta_id bigint(20) unsigned NOT NULL auto_increment" );
-			$wpdb->query( "ALTER TABLE $wpdb->sitemeta MODIFY site_id bigint(20) unsigned NOT NULL default 0" );
-			$wpdb->query( "ALTER TABLE $wpdb->signups MODIFY signup_id bigint(20) unsigned NOT NULL auto_increment" );
+			$zcdb->query( "ALTER TABLE $zcdb->blogs MODIFY blog_id bigint(20) unsigned NOT NULL auto_increment" );
+			$zcdb->query( "ALTER TABLE $zcdb->blogs MODIFY site_id bigint(20) unsigned NOT NULL default 0" );
+			$zcdb->query( "ALTER TABLE $zcdb->blogmeta MODIFY blog_id bigint(20) unsigned NOT NULL default 0" );
+			$zcdb->query( "ALTER TABLE $zcdb->registration_log MODIFY ID bigint(20) unsigned NOT NULL auto_increment" );
+			$zcdb->query( "ALTER TABLE $zcdb->registration_log MODIFY blog_id bigint(20) unsigned NOT NULL default 0" );
+			$zcdb->query( "ALTER TABLE $zcdb->site MODIFY id bigint(20) unsigned NOT NULL auto_increment" );
+			$zcdb->query( "ALTER TABLE $zcdb->sitemeta MODIFY meta_id bigint(20) unsigned NOT NULL auto_increment" );
+			$zcdb->query( "ALTER TABLE $zcdb->sitemeta MODIFY site_id bigint(20) unsigned NOT NULL default 0" );
+			$zcdb->query( "ALTER TABLE $zcdb->signups MODIFY signup_id bigint(20) unsigned NOT NULL auto_increment" );
 		}
 	}
 
 	// Upgrade versions prior to 4.2.
 	if ( $zc_current_db_version < 31351 ) {
 		if ( ! is_multisite() && zc_should_upgrade_global_tables() ) {
-			$wpdb->query( "ALTER TABLE $wpdb->usermeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+			$zcdb->query( "ALTER TABLE $zcdb->usermeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
 		}
-		$wpdb->query( "ALTER TABLE $wpdb->terms DROP INDEX slug, ADD INDEX slug(slug(191))" );
-		$wpdb->query( "ALTER TABLE $wpdb->terms DROP INDEX name, ADD INDEX name(name(191))" );
-		$wpdb->query( "ALTER TABLE $wpdb->commentmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
-		$wpdb->query( "ALTER TABLE $wpdb->postmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
-		$wpdb->query( "ALTER TABLE $wpdb->posts DROP INDEX post_name, ADD INDEX post_name(post_name(191))" );
+		$zcdb->query( "ALTER TABLE $zcdb->terms DROP INDEX slug, ADD INDEX slug(slug(191))" );
+		$zcdb->query( "ALTER TABLE $zcdb->terms DROP INDEX name, ADD INDEX name(name(191))" );
+		$zcdb->query( "ALTER TABLE $zcdb->commentmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+		$zcdb->query( "ALTER TABLE $zcdb->postmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+		$zcdb->query( "ALTER TABLE $zcdb->posts DROP INDEX post_name, ADD INDEX post_name(post_name(191))" );
 	}
 
 	// Upgrade versions prior to 4.4.
 	if ( $zc_current_db_version < 34978 ) {
 		// If compatible termmeta table is found, use it, but enforce a proper index and update collation.
-		if ( $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->termmeta}'" ) && $wpdb->get_results( "SHOW INDEX FROM {$wpdb->termmeta} WHERE Column_name = 'meta_key'" ) ) {
-			$wpdb->query( "ALTER TABLE $wpdb->termmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
-			maybe_convert_table_to_utf8mb4( $wpdb->termmeta );
+		if ( $zcdb->get_var( "SHOW TABLES LIKE '{$zcdb->termmeta}'" ) && $zcdb->get_results( "SHOW INDEX FROM {$zcdb->termmeta} WHERE Column_name = 'meta_key'" ) ) {
+			$zcdb->query( "ALTER TABLE $zcdb->termmeta DROP INDEX meta_key, ADD INDEX meta_key(meta_key(191))" );
+			maybe_convert_table_to_utf8mb4( $zcdb->termmeta );
 		}
 	}
 }

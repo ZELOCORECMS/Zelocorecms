@@ -12,7 +12,7 @@
  * @since 2.1.0
  *
  * @global object $link Current link object.
- * @global wpdb   $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|stdClass $bookmark
  * @param string       $output   Optional. The required return type. One of OBJECT, ARRAY_A, or ARRAY_N, which
@@ -22,7 +22,7 @@
  * @return array|object|null Type returned depends on $output value.
  */
 function get_bookmark( $bookmark, $output = OBJECT, $filter = 'raw' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $bookmark ) ) {
 		if ( isset( $GLOBALS['link'] ) ) {
@@ -39,7 +39,7 @@ function get_bookmark( $bookmark, $output = OBJECT, $filter = 'raw' ) {
 		} else {
 			$_bookmark = zc_cache_get( $bookmark, 'bookmark' );
 			if ( ! $_bookmark ) {
-				$_bookmark = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->links WHERE link_id = %d LIMIT 1", $bookmark ) );
+				$_bookmark = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->links WHERE link_id = %d LIMIT 1", $bookmark ) );
 				if ( $_bookmark ) {
 					$_bookmark->link_category = array_unique( zc_get_object_terms( $_bookmark->link_id, 'link_category', array( 'fields' => 'ids' ) ) );
 					zc_cache_add( $_bookmark->link_id, $_bookmark, 'bookmark' );
@@ -103,7 +103,7 @@ function get_bookmark_field( $field, $bookmark, $context = 'display' ) {
  *
  * @since 2.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string|array $args {
  *     Optional. String or array of arguments to retrieve bookmarks.
@@ -134,7 +134,7 @@ function get_bookmark_field( $field, $bookmark, $context = 'display' ) {
  * @return object[] List of bookmark row objects.
  */
 function get_bookmarks( $args = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$defaults = array(
 		'orderby'        => 'name',
@@ -232,8 +232,8 @@ function get_bookmarks( $args = '' ) {
 
 	$search = '';
 	if ( ! empty( $parsed_args['search'] ) ) {
-		$like   = '%' . $wpdb->esc_like( $parsed_args['search'] ) . '%';
-		$search = $wpdb->prepare( ' AND ( (link_url LIKE %s) OR (link_name LIKE %s) OR (link_description LIKE %s) ) ', $like, $like, $like );
+		$like   = '%' . $zcdb->esc_like( $parsed_args['search'] ) . '%';
+		$search = $zcdb->prepare( ' AND ( (link_url LIKE %s) OR (link_name LIKE %s) OR (link_description LIKE %s) ) ', $like, $like, $like );
 	}
 
 	$category_query = '';
@@ -252,7 +252,7 @@ function get_bookmarks( $args = '' ) {
 	}
 	if ( ! empty( $category_query ) ) {
 		$category_query .= ") AND taxonomy = 'link_category'";
-		$join            = " INNER JOIN $wpdb->term_relationships AS tr ON ($wpdb->links.link_id = tr.object_id) INNER JOIN $wpdb->term_taxonomy as tt ON tt.term_taxonomy_id = tr.term_taxonomy_id";
+		$join            = " INNER JOIN $zcdb->term_relationships AS tr ON ($zcdb->links.link_id = tr.object_id) INNER JOIN $zcdb->term_taxonomy as tt ON tt.term_taxonomy_id = tr.term_taxonomy_id";
 	}
 
 	if ( $parsed_args['show_updated'] ) {
@@ -273,7 +273,7 @@ function get_bookmarks( $args = '' ) {
 			$orderby = 'rand()';
 			break;
 		case 'link_id':
-			$orderby = "$wpdb->links.link_id";
+			$orderby = "$zcdb->links.link_id";
 			break;
 		default:
 			$orderparams = array();
@@ -304,14 +304,14 @@ function get_bookmarks( $args = '' ) {
 		$visible = "AND link_visible = 'Y'";
 	}
 
-	$query  = "SELECT * $length $recently_updated_test $get_updated FROM $wpdb->links $join WHERE 1=1 $visible $category_query";
+	$query  = "SELECT * $length $recently_updated_test $get_updated FROM $zcdb->links $join WHERE 1=1 $visible $category_query";
 	$query .= " $exclusions $inclusions $search";
 	$query .= " ORDER BY $orderby $order";
 	if ( -1 !== $parsed_args['limit'] ) {
 		$query .= ' LIMIT ' . absint( $parsed_args['limit'] );
 	}
 
-	$results = $wpdb->get_results( $query );
+	$results = $zcdb->get_results( $query );
 
 	if ( 'rand()' !== $orderby ) {
 		$cache[ $key ] = $results;

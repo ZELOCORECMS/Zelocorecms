@@ -2,7 +2,7 @@
  * @output zc-admin/js/gallery.js
  */
 
-/* global unescape, getUserSetting, setUserSetting, wpgallery, tinymce */
+/* global unescape, getUserSetting, setUserSetting, zcgallery, tinymce */
 
 jQuery( function($) {
 	var gallerySortable, gallerySortableInit, sortIt, clearAll, w, desc = false;
@@ -76,12 +76,12 @@ jQuery( function($) {
 	clearAll();
 
 	if ( $('#media-items>*').length > 1 ) {
-		w = wpgallery.getWin();
+		w = zcgallery.getWin();
 
 		$('#save-all, #gallery-settings').show();
 		if ( typeof w.tinyMCE !== 'undefined' && w.tinyMCE.activeEditor && ! w.tinyMCE.activeEditor.isHidden() ) {
-			wpgallery.mcemode = true;
-			wpgallery.init();
+			zcgallery.mcemode = true;
+			zcgallery.init();
 		} else {
 			$('#insert-gallery').show();
 		}
@@ -91,7 +91,7 @@ jQuery( function($) {
 /* gallery settings */
 window.tinymce = null;
 
-window.wpgallery = {
+window.zcgallery = {
 	mcemode : false,
 	editor : {},
 	dom : {},

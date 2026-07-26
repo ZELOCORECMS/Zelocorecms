@@ -319,12 +319,12 @@ class ZC_Network_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return int|array A single count of network IDs if a count query. An array of network IDs if a full query.
 	 */
 	protected function get_network_ids() {
-		global $wpdb;
+		global $zcdb;
 
 		$order = $this->parse_order( $this->query_vars['order'] );
 
@@ -366,7 +366,7 @@ class ZC_Network_Query {
 
 			$orderby = implode( ', ', $orderby_array );
 		} else {
-			$orderby = "$wpdb->site.id $order";
+			$orderby = "$zcdb->site.id $order";
 		}
 
 		$number = absint( $this->query_vars['number'] );
@@ -384,52 +384,52 @@ class ZC_Network_Query {
 		if ( $this->query_vars['count'] ) {
 			$fields = 'COUNT(*)';
 		} else {
-			$fields = "$wpdb->site.id";
+			$fields = "$zcdb->site.id";
 		}
 
 		// Parse network IDs for an IN clause.
 		if ( ! empty( $this->query_vars['network__in'] ) ) {
-			$this->sql_clauses['where']['network__in'] = "$wpdb->site.id IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['network__in'] ) ) . ' )';
+			$this->sql_clauses['where']['network__in'] = "$zcdb->site.id IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['network__in'] ) ) . ' )';
 		}
 
 		// Parse network IDs for a NOT IN clause.
 		if ( ! empty( $this->query_vars['network__not_in'] ) ) {
-			$this->sql_clauses['where']['network__not_in'] = "$wpdb->site.id NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['network__not_in'] ) ) . ' )';
+			$this->sql_clauses['where']['network__not_in'] = "$zcdb->site.id NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['network__not_in'] ) ) . ' )';
 		}
 
 		if ( ! empty( $this->query_vars['domain'] ) ) {
-			$this->sql_clauses['where']['domain'] = $wpdb->prepare( "$wpdb->site.domain = %s", $this->query_vars['domain'] );
+			$this->sql_clauses['where']['domain'] = $zcdb->prepare( "$zcdb->site.domain = %s", $this->query_vars['domain'] );
 		}
 
 		// Parse network domain for an IN clause.
 		if ( is_array( $this->query_vars['domain__in'] ) ) {
-			$this->sql_clauses['where']['domain__in'] = "$wpdb->site.domain IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['domain__in'] ) ) . "' )";
+			$this->sql_clauses['where']['domain__in'] = "$zcdb->site.domain IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['domain__in'] ) ) . "' )";
 		}
 
 		// Parse network domain for a NOT IN clause.
 		if ( is_array( $this->query_vars['domain__not_in'] ) ) {
-			$this->sql_clauses['where']['domain__not_in'] = "$wpdb->site.domain NOT IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['domain__not_in'] ) ) . "' )";
+			$this->sql_clauses['where']['domain__not_in'] = "$zcdb->site.domain NOT IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['domain__not_in'] ) ) . "' )";
 		}
 
 		if ( ! empty( $this->query_vars['path'] ) ) {
-			$this->sql_clauses['where']['path'] = $wpdb->prepare( "$wpdb->site.path = %s", $this->query_vars['path'] );
+			$this->sql_clauses['where']['path'] = $zcdb->prepare( "$zcdb->site.path = %s", $this->query_vars['path'] );
 		}
 
 		// Parse network path for an IN clause.
 		if ( is_array( $this->query_vars['path__in'] ) ) {
-			$this->sql_clauses['where']['path__in'] = "$wpdb->site.path IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['path__in'] ) ) . "' )";
+			$this->sql_clauses['where']['path__in'] = "$zcdb->site.path IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['path__in'] ) ) . "' )";
 		}
 
 		// Parse network path for a NOT IN clause.
 		if ( is_array( $this->query_vars['path__not_in'] ) ) {
-			$this->sql_clauses['where']['path__not_in'] = "$wpdb->site.path NOT IN ( '" . implode( "', '", $wpdb->_escape( $this->query_vars['path__not_in'] ) ) . "' )";
+			$this->sql_clauses['where']['path__not_in'] = "$zcdb->site.path NOT IN ( '" . implode( "', '", $zcdb->_escape( $this->query_vars['path__not_in'] ) ) . "' )";
 		}
 
 		// Falsey search strings are ignored.
 		if ( strlen( $this->query_vars['search'] ) ) {
 			$this->sql_clauses['where']['search'] = $this->get_search_sql(
 				$this->query_vars['search'],
-				array( "$wpdb->site.domain", "$wpdb->site.path" )
+				array( "$zcdb->site.domain", "$zcdb->site.path" )
 			);
 		}
 
@@ -485,7 +485,7 @@ class ZC_Network_Query {
 		}
 
 		$this->sql_clauses['select']  = "SELECT $found_rows $fields";
-		$this->sql_clauses['from']    = "FROM $wpdb->site $join";
+		$this->sql_clauses['from']    = "FROM $zcdb->site $join";
 		$this->sql_clauses['groupby'] = $groupby;
 		$this->sql_clauses['orderby'] = $orderby;
 		$this->sql_clauses['limits']  = $limits;
@@ -500,10 +500,10 @@ class ZC_Network_Query {
 			 {$this->sql_clauses['limits']}";
 
 		if ( $this->query_vars['count'] ) {
-			return (int) $wpdb->get_var( $this->request );
+			return (int) $zcdb->get_var( $this->request );
 		}
 
-		$network_ids = $wpdb->get_col( $this->request );
+		$network_ids = $zcdb->get_col( $this->request );
 
 		return array_map( 'intval', $network_ids );
 	}
@@ -514,10 +514,10 @@ class ZC_Network_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	private function set_found_networks() {
-		global $wpdb;
+		global $zcdb;
 
 		if ( $this->query_vars['number'] && ! $this->query_vars['no_found_rows'] ) {
 			/**
@@ -530,7 +530,7 @@ class ZC_Network_Query {
 			 */
 			$found_networks_query = apply_filters( 'found_networks_query', 'SELECT FOUND_ROWS()', $this );
 
-			$this->found_networks = (int) $wpdb->get_var( $found_networks_query );
+			$this->found_networks = (int) $zcdb->get_var( $found_networks_query );
 		}
 	}
 
@@ -539,20 +539,20 @@ class ZC_Network_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string   $search  Search string.
 	 * @param string[] $columns Array of columns to search.
 	 * @return string Search SQL.
 	 */
 	protected function get_search_sql( $search, $columns ) {
-		global $wpdb;
+		global $zcdb;
 
-		$like = '%' . $wpdb->esc_like( $search ) . '%';
+		$like = '%' . $zcdb->esc_like( $search ) . '%';
 
 		$searches = array();
 		foreach ( $columns as $column ) {
-			$searches[] = $wpdb->prepare( "$column LIKE %s", $like );
+			$searches[] = $zcdb->prepare( "$column LIKE %s", $like );
 		}
 
 		return '(' . implode( ' OR ', $searches ) . ')';
@@ -563,13 +563,13 @@ class ZC_Network_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $orderby Alias for the field to order by.
 	 * @return string|false Value to used in the ORDER clause. False otherwise.
 	 */
 	protected function parse_orderby( $orderby ) {
-		global $wpdb;
+		global $zcdb;
 
 		$allowed_keys = array(
 			'id',
@@ -580,12 +580,12 @@ class ZC_Network_Query {
 		$parsed = false;
 		if ( 'network__in' === $orderby ) {
 			$network__in = implode( ',', array_map( 'absint', $this->query_vars['network__in'] ) );
-			$parsed      = "FIELD( {$wpdb->site}.id, $network__in )";
+			$parsed      = "FIELD( {$zcdb->site}.id, $network__in )";
 		} elseif ( 'domain_length' === $orderby || 'path_length' === $orderby ) {
 			$field  = substr( $orderby, 0, -7 );
-			$parsed = "CHAR_LENGTH($wpdb->site.$field)";
+			$parsed = "CHAR_LENGTH($zcdb->site.$field)";
 		} elseif ( in_array( $orderby, $allowed_keys, true ) ) {
-			$parsed = "$wpdb->site.$orderby";
+			$parsed = "$zcdb->site.$orderby";
 		}
 
 		return $parsed;

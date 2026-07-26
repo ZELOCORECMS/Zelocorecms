@@ -229,7 +229,7 @@ function add_user_to_blog( $blog_id, $user_id, $role ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id  ID of the user being removed.
  * @param int $blog_id  Optional. ID of the blog the user is being removed from. Default 0.
@@ -237,7 +237,7 @@ function add_user_to_blog( $blog_id, $user_id, $role ) {
  * @return true|ZC_Error True on success or a ZC_Error object if the user doesn't exist.
  */
 function remove_user_from_blog( $user_id, $blog_id = 0, $reassign = 0 ) {
-	global $wpdb;
+	global $zcdb;
 
 	$user_id = (int) $user_id;
 	$blog_id = (int) $blog_id;
@@ -294,16 +294,16 @@ function remove_user_from_blog( $user_id, $blog_id = 0, $reassign = 0 ) {
 
 	if ( $reassign ) {
 		$reassign = (int) $reassign;
-		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d", $user_id ) );
-		$link_ids = $wpdb->get_col( $wpdb->prepare( "SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $user_id ) );
+		$post_ids = $zcdb->get_col( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_author = %d", $user_id ) );
+		$link_ids = $zcdb->get_col( $zcdb->prepare( "SELECT link_id FROM $zcdb->links WHERE link_owner = %d", $user_id ) );
 
 		if ( ! empty( $post_ids ) ) {
-			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->posts SET post_author = %d WHERE post_author = %d", $reassign, $user_id ) );
+			$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->posts SET post_author = %d WHERE post_author = %d", $reassign, $user_id ) );
 			array_walk( $post_ids, 'clean_post_cache' );
 		}
 
 		if ( ! empty( $link_ids ) ) {
-			$wpdb->query( $wpdb->prepare( "UPDATE $wpdb->links SET link_owner = %d WHERE link_owner = %d", $reassign, $user_id ) );
+			$zcdb->query( $zcdb->prepare( "UPDATE $zcdb->links SET link_owner = %d WHERE link_owner = %d", $reassign, $user_id ) );
 			array_walk( $link_ids, 'clean_bookmark_cache' );
 		}
 	}
@@ -341,7 +341,7 @@ function get_blog_permalink( $blog_id, $post_id ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $domain Website domain.
  * @param string $path   Optional. Not required for subdomain installations. Default '/'.
@@ -452,7 +452,7 @@ function is_email_address_unsafe( $user_email ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $user_name  The login name provided by the user.
  * @param string $user_email The email provided by the user.
@@ -466,7 +466,7 @@ function is_email_address_unsafe( $user_email ) {
  * }
  */
 function zcmu_validate_user_signup( $user_name, $user_email ) {
-	global $wpdb;
+	global $zcdb;
 
 	$errors = new ZC_Error();
 
@@ -550,25 +550,25 @@ function zcmu_validate_user_signup( $user_name, $user_email ) {
 	}
 
 	// Has someone already signed up for this username?
-	$signup = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->signups WHERE user_login = %s", $user_name ) );
+	$signup = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->signups WHERE user_login = %s", $user_name ) );
 	if ( $signup instanceof stdClass ) {
 		$registered_at = mysql2date( 'U', $signup->registered );
 		$now           = time();
 		$diff          = $now - $registered_at;
 		// If registered more than two days ago, cancel registration and let this signup go through.
 		if ( $diff > 2 * DAY_IN_SECONDS ) {
-			$wpdb->delete( $wpdb->signups, array( 'user_login' => $user_name ) );
+			$zcdb->delete( $zcdb->signups, array( 'user_login' => $user_name ) );
 		} else {
 			$errors->add( 'user_name', __( 'That username is currently reserved but may be available in a couple of days.' ) );
 		}
 	}
 
-	$signup = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->signups WHERE user_email = %s", $user_email ) );
+	$signup = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->signups WHERE user_email = %s", $user_email ) );
 	if ( $signup instanceof stdClass ) {
 		$diff = time() - mysql2date( 'U', $signup->registered );
 		// If registered more than two days ago, cancel registration and let this signup go through.
 		if ( $diff > 2 * DAY_IN_SECONDS ) {
-			$wpdb->delete( $wpdb->signups, array( 'user_email' => $user_email ) );
+			$zcdb->delete( $zcdb->signups, array( 'user_email' => $user_email ) );
 		} else {
 			$errors->add( 'user_email', __( 'That email address is pending activation and is not available for new registration. If you made a previous attempt with this email address, please check your inbox for an activation email. If left unconfirmed, it will become available in a couple of days.' ) );
 		}
@@ -617,7 +617,7 @@ function zcmu_validate_user_signup( $user_name, $user_email ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb   $wpdb   ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb   ZelocoreCMS database abstraction object.
  * @global string $domain
  *
  * @param string         $blogname   The site name provided by the user. Must be unique.
@@ -636,7 +636,7 @@ function zcmu_validate_user_signup( $user_name, $user_email ) {
  * }
  */
 function zcmu_validate_blog_signup( $blogname, $blog_title, $user = '' ) {
-	global $wpdb, $domain;
+	global $zcdb, $domain;
 
 	$current_network = get_network();
 	$base            = $current_network->path;
@@ -686,7 +686,7 @@ function zcmu_validate_blog_signup( $blogname, $blog_title, $user = '' ) {
 	}
 
 	// Do not allow users to create a site that conflicts with a page on the main blog.
-	if ( ! is_subdomain_install() && $wpdb->get_var( $wpdb->prepare( 'SELECT post_name FROM ' . $wpdb->get_blog_prefix( $current_network->site_id ) . "posts WHERE post_type = 'page' AND post_name = %s", $blogname ) ) ) {
+	if ( ! is_subdomain_install() && $zcdb->get_var( $zcdb->prepare( 'SELECT post_name FROM ' . $zcdb->get_blog_prefix( $current_network->site_id ) . "posts WHERE post_type = 'page' AND post_name = %s", $blogname ) ) ) {
 		$errors->add( 'blogname', __( 'Sorry, you may not use that site name.' ) );
 	}
 
@@ -739,13 +739,13 @@ function zcmu_validate_blog_signup( $blogname, $blog_title, $user = '' ) {
 	 * Has someone already signed up for this domain?
 	 * TODO: Check email too?
 	 */
-	$signup = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->signups WHERE domain = %s AND path = %s", $mydomain, $path ) );
+	$signup = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->signups WHERE domain = %s AND path = %s", $mydomain, $path ) );
 	if ( $signup instanceof stdClass ) {
 		$diff = time() - mysql2date( 'U', $signup->registered );
 		// If registered more than two days ago, cancel registration and let this signup go through.
 		if ( $diff > 2 * DAY_IN_SECONDS ) {
-			$wpdb->delete(
-				$wpdb->signups,
+			$zcdb->delete(
+				$zcdb->signups,
 				array(
 					'domain' => $mydomain,
 					'path'   => $path,
@@ -789,7 +789,7 @@ function zcmu_validate_blog_signup( $blogname, $blog_title, $user = '' ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $domain     The requested domain.
  * @param string $path       The requested path.
@@ -799,7 +799,7 @@ function zcmu_validate_blog_signup( $blogname, $blog_title, $user = '' ) {
  * @param array  $meta       Optional. Signup meta data. By default, contains the requested privacy setting and lang_id.
  */
 function zcmu_signup_blog( $domain, $path, $title, $user, $user_email, $meta = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	$key = substr( md5( time() . zc_rand() . $domain ), 0, 16 );
 
@@ -820,8 +820,8 @@ function zcmu_signup_blog( $domain, $path, $title, $user, $user_email, $meta = a
 	 */
 	$meta = apply_filters( 'signup_site_meta', $meta, $domain, $path, $title, $user, $user_email, $key );
 
-	$wpdb->insert(
-		$wpdb->signups,
+	$zcdb->insert(
+		$zcdb->signups,
 		array(
 			'domain'         => $domain,
 			'path'           => $path,
@@ -858,14 +858,14 @@ function zcmu_signup_blog( $domain, $path, $title, $user, $user_email, $meta = a
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $user       The user's requested login name.
  * @param string $user_email The user's email address.
  * @param array  $meta       Optional. Signup meta data. Default empty array.
  */
 function zcmu_signup_user( $user, $user_email, $meta = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Format data.
 	$user       = preg_replace( '/\s+/', '', sanitize_user( $user, true ) );
@@ -886,8 +886,8 @@ function zcmu_signup_user( $user, $user_email, $meta = array() ) {
 	 */
 	$meta = apply_filters( 'signup_user_meta', $meta, $user, $user_email, $key );
 
-	$wpdb->insert(
-		$wpdb->signups,
+	$zcdb->insert(
+		$zcdb->signups,
 		array(
 			'domain'         => '',
 			'path'           => '',
@@ -1185,7 +1185,7 @@ function zcmu_signup_user_notification(
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $key The activation key provided to the user.
  * @return array|ZC_Error An array containing information about the activated user and/or blog.
@@ -1194,9 +1194,9 @@ function zcmu_activate_signup(
 	#[\SensitiveParameter]
 	$key
 ) {
-	global $wpdb;
+	global $zcdb;
 
-	$signup = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->signups WHERE activation_key = %s", $key ) );
+	$signup = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->signups WHERE activation_key = %s", $key ) );
 
 	if ( empty( $signup ) ) {
 		return new ZC_Error( 'invalid_key', __( 'Invalid activation key.' ) );
@@ -1228,8 +1228,8 @@ function zcmu_activate_signup(
 	$now = current_time( 'mysql', true );
 
 	if ( empty( $signup->domain ) ) {
-		$wpdb->update(
-			$wpdb->signups,
+		$zcdb->update(
+			$zcdb->signups,
 			array(
 				'active'    => 1,
 				'activated' => $now,
@@ -1270,8 +1270,8 @@ function zcmu_activate_signup(
 		 */
 		if ( 'blog_taken' === $blog_id->get_error_code() ) {
 			$blog_id->add_data( $signup );
-			$wpdb->update(
-				$wpdb->signups,
+			$zcdb->update(
+				$zcdb->signups,
 				array(
 					'active'    => 1,
 					'activated' => $now,
@@ -1282,8 +1282,8 @@ function zcmu_activate_signup(
 		return $blog_id;
 	}
 
-	$wpdb->update(
-		$wpdb->signups,
+	$zcdb->update(
+		$zcdb->signups,
 		array(
 			'active'    => 1,
 			'activated' => $now,
@@ -1318,16 +1318,16 @@ function zcmu_activate_signup(
  *
  * @since 5.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int      $id       ID of the user to delete.
  * @param int|null $reassign ID of the user to reassign posts and links to.
  * @param ZC_User  $user     User object.
  */
 function zc_delete_signup_on_user_delete( $id, $reassign, $user ) {
-	global $wpdb;
+	global $zcdb;
 
-	$wpdb->delete( $wpdb->signups, array( 'user_login' => $user->user_login ) );
+	$zcdb->delete( $zcdb->signups, array( 'user_login' => $user->user_login ) );
 }
 
 /**
@@ -1984,13 +1984,13 @@ function get_current_site() {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID.
  * @return array Contains the blog_id, post_id, post_date_gmt, and post_gmt_ts.
  */
 function get_most_recent_post_of_user( $user_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	$user_blogs       = get_blogs_of_user( (int) $user_id );
 	$most_recent_post = array();
@@ -2000,8 +2000,8 @@ function get_most_recent_post_of_user( $user_id ) {
 	 * published by $user_id.
 	 */
 	foreach ( (array) $user_blogs as $blog ) {
-		$prefix      = $wpdb->get_blog_prefix( $blog->userblog_id );
-		$recent_post = $wpdb->get_row( $wpdb->prepare( "SELECT ID, post_date_gmt FROM {$prefix}posts WHERE post_author = %d AND post_type = 'post' AND post_status = 'publish' ORDER BY post_date_gmt DESC LIMIT 1", $user_id ), ARRAY_A );
+		$prefix      = $zcdb->get_blog_prefix( $blog->userblog_id );
+		$recent_post = $zcdb->get_row( $zcdb->prepare( "SELECT ID, post_date_gmt FROM {$prefix}posts WHERE post_author = %d AND post_type = 'post' AND post_status = 'publish' ORDER BY post_date_gmt DESC LIMIT 1", $user_id ), ARRAY_A );
 
 		// Make sure we found a post.
 		if ( isset( $recent_post['ID'] ) ) {
@@ -2067,13 +2067,13 @@ function check_upload_mimes( $mimes ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $deprecated Not used.
  */
 function update_posts_count( $deprecated = '' ) {
-	global $wpdb;
-	update_option( 'post_count', (int) $wpdb->get_var( "SELECT COUNT(ID) FROM {$wpdb->posts} WHERE post_status = 'publish' and post_type = 'post'" ), true );
+	global $zcdb;
+	update_option( 'post_count', (int) $zcdb->get_var( "SELECT COUNT(ID) FROM {$zcdb->posts} WHERE post_status = 'publish' and post_type = 'post'" ), true );
 }
 
 /**
@@ -2082,13 +2082,13 @@ function update_posts_count( $deprecated = '' ) {
  * @since MU (3.0.0)
  * @since 5.1.0 Parameters now support input from the {@see 'zc_initialize_site'} action.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param ZC_Site|int $blog_id The new site's object or ID.
  * @param int|array   $user_id User ID, or array of arguments including 'user_id'.
  */
 function zcmu_log_new_registrations( $blog_id, $user_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_object( $blog_id ) ) {
 		$blog_id = $blog_id->blog_id;
@@ -2100,8 +2100,8 @@ function zcmu_log_new_registrations( $blog_id, $user_id ) {
 
 	$user = get_userdata( (int) $user_id );
 	if ( $user ) {
-		$wpdb->insert(
-			$wpdb->registration_log,
+		$zcdb->insert(
+			$zcdb->registration_log,
 			array(
 				'email'           => $user->user_email,
 				'IP'              => preg_replace( '/[^0-9., ]/', '', zc_unslash( $_SERVER['REMOTE_ADDR'] ) ),

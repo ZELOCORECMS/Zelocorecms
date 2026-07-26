@@ -175,13 +175,13 @@ final class ZC_Comment {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $id Comment ID.
 	 * @return ZC_Comment|false Comment object, otherwise false.
 	 */
 	public static function get_instance( $id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$comment_id = (int) $id;
 		if ( ! $comment_id ) {
@@ -191,7 +191,7 @@ final class ZC_Comment {
 		$_comment = zc_cache_get( $comment_id, 'comment' );
 
 		if ( ! $_comment ) {
-			$_comment = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_ID = %d LIMIT 1", $comment_id ) );
+			$_comment = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->comments WHERE comment_ID = %d LIMIT 1", $comment_id ) );
 
 			if ( ! $_comment ) {
 				return false;

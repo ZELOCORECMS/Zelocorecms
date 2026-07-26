@@ -131,18 +131,18 @@ require_once ABSPATH . 'zc-admin/admin-header.php';
  *
  * @since 3.1.0
  *
- * @global wpdb      $wpdb      ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb      ZelocoreCMS database abstraction object.
  * @global ZC_Locale $zc_locale ZelocoreCMS date and time locale object.
  *
  * @param string $post_type The post type. Default 'post'.
  */
 function export_date_options( $post_type = 'post' ) {
-	global $wpdb, $zc_locale;
+	global $zcdb, $zc_locale;
 
-	$months = $wpdb->get_results(
-		$wpdb->prepare(
+	$months = $zcdb->get_results(
+		$zcdb->prepare(
 			"SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_type = %s AND post_status != 'auto-draft'
 			ORDER BY post_date DESC",
 			$post_type
@@ -200,7 +200,7 @@ function export_date_options( $post_type = 'post' ) {
 	<li>
 		<label><span class="label-responsive"><?php _e( 'Authors:' ); ?></span>
 		<?php
-		$authors = $wpdb->get_col( "SELECT DISTINCT post_author FROM {$wpdb->posts} WHERE post_type = 'post'" );
+		$authors = $zcdb->get_col( "SELECT DISTINCT post_author FROM {$zcdb->posts} WHERE post_type = 'post'" );
 		zc_dropdown_users(
 			array(
 				'include'         => $authors,
@@ -252,7 +252,7 @@ function export_date_options( $post_type = 'post' ) {
 	<li>
 		<label><span class="label-responsive"><?php _e( 'Authors:' ); ?></span>
 		<?php
-		$authors = $wpdb->get_col( "SELECT DISTINCT post_author FROM {$wpdb->posts} WHERE post_type = 'page'" );
+		$authors = $zcdb->get_col( "SELECT DISTINCT post_author FROM {$zcdb->posts} WHERE post_type = 'page'" );
 		zc_dropdown_users(
 			array(
 				'include'         => $authors,

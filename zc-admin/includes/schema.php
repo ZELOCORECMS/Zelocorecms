@@ -11,35 +11,35 @@
 /**
  * Declare these as global in case schema.php is included from a function.
  *
- * @global wpdb   $wpdb            ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb            ZelocoreCMS database abstraction object.
  * @global array  $zc_queries      Global database queries array.
  * @global string $charset_collate Database charset and collation.
  */
-global $wpdb, $zc_queries, $charset_collate;
+global $zcdb, $zc_queries, $charset_collate;
 
 /**
  * The database character collate.
  */
-$charset_collate = $wpdb->get_charset_collate();
+$charset_collate = $zcdb->get_charset_collate();
 
 /**
  * Retrieve the SQL for creating database tables.
  *
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $scope   Optional. The tables for which to retrieve SQL. Can be all, global, ms_global, or blog tables. Defaults to all.
  * @param int    $blog_id Optional. The site ID for which to retrieve SQL. Default is the current site ID.
  * @return string The SQL needed to create the requested tables.
  */
 function zc_get_db_schema( $scope = 'all', $blog_id = null ) {
-	global $wpdb;
+	global $zcdb;
 
-	$charset_collate = $wpdb->get_charset_collate();
+	$charset_collate = $zcdb->get_charset_collate();
 
-	if ( $blog_id && (int) $blog_id !== $wpdb->blogid ) {
-		$old_blog_id = $wpdb->set_blog_id( $blog_id );
+	if ( $blog_id && (int) $blog_id !== $zcdb->blogid ) {
+		$old_blog_id = $zcdb->set_blog_id( $blog_id );
 	}
 
 	// Engage multisite if in the middle of turning it on from network.php.
@@ -53,7 +53,7 @@ function zc_get_db_schema( $scope = 'all', $blog_id = null ) {
 	$max_index_length = 191;
 
 	// Blog-specific tables.
-	$blog_tables = "CREATE TABLE $wpdb->termmeta (
+	$blog_tables = "CREATE TABLE $zcdb->termmeta (
 	meta_id bigint(20) unsigned NOT NULL auto_increment,
 	term_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -62,7 +62,7 @@ function zc_get_db_schema( $scope = 'all', $blog_id = null ) {
 	KEY term_id (term_id),
 	KEY meta_key (meta_key($max_index_length))
 ) $charset_collate;
-CREATE TABLE $wpdb->terms (
+CREATE TABLE $zcdb->terms (
  term_id bigint(20) unsigned NOT NULL auto_increment,
  name varchar(200) NOT NULL default '',
  slug varchar(200) NOT NULL default '',
@@ -71,7 +71,7 @@ CREATE TABLE $wpdb->terms (
  KEY slug (slug($max_index_length)),
  KEY name (name($max_index_length))
 ) $charset_collate;
-CREATE TABLE $wpdb->term_taxonomy (
+CREATE TABLE $zcdb->term_taxonomy (
  term_taxonomy_id bigint(20) unsigned NOT NULL auto_increment,
  term_id bigint(20) unsigned NOT NULL default 0,
  taxonomy varchar(32) NOT NULL default '',
@@ -82,14 +82,14 @@ CREATE TABLE $wpdb->term_taxonomy (
  UNIQUE KEY term_id_taxonomy (term_id,taxonomy),
  KEY taxonomy (taxonomy)
 ) $charset_collate;
-CREATE TABLE $wpdb->term_relationships (
+CREATE TABLE $zcdb->term_relationships (
  object_id bigint(20) unsigned NOT NULL default 0,
  term_taxonomy_id bigint(20) unsigned NOT NULL default 0,
  term_order int(11) NOT NULL default 0,
  PRIMARY KEY  (object_id,term_taxonomy_id),
  KEY term_taxonomy_id (term_taxonomy_id)
 ) $charset_collate;
-CREATE TABLE $wpdb->commentmeta (
+CREATE TABLE $zcdb->commentmeta (
 	meta_id bigint(20) unsigned NOT NULL auto_increment,
 	comment_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -98,7 +98,7 @@ CREATE TABLE $wpdb->commentmeta (
 	KEY comment_id (comment_id),
 	KEY meta_key (meta_key($max_index_length))
 ) $charset_collate;
-CREATE TABLE $wpdb->comments (
+CREATE TABLE $zcdb->comments (
 	comment_ID bigint(20) unsigned NOT NULL auto_increment,
 	comment_post_ID bigint(20) unsigned NOT NULL default '0',
 	comment_author tinytext NOT NULL,
@@ -121,7 +121,7 @@ CREATE TABLE $wpdb->comments (
 	KEY comment_parent (comment_parent),
 	KEY comment_author_email (comment_author_email(10))
 ) $charset_collate;
-CREATE TABLE $wpdb->links (
+CREATE TABLE $zcdb->links (
 	link_id bigint(20) unsigned NOT NULL auto_increment,
 	link_url varchar(255) NOT NULL default '',
 	link_name varchar(255) NOT NULL default '',
@@ -138,7 +138,7 @@ CREATE TABLE $wpdb->links (
 	PRIMARY KEY  (link_id),
 	KEY link_visible (link_visible)
 ) $charset_collate;
-CREATE TABLE $wpdb->options (
+CREATE TABLE $zcdb->options (
 	option_id bigint(20) unsigned NOT NULL auto_increment,
 	option_name varchar(191) NOT NULL default '',
 	option_value longtext NOT NULL,
@@ -147,7 +147,7 @@ CREATE TABLE $wpdb->options (
 	UNIQUE KEY option_name (option_name),
 	KEY autoload (autoload)
 ) $charset_collate;
-CREATE TABLE $wpdb->postmeta (
+CREATE TABLE $zcdb->postmeta (
 	meta_id bigint(20) unsigned NOT NULL auto_increment,
 	post_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -156,7 +156,7 @@ CREATE TABLE $wpdb->postmeta (
 	KEY post_id (post_id),
 	KEY meta_key (meta_key($max_index_length))
 ) $charset_collate;
-CREATE TABLE $wpdb->posts (
+CREATE TABLE $zcdb->posts (
 	ID bigint(20) unsigned NOT NULL auto_increment,
 	post_author bigint(20) unsigned NOT NULL default '0',
 	post_date datetime NOT NULL default '0000-00-00 00:00:00',
@@ -189,7 +189,7 @@ CREATE TABLE $wpdb->posts (
 ) $charset_collate;\n";
 
 	// Single site users table. The multisite flavor of the users table is handled below.
-	$users_single_table = "CREATE TABLE $wpdb->users (
+	$users_single_table = "CREATE TABLE $zcdb->users (
 	ID bigint(20) unsigned NOT NULL auto_increment,
 	user_login varchar(60) NOT NULL default '',
 	user_pass varchar(255) NOT NULL default '',
@@ -207,7 +207,7 @@ CREATE TABLE $wpdb->posts (
 ) $charset_collate;\n";
 
 	// Multisite users table.
-	$users_multi_table = "CREATE TABLE $wpdb->users (
+	$users_multi_table = "CREATE TABLE $zcdb->users (
 	ID bigint(20) unsigned NOT NULL auto_increment,
 	user_login varchar(60) NOT NULL default '',
 	user_pass varchar(255) NOT NULL default '',
@@ -227,7 +227,7 @@ CREATE TABLE $wpdb->posts (
 ) $charset_collate;\n";
 
 	// Usermeta.
-	$usermeta_table = "CREATE TABLE $wpdb->usermeta (
+	$usermeta_table = "CREATE TABLE $zcdb->usermeta (
 	umeta_id bigint(20) unsigned NOT NULL auto_increment,
 	user_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -245,7 +245,7 @@ CREATE TABLE $wpdb->posts (
 	}
 
 	// Multisite global tables.
-	$ms_global_tables = "CREATE TABLE $wpdb->blogs (
+	$ms_global_tables = "CREATE TABLE $zcdb->blogs (
 	blog_id bigint(20) unsigned NOT NULL auto_increment,
 	site_id bigint(20) unsigned NOT NULL default '0',
 	domain varchar(200) NOT NULL default '',
@@ -262,7 +262,7 @@ CREATE TABLE $wpdb->posts (
 	KEY domain (domain(50),path(5)),
 	KEY lang_id (lang_id)
 ) $charset_collate;
-CREATE TABLE $wpdb->blogmeta (
+CREATE TABLE $zcdb->blogmeta (
 	meta_id bigint(20) unsigned NOT NULL auto_increment,
 	blog_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -271,7 +271,7 @@ CREATE TABLE $wpdb->blogmeta (
 	KEY meta_key (meta_key($max_index_length)),
 	KEY blog_id (blog_id)
 ) $charset_collate;
-CREATE TABLE $wpdb->registration_log (
+CREATE TABLE $zcdb->registration_log (
 	ID bigint(20) unsigned NOT NULL auto_increment,
 	email varchar(255) NOT NULL default '',
 	IP varchar(30) NOT NULL default '',
@@ -280,14 +280,14 @@ CREATE TABLE $wpdb->registration_log (
 	PRIMARY KEY  (ID),
 	KEY IP (IP)
 ) $charset_collate;
-CREATE TABLE $wpdb->site (
+CREATE TABLE $zcdb->site (
 	id bigint(20) unsigned NOT NULL auto_increment,
 	domain varchar(200) NOT NULL default '',
 	path varchar(100) NOT NULL default '',
 	PRIMARY KEY  (id),
 	KEY domain (domain(140),path(51))
 ) $charset_collate;
-CREATE TABLE $wpdb->sitemeta (
+CREATE TABLE $zcdb->sitemeta (
 	meta_id bigint(20) unsigned NOT NULL auto_increment,
 	site_id bigint(20) unsigned NOT NULL default '0',
 	meta_key varchar(255) default NULL,
@@ -296,7 +296,7 @@ CREATE TABLE $wpdb->sitemeta (
 	KEY meta_key (meta_key($max_index_length)),
 	KEY site_id (site_id)
 ) $charset_collate;
-CREATE TABLE $wpdb->signups (
+CREATE TABLE $zcdb->signups (
 	signup_id bigint(20) unsigned NOT NULL auto_increment,
 	domain varchar(200) NOT NULL default '',
 	path varchar(100) NOT NULL default '',
@@ -338,7 +338,7 @@ CREATE TABLE $wpdb->signups (
 	}
 
 	if ( isset( $old_blog_id ) ) {
-		$wpdb->set_blog_id( $old_blog_id );
+		$zcdb->set_blog_id( $old_blog_id );
 	}
 
 	return $queries;
@@ -353,14 +353,14 @@ $zc_queries = zc_get_db_schema( 'all' );
  * @since 1.5.0
  * @since 5.1.0 The $options parameter has been added.
  *
- * @global wpdb $wpdb                  ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb                  ZelocoreCMS database abstraction object.
  * @global int  $zc_db_version         ZelocoreCMS database version.
  * @global int  $zc_current_db_version The old (current) database version.
  *
  * @param array $options Optional. Custom option $key => $value pairs to use. Default empty array.
  */
 function populate_options( array $options = array() ) {
-	global $wpdb, $zc_db_version, $zc_current_db_version;
+	global $zcdb, $zc_db_version, $zc_current_db_version;
 
 	$guessurl = zc_guess_url();
 	/**
@@ -588,7 +588,7 @@ function populate_options( array $options = array() ) {
 	);
 
 	$keys             = "'" . implode( "', '", array_keys( $options ) ) . "'";
-	$existing_options = $wpdb->get_col( "SELECT option_name FROM $wpdb->options WHERE option_name in ( $keys )" ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
+	$existing_options = $zcdb->get_col( "SELECT option_name FROM $zcdb->options WHERE option_name in ( $keys )" ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
 
 	$insert = '';
 
@@ -609,11 +609,11 @@ function populate_options( array $options = array() ) {
 
 		$value = maybe_serialize( sanitize_option( $option, $value ) );
 
-		$insert .= $wpdb->prepare( '(%s, %s, %s)', $option, $value, $autoload );
+		$insert .= $zcdb->prepare( '(%s, %s, %s)', $option, $value, $autoload );
 	}
 
 	if ( ! empty( $insert ) ) {
-		$wpdb->query( "INSERT INTO $wpdb->options (option_name, option_value, autoload) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+		$zcdb->query( "INSERT INTO $zcdb->options (option_name, option_value, autoload) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 	}
 
 	// In case it is set, but blank, update "home".
@@ -705,7 +705,7 @@ function populate_options( array $options = array() ) {
 	}
 
 	// Delete obsolete magpie stuff.
-	$wpdb->query( "DELETE FROM $wpdb->options WHERE option_name REGEXP '^rss_[0-9a-f]{32}(_ts)?$'" );
+	$zcdb->query( "DELETE FROM $zcdb->options WHERE option_name REGEXP '^rss_[0-9a-f]{32}(_ts)?$'" );
 
 	// Clear expired transients.
 	delete_expired_transients( true );
@@ -988,7 +988,7 @@ endif;
  *
  * @since 3.0.0
  *
- * @global wpdb       $wpdb         ZelocoreCMS database abstraction object.
+ * @global zcdb       $zcdb         ZelocoreCMS database abstraction object.
  * @global object     $current_site
  * @global ZC_Rewrite $zc_rewrite   ZelocoreCMS rewrite component.
  *
@@ -1003,7 +1003,7 @@ endif;
  *                       so the error code must be checked) or failure.
  */
 function populate_network( $network_id = 1, $domain = '', $email = '', $site_name = '', $path = '/', $subdomain_install = false ) {
-	global $wpdb, $current_site, $zc_rewrite;
+	global $zcdb, $current_site, $zc_rewrite;
 
 	$network_id = (int) $network_id;
 
@@ -1035,8 +1035,8 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 			$errors->add( 'siteid_exists', __( 'The network already exists.' ) );
 		}
 	} else {
-		if ( $network_id === (int) $wpdb->get_var(
-			$wpdb->prepare( "SELECT id FROM $wpdb->site WHERE id = %d", $network_id )
+		if ( $network_id === (int) $zcdb->get_var(
+			$zcdb->prepare( "SELECT id FROM $zcdb->site WHERE id = %d", $network_id )
 		) ) {
 			$errors->add( 'siteid_exists', __( 'The network already exists.' ) );
 		}
@@ -1051,17 +1051,17 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 	}
 
 	if ( 1 === $network_id ) {
-		$wpdb->insert(
-			$wpdb->site,
+		$zcdb->insert(
+			$zcdb->site,
 			array(
 				'domain' => $domain,
 				'path'   => $path,
 			)
 		);
-		$network_id = $wpdb->insert_id;
+		$network_id = $zcdb->insert_id;
 	} else {
-		$wpdb->insert(
-			$wpdb->site,
+		$zcdb->insert(
+			$zcdb->site,
 			array(
 				'domain' => $domain,
 				'path'   => $path,
@@ -1096,8 +1096,8 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 		$current_site->domain    = $domain;
 		$current_site->path      = $path;
 		$current_site->site_name = ucfirst( $domain );
-		$wpdb->insert(
-			$wpdb->blogs,
+		$zcdb->insert(
+			$zcdb->blogs,
 			array(
 				'site_id'    => $network_id,
 				'blog_id'    => 1,
@@ -1106,12 +1106,12 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 				'registered' => current_time( 'mysql' ),
 			)
 		);
-		$current_site->blog_id = $wpdb->insert_id;
+		$current_site->blog_id = $zcdb->insert_id;
 
-		$site_user_id = (int) $wpdb->get_var(
-			$wpdb->prepare(
+		$site_user_id = (int) $zcdb->get_var(
+			$zcdb->prepare(
 				"SELECT meta_value
-				FROM $wpdb->sitemeta
+				FROM $zcdb->sitemeta
 				WHERE meta_key = %s AND site_id = %d",
 				'admin_user_id',
 				$network_id
@@ -1122,8 +1122,8 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
 		update_user_meta( $site_user_id, 'primary_blog', $current_site->blog_id );
 
 		// Unable to use update_network_option() while populating the network.
-		$wpdb->insert(
-			$wpdb->sitemeta,
+		$zcdb->insert(
+			$zcdb->sitemeta,
 			array(
 				'site_id'    => $network_id,
 				'meta_key'   => 'main_site',
@@ -1221,14 +1221,14 @@ function populate_network( $network_id = 1, $domain = '', $email = '', $site_nam
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb          ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb          ZelocoreCMS database abstraction object.
  * @global int  $zc_db_version ZelocoreCMS database version.
  *
  * @param int   $network_id Network ID to populate meta for.
  * @param array $meta       Optional. Custom meta $key => $value pairs to use. Default empty array.
  */
 function populate_network_meta( $network_id, array $meta = array() ) {
-	global $wpdb, $zc_db_version;
+	global $zcdb, $zc_db_version;
 
 	$network_id = (int) $network_id;
 
@@ -1366,9 +1366,9 @@ We hope you enjoy your new site. Thanks!
 		if ( ! empty( $insert ) ) {
 			$insert .= ', ';
 		}
-		$insert .= $wpdb->prepare( '( %d, %s, %s)', $network_id, $meta_key, $meta_value );
+		$insert .= $zcdb->prepare( '( %d, %s, %s)', $network_id, $meta_key, $meta_value );
 	}
-	$wpdb->query( "INSERT INTO $wpdb->sitemeta ( site_id, meta_key, meta_value ) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+	$zcdb->query( "INSERT INTO $zcdb->sitemeta ( site_id, meta_key, meta_value ) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 }
 
 /**
@@ -1376,13 +1376,13 @@ We hope you enjoy your new site. Thanks!
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int   $site_id Site ID to populate meta for.
  * @param array $meta    Optional. Custom meta $key => $value pairs to use. Default empty array.
  */
 function populate_site_meta( $site_id, array $meta = array() ) {
-	global $wpdb;
+	global $zcdb;
 
 	$site_id = (int) $site_id;
 
@@ -1412,10 +1412,10 @@ function populate_site_meta( $site_id, array $meta = array() ) {
 		if ( ! empty( $insert ) ) {
 			$insert .= ', ';
 		}
-		$insert .= $wpdb->prepare( '( %d, %s, %s)', $site_id, $meta_key, $meta_value );
+		$insert .= $zcdb->prepare( '( %d, %s, %s)', $site_id, $meta_key, $meta_value );
 	}
 
-	$wpdb->query( "INSERT INTO $wpdb->blogmeta ( blog_id, meta_key, meta_value ) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+	$zcdb->query( "INSERT INTO $zcdb->blogmeta ( blog_id, meta_key, meta_value ) VALUES " . $insert ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 
 	zc_cache_delete( $site_id, 'blog_meta' );
 	zc_cache_set_sites_last_changed();

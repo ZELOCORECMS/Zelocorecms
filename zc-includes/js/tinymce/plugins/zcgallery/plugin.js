@@ -1,5 +1,5 @@
 /* global tinymce */
-tinymce.PluginManager.add('wpgallery', function( editor ) {
+tinymce.PluginManager.add('zcgallery', function( editor ) {
 
 	function replaceGalleryShortcodes( content ) {
 		return content.replace( /\[gallery([^\]]*)\]/g, function( match ) {
@@ -98,8 +98,8 @@ tinymce.PluginManager.add('wpgallery', function( editor ) {
 	});
 
 	editor.on( 'BeforeSetContent', function( event ) {
-		// 'wpview' handles the gallery shortcode when present.
-		if ( ! editor.plugins.wpview || typeof zc === 'undefined' || ! zc.mce ) {
+		// 'zcview' handles the gallery shortcode when present.
+		if ( ! editor.plugins.zcview || typeof zc === 'undefined' || ! zc.mce ) {
 			event.content = replaceGalleryShortcodes( event.content );
 		}
 	});

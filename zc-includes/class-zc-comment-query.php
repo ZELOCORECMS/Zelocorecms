@@ -371,12 +371,12 @@ class ZC_Comment_Query {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return int|int[]|ZC_Comment[] List of comments or number of found comments if `$count` argument is true.
 	 */
 	public function get_comments() {
-		global $wpdb;
+		global $zcdb;
 
 		$this->parse_query();
 
@@ -396,7 +396,7 @@ class ZC_Comment_Query {
 		// Reparse query vars, in case they were modified in a 'pre_get_comments' callback.
 		$this->meta_query->parse_query_vars( $this->query_vars );
 		if ( ! empty( $this->meta_query->queries ) ) {
-			$this->meta_query_clauses = $this->meta_query->get_sql( 'comment', $wpdb->comments, 'comment_ID', $this );
+			$this->meta_query_clauses = $this->meta_query->get_sql( 'comment', $zcdb->comments, 'comment_ID', $this );
 		}
 
 		$comment_data = null;
@@ -538,12 +538,12 @@ class ZC_Comment_Query {
 	 * @since 4.4.0
 	 * @since 6.9.0 Excludes the 'note' comment type, unless 'all' or the 'note' types are requested.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return int|array A single count of comment IDs if a count query. An array of comment IDs if a full query.
 	 */
 	protected function get_comment_ids() {
-		global $wpdb;
+		global $zcdb;
 
 		// Assemble clauses related to 'comment_approved'.
 		$approved_clauses = array();
@@ -575,7 +575,7 @@ class ZC_Comment_Query {
 						break;
 
 					default:
-						$status_clauses[] = $wpdb->prepare( 'comment_approved = %s', $status );
+						$status_clauses[] = $zcdb->prepare( 'comment_approved = %s', $status );
 						break;
 				}
 			}
@@ -590,15 +590,15 @@ class ZC_Comment_Query {
 			foreach ( $include_unapproved as $unapproved_identifier ) {
 				// Numeric values are assumed to be user IDs.
 				if ( is_numeric( $unapproved_identifier ) ) {
-					$approved_clauses[] = $wpdb->prepare( "( user_id = %d AND comment_approved = '0' )", $unapproved_identifier );
+					$approved_clauses[] = $zcdb->prepare( "( user_id = %d AND comment_approved = '0' )", $unapproved_identifier );
 				} else {
 					// Otherwise we match against email addresses.
 					if ( ! empty( $_GET['unapproved'] ) && ! empty( $_GET['moderation-hash'] ) ) {
 						// Only include requested comment.
-						$approved_clauses[] = $wpdb->prepare( "( comment_author_email = %s AND comment_approved = '0' AND {$wpdb->comments}.comment_ID = %d )", $unapproved_identifier, (int) $_GET['unapproved'] );
+						$approved_clauses[] = $zcdb->prepare( "( comment_author_email = %s AND comment_approved = '0' AND {$zcdb->comments}.comment_ID = %d )", $unapproved_identifier, (int) $_GET['unapproved'] );
 					} else {
 						// Include all of the author's unapproved comments.
-						$approved_clauses[] = $wpdb->prepare( "( comment_author_email = %s AND comment_approved = '0' )", $unapproved_identifier );
+						$approved_clauses[] = $zcdb->prepare( "( comment_author_email = %s AND comment_approved = '0' )", $unapproved_identifier );
 					}
 				}
 			}
@@ -658,7 +658,7 @@ class ZC_Comment_Query {
 
 			// If no valid clauses were found, order by comment_date_gmt.
 			if ( empty( $orderby_array ) ) {
-				$orderby_array[] = "$wpdb->comments.comment_date_gmt $order";
+				$orderby_array[] = "$zcdb->comments.comment_date_gmt $order";
 			}
 
 			// To ensure determinate sorting, always include a comment_ID clause.
@@ -691,12 +691,12 @@ class ZC_Comment_Query {
 					$comment_id_order = 'DESC';
 				}
 
-				$orderby_array[] = "$wpdb->comments.comment_ID $comment_id_order";
+				$orderby_array[] = "$zcdb->comments.comment_ID $comment_id_order";
 			}
 
 			$orderby = implode( ', ', $orderby_array );
 		} else {
-			$orderby = "$wpdb->comments.comment_date_gmt $order";
+			$orderby = "$zcdb->comments.comment_date_gmt $order";
 		}
 
 		$number = absint( $this->query_vars['number'] );
@@ -715,22 +715,22 @@ class ZC_Comment_Query {
 		if ( $this->query_vars['count'] ) {
 			$fields = 'COUNT(*)';
 		} else {
-			$fields = "$wpdb->comments.comment_ID";
+			$fields = "$zcdb->comments.comment_ID";
 		}
 
 		$post_id = absint( $this->query_vars['post_id'] );
 		if ( ! empty( $post_id ) ) {
-			$this->sql_clauses['where']['post_id'] = $wpdb->prepare( 'comment_post_ID = %d', $post_id );
+			$this->sql_clauses['where']['post_id'] = $zcdb->prepare( 'comment_post_ID = %d', $post_id );
 		}
 
 		// Parse comment IDs for an IN clause.
 		if ( ! empty( $this->query_vars['comment__in'] ) ) {
-			$this->sql_clauses['where']['comment__in'] = "$wpdb->comments.comment_ID IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['comment__in'] ) ) . ' )';
+			$this->sql_clauses['where']['comment__in'] = "$zcdb->comments.comment_ID IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['comment__in'] ) ) . ' )';
 		}
 
 		// Parse comment IDs for a NOT IN clause.
 		if ( ! empty( $this->query_vars['comment__not_in'] ) ) {
-			$this->sql_clauses['where']['comment__not_in'] = "$wpdb->comments.comment_ID NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['comment__not_in'] ) ) . ' )';
+			$this->sql_clauses['where']['comment__not_in'] = "$zcdb->comments.comment_ID NOT IN ( " . implode( ',', zc_parse_id_list( $this->query_vars['comment__not_in'] ) ) . ' )';
 		}
 
 		// Parse comment parent IDs for an IN clause.
@@ -754,15 +754,15 @@ class ZC_Comment_Query {
 		}
 
 		if ( '' !== $this->query_vars['author_email'] ) {
-			$this->sql_clauses['where']['author_email'] = $wpdb->prepare( 'comment_author_email = %s', $this->query_vars['author_email'] );
+			$this->sql_clauses['where']['author_email'] = $zcdb->prepare( 'comment_author_email = %s', $this->query_vars['author_email'] );
 		}
 
 		if ( '' !== $this->query_vars['author_url'] ) {
-			$this->sql_clauses['where']['author_url'] = $wpdb->prepare( 'comment_author_url = %s', $this->query_vars['author_url'] );
+			$this->sql_clauses['where']['author_url'] = $zcdb->prepare( 'comment_author_url = %s', $this->query_vars['author_url'] );
 		}
 
 		if ( '' !== $this->query_vars['karma'] ) {
-			$this->sql_clauses['where']['karma'] = $wpdb->prepare( 'comment_karma = %d', $this->query_vars['karma'] );
+			$this->sql_clauses['where']['karma'] = $zcdb->prepare( 'comment_karma = %d', $this->query_vars['karma'] );
 		}
 
 		// Filtering by comment_type: 'type', 'type__in', 'type__not_in'.
@@ -803,7 +803,7 @@ class ZC_Comment_Query {
 						break;
 
 					default:
-						$comment_types[ $operator ][] = $wpdb->prepare( '%s', $type );
+						$comment_types[ $operator ][] = $zcdb->prepare( '%s', $type );
 						break;
 				}
 			}
@@ -820,13 +820,13 @@ class ZC_Comment_Query {
 		}
 
 		if ( '' !== $parent ) {
-			$this->sql_clauses['where']['parent'] = $wpdb->prepare( 'comment_parent = %d', $parent );
+			$this->sql_clauses['where']['parent'] = $zcdb->prepare( 'comment_parent = %d', $parent );
 		}
 
 		if ( is_array( $this->query_vars['user_id'] ) ) {
 			$this->sql_clauses['where']['user_id'] = 'user_id IN (' . implode( ',', array_map( 'absint', $this->query_vars['user_id'] ) ) . ')';
 		} elseif ( '' !== $this->query_vars['user_id'] ) {
-			$this->sql_clauses['where']['user_id'] = $wpdb->prepare( 'user_id = %d', $this->query_vars['user_id'] );
+			$this->sql_clauses['where']['user_id'] = $zcdb->prepare( 'user_id = %d', $this->query_vars['user_id'] );
 		}
 
 		// Falsey search strings are ignored.
@@ -852,7 +852,7 @@ class ZC_Comment_Query {
 				$esses = array_fill( 0, count( (array) $field_value ), '%s' );
 
 				// phpcs:ignore ZelocoreCMS.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-				$this->sql_clauses['where'][ $field_name ] = $wpdb->prepare( " {$wpdb->posts}.{$field_name} IN (" . implode( ',', $esses ) . ')', $field_value );
+				$this->sql_clauses['where'][ $field_name ] = $zcdb->prepare( " {$zcdb->posts}.{$field_name} IN (" . implode( ',', $esses ) . ')', $field_value );
 			}
 		}
 
@@ -875,7 +875,7 @@ class ZC_Comment_Query {
 				$esses = array_fill( 0, count( $q_values ), '%s' );
 
 				// phpcs:ignore ZelocoreCMS.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-				$this->sql_clauses['where'][ $field_name ] = $wpdb->prepare( " {$wpdb->posts}.{$field_name} IN (" . implode( ',', $esses ) . ')', $q_values );
+				$this->sql_clauses['where'][ $field_name ] = $zcdb->prepare( " {$zcdb->posts}.{$field_name} IN (" . implode( ',', $esses ) . ')', $q_values );
 			}
 		}
 
@@ -905,7 +905,7 @@ class ZC_Comment_Query {
 		$groupby = '';
 
 		if ( $join_posts_table ) {
-			$join .= "JOIN $wpdb->posts ON $wpdb->posts.ID = $wpdb->comments.comment_post_ID";
+			$join .= "JOIN $zcdb->posts ON $zcdb->posts.ID = $zcdb->comments.comment_post_ID";
 		}
 
 		if ( ! empty( $this->meta_query_clauses ) ) {
@@ -915,7 +915,7 @@ class ZC_Comment_Query {
 			$this->sql_clauses['where']['meta_query'] = preg_replace( '/^\s*AND\s*/', '', $this->meta_query_clauses['where'] );
 
 			if ( ! $this->query_vars['count'] ) {
-				$groupby = "{$wpdb->comments}.comment_ID";
+				$groupby = "{$zcdb->comments}.comment_ID";
 			}
 		}
 
@@ -976,7 +976,7 @@ class ZC_Comment_Query {
 		}
 
 		$this->sql_clauses['select']  = "SELECT $found_rows $fields";
-		$this->sql_clauses['from']    = "FROM $wpdb->comments $join";
+		$this->sql_clauses['from']    = "FROM $zcdb->comments $join";
 		$this->sql_clauses['groupby'] = $groupby;
 		$this->sql_clauses['orderby'] = $orderby;
 		$this->sql_clauses['limits']  = $limits;
@@ -991,9 +991,9 @@ class ZC_Comment_Query {
 			 {$this->sql_clauses['limits']}";
 
 		if ( $this->query_vars['count'] ) {
-			return (int) $wpdb->get_var( $this->request );
+			return (int) $zcdb->get_var( $this->request );
 		} else {
-			$comment_ids = $wpdb->get_col( $this->request );
+			$comment_ids = $zcdb->get_col( $this->request );
 			return array_map( 'intval', $comment_ids );
 		}
 	}
@@ -1004,10 +1004,10 @@ class ZC_Comment_Query {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	private function set_found_comments() {
-		global $wpdb;
+		global $zcdb;
 
 		if ( $this->query_vars['number'] && ! $this->query_vars['no_found_rows'] ) {
 			/**
@@ -1020,7 +1020,7 @@ class ZC_Comment_Query {
 			 */
 			$found_comments_query = apply_filters( 'found_comments_query', 'SELECT FOUND_ROWS()', $this );
 
-			$this->found_comments = (int) $wpdb->get_var( $found_comments_query );
+			$this->found_comments = (int) $zcdb->get_var( $found_comments_query );
 		}
 	}
 
@@ -1152,20 +1152,20 @@ class ZC_Comment_Query {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string   $search  Search string.
 	 * @param string[] $columns Array of columns to search.
 	 * @return string Search SQL.
 	 */
 	protected function get_search_sql( $search, $columns ) {
-		global $wpdb;
+		global $zcdb;
 
-		$like = '%' . $wpdb->esc_like( $search ) . '%';
+		$like = '%' . $zcdb->esc_like( $search ) . '%';
 
 		$searches = array();
 		foreach ( $columns as $column ) {
-			$searches[] = $wpdb->prepare( "$column LIKE %s", $like );
+			$searches[] = $zcdb->prepare( "$column LIKE %s", $like );
 		}
 
 		return ' AND (' . implode( ' OR ', $searches ) . ')';
@@ -1176,13 +1176,13 @@ class ZC_Comment_Query {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $orderby Alias for the field to order by.
 	 * @return string|false Value to used in the ORDER clause. False otherwise.
 	 */
 	protected function parse_orderby( $orderby ) {
-		global $wpdb;
+		global $zcdb;
 
 		$allowed_keys = array(
 			'comment_agent',
@@ -1215,19 +1215,19 @@ class ZC_Comment_Query {
 
 		$parsed = false;
 		if ( $this->query_vars['meta_key'] === $orderby || 'meta_value' === $orderby ) {
-			$parsed = "$wpdb->commentmeta.meta_value";
+			$parsed = "$zcdb->commentmeta.meta_value";
 		} elseif ( 'meta_value_num' === $orderby ) {
-			$parsed = "$wpdb->commentmeta.meta_value+0";
+			$parsed = "$zcdb->commentmeta.meta_value+0";
 		} elseif ( 'comment__in' === $orderby ) {
 			$comment__in = implode( ',', array_map( 'absint', $this->query_vars['comment__in'] ) );
-			$parsed      = "FIELD( {$wpdb->comments}.comment_ID, $comment__in )";
+			$parsed      = "FIELD( {$zcdb->comments}.comment_ID, $comment__in )";
 		} elseif ( in_array( $orderby, $allowed_keys, true ) ) {
 
 			if ( isset( $meta_query_clauses[ $orderby ] ) ) {
 				$meta_clause = $meta_query_clauses[ $orderby ];
 				$parsed      = sprintf( 'CAST(%s.meta_value AS %s)', esc_sql( $meta_clause['alias'] ), esc_sql( $meta_clause['cast'] ) );
 			} else {
-				$parsed = "$wpdb->comments.$orderby";
+				$parsed = "$zcdb->comments.$orderby";
 			}
 		}
 

@@ -12,7 +12,7 @@
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $data {
  *     Data for the new site that should be inserted.
@@ -42,7 +42,7 @@
  * @return int|ZC_Error The new site's ID on success, or error object on failure.
  */
 function zc_insert_site( array $data ) {
-	global $wpdb;
+	global $zcdb;
 
 	$now = current_time( 'mysql', true );
 
@@ -65,11 +65,11 @@ function zc_insert_site( array $data ) {
 		return $prepared_data;
 	}
 
-	if ( false === $wpdb->insert( $wpdb->blogs, $prepared_data ) ) {
-		return new ZC_Error( 'db_insert_error', __( 'Could not insert site into the database.' ), $wpdb->last_error );
+	if ( false === $zcdb->insert( $zcdb->blogs, $prepared_data ) ) {
+		return new ZC_Error( 'db_insert_error', __( 'Could not insert site into the database.' ), $zcdb->last_error );
 	}
 
-	$site_id = (int) $wpdb->insert_id;
+	$site_id = (int) $zcdb->insert_id;
 
 	clean_blog_cache( $site_id );
 
@@ -150,14 +150,14 @@ function zc_insert_site( array $data ) {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int   $site_id ID of the site that should be updated.
  * @param array $data    Site data to update. See {@see zc_insert_site()} for the list of supported keys.
  * @return int|ZC_Error The updated site's ID on success, or error object on failure.
  */
 function zc_update_site( $site_id, array $data ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $site_id ) ) {
 		return new ZC_Error( 'site_empty_id', __( 'Site ID must not be empty.' ) );
@@ -178,8 +178,8 @@ function zc_update_site( $site_id, array $data ) {
 		return $data;
 	}
 
-	if ( false === $wpdb->update( $wpdb->blogs, $data, array( 'blog_id' => $old_site->id ) ) ) {
-		return new ZC_Error( 'db_update_error', __( 'Could not update site in the database.' ), $wpdb->last_error );
+	if ( false === $zcdb->update( $zcdb->blogs, $data, array( 'blog_id' => $old_site->id ) ) ) {
+		return new ZC_Error( 'db_update_error', __( 'Could not update site in the database.' ), $zcdb->last_error );
 	}
 
 	clean_blog_cache( $old_site );
@@ -204,13 +204,13 @@ function zc_update_site( $site_id, array $data ) {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $site_id ID of the site that should be deleted.
  * @return ZC_Site|ZC_Error The deleted site object on success, or error object on failure.
  */
 function zc_delete_site( $site_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $site_id ) ) {
 		return new ZC_Error( 'site_empty_id', __( 'Site ID must not be empty.' ) );
@@ -261,14 +261,14 @@ function zc_delete_site( $site_id ) {
 	do_action( 'zc_uninitialize_site', $old_site );
 
 	if ( is_site_meta_supported() ) {
-		$blog_meta_ids = $wpdb->get_col( $wpdb->prepare( "SELECT meta_id FROM $wpdb->blogmeta WHERE blog_id = %d ", $old_site->id ) );
+		$blog_meta_ids = $zcdb->get_col( $zcdb->prepare( "SELECT meta_id FROM $zcdb->blogmeta WHERE blog_id = %d ", $old_site->id ) );
 		foreach ( $blog_meta_ids as $mid ) {
 			delete_metadata_by_mid( 'blog', $mid );
 		}
 	}
 
-	if ( false === $wpdb->delete( $wpdb->blogs, array( 'blog_id' => $old_site->id ) ) ) {
-		return new ZC_Error( 'db_delete_error', __( 'Could not delete site from the database.' ), $wpdb->last_error );
+	if ( false === $zcdb->delete( $zcdb->blogs, array( 'blog_id' => $old_site->id ) ) ) {
+		return new ZC_Error( 'db_delete_error', __( 'Could not delete site from the database.' ), $zcdb->last_error );
 	}
 
 	clean_blog_cache( $old_site );
@@ -345,17 +345,17 @@ function get_site( $site = null ) {
  * @since 6.3.0 Use zc_lazyload_site_meta() for lazy-loading of site meta.
  *
  * @see update_site_cache()
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $ids               ID list.
  * @param bool  $update_meta_cache Optional. Whether to update the meta cache. Default true.
  */
 function _prime_site_caches( $ids, $update_meta_cache = true ) {
-	global $wpdb;
+	global $zcdb;
 
 	$non_cached_ids = _get_non_cached_ids( $ids, 'sites' );
 	if ( ! empty( $non_cached_ids ) ) {
-		$fresh_sites = $wpdb->get_results( sprintf( "SELECT * FROM $wpdb->blogs WHERE blog_id IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+		$fresh_sites = $zcdb->get_results( sprintf( "SELECT * FROM $zcdb->blogs WHERE blog_id IN (%s)", implode( ',', array_map( 'intval', $non_cached_ids ) ) ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 
 		update_site_cache( $fresh_sites, false );
 	}
@@ -633,7 +633,7 @@ function zc_validate_site_data( $errors, $data, $old_site = null ) {
  *
  * @since 5.1.0
  *
- * @global wpdb     $wpdb     ZelocoreCMS database abstraction object.
+ * @global zcdb     $zcdb     ZelocoreCMS database abstraction object.
  * @global ZC_Roles $zc_roles ZelocoreCMS role management object.
  *
  * @param int|ZC_Site $site_id Site ID or object.
@@ -651,7 +651,7 @@ function zc_validate_site_data( $errors, $data, $old_site = null ) {
  * @return true|ZC_Error True on success, or error object on failure.
  */
 function zc_initialize_site( $site_id, array $args = array() ) {
-	global $wpdb, $zc_roles;
+	global $zcdb, $zc_roles;
 
 	if ( empty( $site_id ) ) {
 		return new ZC_Error( 'site_empty_id', __( 'Site ID must not be empty.' ) );
@@ -747,7 +747,7 @@ function zc_initialize_site( $site_id, array $args = array() ) {
 	populate_site_meta( $site->id, $args['meta'] );
 
 	// Remove all permissions that may exist for the site.
-	$table_prefix = $wpdb->get_blog_prefix();
+	$table_prefix = $zcdb->get_blog_prefix();
 	delete_metadata( 'user', 0, $table_prefix . 'user_level', null, true );   // Delete all.
 	delete_metadata( 'user', 0, $table_prefix . 'capabilities', null, true ); // Delete all.
 
@@ -776,13 +776,13 @@ function zc_initialize_site( $site_id, array $args = array() ) {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Site $site_id Site ID or object.
  * @return true|ZC_Error True on success, or error object on failure.
  */
 function zc_uninitialize_site( $site_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $site_id ) ) {
 		return new ZC_Error( 'site_empty_id', __( 'Site ID must not be empty.' ) );
@@ -819,7 +819,7 @@ function zc_uninitialize_site( $site_id ) {
 
 	$uploads = zc_get_upload_dir();
 
-	$tables = $wpdb->tables( 'blog' );
+	$tables = $zcdb->tables( 'blog' );
 
 	/**
 	 * Filters the tables to drop when the site is deleted.
@@ -832,7 +832,7 @@ function zc_uninitialize_site( $site_id ) {
 	$drop_tables = apply_filters( 'zcmu_drop_tables', $tables, $site->id );
 
 	foreach ( (array) $drop_tables as $table ) {
-		$wpdb->query( "DROP TABLE IF EXISTS `$table`" ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
+		$zcdb->query( "DROP TABLE IF EXISTS `$table`" ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
 	}
 
 	/**
@@ -898,13 +898,13 @@ function zc_uninitialize_site( $site_id ) {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|ZC_Site $site_id Site ID or object.
  * @return bool True if the site is initialized, false otherwise.
  */
 function zc_is_site_initialized( $site_id ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( is_object( $site_id ) ) {
 		$site_id = $site_id->blog_id;
@@ -935,9 +935,9 @@ function zc_is_site_initialized( $site_id ) {
 		switch_to_blog( $site_id );
 	}
 
-	$suppress = $wpdb->suppress_errors();
-	$result   = (bool) $wpdb->get_results( "DESCRIBE {$wpdb->posts}" );
-	$wpdb->suppress_errors( $suppress );
+	$suppress = $zcdb->suppress_errors();
+	$result   = (bool) $zcdb->get_results( "DESCRIBE {$zcdb->posts}" );
+	$zcdb->suppress_errors( $suppress );
 
 	if ( $switch ) {
 		restore_current_blog();
@@ -1325,7 +1325,7 @@ function zc_cache_set_sites_last_changed() {
  *
  * @since 5.1.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param mixed $check Skip-value for whether to proceed site meta function execution.
  * @return mixed Original value of $check, or false if site meta is not supported.
@@ -1333,7 +1333,7 @@ function zc_cache_set_sites_last_changed() {
 function zc_check_site_meta_support_prefilter( $check ) {
 	if ( ! is_site_meta_supported() ) {
 		/* translators: %s: Database table name. */
-		_doing_it_wrong( __FUNCTION__, sprintf( __( 'The %s table is not installed. Please run the network database upgrade.' ), $GLOBALS['wpdb']->blogmeta ), '5.1.0' );
+		_doing_it_wrong( __FUNCTION__, sprintf( __( 'The %s table is not installed. Please run the network database upgrade.' ), $GLOBALS['zcdb']->blogmeta ), '5.1.0' );
 		return false;
 	}
 

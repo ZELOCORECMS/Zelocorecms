@@ -202,14 +202,14 @@ class ZC_Site_Health {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	private function prepare_sql_data() {
-		global $wpdb;
+		global $zcdb;
 
-		$mysql_server_type = $wpdb->db_server_info();
+		$mysql_server_type = $zcdb->db_server_info();
 
-		$this->mysql_server_version = $wpdb->get_var( 'SELECT VERSION()' );
+		$this->mysql_server_version = $zcdb->get_var( 'SELECT VERSION()' );
 
 		if ( stristr( $mysql_server_type, 'mariadb' ) ) {
 			$this->is_mariadb                = true;
@@ -3748,12 +3748,12 @@ class ZC_Site_Health {
 	 *
 	 * @since 6.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return bool Whether to suggest using a persistent object cache.
 	 */
 	public function should_suggest_persistent_object_cache() {
-		global $wpdb;
+		global $zcdb;
 
 		/**
 		 * Filters whether to suggest use of a persistent object cache and bypass default threshold checks.
@@ -3804,11 +3804,11 @@ class ZC_Site_Health {
 			return true;
 		}
 
-		$table_names = implode( "','", array( $wpdb->comments, $wpdb->options, $wpdb->posts, $wpdb->terms, $wpdb->users ) );
+		$table_names = implode( "','", array( $zcdb->comments, $zcdb->options, $zcdb->posts, $zcdb->terms, $zcdb->users ) );
 
 		// With InnoDB the `TABLE_ROWS` are estimates, which are accurate enough and faster to retrieve than individual `COUNT()` queries.
-		$results = $wpdb->get_results(
-			$wpdb->prepare(
+		$results = $zcdb->get_results(
+			$zcdb->prepare(
 				// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- This query cannot use interpolation.
 				"SELECT TABLE_NAME AS 'table', TABLE_ROWS AS 'rows', SUM(data_length + index_length) as 'bytes' FROM information_schema.TABLES WHERE TABLE_SCHEMA = %s AND TABLE_NAME IN ('$table_names') GROUP BY TABLE_NAME;",
 				DB_NAME
@@ -3817,11 +3817,11 @@ class ZC_Site_Health {
 		);
 
 		$threshold_map = array(
-			'comments_count' => $wpdb->comments,
-			'options_count'  => $wpdb->options,
-			'posts_count'    => $wpdb->posts,
-			'terms_count'    => $wpdb->terms,
-			'users_count'    => $wpdb->users,
+			'comments_count' => $zcdb->comments,
+			'options_count'  => $zcdb->options,
+			'posts_count'    => $zcdb->posts,
+			'terms_count'    => $zcdb->terms,
+			'users_count'    => $zcdb->users,
 		);
 
 		foreach ( $threshold_map as $threshold => $table ) {

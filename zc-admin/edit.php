@@ -93,11 +93,11 @@ if ( $doaction ) {
 		// Validate the post status exists.
 		if ( get_post_status_object( $post_status ) ) {
 			/**
-			 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+			 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 			 */
-			global $wpdb;
+			global $zcdb;
 
-			$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_type=%s AND post_status = %s", $post_type, $post_status ) );
+			$post_ids = $zcdb->get_col( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_type=%s AND post_status = %s", $post_type, $post_status ) );
 		}
 		$doaction = 'delete';
 	} elseif ( isset( $_REQUEST['media'] ) ) {

@@ -481,7 +481,7 @@
 		zc_fullscreen_desc: "Distraction-free writing mode (Alt + Shift + W)"
 	});
 
-	tinyMCE.addI18n( lang + ".wpeditimage", {
+	tinyMCE.addI18n( lang + ".zceditimage", {
 		edit_img: "Edit Image",
 		del_img: "Delete Image",
 		adv_settings: "Advanced Settings",

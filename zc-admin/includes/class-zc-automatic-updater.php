@@ -183,7 +183,7 @@ class ZC_Automatic_Updater {
 	 *
 	 * @since 3.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $type    The type of update being checked: 'core', 'theme',
 	 *                        'plugin', 'translation'.
@@ -276,13 +276,13 @@ class ZC_Automatic_Updater {
 
 		// If it's a core update, are we actually compatible with its requirements?
 		if ( 'core' === $type ) {
-			global $wpdb;
+			global $zcdb;
 
 			$php_compat = version_compare( PHP_VERSION, $item->php_version, '>=' );
-			if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $wpdb->is_mysql ) ) {
+			if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $zcdb->is_mysql ) ) {
 				$mysql_compat = true;
 			} else {
-				$mysql_compat = version_compare( $wpdb->db_version(), $item->mysql_version, '>=' );
+				$mysql_compat = version_compare( $zcdb->db_version(), $item->mysql_version, '>=' );
 			}
 
 			if ( ! $php_compat || ! $mysql_compat ) {

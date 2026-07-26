@@ -20,7 +20,7 @@
  * It will retain a minimum height, which is the height of the content area when
  * it's initialized.
  */
-tinymce.PluginManager.add( 'wpautoresize', function( editor ) {
+tinymce.PluginManager.add( 'zcautoresize', function( editor ) {
 	var settings = editor.settings,
 		oldSize = 300,
 		isActive = false;

@@ -155,7 +155,7 @@ class ZelocoreAntispam {
 	}
 
 	public static function delete_old_comments() {
-		global $wpdb;
+		global $zcdb;
 
 		$delete_limit = apply_filters( 'zelocore_antispam_delete_comment_limit', defined( 'ZELOCORE_ANTISPAM_DELETE_LIMIT' ) ? ZELOCORE_ANTISPAM_DELETE_LIMIT : 10000 );
 		$delete_limit = max( 1, intval( $delete_limit ) );
@@ -163,7 +163,7 @@ class ZelocoreAntispam {
 		$delete_interval = apply_filters( 'zelocore_antispam_delete_comment_interval', 15 );
 		$delete_interval = max( 1, intval( $delete_interval ) );
 
-		while ( $comment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT comment_id FROM {$wpdb->comments} WHERE DATE_SUB(NOW(), INTERVAL %d DAY) > comment_date_gmt AND comment_approved = 'spam' LIMIT %d", $delete_interval, $delete_limit ) ) ) {
+		while ( $comment_ids = $zcdb->get_col( $zcdb->prepare( "SELECT comment_id FROM {$zcdb->comments} WHERE DATE_SUB(NOW(), INTERVAL %d DAY) > comment_date_gmt AND comment_approved = 'spam' LIMIT %d", $delete_interval, $delete_limit ) ) ) {
 			if ( empty( $comment_ids ) ) {
 				return;
 			}
@@ -173,15 +173,15 @@ class ZelocoreAntispam {
 			}
 
 			$format_string = implode( ', ', array_fill( 0, count( $comment_ids ), '%s' ) );
-			$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->comments} WHERE comment_id IN ( " . $format_string . ' )', $comment_ids ) );
-			$wpdb->query( $wpdb->prepare( "DELETE FROM {$wpdb->commentmeta} WHERE comment_id IN ( " . $format_string . ' )', $comment_ids ) );
+			$zcdb->query( $zcdb->prepare( "DELETE FROM {$zcdb->comments} WHERE comment_id IN ( " . $format_string . ' )', $comment_ids ) );
+			$zcdb->query( $zcdb->prepare( "DELETE FROM {$zcdb->commentmeta} WHERE comment_id IN ( " . $format_string . ' )', $comment_ids ) );
 
 			clean_comment_cache( $comment_ids );
 		}
 	}
 
 	public static function delete_old_comments_meta() {
-		global $wpdb;
+		global $zcdb;
 
 		$interval = apply_filters( 'zelocore_antispam_delete_commentmeta_interval', 15 );
 		$interval = absint( $interval );
@@ -189,7 +189,7 @@ class ZelocoreAntispam {
 			$interval = 1;
 		}
 
-		while ( $comment_ids = $wpdb->get_col( $wpdb->prepare( "SELECT m.comment_id FROM {$wpdb->commentmeta} as m INNER JOIN {$wpdb->comments} as c USING(comment_id) WHERE m.meta_key = 'zelocore_antispam_as_submitted' AND DATE_SUB(NOW(), INTERVAL %d DAY) > c.comment_date_gmt LIMIT 10000", $interval ) ) ) {
+		while ( $comment_ids = $zcdb->get_col( $zcdb->prepare( "SELECT m.comment_id FROM {$zcdb->commentmeta} as m INNER JOIN {$zcdb->comments} as c USING(comment_id) WHERE m.meta_key = 'zelocore_antispam_as_submitted' AND DATE_SUB(NOW(), INTERVAL %d DAY) > c.comment_date_gmt LIMIT 10000", $interval ) ) ) {
 			if ( empty( $comment_ids ) ) {
 				return;
 			}
@@ -201,13 +201,13 @@ class ZelocoreAntispam {
 	}
 
 	public static function delete_orphaned_commentmeta() {
-		global $wpdb;
+		global $zcdb;
 
 		$last_meta_id  = 0;
 		$start_time    = isset( $_SERVER['REQUEST_TIME_FLOAT'] ) ? $_SERVER['REQUEST_TIME_FLOAT'] : microtime( true );
 		$max_exec_time = max( ini_get( 'max_execution_time' ) - 5, 3 );
 
-		while ( $commentmeta_results = $wpdb->get_results( $wpdb->prepare( "SELECT m.meta_id, m.comment_id, m.meta_key FROM {$wpdb->commentmeta} as m LEFT JOIN {$wpdb->comments} as c USING(comment_id) WHERE c.comment_id IS NULL AND m.meta_id > %d ORDER BY m.meta_id LIMIT 1000", $last_meta_id ) ) ) {
+		while ( $commentmeta_results = $zcdb->get_results( $zcdb->prepare( "SELECT m.meta_id, m.comment_id, m.meta_key FROM {$zcdb->commentmeta} as m LEFT JOIN {$zcdb->comments} as c USING(comment_id) WHERE c.comment_id IS NULL AND m.meta_id > %d ORDER BY m.meta_id LIMIT 1000", $last_meta_id ) ) ) {
 			if ( empty( $commentmeta_results ) ) {
 				return;
 			}
@@ -226,7 +226,7 @@ class ZelocoreAntispam {
 	}
 
 	public static function cron_recheck() {
-		global $wpdb;
+		global $zcdb;
 
 		$api_key = self::get_api_key();
 

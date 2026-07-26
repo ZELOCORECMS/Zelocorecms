@@ -71,7 +71,7 @@ class ZC_Tax_Query {
 	public $queried_terms = array();
 
 	/**
-	 * Database table that where the metadata's objects are stored (eg $wpdb->users).
+	 * Database table that where the metadata's objects are stored (eg $zcdb->users).
 	 *
 	 * @since 4.1.0
 	 * @var string
@@ -370,7 +370,7 @@ class ZC_Tax_Query {
 	 *
 	 * @since 4.1.0
 	 *
-	 * @global wpdb $wpdb The ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb The ZelocoreCMS database abstraction object.
 	 *
 	 * @param array $clause       Query clause (passed by reference).
 	 * @param array $parent_query Parent query array.
@@ -382,7 +382,7 @@ class ZC_Tax_Query {
 	 * }
 	 */
 	public function get_sql_for_clause( &$clause, $parent_query ) {
-		global $wpdb;
+		global $zcdb;
 
 		$sql = array(
 			'where' => array(),
@@ -416,7 +416,7 @@ class ZC_Tax_Query {
 			$alias = $this->find_compatible_table_alias( $clause, $parent_query );
 			if ( false === $alias ) {
 				$i     = count( $this->table_aliases );
-				$alias = $i ? 'tt' . $i : $wpdb->term_relationships;
+				$alias = $i ? 'tt' . $i : $zcdb->term_relationships;
 
 				// Store the alias as part of a flat array to build future iterators.
 				$this->table_aliases[] = $alias;
@@ -424,7 +424,7 @@ class ZC_Tax_Query {
 				// Store the alias with this clause, so later siblings can use it.
 				$clause['alias'] = $alias;
 
-				$join .= " LEFT JOIN $wpdb->term_relationships";
+				$join .= " LEFT JOIN $zcdb->term_relationships";
 				$join .= $i ? " AS $alias" : '';
 				$join .= " ON ($this->primary_table.$this->primary_id_column = $alias.object_id)";
 			}
@@ -441,7 +441,7 @@ class ZC_Tax_Query {
 
 			$where = "$this->primary_table.$this->primary_id_column NOT IN (
 				SELECT object_id
-				FROM $wpdb->term_relationships
+				FROM $zcdb->term_relationships
 				WHERE term_taxonomy_id IN ($terms)
 			)";
 
@@ -457,21 +457,21 @@ class ZC_Tax_Query {
 
 			$where = "(
 				SELECT COUNT(1)
-				FROM $wpdb->term_relationships
+				FROM $zcdb->term_relationships
 				WHERE term_taxonomy_id IN ($terms)
 				AND object_id = $this->primary_table.$this->primary_id_column
 			) = $num_terms";
 
 		} elseif ( 'NOT EXISTS' === $operator || 'EXISTS' === $operator ) {
 
-			$where = $wpdb->prepare(
+			$where = $zcdb->prepare(
 				"$operator (
 					SELECT 1
-					FROM $wpdb->term_relationships
-					INNER JOIN $wpdb->term_taxonomy
-					ON $wpdb->term_taxonomy.term_taxonomy_id = $wpdb->term_relationships.term_taxonomy_id
-					WHERE $wpdb->term_taxonomy.taxonomy = %s
-					AND $wpdb->term_relationships.object_id = $this->primary_table.$this->primary_id_column
+					FROM $zcdb->term_relationships
+					INNER JOIN $zcdb->term_taxonomy
+					ON $zcdb->term_taxonomy.term_taxonomy_id = $zcdb->term_relationships.term_taxonomy_id
+					WHERE $zcdb->term_taxonomy.taxonomy = %s
+					AND $zcdb->term_relationships.object_id = $this->primary_table.$this->primary_id_column
 				)",
 				$clause['taxonomy']
 			);

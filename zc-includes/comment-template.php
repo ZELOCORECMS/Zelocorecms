@@ -1400,7 +1400,7 @@ function zc_comment_form_unfiltered_html_nonce() {
  *
  * @global ZC_Query   $zc_query           ZelocoreCMS Query object.
  * @global ZC_Post    $post               Global post object.
- * @global wpdb       $wpdb               ZelocoreCMS database abstraction object.
+ * @global zcdb       $zcdb               ZelocoreCMS database abstraction object.
  * @global int        $id
  * @global ZC_Comment $comment            Global comment object.
  * @global string     $user_login
@@ -1415,7 +1415,7 @@ function zc_comment_form_unfiltered_html_nonce() {
  *                                  Default false.
  */
 function comments_template( $file = '/comments.php', $separate_comments = false ) {
-	global $zc_query, $withcomments, $post, $wpdb, $id, $comment, $user_login, $user_identity, $overridden_cpage, $zc_stylesheet_path, $zc_template_path;
+	global $zc_query, $withcomments, $post, $zcdb, $id, $comment, $user_login, $user_identity, $overridden_cpage, $zc_stylesheet_path, $zc_template_path;
 
 	if ( ! ( is_single() || is_page() || $withcomments ) || empty( $post ) ) {
 		return;

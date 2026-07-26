@@ -94,7 +94,7 @@ class PluginSandboxTier1
     
     /**
      * Allowed ONLY via the ZeloCMS Plugin API, not direct DB access.
-     * Plugins CANNOT use $wpdb equivalent directly.
+     * Plugins CANNOT use $zcdb equivalent directly.
      */
     private const BLOCKED_CLASSES = [
         'PDO',           // No direct database access

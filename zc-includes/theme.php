@@ -3854,14 +3854,14 @@ function is_customize_preview() {
  * @access private
  * @see zc_delete_auto_drafts()
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string   $new_status Transition to this post status.
  * @param string   $old_status Previous post status.
  * @param \ZC_Post $post       Post data.
  */
 function _zc_keep_alive_customize_changeset_dependent_auto_drafts( $new_status, $old_status, $post ) {
-	global $wpdb;
+	global $zcdb;
 	unset( $old_status );
 
 	// Short-circuit if not a changeset or if the changeset was published.
@@ -3915,8 +3915,8 @@ function _zc_keep_alive_customize_changeset_dependent_auto_drafts( $new_status, 
 		if ( empty( $post_id ) || 'auto-draft' !== get_post_status( $post_id ) ) {
 			continue;
 		}
-		$wpdb->update(
-			$wpdb->posts,
+		$zcdb->update(
+			$zcdb->posts,
 			$post_args,
 			array( 'ID' => $post_id )
 		);

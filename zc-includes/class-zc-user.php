@@ -119,17 +119,17 @@ class ZC_User {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int|string|object $id      User's ID, a ZC_User object, or a user object from the DB.
 	 * @param string            $name    Optional. User's username
 	 * @param int               $site_id Optional Site ID, defaults to current site.
 	 */
 	public function __construct( $id = 0, $name = '', $site_id = 0 ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( ! isset( self::$back_compat_keys ) ) {
-			$prefix = $wpdb->prefix;
+			$prefix = $zcdb->prefix;
 
 			self::$back_compat_keys = array(
 				'user_firstname'             => 'first_name',
@@ -191,14 +191,14 @@ class ZC_User {
 	 * @since 3.3.0
 	 * @since 4.4.0 Added 'ID' as an alias of 'id' for the `$field` parameter.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string     $field The field to query against: Accepts 'id', 'ID', 'slug', 'email' or 'login'.
 	 * @param string|int $value The field value.
 	 * @return object|false Raw user object.
 	 */
 	public static function get_data_by( $field, $value ) {
-		global $wpdb;
+		global $zcdb;
 
 		// 'ID' is an alias of 'id'.
 		if ( 'ID' === $field ) {
@@ -251,9 +251,9 @@ class ZC_User {
 			}
 		}
 
-		$user = $wpdb->get_row(
-			$wpdb->prepare(
-				"SELECT * FROM $wpdb->users WHERE $db_field = %s LIMIT 1",
+		$user = $zcdb->get_row(
+			$zcdb->prepare(
+				"SELECT * FROM $zcdb->users WHERE $db_field = %s LIMIT 1",
 				$value
 			)
 		);
@@ -472,17 +472,17 @@ class ZC_User {
 	 * @since 2.1.0
 	 * @deprecated 4.9.0 Use ZC_User::for_site()
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $cap_key Optional capability key
 	 */
 	protected function _init_caps( $cap_key = '' ) {
-		global $wpdb;
+		global $zcdb;
 
 		_deprecated_function( __METHOD__, '4.9.0', 'ZC_User::for_site()' );
 
 		if ( empty( $cap_key ) ) {
-			$this->cap_key = $wpdb->get_blog_prefix( $this->site_id ) . 'capabilities';
+			$this->cap_key = $zcdb->get_blog_prefix( $this->site_id ) . 'capabilities';
 		} else {
 			$this->cap_key = $cap_key;
 		}
@@ -699,12 +699,12 @@ class ZC_User {
 	 *
 	 * @since 2.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function update_user_level_from_caps() {
-		global $wpdb;
+		global $zcdb;
 		$this->user_level = array_reduce( array_keys( $this->allcaps ), array( $this, 'level_reduction' ), 0 );
-		update_user_meta( $this->ID, $wpdb->get_blog_prefix() . 'user_level', $this->user_level );
+		update_user_meta( $this->ID, $zcdb->get_blog_prefix() . 'user_level', $this->user_level );
 	}
 
 	/**
@@ -744,13 +744,13 @@ class ZC_User {
 	 *
 	 * @since 2.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function remove_all_caps() {
-		global $wpdb;
+		global $zcdb;
 		$this->caps = array();
 		delete_user_meta( $this->ID, $this->cap_key );
-		delete_user_meta( $this->ID, $wpdb->get_blog_prefix() . 'user_level' );
+		delete_user_meta( $this->ID, $zcdb->get_blog_prefix() . 'user_level' );
 		$this->get_role_caps();
 	}
 
@@ -869,12 +869,12 @@ class ZC_User {
 	 *
 	 * @since 4.9.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $site_id Site ID to initialize user capabilities for. Default is the current site.
 	 */
 	public function for_site( $site_id = 0 ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( ! empty( $site_id ) ) {
 			$this->site_id = absint( $site_id );
@@ -882,7 +882,7 @@ class ZC_User {
 			$this->site_id = get_current_blog_id();
 		}
 
-		$this->cap_key = $wpdb->get_blog_prefix( $this->site_id ) . 'capabilities';
+		$this->cap_key = $zcdb->get_blog_prefix( $this->site_id ) . 'capabilities';
 
 		$this->caps = $this->get_caps_data();
 

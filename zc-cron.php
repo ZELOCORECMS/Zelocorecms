@@ -57,12 +57,12 @@ zc_raise_memory_limit( 'cron' );
  * @ignore
  * @since 3.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return string|int|false Value of the `doing_cron` transient, 0|false otherwise.
  */
 function _get_cron_lock() {
-	global $wpdb;
+	global $zcdb;
 
 	$value = 0;
 	if ( zc_using_ext_object_cache() ) {
@@ -72,7 +72,7 @@ function _get_cron_lock() {
 		 */
 		$value = zc_cache_get( 'doing_cron', 'transient', true );
 	} else {
-		$row = $wpdb->get_row( $wpdb->prepare( "SELECT option_value FROM $wpdb->options WHERE option_name = %s LIMIT 1", '_transient_doing_cron' ) );
+		$row = $zcdb->get_row( $zcdb->prepare( "SELECT option_value FROM $zcdb->options WHERE option_name = %s LIMIT 1", '_transient_doing_cron' ) );
 		if ( is_object( $row ) ) {
 			$value = $row->option_value;
 		}

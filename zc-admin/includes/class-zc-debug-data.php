@@ -1688,25 +1688,25 @@ class ZC_Debug_Data {
 	 *
 	 * @since 6.7.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return array<string, string|array> The database debug data.
 	 */
 	private static function get_zc_database(): array {
-		global $wpdb;
+		global $zcdb;
 
 		// Populate the database debug fields.
-		if ( is_object( $wpdb->dbh ) ) {
+		if ( is_object( $zcdb->dbh ) ) {
 			// mysqli or PDO.
-			$extension = get_class( $wpdb->dbh );
+			$extension = get_class( $zcdb->dbh );
 		} else {
 			// Unknown sql extension.
 			$extension = null;
 		}
 
-		$server = $wpdb->get_var( 'SELECT VERSION()' );
+		$server = $zcdb->get_var( 'SELECT VERSION()' );
 
-		$client_version = $wpdb->dbh->client_info;
+		$client_version = $zcdb->dbh->client_info;
 
 		$fields = array(
 			'extension'          => array(
@@ -1723,32 +1723,32 @@ class ZC_Debug_Data {
 			),
 			'database_user'      => array(
 				'label'   => __( 'Database username' ),
-				'value'   => $wpdb->dbuser,
+				'value'   => $zcdb->dbuser,
 				'private' => true,
 			),
 			'database_host'      => array(
 				'label'   => __( 'Database host' ),
-				'value'   => $wpdb->dbhost,
+				'value'   => $zcdb->dbhost,
 				'private' => true,
 			),
 			'database_name'      => array(
 				'label'   => __( 'Database name' ),
-				'value'   => $wpdb->dbname,
+				'value'   => $zcdb->dbname,
 				'private' => true,
 			),
 			'database_prefix'    => array(
 				'label'   => __( 'Table prefix' ),
-				'value'   => $wpdb->prefix,
+				'value'   => $zcdb->prefix,
 				'private' => true,
 			),
 			'database_charset'   => array(
 				'label'   => __( 'Database charset' ),
-				'value'   => $wpdb->charset,
+				'value'   => $zcdb->charset,
 				'private' => true,
 			),
 			'database_collate'   => array(
 				'label'   => __( 'Database collation' ),
-				'value'   => $wpdb->collate,
+				'value'   => $zcdb->collate,
 				'private' => true,
 			),
 			'max_allowed_packet' => array(
@@ -1844,16 +1844,16 @@ class ZC_Debug_Data {
 	 *
 	 * @since 5.9.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $mysql_var Name of the MySQL system variable.
 	 * @return string|null The variable value on success. Null if the variable does not exist.
 	 */
 	public static function get_mysql_var( $mysql_var ) {
-		global $wpdb;
+		global $zcdb;
 
-		$result = $wpdb->get_row(
-			$wpdb->prepare( 'SHOW VARIABLES LIKE %s', $mysql_var ),
+		$result = $zcdb->get_row(
+			$zcdb->prepare( 'SHOW VARIABLES LIKE %s', $mysql_var ),
 			ARRAY_A
 		);
 
@@ -1938,16 +1938,16 @@ class ZC_Debug_Data {
 	 *
 	 * @since 5.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return int The size of the database, in bytes.
 	 */
 	public static function get_database_size() {
-		global $wpdb;
+		global $zcdb;
 		$size = 0;
-		$rows = $wpdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
+		$rows = $zcdb->get_results( 'SHOW TABLE STATUS', ARRAY_A );
 
-		if ( $wpdb->num_rows > 0 ) {
+		if ( $zcdb->num_rows > 0 ) {
 			foreach ( $rows as $row ) {
 				$size += $row['Data_length'] + $row['Index_length'];
 			}

@@ -56,7 +56,7 @@ class ZC_Meta_Query {
 	public $meta_id_column;
 
 	/**
-	 * Database table that where the metadata's objects are stored (eg $wpdb->users).
+	 * Database table that where the metadata's objects are stored (eg $zcdb->users).
 	 *
 	 * @since 4.1.0
 	 * @var string
@@ -516,7 +516,7 @@ class ZC_Meta_Query {
 	 *
 	 * @since 4.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array  $clause       Query clause (passed by reference).
 	 * @param array  $parent_query Parent query array.
@@ -531,7 +531,7 @@ class ZC_Meta_Query {
 	 * }
 	 */
 	public function get_sql_for_clause( &$clause, $parent_query, $clause_key = '' ) {
-		global $wpdb;
+		global $zcdb;
 
 		$sql_chunks = array(
 			'where' => array(),
@@ -599,9 +599,9 @@ class ZC_Meta_Query {
 				$join .= $i ? " AS $alias" : '';
 
 				if ( 'LIKE' === $meta_compare_key ) {
-					$join .= $wpdb->prepare( " ON ( $this->primary_table.$this->primary_id_column = $alias.$this->meta_id_column AND $alias.meta_key LIKE %s )", '%' . $wpdb->esc_like( $clause['key'] ) . '%' );
+					$join .= $zcdb->prepare( " ON ( $this->primary_table.$this->primary_id_column = $alias.$this->meta_id_column AND $alias.meta_key LIKE %s )", '%' . $zcdb->esc_like( $clause['key'] ) . '%' );
 				} else {
-					$join .= $wpdb->prepare( " ON ( $this->primary_table.$this->primary_id_column = $alias.$this->meta_id_column AND $alias.meta_key = %s )", $clause['key'] );
+					$join .= $zcdb->prepare( " ON ( $this->primary_table.$this->primary_id_column = $alias.$this->meta_id_column AND $alias.meta_key = %s )", $clause['key'] );
 				}
 
 				// All other JOIN clauses.
@@ -659,7 +659,7 @@ class ZC_Meta_Query {
 					$this->table_aliases[] = $subquery_alias;
 
 					$meta_compare_string_start  = 'NOT EXISTS (';
-					$meta_compare_string_start .= "SELECT 1 FROM $wpdb->postmeta $subquery_alias ";
+					$meta_compare_string_start .= "SELECT 1 FROM $zcdb->postmeta $subquery_alias ";
 					$meta_compare_string_start .= "WHERE $subquery_alias.post_ID = $alias.post_ID ";
 					$meta_compare_string_end    = 'LIMIT 1';
 					$meta_compare_string_end   .= ')';
@@ -668,15 +668,15 @@ class ZC_Meta_Query {
 				switch ( $meta_compare_key ) {
 					case '=':
 					case 'EXISTS':
-						$where = $wpdb->prepare( "$alias.meta_key = %s", trim( $clause['key'] ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
+						$where = $zcdb->prepare( "$alias.meta_key = %s", trim( $clause['key'] ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
 						break;
 					case 'LIKE':
-						$meta_compare_value = '%' . $wpdb->esc_like( trim( $clause['key'] ) ) . '%';
-						$where              = $wpdb->prepare( "$alias.meta_key LIKE %s", $meta_compare_value ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
+						$meta_compare_value = '%' . $zcdb->esc_like( trim( $clause['key'] ) ) . '%';
+						$where              = $zcdb->prepare( "$alias.meta_key LIKE %s", $meta_compare_value ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
 						break;
 					case 'IN':
 						$meta_compare_string = "$alias.meta_key IN (" . substr( str_repeat( ',%s', count( $clause['key'] ) ), 1 ) . ')';
-						$where               = $wpdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+						$where               = $zcdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 						break;
 					case 'RLIKE':
 					case 'REGEXP':
@@ -688,24 +688,24 @@ class ZC_Meta_Query {
 							$cast     = '';
 							$meta_key = "$alias.meta_key";
 						}
-						$where = $wpdb->prepare( "$meta_key $operator $cast %s", trim( $clause['key'] ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
+						$where = $zcdb->prepare( "$meta_key $operator $cast %s", trim( $clause['key'] ) ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
 						break;
 
 					case '!=':
 					case 'NOT EXISTS':
 						$meta_compare_string = $meta_compare_string_start . "AND $subquery_alias.meta_key = %s " . $meta_compare_string_end;
-						$where               = $wpdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+						$where               = $zcdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 						break;
 					case 'NOT LIKE':
 						$meta_compare_string = $meta_compare_string_start . "AND $subquery_alias.meta_key LIKE %s " . $meta_compare_string_end;
 
-						$meta_compare_value = '%' . $wpdb->esc_like( trim( $clause['key'] ) ) . '%';
-						$where              = $wpdb->prepare( $meta_compare_string, $meta_compare_value ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+						$meta_compare_value = '%' . $zcdb->esc_like( trim( $clause['key'] ) ) . '%';
+						$where              = $zcdb->prepare( $meta_compare_string, $meta_compare_value ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 						break;
 					case 'NOT IN':
 						$array_subclause     = '(' . substr( str_repeat( ',%s', count( $clause['key'] ) ), 1 ) . ') ';
 						$meta_compare_string = $meta_compare_string_start . "AND $subquery_alias.meta_key IN " . $array_subclause . $meta_compare_string_end;
-						$where               = $wpdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+						$where               = $zcdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 						break;
 					case 'NOT REGEXP':
 						$operator = $meta_compare_key;
@@ -718,7 +718,7 @@ class ZC_Meta_Query {
 						}
 
 						$meta_compare_string = $meta_compare_string_start . "AND $meta_key REGEXP $cast %s " . $meta_compare_string_end;
-						$where               = $wpdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
+						$where               = $zcdb->prepare( $meta_compare_string, $clause['key'] ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.NotPrepared
 						break;
 				}
 
@@ -742,24 +742,24 @@ class ZC_Meta_Query {
 				case 'IN':
 				case 'NOT IN':
 					$meta_compare_string = '(' . substr( str_repeat( ',%s', count( $meta_value ) ), 1 ) . ')';
-					$where               = $wpdb->prepare( $meta_compare_string, $meta_value );
+					$where               = $zcdb->prepare( $meta_compare_string, $meta_value );
 					break;
 
 				case 'BETWEEN':
 				case 'NOT BETWEEN':
-					$where = $wpdb->prepare( '%s AND %s', $meta_value[0], $meta_value[1] );
+					$where = $zcdb->prepare( '%s AND %s', $meta_value[0], $meta_value[1] );
 					break;
 
 				case 'LIKE':
 				case 'NOT LIKE':
-					$meta_value = '%' . $wpdb->esc_like( $meta_value ) . '%';
-					$where      = $wpdb->prepare( '%s', $meta_value );
+					$meta_value = '%' . $zcdb->esc_like( $meta_value ) . '%';
+					$where      = $zcdb->prepare( '%s', $meta_value );
 					break;
 
 				// EXISTS with a value is interpreted as '='.
 				case 'EXISTS':
 					$meta_compare = '=';
-					$where        = $wpdb->prepare( '%s', $meta_value );
+					$where        = $zcdb->prepare( '%s', $meta_value );
 					break;
 
 				// 'value' is ignored for NOT EXISTS.
@@ -768,7 +768,7 @@ class ZC_Meta_Query {
 					break;
 
 				default:
-					$where = $wpdb->prepare( '%s', $meta_value );
+					$where = $zcdb->prepare( '%s', $meta_value );
 					break;
 
 			}

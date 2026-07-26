@@ -67,10 +67,10 @@ class ZC_MS_Sites_List_Table extends ZC_List_Table {
 	 *
 	 * @global string $mode List table view mode.
 	 * @global string $s    Search string.
-	 * @global wpdb   $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb   $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function prepare_items() {
-		global $mode, $s, $wpdb;
+		global $mode, $s, $zcdb;
 
 		if ( ! empty( $_REQUEST['mode'] ) ) {
 			$mode = 'excerpt' === $_REQUEST['mode'] ? 'excerpt' : 'list';
@@ -119,10 +119,10 @@ class ZC_MS_Sites_List_Table extends ZC_List_Table {
 			|| preg_match( '/^[0-9]{1,3}\.$/', $s )
 		) {
 			// IPv4 address.
-			$reg_blog_ids = $wpdb->get_col(
-				$wpdb->prepare(
-					"SELECT blog_id FROM {$wpdb->registration_log} WHERE {$wpdb->registration_log}.IP LIKE %s",
-					$wpdb->esc_like( $s ) . ( ! empty( $wild ) ? '%' : '' )
+			$reg_blog_ids = $zcdb->get_col(
+				$zcdb->prepare(
+					"SELECT blog_id FROM {$zcdb->registration_log} WHERE {$zcdb->registration_log}.IP LIKE %s",
+					$zcdb->esc_like( $s ) . ( ! empty( $wild ) ? '%' : '' )
 				)
 			);
 

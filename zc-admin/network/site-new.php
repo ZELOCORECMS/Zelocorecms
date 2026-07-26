@@ -140,9 +140,9 @@ if ( isset( $_REQUEST['action'] ) && 'add-site' === $_REQUEST['action'] ) {
 		do_action( 'network_site_new_created_user', $user_id );
 	}
 
-	$wpdb->hide_errors();
+	$zcdb->hide_errors();
 	$id = zcmu_create_blog( $newdomain, $path, $title, $user_id, $meta, get_current_network_id() );
-	$wpdb->show_errors();
+	$zcdb->show_errors();
 
 	if ( ! is_zc_error( $id ) ) {
 		if ( ! is_super_admin( $user_id ) && ! get_user_option( 'primary_blog', $user_id ) ) {

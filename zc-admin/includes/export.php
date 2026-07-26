@@ -25,7 +25,7 @@ define( 'WXR_VERSION', '1.2' );
  * @since 2.1.0
  * @since 5.7.0 Added the `post_modified` and `post_modified_gmt` fields to the export file.
  *
- * @global wpdb    $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb    $zcdb ZelocoreCMS database abstraction object.
  * @global ZC_Post $post Global post object.
  *
  * @param array $args {
@@ -55,7 +55,7 @@ define( 'WXR_VERSION', '1.2' );
  * }
  */
 function export_wp( $args = array() ) {
-	global $wpdb, $post;
+	global $zcdb, $post;
 
 	$defaults = array(
 		'content'    => 'all',
@@ -103,46 +103,46 @@ function export_wp( $args = array() ) {
 			$args['content'] = 'post';
 		}
 
-		$where = $wpdb->prepare( "{$wpdb->posts}.post_type = %s", $args['content'] );
+		$where = $zcdb->prepare( "{$zcdb->posts}.post_type = %s", $args['content'] );
 	} else {
 		$post_types = get_post_types( array( 'can_export' => true ) );
 		$esses      = array_fill( 0, count( $post_types ), '%s' );
 
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQLPlaceholders.UnfinishedPrepare
-		$where = $wpdb->prepare( "{$wpdb->posts}.post_type IN (" . implode( ',', $esses ) . ')', $post_types );
+		$where = $zcdb->prepare( "{$zcdb->posts}.post_type IN (" . implode( ',', $esses ) . ')', $post_types );
 	}
 
 	if ( $args['status'] && ( 'post' === $args['content'] || 'page' === $args['content'] ) ) {
-		$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_status = %s", $args['status'] );
+		$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_status = %s", $args['status'] );
 	} else {
-		$where .= " AND {$wpdb->posts}.post_status != 'auto-draft'";
+		$where .= " AND {$zcdb->posts}.post_status != 'auto-draft'";
 	}
 
 	$join = '';
 	if ( $args['category'] && 'post' === $args['content'] ) {
 		$term = term_exists( $args['category'], 'category' );
 		if ( $term ) {
-			$join   = "INNER JOIN {$wpdb->term_relationships} ON ({$wpdb->posts}.ID = {$wpdb->term_relationships}.object_id)";
-			$where .= $wpdb->prepare( " AND {$wpdb->term_relationships}.term_taxonomy_id = %d", $term['term_taxonomy_id'] );
+			$join   = "INNER JOIN {$zcdb->term_relationships} ON ({$zcdb->posts}.ID = {$zcdb->term_relationships}.object_id)";
+			$where .= $zcdb->prepare( " AND {$zcdb->term_relationships}.term_taxonomy_id = %d", $term['term_taxonomy_id'] );
 		}
 	}
 
 	if ( in_array( $args['content'], array( 'post', 'page', 'attachment' ), true ) ) {
 		if ( $args['author'] ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_author = %d", $args['author'] );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_author = %d", $args['author'] );
 		}
 
 		if ( $args['start_date'] ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_date >= %s", gmdate( 'Y-m-d', strtotime( $args['start_date'] ) ) );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_date >= %s", gmdate( 'Y-m-d', strtotime( $args['start_date'] ) ) );
 		}
 
 		if ( $args['end_date'] ) {
-			$where .= $wpdb->prepare( " AND {$wpdb->posts}.post_date < %s", gmdate( 'Y-m-d', strtotime( '+1 month', strtotime( $args['end_date'] ) ) ) );
+			$where .= $zcdb->prepare( " AND {$zcdb->posts}.post_date < %s", gmdate( 'Y-m-d', strtotime( '+1 month', strtotime( $args['end_date'] ) ) ) );
 		}
 	}
 
 	// Grab a snapshot of post IDs, just in case it changes during the export.
-	$post_ids = $wpdb->get_col( "SELECT ID FROM {$wpdb->posts} $join WHERE $where" );
+	$post_ids = $zcdb->get_col( "SELECT ID FROM {$zcdb->posts} $join WHERE $where" );
 
 	// Get IDs for the attachments of each post, unless all content is already being exported.
 	if ( ! in_array( $args['content'], array( 'all', 'attachment' ), true ) ) {
@@ -160,24 +160,24 @@ function export_wp( $args = array() ) {
 			$in_placeholder = implode( ',', $placeholders );
 
 			// Prepare the SQL statement for attachment ids.
-			$attachment_ids = $wpdb->get_col(
-				$wpdb->prepare(
+			$attachment_ids = $zcdb->get_col(
+				$zcdb->prepare(
 					"
 				SELECT ID
-				FROM $wpdb->posts
+				FROM $zcdb->posts
 				WHERE post_parent IN ($in_placeholder) AND post_type = 'attachment'
 					",
 					$posts_in
 				)
 			);
 
-			$thumbnails_ids = $wpdb->get_col(
-				$wpdb->prepare(
+			$thumbnails_ids = $zcdb->get_col(
+				$zcdb->prepare(
 					"
 				SELECT meta_value
-				FROM $wpdb->postmeta
-				WHERE $wpdb->postmeta.post_id IN ($in_placeholder)
-				AND $wpdb->postmeta.meta_key = '_thumbnail_id'
+				FROM $zcdb->postmeta
+				WHERE $zcdb->postmeta.post_id IN ($in_placeholder)
+				AND $zcdb->postmeta.meta_key = '_thumbnail_id'
 					",
 					$posts_in
 				)
@@ -366,14 +366,14 @@ function export_wp( $args = array() ) {
 	 *
 	 * @since 4.6.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param ZC_Term $term Term object.
 	 */
 	function wxr_term_meta( $term ) {
-		global $wpdb;
+		global $zcdb;
 
-		$termmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->termmeta WHERE term_id = %d", $term->term_id ) );
+		$termmeta = $zcdb->get_results( $zcdb->prepare( "SELECT * FROM $zcdb->termmeta WHERE term_id = %d", $term->term_id ) );
 
 		foreach ( $termmeta as $meta ) {
 			/**
@@ -399,12 +399,12 @@ function export_wp( $args = array() ) {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int[] $post_ids Optional. Array of post IDs to filter the query by.
 	 */
 	function wxr_authors_list( ?array $post_ids = null ) {
-		global $wpdb;
+		global $zcdb;
 
 		if ( ! empty( $post_ids ) ) {
 			$post_ids       = array_map( 'absint', $post_ids );
@@ -418,7 +418,7 @@ function export_wp( $args = array() ) {
 		foreach ( $post_id_chunks as $next_posts ) {
 			$and = ! empty( $next_posts ) ? 'AND ID IN (' . implode( ', ', $next_posts ) . ')' : '';
 
-			$results = $wpdb->get_results( "SELECT DISTINCT post_author FROM $wpdb->posts WHERE post_status != 'auto-draft' $and" );
+			$results = $zcdb->get_results( "SELECT DISTINCT post_author FROM $zcdb->posts WHERE post_status != 'auto-draft' $and" );
 
 			foreach ( (array) $results as $result ) {
 				$authors[] = get_userdata( $result->post_author );
@@ -598,7 +598,7 @@ function export_wp( $args = array() ) {
 		// Fetch 20 posts at a time rather than loading the entire table into memory.
 		while ( $next_posts = array_splice( $post_ids, 0, 20 ) ) {
 			$where = 'WHERE ID IN (' . implode( ',', $next_posts ) . ')';
-			$posts = $wpdb->get_results( "SELECT * FROM {$wpdb->posts} $where" );
+			$posts = $zcdb->get_results( "SELECT * FROM {$zcdb->posts} $where" );
 
 			// Begin Loop.
 			foreach ( $posts as $post ) {
@@ -661,7 +661,7 @@ function export_wp( $args = array() ) {
 	<?php endif; ?>
 				<?php wxr_post_taxonomy(); ?>
 				<?php
-				$postmeta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->postmeta WHERE post_id = %d", $post->ID ) );
+				$postmeta = $zcdb->get_results( $zcdb->prepare( "SELECT * FROM $zcdb->postmeta WHERE post_id = %d", $post->ID ) );
 				foreach ( $postmeta as $meta ) :
 					/**
 					 * Filters whether to selectively skip post meta used for WXR exports.
@@ -686,7 +686,7 @@ function export_wp( $args = array() ) {
 					<?php
 	endforeach;
 
-				$_comments = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );
+				$_comments = $zcdb->get_results( $zcdb->prepare( "SELECT * FROM $zcdb->comments WHERE comment_post_ID = %d AND comment_approved <> 'spam'", $post->ID ) );
 				$comments  = array_filter(
 					array_map( 'get_comment', $_comments ),
 					static function ( $comment ) {
@@ -709,7 +709,7 @@ function export_wp( $args = array() ) {
 			<zc:comment_parent><?php echo (int) $c->comment_parent; ?></zc:comment_parent>
 			<zc:comment_user_id><?php echo (int) $c->user_id; ?></zc:comment_user_id>
 					<?php
-					$c_meta = $wpdb->get_results( $wpdb->prepare( "SELECT * FROM $wpdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
+					$c_meta = $zcdb->get_results( $zcdb->prepare( "SELECT * FROM $zcdb->commentmeta WHERE comment_id = %d", $c->comment_ID ) );
 					foreach ( $c_meta as $meta ) :
 						/**
 						 * Filters whether to selectively skip comment meta used for WXR exports.

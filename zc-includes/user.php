@@ -25,7 +25,7 @@
  * @since 2.5.0
  *
  * @global string $auth_secure_cookie
- * @global wpdb   $wpdb               ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb               ZelocoreCMS database abstraction object.
  *
  * @param array       $credentials {
  *     Optional. User info in order to sign on.
@@ -39,7 +39,7 @@
  * @return ZC_User|ZC_Error ZC_User on success, ZC_Error on failure.
  */
 function zc_signon( $credentials = array(), $secure_cookie = '' ) {
-	global $auth_secure_cookie, $wpdb;
+	global $auth_secure_cookie, $zcdb;
 
 	if ( empty( $credentials ) ) {
 		$credentials = array(
@@ -116,8 +116,8 @@ function zc_signon( $credentials = array(), $secure_cookie = '' ) {
 
 	// Clear `user_activation_key` after a successful login.
 	if ( ! empty( $user->user_activation_key ) ) {
-		$wpdb->update(
-			$wpdb->users,
+		$zcdb->update(
+			$zcdb->users,
 			array(
 				'user_activation_key' => '',
 			),
@@ -606,7 +606,7 @@ function zc_validate_logged_in_cookie( $user_id ) {
  * @since 4.3.0 Added `$public_only` argument. Added the ability to pass an array
  *              of post types to `$post_type`.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int          $userid      User ID.
  * @param array|string $post_type   Optional. Single post type or array of post types to count the number of posts for. Default 'post'.
@@ -614,19 +614,19 @@ function zc_validate_logged_in_cookie( $user_id ) {
  * @return string Number of posts the user has written in this post type.
  */
 function count_user_posts( $userid, $post_type = 'post', $public_only = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post_type = array_unique( (array) $post_type );
 	sort( $post_type );
 
 	$where = get_posts_by_author_sql( $post_type, true, $userid, $public_only );
-	$query = "SELECT COUNT(*) FROM $wpdb->posts $where";
+	$query = "SELECT COUNT(*) FROM $zcdb->posts $where";
 
 	$last_changed = zc_cache_get_last_changed( 'posts' );
 	$cache_key    = 'count_user_posts:' . md5( $query );
 	$count        = zc_cache_get_salted( $cache_key, 'post-queries', $last_changed );
 	if ( false === $count ) {
-		$count = $wpdb->get_var( $query );
+		$count = $zcdb->get_var( $query );
 		zc_cache_set_salted( $cache_key, $count, 'post-queries', $last_changed );
 	}
 
@@ -651,7 +651,7 @@ function count_user_posts( $userid, $post_type = 'post', $public_only = false ) 
  * @since 3.0.0
  * @since 6.9.0 The results are now cached.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int[]           $users       Array of user IDs.
  * @param string|string[] $post_type   Optional. Single post type or array of post types to check. Defaults to 'post'.
@@ -659,7 +659,7 @@ function count_user_posts( $userid, $post_type = 'post', $public_only = false ) 
  * @return array<int, string> Amount of posts each user has written, as strings, keyed by user ID.
  */
 function count_many_users_posts( $users, $post_type = 'post', $public_only = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( empty( $users ) || ! is_array( $users ) ) {
 		return array();
@@ -693,13 +693,13 @@ function count_many_users_posts( $users, $post_type = 'post', $public_only = fal
 
 	$userlist    = implode( ',', $users );
 	$where       = get_posts_by_author_sql( $post_type, true, null, $public_only );
-	$query       = "SELECT post_author, COUNT(*) FROM $wpdb->posts $where AND post_author IN ($userlist) GROUP BY post_author";
+	$query       = "SELECT post_author, COUNT(*) FROM $zcdb->posts $where AND post_author IN ($userlist) GROUP BY post_author";
 	$cache_key   = 'count_many_users_posts:' . md5( $query );
 	$cache_salts = array( zc_cache_get_last_changed( 'posts' ), zc_cache_get_last_changed( 'users' ) );
 	$count       = zc_cache_get_salted( $cache_key, 'post-queries', $cache_salts );
 
 	if ( false === $count ) {
-		$result = $wpdb->get_results( $query, ARRAY_N );
+		$result = $zcdb->get_results( $query, ARRAY_N );
 
 		$count = array_fill_keys( $users, 0 );
 		foreach ( $result as $row ) {
@@ -743,7 +743,7 @@ function get_current_user_id() {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $option     User option name.
  * @param int    $user       Optional. User ID.
@@ -751,7 +751,7 @@ function get_current_user_id() {
  * @return mixed User option value on success, false on failure.
  */
 function get_user_option( $option, $user = 0, $deprecated = '' ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! empty( $deprecated ) ) {
 		_deprecated_argument( __FUNCTION__, '3.0.0' );
@@ -766,7 +766,7 @@ function get_user_option( $option, $user = 0, $deprecated = '' ) {
 		return false;
 	}
 
-	$prefix = $wpdb->get_blog_prefix();
+	$prefix = $zcdb->get_blog_prefix();
 	if ( $user->has_prop( $prefix . $option ) ) { // Blog-specific.
 		$result = $user->get( $prefix . $option );
 	} elseif ( $user->has_prop( $option ) ) { // User-specific and cross-blog.
@@ -800,7 +800,7 @@ function get_user_option( $option, $user = 0, $deprecated = '' ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $user_id     User ID.
  * @param string $option_name User option name.
@@ -811,10 +811,10 @@ function get_user_option( $option, $user = 0, $deprecated = '' ) {
  *                  false on failure.
  */
 function update_user_option( $user_id, $option_name, $newvalue, $is_global = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $is_global ) {
-		$option_name = $wpdb->get_blog_prefix() . $option_name;
+		$option_name = $zcdb->get_blog_prefix() . $option_name;
 	}
 
 	return update_user_meta( $user_id, $option_name, $newvalue );
@@ -829,7 +829,7 @@ function update_user_option( $user_id, $option_name, $newvalue, $is_global = fal
  *
  * @since 3.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int    $user_id     User ID
  * @param string $option_name User option name.
@@ -838,10 +838,10 @@ function update_user_option( $user_id, $option_name, $newvalue, $is_global = fal
  * @return bool True on success, false on failure.
  */
 function delete_user_option( $user_id, $option_name, $is_global = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $is_global ) {
-		$option_name = $wpdb->get_blog_prefix() . $option_name;
+		$option_name = $zcdb->get_blog_prefix() . $option_name;
 	}
 
 	return delete_user_meta( $user_id, $option_name );
@@ -1023,7 +1023,7 @@ function zc_list_users( $args = array() ) {
  * @since 3.0.0
  * @since 4.7.0 Converted to use `get_sites()`.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int  $user_id User ID
  * @param bool $all     Whether to retrieve all sites, or only sites that are not
@@ -1032,7 +1032,7 @@ function zc_list_users( $args = array() ) {
  *                  or belongs to no sites.
  */
 function get_blogs_of_user( $user_id, $all = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$user_id = (int) $user_id;
 
@@ -1082,9 +1082,9 @@ function get_blogs_of_user( $user_id, $all = false ) {
 
 	$site_ids = array();
 
-	if ( isset( $keys[ $wpdb->base_prefix . 'capabilities' ] ) && defined( 'MULTISITE' ) ) {
+	if ( isset( $keys[ $zcdb->base_prefix . 'capabilities' ] ) && defined( 'MULTISITE' ) ) {
 		$site_ids[] = 1;
-		unset( $keys[ $wpdb->base_prefix . 'capabilities' ] );
+		unset( $keys[ $zcdb->base_prefix . 'capabilities' ] );
 	}
 
 	$keys = array_keys( $keys );
@@ -1093,10 +1093,10 @@ function get_blogs_of_user( $user_id, $all = false ) {
 		if ( ! str_ends_with( $key, 'capabilities' ) ) {
 			continue;
 		}
-		if ( $wpdb->base_prefix && ! str_starts_with( $key, $wpdb->base_prefix ) ) {
+		if ( $zcdb->base_prefix && ! str_starts_with( $key, $zcdb->base_prefix ) ) {
 			continue;
 		}
-		$site_id = str_replace( array( $wpdb->base_prefix, '_capabilities' ), '', $key );
+		$site_id = str_replace( array( $zcdb->base_prefix, '_capabilities' ), '', $key );
 		if ( ! is_numeric( $site_id ) ) {
 			continue;
 		}
@@ -1153,14 +1153,14 @@ function get_blogs_of_user( $user_id, $all = false ) {
  *
  * @since MU (3.0.0)
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id Optional. The unique ID of the user. Defaults to the current user.
  * @param int $blog_id Optional. ID of the blog to check. Defaults to the current site.
  * @return bool
  */
 function is_user_member_of_blog( $user_id = 0, $blog_id = 0 ) {
-	global $wpdb;
+	global $zcdb;
 
 	$user_id = (int) $user_id;
 	$blog_id = (int) $blog_id;
@@ -1197,9 +1197,9 @@ function is_user_member_of_blog( $user_id = 0, $blog_id = 0 ) {
 	}
 
 	if ( 1 === $blog_id ) {
-		$capabilities_key = $wpdb->base_prefix . 'capabilities';
+		$capabilities_key = $zcdb->base_prefix . 'capabilities';
 	} else {
-		$capabilities_key = $wpdb->base_prefix . $blog_id . '_capabilities';
+		$capabilities_key = $zcdb->base_prefix . $blog_id . '_capabilities';
 	}
 	$has_cap = get_user_meta( $user_id, $capabilities_key, true );
 
@@ -1322,7 +1322,7 @@ function update_user_meta( $user_id, $meta_key, $meta_value, $prev_value = '' ) 
  * @since 4.4.0 The number of users with no role is now included in the `none` element.
  * @since 4.9.0 The `$site_id` parameter was added to support multisite.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string   $strategy Optional. The computational strategy to use when counting the users.
  *                           Accepts either 'time' or 'memory'. Default 'time'.
@@ -1335,7 +1335,7 @@ function update_user_meta( $user_id, $meta_key, $meta_value, $prev_value = '' ) 
  * }
  */
 function count_users( $strategy = 'time', $site_id = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	// Initialize.
 	if ( ! $site_id ) {
@@ -1360,7 +1360,7 @@ function count_users( $strategy = 'time', $site_id = null ) {
 		return $pre;
 	}
 
-	$blog_prefix = $wpdb->get_blog_prefix( $site_id );
+	$blog_prefix = $zcdb->get_blog_prefix( $site_id );
 	$result      = array();
 
 	if ( 'time' === $strategy ) {
@@ -1375,17 +1375,17 @@ function count_users( $strategy = 'time', $site_id = null ) {
 		// Build a CPU-intensive query that will return concise information.
 		$select_count = array();
 		foreach ( $avail_roles as $this_role => $name ) {
-			$select_count[] = $wpdb->prepare( 'COUNT(NULLIF(`meta_value` LIKE %s, false))', '%' . $wpdb->esc_like( '"' . $this_role . '"' ) . '%' );
+			$select_count[] = $zcdb->prepare( 'COUNT(NULLIF(`meta_value` LIKE %s, false))', '%' . $zcdb->esc_like( '"' . $this_role . '"' ) . '%' );
 		}
 		$select_count[] = "COUNT(NULLIF(`meta_value` = 'a:0:{}', false))";
 		$select_count   = implode( ', ', $select_count );
 
 		// Add the meta_value index to the selection list, then run the query.
-		$row = $wpdb->get_row(
+		$row = $zcdb->get_row(
 			"
 			SELECT {$select_count}, COUNT(*)
-			FROM {$wpdb->usermeta}
-			INNER JOIN {$wpdb->users} ON user_id = ID
+			FROM {$zcdb->usermeta}
+			INNER JOIN {$zcdb->users} ON user_id = ID
 			WHERE meta_key = '{$blog_prefix}capabilities'
 		",
 			ARRAY_N
@@ -1413,11 +1413,11 @@ function count_users( $strategy = 'time', $site_id = null ) {
 			'none' => 0,
 		);
 
-		$users_of_blog = $wpdb->get_col(
+		$users_of_blog = $zcdb->get_col(
 			"
 			SELECT meta_value
-			FROM {$wpdb->usermeta}
-			INNER JOIN {$wpdb->users} ON user_id = ID
+			FROM {$zcdb->usermeta}
+			INNER JOIN {$zcdb->users} ON user_id = ID
 			WHERE meta_key = '{$blog_prefix}capabilities'
 		"
 		);
@@ -1507,14 +1507,14 @@ function zc_maybe_update_user_counts( $network_id = null ) {
 /**
  * Updates the total count of users on the site.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  * @since 6.0.0
  *
  * @param int|null $network_id ID of the network. Defaults to the current network.
  * @return bool Whether the update was successful.
  */
 function zc_update_user_counts( $network_id = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_multisite() && null !== $network_id ) {
 		_doing_it_wrong(
@@ -1528,12 +1528,12 @@ function zc_update_user_counts( $network_id = null ) {
 		);
 	}
 
-	$query = "SELECT COUNT(ID) as c FROM $wpdb->users";
+	$query = "SELECT COUNT(ID) as c FROM $zcdb->users";
 	if ( is_multisite() ) {
 		$query .= " WHERE spam = '0' AND deleted = '0'";
 	}
 
-	$count = $wpdb->get_var( $query );
+	$count = $zcdb->get_var( $query );
 
 	return update_network_option( $network_id, 'user_count', $count );
 }
@@ -2152,7 +2152,7 @@ function validate_username( $username ) {
  * @since 5.3.0 The `spam` field can be passed to `$userdata` (Multisite only).
  * @since 5.9.0 The `meta_input` field can be passed to `$userdata` to allow addition of user meta data.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array|object|ZC_User $userdata {
  *     An array, object, or ZC_User object of user data arguments.
@@ -2203,7 +2203,7 @@ function validate_username( $username ) {
  *                      be created.
  */
 function zc_insert_user( $userdata ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( $userdata instanceof stdClass ) {
 		$userdata = get_object_vars( $userdata );
@@ -2350,7 +2350,7 @@ function zc_insert_user( $userdata ) {
 		return new ZC_Error( 'user_nicename_too_long', __( 'Nicename may not be longer than 50 characters.' ) );
 	}
 
-	$user_nicename_check = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1", $user_nicename, $user_login ) );
+	$user_nicename_check = $zcdb->get_var( $zcdb->prepare( "SELECT ID FROM $zcdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1", $user_nicename, $user_login ) );
 
 	if ( $user_nicename_check ) {
 		$suffix = 2;
@@ -2358,7 +2358,7 @@ function zc_insert_user( $userdata ) {
 			// user_nicename allows 50 chars. Subtract one for a hyphen, plus the length of the suffix.
 			$base_length         = 49 - mb_strlen( $suffix );
 			$alt_user_nicename   = mb_substr( $user_nicename, 0, $base_length ) . "-$suffix";
-			$user_nicename_check = $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1", $alt_user_nicename, $user_login ) );
+			$user_nicename_check = $zcdb->get_var( $zcdb->prepare( "SELECT ID FROM $zcdb->users WHERE user_nicename = %s AND user_login != %s LIMIT 1", $alt_user_nicename, $user_login ) );
 			++$suffix;
 		}
 		$user_nicename = $alt_user_nicename;
@@ -2550,10 +2550,10 @@ function zc_insert_user( $userdata ) {
 		if ( $user_email !== $old_user_data->user_email || $user_pass !== $old_user_data->user_pass ) {
 			$data['user_activation_key'] = '';
 		}
-		$wpdb->update( $wpdb->users, $data, array( 'ID' => $user_id ) );
+		$zcdb->update( $zcdb->users, $data, array( 'ID' => $user_id ) );
 	} else {
-		$wpdb->insert( $wpdb->users, $data );
-		$user_id = (int) $wpdb->insert_id;
+		$zcdb->insert( $zcdb->users, $data );
+		$user_id = (int) $zcdb->insert_id;
 	}
 
 	$user = new ZC_User( $user_id );
@@ -3234,7 +3234,7 @@ function check_password_reset_key(
  * @since 2.5.0
  * @since 5.7.0 Added `$user_login` parameter.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $user_login Optional. Username to send a password retrieval email for.
  *                           Defaults to `$_POST['user_login']` if not set.
@@ -3727,19 +3727,19 @@ function zc_destroy_all_sessions() {
  * @since 4.4.0
  * @since 4.9.0 The `$site_id` parameter was added to support multisite.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int|null $site_id Optional. The site ID to get users with no role for. Defaults to the current site.
  * @return string[] Array of user IDs as strings.
  */
 function zc_get_users_with_no_role( $site_id = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! $site_id ) {
 		$site_id = get_current_blog_id();
 	}
 
-	$prefix = $wpdb->get_blog_prefix( $site_id );
+	$prefix = $zcdb->get_blog_prefix( $site_id );
 
 	if ( is_multisite() && get_current_blog_id() !== $site_id ) {
 		switch_to_blog( $site_id );
@@ -3751,10 +3751,10 @@ function zc_get_users_with_no_role( $site_id = null ) {
 
 	$regex = implode( '|', array_keys( $role_names ) );
 	$regex = preg_replace( '/[^a-zA-Z_\|-]/', '', $regex );
-	$users = $wpdb->get_col(
-		$wpdb->prepare(
+	$users = $zcdb->get_col(
+		$zcdb->prepare(
 			"SELECT user_id
-			FROM $wpdb->usermeta
+			FROM $zcdb->usermeta
 			WHERE meta_key = '{$prefix}capabilities'
 			AND meta_value NOT REGEXP %s",
 			$regex
@@ -5193,15 +5193,15 @@ function zc_is_application_passwords_available_for_user( $user ) {
  * @since 6.1.0
  * @access private
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function zc_register_persisted_preferences_meta() {
 	/*
 	 * Create a meta key that incorporates the blog prefix so that each site
 	 * on a multisite can have distinct user preferences.
 	 */
-	global $wpdb;
-	$meta_key = $wpdb->get_blog_prefix() . 'persisted_preferences';
+	global $zcdb;
+	$meta_key = $zcdb->get_blog_prefix() . 'persisted_preferences';
 
 	register_meta(
 		'user',

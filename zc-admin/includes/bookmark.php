@@ -81,13 +81,13 @@ function get_default_link_to_edit() {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $link_id ID of the link to delete.
  * @return true Always true.
  */
 function zc_delete_link( $link_id ) {
-	global $wpdb;
+	global $zcdb;
 	/**
 	 * Fires before a link is deleted.
 	 *
@@ -99,7 +99,7 @@ function zc_delete_link( $link_id ) {
 
 	zc_delete_object_term_relationships( $link_id, 'link_category' );
 
-	$wpdb->delete( $wpdb->links, array( 'link_id' => $link_id ) );
+	$zcdb->delete( $zcdb->links, array( 'link_id' => $link_id ) );
 
 	/**
 	 * Fires after a link has been deleted.
@@ -148,7 +148,7 @@ function get_link_to_edit( $link ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param array $linkdata {
  *     Elements that make up the link to insert.
@@ -172,7 +172,7 @@ function get_link_to_edit( $link ) {
  * @return int|ZC_Error The link ID on success. The value 0 or ZC_Error on failure.
  */
 function zc_insert_link( $linkdata, $zc_error = false ) {
-	global $wpdb;
+	global $zcdb;
 
 	$defaults = array(
 		'link_id'     => 0,
@@ -223,22 +223,22 @@ function zc_insert_link( $linkdata, $zc_error = false ) {
 	}
 
 	if ( $update ) {
-		if ( false === $wpdb->update( $wpdb->links, compact( 'link_url', 'link_name', 'link_image', 'link_target', 'link_description', 'link_visible', 'link_owner', 'link_rating', 'link_rel', 'link_notes', 'link_rss', 'link_updated' ), compact( 'link_id' ) ) ) {
+		if ( false === $zcdb->update( $zcdb->links, compact( 'link_url', 'link_name', 'link_image', 'link_target', 'link_description', 'link_visible', 'link_owner', 'link_rating', 'link_rel', 'link_notes', 'link_rss', 'link_updated' ), compact( 'link_id' ) ) ) {
 			if ( $zc_error ) {
-				return new ZC_Error( 'db_update_error', __( 'Could not update link in the database.' ), $wpdb->last_error );
+				return new ZC_Error( 'db_update_error', __( 'Could not update link in the database.' ), $zcdb->last_error );
 			} else {
 				return 0;
 			}
 		}
 	} else {
-		if ( false === $wpdb->insert( $wpdb->links, compact( 'link_url', 'link_name', 'link_image', 'link_target', 'link_description', 'link_visible', 'link_owner', 'link_rating', 'link_rel', 'link_notes', 'link_rss', 'link_updated' ) ) ) {
+		if ( false === $zcdb->insert( $zcdb->links, compact( 'link_url', 'link_name', 'link_image', 'link_target', 'link_description', 'link_visible', 'link_owner', 'link_rating', 'link_rel', 'link_notes', 'link_rss', 'link_updated' ) ) ) {
 			if ( $zc_error ) {
-				return new ZC_Error( 'db_insert_error', __( 'Could not insert link into the database.' ), $wpdb->last_error );
+				return new ZC_Error( 'db_insert_error', __( 'Could not insert link into the database.' ), $zcdb->last_error );
 			} else {
 				return 0;
 			}
 		}
-		$link_id = (int) $wpdb->insert_id;
+		$link_id = (int) $zcdb->insert_id;
 	}
 
 	zc_set_link_cats( $link_id, $link_category );

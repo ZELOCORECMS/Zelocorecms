@@ -17,14 +17,14 @@ class ZC_Importer {
 	/**
 	 * Returns array with imported permalinks from ZelocoreCMS database.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $importer_name
 	 * @param string $blog_id
 	 * @return array
 	 */
 	public function get_imported_posts( $importer_name, $blog_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$hashtable = array();
 
@@ -34,9 +34,9 @@ class ZC_Importer {
 		// Grab all posts in chunks.
 		do {
 			$meta_key = $importer_name . '_' . $blog_id . '_permalink';
-			$results  = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key = %s LIMIT %d,%d",
+			$results  = $zcdb->get_results(
+				$zcdb->prepare(
+					"SELECT post_id, meta_value FROM $zcdb->postmeta WHERE meta_key = %s LIMIT %d,%d",
 					$meta_key,
 					$offset,
 					$limit
@@ -60,22 +60,22 @@ class ZC_Importer {
 	/**
 	 * Returns count of imported permalinks from ZelocoreCMS database.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $importer_name
 	 * @param string $blog_id
 	 * @return int
 	 */
 	public function count_imported_posts( $importer_name, $blog_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$count = 0;
 
 		// Get count of permalinks.
 		$meta_key = $importer_name . '_' . $blog_id . '_permalink';
-		$result   = $wpdb->get_results(
-			$wpdb->prepare(
-				"SELECT COUNT( post_id ) AS cnt FROM $wpdb->postmeta WHERE meta_key = %s",
+		$result   = $zcdb->get_results(
+			$zcdb->prepare(
+				"SELECT COUNT( post_id ) AS cnt FROM $zcdb->postmeta WHERE meta_key = %s",
 				$meta_key
 			)
 		);
@@ -90,13 +90,13 @@ class ZC_Importer {
 	/**
 	 * Sets array with imported comments from ZelocoreCMS database.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $blog_id
 	 * @return array
 	 */
 	public function get_imported_comments( $blog_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$hashtable = array();
 
@@ -105,9 +105,9 @@ class ZC_Importer {
 
 		// Grab all comments in chunks.
 		do {
-			$results = $wpdb->get_results(
-				$wpdb->prepare(
-					"SELECT comment_ID, comment_agent FROM $wpdb->comments LIMIT %d,%d",
+			$results = $zcdb->get_results(
+				$zcdb->prepare(
+					"SELECT comment_ID, comment_agent FROM $zcdb->comments LIMIT %d,%d",
 					$offset,
 					$limit
 				)
@@ -278,13 +278,13 @@ class ZC_Importer {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @global wpdb  $wpdb       ZelocoreCMS database abstraction object.
+	 * @global zcdb  $zcdb       ZelocoreCMS database abstraction object.
 	 * @global int[] $zc_actions Stores the number of times each action was triggered.
 	 */
 	public function stop_the_insanity() {
-		global $wpdb, $zc_actions;
+		global $zcdb, $zc_actions;
 		// Or define( 'ZC_IMPORTING', true );
-		$wpdb->queries = array();
+		$zcdb->queries = array();
 		// Reset $zc_actions to keep it from growing out of control.
 		$zc_actions = array();
 	}

@@ -1,8 +1,8 @@
 ( function( tinymce ) {
-	tinymce.PluginManager.add( 'wpemoji', function( editor ) {
+	tinymce.PluginManager.add( 'zcemoji', function( editor ) {
 		var typing,
 			zc = window.zc,
-			settings = window._wpemojiSettings,
+			settings = window._zcemojiSettings,
 			env = tinymce.Env,
 			ua = window.navigator.userAgent,
 			isWin = ua.indexOf( 'Windows' ) > -1,

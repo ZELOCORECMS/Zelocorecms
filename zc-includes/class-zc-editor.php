@@ -391,8 +391,8 @@ final class _ZC_Editors {
 							'fullscreen',
 							'image',
 							'zelocorecms',
-							'wpeditimage',
-							'wplink',
+							'zceditimage',
+							'zclink',
 						),
 						$editor_id
 					);
@@ -431,14 +431,14 @@ final class _ZC_Editors {
 						'textcolor',
 						'fullscreen',
 						'zelocorecms',
-						'wpautoresize',
-						'wpeditimage',
-						'wpemoji',
-						'wpgallery',
-						'wplink',
-						'wpdialogs',
-						'wptextpattern',
-						'wpview',
+						'zcautoresize',
+						'zceditimage',
+						'zcemoji',
+						'zcgallery',
+						'zclink',
+						'zcdialogs',
+						'zctextpattern',
+						'zcview',
 					);
 
 					if ( ! self::$has_medialib ) {
@@ -565,7 +565,7 @@ final class _ZC_Editors {
 
 				/** This filter is documented in zc-admin/includes/media.php */
 				if ( apply_filters( 'disable_captions', '' ) ) {
-					$settings['wpeditimage_disable_captions'] = true;
+					$settings['zceditimage_disable_captions'] = true;
 				}
 
 				$mce_css = $settings['content_css'];
@@ -869,8 +869,8 @@ final class _ZC_Editors {
 			zc_enqueue_style( 'buttons' );
 		}
 
-		if ( $default_scripts || in_array( 'wplink', self::$plugins, true ) || in_array( 'link', self::$qt_buttons, true ) ) {
-			zc_enqueue_script( 'wplink' );
+		if ( $default_scripts || in_array( 'zclink', self::$plugins, true ) || in_array( 'link', self::$qt_buttons, true ) ) {
+			zc_enqueue_script( 'zclink' );
 			zc_enqueue_script( 'jquery-ui-autocomplete' );
 		}
 
@@ -948,7 +948,7 @@ final class _ZC_Editors {
 
 			/*
 			 * In production all plugins are loaded (they are in zc-editor.js.gz).
-			 * The 'wpview', 'wpdialogs', and 'media' TinyMCE plugins are not initialized by default.
+			 * The 'zcview', 'zcdialogs', and 'media' TinyMCE plugins are not initialized by default.
 			 * Can be added from js by using the 'zc-before-tinymce-init' event.
 			 */
 			$settings['plugins'] = implode(
@@ -963,12 +963,12 @@ final class _ZC_Editors {
 					'textcolor',
 					'fullscreen',
 					'zelocorecms',
-					'wpautoresize',
-					'wpeditimage',
-					'wpemoji',
-					'wpgallery',
-					'wplink',
-					'wptextpattern',
+					'zcautoresize',
+					'zceditimage',
+					'zcemoji',
+					'zcgallery',
+					'zclink',
+					'zctextpattern',
 				)
 			);
 
@@ -1113,7 +1113,7 @@ final class _ZC_Editors {
 			'preview_styles'               => 'font-family font-size font-weight font-style text-decoration text-transform',
 
 			'end_container_on_empty_block' => true,
-			'wpeditimage_html5_captions'   => true,
+			'zceditimage_html5_captions'   => true,
 			'zc_lang_attr'                 => get_bloginfo( 'language' ),
 			'zc_shortcut_labels'           => zc_json_encode( $shortcut_labels ),
 		);
@@ -1731,7 +1731,7 @@ final class _ZC_Editors {
 		</script>
 		<?php
 
-		if ( in_array( 'wplink', self::$plugins, true ) || in_array( 'link', self::$qt_buttons, true ) ) {
+		if ( in_array( 'zclink', self::$plugins, true ) || in_array( 'link', self::$qt_buttons, true ) ) {
 			self::zc_link_dialog();
 		}
 
@@ -1888,10 +1888,10 @@ final class _ZC_Editors {
 		</span></button>
 		<div id="link-selector">
 			<div id="link-options">
-				<p class="howto" id="wplink-enter-url"><?php _e( 'Enter the destination URL' ); ?></p>
+				<p class="howto" id="zclink-enter-url"><?php _e( 'Enter the destination URL' ); ?></p>
 				<div>
 					<label><span><?php _e( 'URL' ); ?></span>
-					<input id="zc-link-url" type="text" aria-describedby="wplink-enter-url" /></label>
+					<input id="zc-link-url" type="text" aria-describedby="zclink-enter-url" /></label>
 				</div>
 				<div class="zc-link-text-field">
 					<label><span><?php _e( 'Link Text' ); ?></span>
@@ -1902,12 +1902,12 @@ final class _ZC_Editors {
 					<input type="checkbox" id="zc-link-target" /> <?php _e( 'Open link in a new tab' ); ?></label>
 				</div>
 			</div>
-			<p class="howto" id="wplink-link-existing-content"><?php _e( 'Or link to existing content' ); ?></p>
+			<p class="howto" id="zclink-link-existing-content"><?php _e( 'Or link to existing content' ); ?></p>
 			<div id="search-panel">
 				<div class="link-search-wrapper">
 					<label>
 						<span class="search-label"><?php _e( 'Search' ); ?></span>
-						<input type="search" id="zc-link-search" class="link-search-field" autocomplete="off" aria-describedby="wplink-link-existing-content" />
+						<input type="search" id="zc-link-search" class="link-search-field" autocomplete="off" aria-describedby="zclink-link-existing-content" />
 						<span class="spinner"></span>
 					</label>
 				</div>

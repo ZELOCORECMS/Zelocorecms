@@ -31,7 +31,7 @@
  * @global ZC_Rewrite $zc_rewrite ZelocoreCMS rewrite component.
  * @global bool       $is_IIS
  * @global ZC_Query   $zc_query   ZelocoreCMS Query object.
- * @global wpdb       $wpdb       ZelocoreCMS database abstraction object.
+ * @global zcdb       $zcdb       ZelocoreCMS database abstraction object.
  * @global ZC         $zc         Current ZelocoreCMS environment instance.
  *
  * @param string $requested_url Optional. The URL that was requested, used to
@@ -40,7 +40,7 @@
  * @return string|void The string of the URL, if redirect needed.
  */
 function redirect_canonical( $requested_url = null, $do_redirect = true ) {
-	global $zc_rewrite, $is_IIS, $zc_query, $wpdb, $zc;
+	global $zc_rewrite, $is_IIS, $zc_query, $zcdb, $zc;
 
 	if ( isset( $_SERVER['REQUEST_METHOD'] ) && ! in_array( strtoupper( $_SERVER['REQUEST_METHOD'] ), array( 'GET', 'HEAD' ), true ) ) {
 		return;
@@ -120,7 +120,7 @@ function redirect_canonical( $requested_url = null, $do_redirect = true ) {
 
 	if ( is_singular() && $zc_query->post_count < 1 && $post_id ) {
 
-		$vars = $wpdb->get_results( $wpdb->prepare( "SELECT post_type, post_parent FROM $wpdb->posts WHERE ID = %d", $post_id ) );
+		$vars = $zcdb->get_results( $zcdb->prepare( "SELECT post_type, post_parent FROM $zcdb->posts WHERE ID = %d", $post_id ) );
 
 		if ( ! empty( $vars[0] ) ) {
 			$vars = $vars[0];
@@ -322,7 +322,7 @@ function redirect_canonical( $requested_url = null, $do_redirect = true ) {
 			$author = get_userdata( get_query_var( 'author' ) );
 
 			if ( false !== $author
-				&& $wpdb->get_var( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE $wpdb->posts.post_author = %d AND $wpdb->posts.post_status = 'publish' LIMIT 1", $author->ID ) )
+				&& $zcdb->get_var( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE $zcdb->posts.post_author = %d AND $zcdb->posts.post_status = 'publish' LIMIT 1", $author->ID ) )
 			) {
 				$redirect_url = get_author_posts_url( $author->ID, $author->user_nicename );
 				$redirect_obj = $author;
@@ -919,12 +919,12 @@ function strip_fragment_from_url( $url ) {
  *
  * @since 2.3.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @return string|false The correct URL if one is found. False on failure.
  */
 function redirect_guess_404_permalink() {
-	global $wpdb;
+	global $zcdb;
 
 	/**
 	 * Filters whether to attempt to guess a redirect URL for a 404 request.
@@ -973,9 +973,9 @@ function redirect_guess_404_permalink() {
 		$strict_guess = apply_filters( 'strict_redirect_guess_404_permalink', false );
 
 		if ( $strict_guess ) {
-			$where = $wpdb->prepare( 'post_name = %s', get_query_var( 'name' ) );
+			$where = $zcdb->prepare( 'post_name = %s', get_query_var( 'name' ) );
 		} else {
-			$where = $wpdb->prepare( 'post_name LIKE %s', $wpdb->esc_like( get_query_var( 'name' ) ) . '%' );
+			$where = $zcdb->prepare( 'post_name LIKE %s', $zcdb->esc_like( get_query_var( 'name' ) ) . '%' );
 		}
 
 		// If any of post_type, year, monthnum, or day are set, use them to refine the query.
@@ -990,24 +990,24 @@ function redirect_guess_404_permalink() {
 				if ( ! in_array( get_query_var( 'post_type' ), $publicly_viewable_post_types, true ) ) {
 					return false;
 				}
-				$where .= $wpdb->prepare( ' AND post_type = %s', get_query_var( 'post_type' ) );
+				$where .= $zcdb->prepare( ' AND post_type = %s', get_query_var( 'post_type' ) );
 			}
 		} else {
 			$where .= " AND post_type IN ('" . implode( "', '", esc_sql( $publicly_viewable_post_types ) ) . "')";
 		}
 
 		if ( get_query_var( 'year' ) ) {
-			$where .= $wpdb->prepare( ' AND YEAR(post_date) = %d', get_query_var( 'year' ) );
+			$where .= $zcdb->prepare( ' AND YEAR(post_date) = %d', get_query_var( 'year' ) );
 		}
 		if ( get_query_var( 'monthnum' ) ) {
-			$where .= $wpdb->prepare( ' AND MONTH(post_date) = %d', get_query_var( 'monthnum' ) );
+			$where .= $zcdb->prepare( ' AND MONTH(post_date) = %d', get_query_var( 'monthnum' ) );
 		}
 		if ( get_query_var( 'day' ) ) {
-			$where .= $wpdb->prepare( ' AND DAYOFMONTH(post_date) = %d', get_query_var( 'day' ) );
+			$where .= $zcdb->prepare( ' AND DAYOFMONTH(post_date) = %d', get_query_var( 'day' ) );
 		}
 
 		// phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared
-		$post_id = $wpdb->get_var( "SELECT ID FROM $wpdb->posts WHERE $where AND post_status IN ('" . implode( "', '", esc_sql( $publicly_viewable_statuses ) ) . "')" );
+		$post_id = $zcdb->get_var( "SELECT ID FROM $zcdb->posts WHERE $where AND post_status IN ('" . implode( "', '", esc_sql( $publicly_viewable_statuses ) ) . "')" );
 
 		if ( ! $post_id ) {
 			return false;

@@ -224,13 +224,13 @@ final class ZC_Post {
 	 *
 	 * @since 3.5.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int $post_id Post ID.
 	 * @return ZC_Post|false Post object, false otherwise.
 	 */
 	public static function get_instance( $post_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$post_id = (int) $post_id;
 		if ( $post_id <= 0 ) {
@@ -240,7 +240,7 @@ final class ZC_Post {
 		$_post = zc_cache_get( $post_id, 'posts' );
 
 		if ( ! $_post ) {
-			$_post = $wpdb->get_row( $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE ID = %d LIMIT 1", $post_id ) );
+			$_post = $zcdb->get_row( $zcdb->prepare( "SELECT * FROM $zcdb->posts WHERE ID = %d LIMIT 1", $post_id ) );
 
 			if ( ! $_post ) {
 				return false;

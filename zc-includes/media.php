@@ -4800,7 +4800,7 @@ function zc_prepare_attachment_for_js( $attachment ) {
  * @since 3.5.0
  *
  * @global int       $content_width
- * @global wpdb      $wpdb          ZelocoreCMS database abstraction object.
+ * @global zcdb      $zcdb          ZelocoreCMS database abstraction object.
  * @global ZC_Locale $zc_locale     ZelocoreCMS date and time locale object.
  *
  * @param array $args {
@@ -4815,7 +4815,7 @@ function zc_enqueue_media( $args = array() ) {
 		return;
 	}
 
-	global $content_width, $wpdb, $zc_locale;
+	global $content_width, $zcdb, $zc_locale;
 
 	$defaults = array(
 		'post' => null,
@@ -4875,9 +4875,9 @@ function zc_enqueue_media( $args = array() ) {
 	 */
 	$show_audio_playlist = apply_filters( 'media_library_show_audio_playlist', true );
 	if ( null === $show_audio_playlist ) {
-		$show_audio_playlist = $wpdb->get_var(
+		$show_audio_playlist = $zcdb->get_var(
 			"SELECT ID
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_type = 'attachment'
 			AND post_mime_type LIKE 'audio%'
 			LIMIT 1"
@@ -4903,9 +4903,9 @@ function zc_enqueue_media( $args = array() ) {
 	 */
 	$show_video_playlist = apply_filters( 'media_library_show_video_playlist', true );
 	if ( null === $show_video_playlist ) {
-		$show_video_playlist = $wpdb->get_var(
+		$show_video_playlist = $zcdb->get_var(
 			"SELECT ID
-			FROM $wpdb->posts
+			FROM $zcdb->posts
 			WHERE post_type = 'attachment'
 			AND post_mime_type LIKE 'video%'
 			LIMIT 1"
@@ -4929,10 +4929,10 @@ function zc_enqueue_media( $args = array() ) {
 	 */
 	$months = apply_filters( 'media_library_months_with_files', null );
 	if ( ! is_array( $months ) ) {
-		$months = $wpdb->get_results(
-			$wpdb->prepare(
+		$months = $zcdb->get_results(
+			$zcdb->prepare(
 				"SELECT DISTINCT YEAR( post_date ) AS year, MONTH( post_date ) AS month
-				FROM $wpdb->posts
+				FROM $zcdb->posts
 				WHERE post_type = %s
 				ORDER BY post_date DESC",
 				'attachment'
@@ -5537,13 +5537,13 @@ function zc_maybe_generate_attachment_metadata( $attachment ) {
  *
  * @since 4.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $url The URL to resolve.
  * @return int The found post ID, or 0 on failure.
  */
 function attachment_url_to_postid( $url ) {
-	global $wpdb;
+	global $zcdb;
 
 	/**
 	 * Filters the attachment ID to allow short-circuit the function.
@@ -5587,12 +5587,12 @@ function attachment_url_to_postid( $url ) {
 		$path = substr( $path, strlen( $dir['baseurl'] . '/' ) );
 	}
 
-	$sql = $wpdb->prepare(
-		"SELECT post_id, meta_value FROM $wpdb->postmeta WHERE meta_key = '_zc_attached_file' AND meta_value = %s",
+	$sql = $zcdb->prepare(
+		"SELECT post_id, meta_value FROM $zcdb->postmeta WHERE meta_key = '_zc_attached_file' AND meta_value = %s",
 		$path
 	);
 
-	$results = $wpdb->get_results( $sql );
+	$results = $zcdb->get_results( $sql );
 	$post_id = null;
 
 	if ( $results ) {
@@ -5627,7 +5627,7 @@ function attachment_url_to_postid( $url ) {
  *
  * @return string[] The relevant CSS file URLs.
  */
-function wpview_media_sandbox_styles() {
+function zcview_media_sandbox_styles() {
 	$version        = 'ver=' . get_bloginfo( 'version' );
 	$mediaelement   = includes_url( "js/mediaelement/mediaelementplayer-legacy.min.css?$version" );
 	$wpmediaelement = includes_url( "js/mediaelement/zc-mediaelement.css?$version" );

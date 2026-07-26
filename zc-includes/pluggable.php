@@ -118,12 +118,12 @@ if ( ! function_exists( 'cache_users' ) ) :
 	 *
 	 * @since 3.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int[] $user_ids User ID numbers list
 	 */
 	function cache_users( $user_ids ) {
-		global $wpdb;
+		global $zcdb;
 
 		update_meta_cache( 'user', $user_ids );
 
@@ -135,7 +135,7 @@ if ( ! function_exists( 'cache_users' ) ) :
 
 		$list = implode( ',', $clean );
 
-		$users = $wpdb->get_results( "SELECT * FROM $wpdb->users WHERE ID IN ($list)" );
+		$users = $zcdb->get_results( "SELECT * FROM $zcdb->users WHERE ID IN ($list)" );
 
 		foreach ( $users as $user ) {
 			update_user_caches( $user );
@@ -1994,7 +1994,7 @@ if ( ! function_exists( 'zc_notify_moderator' ) ) :
 	 *
 	 * @since 1.0.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * Uses the {@see 'notify_moderator'} filter to determine whether the site moderator
 	 * should be notified, overriding the site setting.
@@ -2003,7 +2003,7 @@ if ( ! function_exists( 'zc_notify_moderator' ) ) :
 	 * @return true Always returns true.
 	 */
 	function zc_notify_moderator( $comment_id ) {
-		global $wpdb;
+		global $zcdb;
 
 		$maybe_notify = get_option( 'moderation_notify' );
 
@@ -2037,7 +2037,7 @@ if ( ! function_exists( 'zc_notify_moderator' ) ) :
 			$comment_author_domain = gethostbyaddr( $comment->comment_author_IP );
 		}
 
-		$comments_waiting = $wpdb->get_var( "SELECT COUNT(*) FROM $wpdb->comments WHERE comment_approved = '0'" );
+		$comments_waiting = $zcdb->get_var( "SELECT COUNT(*) FROM $zcdb->comments WHERE comment_approved = '0'" );
 
 		/*
 		 * The blogname option is escaped with esc_html() on the way into the database in sanitize_option().
@@ -3091,7 +3091,7 @@ if ( ! function_exists( 'zc_set_password' ) ) :
 	 * @since 2.5.0
 	 * @since 6.8.0 The password is now hashed using bcrypt by default instead of phpass.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $password The plaintext new user password.
 	 * @param int    $user_id  User ID.
@@ -3101,13 +3101,13 @@ if ( ! function_exists( 'zc_set_password' ) ) :
 		$password,
 		$user_id
 	) {
-		global $wpdb;
+		global $zcdb;
 
 		$old_user_data = get_userdata( $user_id );
 
 		$hash = zc_hash_password( $password );
-		$wpdb->update(
-			$wpdb->users,
+		$zcdb->update(
+			$zcdb->users,
 			array(
 				'user_pass'           => $hash,
 				'user_activation_key' => '',

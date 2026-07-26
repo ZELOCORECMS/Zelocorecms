@@ -26,15 +26,15 @@ if ( $doaction ) {
 
 	if ( 'delete_all' === $doaction && ! empty( $_REQUEST['pagegen_timestamp'] ) ) {
 		/**
-		 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+		 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 		 */
-		global $wpdb;
+		global $zcdb;
 
 		$comment_status = zc_unslash( $_REQUEST['comment_status'] );
 		$delete_time    = zc_unslash( $_REQUEST['pagegen_timestamp'] );
-		$comment_ids    = $wpdb->get_col(
-			$wpdb->prepare(
-				"SELECT comment_ID FROM $wpdb->comments
+		$comment_ids    = $zcdb->get_col(
+			$zcdb->prepare(
+				"SELECT comment_ID FROM $zcdb->comments
 				WHERE comment_approved = %s AND %s > comment_date_gmt",
 				$comment_status,
 				$delete_time

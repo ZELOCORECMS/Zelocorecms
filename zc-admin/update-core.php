@@ -29,12 +29,12 @@ if ( ! current_user_can( 'update_core' ) && ! current_user_can( 'update_themes' 
  * @since 2.7.0
  *
  * @global string $zc_local_package Locale code of the package.
- * @global wpdb   $wpdb             ZelocoreCMS database abstraction object.
+ * @global zcdb   $zcdb             ZelocoreCMS database abstraction object.
  *
  * @param object $update
  */
 function list_core_update( $update ) {
-	global $zc_local_package, $wpdb;
+	global $zc_local_package, $zcdb;
 	static $first_pass = true;
 
 	$zc_version     = zc_get_zc_version();
@@ -60,7 +60,7 @@ function list_core_update( $update ) {
 	$message       = '';
 	$form_action   = 'update-core.php?action=do-core-upgrade';
 	$php_version   = PHP_VERSION;
-	$mysql_version = $wpdb->db_version();
+	$mysql_version = $zcdb->db_version();
 	$show_buttons  = true;
 
 	// Nightly build versions have two hyphens and a commit number.
@@ -83,7 +83,7 @@ function list_core_update( $update ) {
 			$form_action = 'update-core.php?action=do-core-reinstall';
 		} else {
 			$php_compat = version_compare( $php_version, $update->php_version, '>=' );
-			if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $wpdb->is_mysql ) ) {
+			if ( file_exists( ZC_CONTENT_DIR . '/db.php' ) && empty( $zcdb->is_mysql ) ) {
 				$mysql_compat = true;
 			} else {
 				$mysql_compat = version_compare( $mysql_version, $update->mysql_version, '>=' );

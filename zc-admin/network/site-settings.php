@@ -120,15 +120,15 @@ if ( ! empty( $messages ) ) {
 	<input type="hidden" name="id" value="<?php echo esc_attr( $id ); ?>" />
 	<table class="form-table" role="presentation">
 		<?php
-		$blog_prefix = $wpdb->get_blog_prefix( $id );
-		$options     = $wpdb->get_results(
-			$wpdb->prepare(
+		$blog_prefix = $zcdb->get_blog_prefix( $id );
+		$options     = $zcdb->get_results(
+			$zcdb->prepare(
 				'SELECT * FROM %i
 				WHERE option_name NOT LIKE %s
 				AND option_name NOT LIKE %s',
 				"{$blog_prefix}options",
-				$wpdb->esc_like( '_' ) . '%',
-				'%' . $wpdb->esc_like( 'user_roles' )
+				$zcdb->esc_like( '_' ) . '%',
+				'%' . $zcdb->esc_like( 'user_roles' )
 			)
 		);
 

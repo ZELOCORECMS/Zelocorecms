@@ -29,10 +29,10 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			return;
 		}
 
-		if ( typeof jQuery === 'undefined' || ! jQuery.zc || ! jQuery.zc.wpdialog ) {
-			// wpdialog.js is not loaded.
+		if ( typeof jQuery === 'undefined' || ! jQuery.zc || ! jQuery.zc.zcdialog ) {
+			// zcdialog.js is not loaded.
 			if ( window.console && window.console.error ) {
-				window.console.error('wpdialog.js is not loaded. Please set "wpdialogs" as dependency for your script when calling zc_enqueue_script(). You may also want to enqueue the "zc-jquery-ui-dialog" stylesheet.');
+				window.console.error('zcdialog.js is not loaded. Please set "zcdialogs" as dependency for your script when calling zc_enqueue_script(). You may also want to enqueue the "zc-jquery-ui-dialog" stylesheet.');
 			}
 
 			return;
@@ -55,8 +55,8 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 		editor.nodeChanged();
 
 		// Create the dialog if necessary.
-		if ( ! $element.data('wpdialog') ) {
-			$element.wpdialog({
+		if ( ! $element.data('zcdialog') ) {
+			$element.zcdialog({
 				title: args.title,
 				width: args.width,
 				height: args.height,
@@ -66,9 +66,9 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			});
 		}
 
-		$element.wpdialog('open');
+		$element.zcdialog('open');
 
-		$element.on( 'wpdialogclose', function() {
+		$element.on( 'zcdialogclose', function() {
 			if ( self.zc.$element ) {
 				self.zc = {};
 			}
@@ -80,11 +80,11 @@ tinymce.WPWindowManager = tinymce.InlineWindowManager = function( editor ) {
 			return this.parent.close.apply( this, arguments );
 		}
 
-		this.zc.$element.wpdialog('close');
+		this.zc.$element.zcdialog('close');
 	};
 };
 
-tinymce.PluginManager.add( 'wpdialogs', function( editor ) {
+tinymce.PluginManager.add( 'zcdialogs', function( editor ) {
 	// Replace window manager.
 	editor.on( 'init', function() {
 		editor.windowManager = new tinymce.WPWindowManager( editor );

@@ -40,19 +40,19 @@ define( 'ARRAY_N', 'ARRAY_N' );
  * ZelocoreCMS database access abstraction class.
  *
  * This class is used to interact with a database without needing to use raw SQL statements.
- * By default, ZelocoreCMS uses this class to instantiate the global $wpdb object, providing
+ * By default, ZelocoreCMS uses this class to instantiate the global $zcdb object, providing
  * access to the ZelocoreCMS database.
  *
- * It is possible to replace the global instance with your own by setting the $wpdb global variable
- * in zc-content/db.php file to your class. The wpdb class will still be included, so you can
+ * It is possible to replace the global instance with your own by setting the $zcdb global variable
+ * in zc-content/db.php file to your class. The zcdb class will still be included, so you can
  * extend it or simply use your own.
  *
- * @link https://developer.zelocorecms.org/reference/classes/wpdb/
+ * @link https://developer.zelocorecms.org/reference/classes/zcdb/
  *
  * @since 0.71
  */
 #[AllowDynamicProperties]
-class wpdb {
+class zcdb {
 
 	/**
 	 * Whether to show SQL/DB errors.
@@ -185,7 +185,7 @@ class wpdb {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @see wpdb::check_safe_collation()
+	 * @see zcdb::check_safe_collation()
 	 * @var bool
 	 */
 	private $checking_collation = false;
@@ -228,7 +228,7 @@ class wpdb {
 	 *
 	 * @since 3.9.0
 	 *
-	 * @see wpdb::check_connection()
+	 * @see zcdb::check_connection()
 	 * @var int
 	 */
 	protected $reconnect_retries = 5;
@@ -285,7 +285,7 @@ class wpdb {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @see wpdb::tables()
+	 * @see zcdb::tables()
 	 * @var string[]
 	 */
 	public $tables = array(
@@ -308,7 +308,7 @@ class wpdb {
 	 *
 	 * @since 2.9.0
 	 *
-	 * @see wpdb::tables()
+	 * @see zcdb::tables()
 	 * @var string[]
 	 */
 	public $old_tables = array( 'categories', 'post2cat', 'link2cat' );
@@ -318,7 +318,7 @@ class wpdb {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @see wpdb::tables()
+	 * @see zcdb::tables()
 	 * @var string[]
 	 */
 	public $global_tables = array( 'users', 'usermeta' );
@@ -328,7 +328,7 @@ class wpdb {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @see wpdb::tables()
+	 * @see zcdb::tables()
 	 * @var string[]
 	 */
 	public $ms_global_tables = array(
@@ -345,7 +345,7 @@ class wpdb {
 	 *
 	 * @since 6.1.0
 	 *
-	 * @see wpdb::tables()
+	 * @see zcdb::tables()
 	 * @var string[]
 	 */
 	public $old_ms_global_tables = array( 'sitecategories' );
@@ -533,11 +533,11 @@ class wpdb {
 	 *
 	 * @since 2.8.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::insert()
-	 * @see wpdb::update()
-	 * @see wpdb::delete()
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::insert()
+	 * @see zcdb::update()
+	 * @see zcdb::delete()
+	 * @see zc_set_zcdb_vars()
 	 * @var array
 	 */
 	public $field_types = array();
@@ -623,7 +623,7 @@ class wpdb {
 	/**
 	 * Whether MySQL is used as the database engine.
 	 *
-	 * Set in wpdb::db_connect() to true, by default. This is used when checking
+	 * Set in zcdb::db_connect() to true, by default. This is used when checking
 	 * against the required MySQL version for ZelocoreCMS. Normally, a replacement
 	 * database drop-in (db.php) will skip these checks, but setting this to true
 	 * will force the checks to occur.
@@ -651,35 +651,35 @@ class wpdb {
 	);
 
 	/**
-	 * Backward compatibility, where wpdb::prepare() has not quoted formatted/argnum placeholders.
+	 * Backward compatibility, where zcdb::prepare() has not quoted formatted/argnum placeholders.
 	 *
 	 * This is often used for table/field names (before %i was supported), and sometimes string formatting, e.g.
 	 *
-	 *     $wpdb->prepare( 'WHERE `%1$s` = "%2$s something %3$s" OR %1$s = "%4$-10s"', 'field_1', 'a', 'b', 'c' );
+	 *     $zcdb->prepare( 'WHERE `%1$s` = "%2$s something %3$s" OR %1$s = "%4$-10s"', 'field_1', 'a', 'b', 'c' );
 	 *
 	 * But it's risky, e.g. forgetting to add quotes, resulting in SQL Injection vulnerabilities:
 	 *
-	 *     $wpdb->prepare( 'WHERE (id = %1s) OR (id = %2$s)', $_GET['id'], $_GET['id'] ); // ?id=id
+	 *     $zcdb->prepare( 'WHERE (id = %1s) OR (id = %2$s)', $_GET['id'], $_GET['id'] ); // ?id=id
 	 *
 	 * This feature is preserved while plugin authors update their code to use safer approaches:
 	 *
 	 *     $_GET['key'] = 'a`b';
 	 *
-	 *     $wpdb->prepare( 'WHERE %1s = %s',        $_GET['key'], $_GET['value'] ); // WHERE a`b = 'value'
-	 *     $wpdb->prepare( 'WHERE `%1$s` = "%2$s"', $_GET['key'], $_GET['value'] ); // WHERE `a`b` = "value"
+	 *     $zcdb->prepare( 'WHERE %1s = %s',        $_GET['key'], $_GET['value'] ); // WHERE a`b = 'value'
+	 *     $zcdb->prepare( 'WHERE `%1$s` = "%2$s"', $_GET['key'], $_GET['value'] ); // WHERE `a`b` = "value"
 	 *
-	 *     $wpdb->prepare( 'WHERE %i = %s',         $_GET['key'], $_GET['value'] ); // WHERE `a``b` = 'value'
+	 *     $zcdb->prepare( 'WHERE %i = %s',         $_GET['key'], $_GET['value'] ); // WHERE `a``b` = 'value'
 	 *
 	 * While changing to false will be fine for queries not using formatted/argnum placeholders,
 	 * any remaining cases are most likely going to result in SQL errors (good, in a way):
 	 *
-	 *     $wpdb->prepare( 'WHERE %1$s = "%2$-10s"', 'my_field', 'my_value' );
+	 *     $zcdb->prepare( 'WHERE %1$s = "%2$-10s"', 'my_field', 'my_value' );
 	 *     true  = WHERE my_field = "my_value  "
 	 *     false = WHERE 'my_field' = "'my_value  '"
 	 *
 	 * But there may be some queries that result in an SQL Injection vulnerability:
 	 *
-	 *     $wpdb->prepare( 'WHERE id = %1$s', $_GET['id'] ); // ?id=id
+	 *     $zcdb->prepare( 'WHERE id = %1$s', $_GET['id'] ); // ?id=id
 	 *
 	 * So there may need to be a `_doing_it_wrong()` phase, after we know everyone can use
 	 * identifier placeholders (%i), but before this feature is disabled or removed.
@@ -991,7 +991,7 @@ class wpdb {
 	 * @since 2.5.0
 	 *
 	 * @param string $prefix          Alphanumeric name for the new prefix.
-	 * @param bool   $set_table_names Optional. Whether the table names, e.g. wpdb::$posts,
+	 * @param bool   $set_table_names Optional. Whether the table names, e.g. zcdb::$posts,
 	 *                                should be updated or not. Default true.
 	 * @return string|ZC_Error Old prefix or ZC_Error on error.
 	 */
@@ -1105,18 +1105,18 @@ class wpdb {
 	 * @since 3.0.0
 	 * @since 6.1.0 `old` now includes deprecated multisite global tables only on multisite.
 	 *
-	 * @uses wpdb::$tables
-	 * @uses wpdb::$old_tables
-	 * @uses wpdb::$global_tables
-	 * @uses wpdb::$ms_global_tables
-	 * @uses wpdb::$old_ms_global_tables
+	 * @uses zcdb::$tables
+	 * @uses zcdb::$old_tables
+	 * @uses zcdb::$global_tables
+	 * @uses zcdb::$ms_global_tables
+	 * @uses zcdb::$old_ms_global_tables
 	 *
 	 * @param string $scope   Optional. Possible values include 'all', 'global', 'ms_global', 'blog',
 	 *                        or 'old' tables. Default 'all'.
 	 * @param bool   $prefix  Optional. Whether to include table prefixes. If blog prefix is requested,
 	 *                        then the custom users and usermeta tables will be mapped. Default true.
 	 * @param int    $blog_id Optional. The blog_id to prefix. Used only when prefix is requested.
-	 *                        Defaults to `wpdb::$blogid`.
+	 *                        Defaults to `zcdb::$blogid`.
 	 * @return string[] Table names. When a prefix is requested, the key is the unprefixed table name.
 	 */
 	public function tables( $scope = 'all', $prefix = true, $blog_id = 0 ) {
@@ -1241,11 +1241,11 @@ class wpdb {
 	/**
 	 * Do not use, deprecated.
 	 *
-	 * Use esc_sql() or wpdb::prepare() instead.
+	 * Use esc_sql() or zcdb::prepare() instead.
 	 *
 	 * @since 2.8.0
-	 * @deprecated 3.6.0 Use wpdb::prepare()
-	 * @see wpdb::prepare()
+	 * @deprecated 3.6.0 Use zcdb::prepare()
+	 * @see zcdb::prepare()
 	 * @see esc_sql()
 	 *
 	 * @param string $data
@@ -1253,7 +1253,7 @@ class wpdb {
 	 */
 	public function _weak_escape( $data ) {
 		if ( func_num_args() === 1 && function_exists( '_deprecated_function' ) ) {
-			_deprecated_function( __METHOD__, '3.6.0', 'wpdb::prepare() or esc_sql()' );
+			_deprecated_function( __METHOD__, '3.6.0', 'zcdb::prepare() or esc_sql()' );
 		}
 		return addslashes( $data );
 	}
@@ -1279,7 +1279,7 @@ class wpdb {
 			$class = get_class( $this );
 
 			zc_load_translations_early();
-			/* translators: %s: Database access abstraction class, usually wpdb or a class extending wpdb. */
+			/* translators: %s: Database access abstraction class, usually zcdb or a class extending zcdb. */
 			_doing_it_wrong( $class, sprintf( __( '%s must set a database connection for use with escaping.' ), $class ), '3.6.0' );
 
 			$escaped = addslashes( $data );
@@ -1293,7 +1293,7 @@ class wpdb {
 	 *
 	 * @since 2.8.0
 	 *
-	 * @uses wpdb::_real_escape()
+	 * @uses zcdb::_real_escape()
 	 *
 	 * @param string|array $data Data to escape.
 	 * @return string|array Escaped data, in the same type as supplied.
@@ -1317,11 +1317,11 @@ class wpdb {
 	/**
 	 * Do not use, deprecated.
 	 *
-	 * Use esc_sql() or wpdb::prepare() instead.
+	 * Use esc_sql() or zcdb::prepare() instead.
 	 *
 	 * @since 0.71
-	 * @deprecated 3.6.0 Use wpdb::prepare()
-	 * @see wpdb::prepare()
+	 * @deprecated 3.6.0 Use zcdb::prepare()
+	 * @see zcdb::prepare()
 	 * @see esc_sql()
 	 *
 	 * @param string|array $data Data to escape.
@@ -1329,7 +1329,7 @@ class wpdb {
 	 */
 	public function escape( $data ) {
 		if ( func_num_args() === 1 && function_exists( '_deprecated_function' ) ) {
-			_deprecated_function( __METHOD__, '3.6.0', 'wpdb::prepare() or esc_sql()' );
+			_deprecated_function( __METHOD__, '3.6.0', 'zcdb::prepare() or esc_sql()' );
 		}
 		if ( is_array( $data ) ) {
 			foreach ( $data as $k => $v ) {
@@ -1349,7 +1349,7 @@ class wpdb {
 	/**
 	 * Escapes content by reference for insertion into the database, for security.
 	 *
-	 * @uses wpdb::_real_escape()
+	 * @uses zcdb::_real_escape()
 	 *
 	 * @since 2.3.0
 	 *
@@ -1411,24 +1411,24 @@ class wpdb {
 	 * Literal percentage signs (`%`) in the query string must be written as `%%`. Percentage wildcards
 	 * (for example, to use in LIKE syntax) must be passed via a substitution argument containing
 	 * the complete LIKE string, these cannot be inserted directly in the query string.
-	 * Also see wpdb::esc_like().
+	 * Also see zcdb::esc_like().
 	 *
 	 * Arguments may be passed as individual arguments to the method, or as a single array
 	 * containing all arguments. A combination of the two is not supported.
 	 *
 	 * Examples:
 	 *
-	 *     $wpdb->prepare(
+	 *     $zcdb->prepare(
 	 *         "SELECT * FROM `table` WHERE `column` = %s AND `field` = %d OR `other_field` LIKE %s",
 	 *         array( 'foo', 1337, '%bar' )
 	 *     );
 	 *
-	 *     $wpdb->prepare(
+	 *     $zcdb->prepare(
 	 *         "SELECT DATE_FORMAT(`field`, '%%c') FROM `table` WHERE `column` = %s",
 	 *         'foo'
 	 *     );
 	 *
-	 *     $wpdb->prepare(
+	 *     $zcdb->prepare(
 	 *         "SELECT * FROM %i WHERE %i = %s",
 	 *         $table,
 	 *         $field,
@@ -1440,7 +1440,7 @@ class wpdb {
 	 *              by updating the function signature. The second parameter was changed
 	 *              from `$args` to `...$args`.
 	 * @since 6.2.0 Added `%i` for identifiers, e.g. table or field names.
-	 *              Check support via `wpdb::has_cap( 'identifier_placeholders' )`.
+	 *              Check support via `zcdb::has_cap( 'identifier_placeholders' )`.
 	 *              This preserves compatibility with `sprintf()`, as the C version uses
 	 *              `%d` and `$i` as a signed integer, whereas PHP only supports `%d`.
 	 *
@@ -1470,11 +1470,11 @@ class wpdb {
 		if ( false === strpos( $query, '%' ) ) {
 			zc_load_translations_early();
 			_doing_it_wrong(
-				'wpdb::prepare',
+				'zcdb::prepare',
 				sprintf(
-					/* translators: %s: wpdb::prepare() */
+					/* translators: %s: zcdb::prepare() */
 					__( 'The query argument of %s must have a placeholder.' ),
-					'wpdb::prepare()'
+					'zcdb::prepare()'
 				),
 				'3.9.0'
 			);
@@ -1657,7 +1657,7 @@ class wpdb {
 			}
 
 			_doing_it_wrong(
-				'wpdb::prepare',
+				'zcdb::prepare',
 				sprintf(
 					/* translators: %s: A list of placeholders found to be a problem. */
 					__( 'Arguments cannot be prepared as both an Identifier and Value. Found the following conflicts: %s' ),
@@ -1679,7 +1679,7 @@ class wpdb {
 				 */
 				zc_load_translations_early();
 				_doing_it_wrong(
-					'wpdb::prepare',
+					'zcdb::prepare',
 					__( 'The query only expected one placeholder, but an array of multiple placeholders was sent.' ),
 					'4.9.0'
 				);
@@ -1693,7 +1693,7 @@ class wpdb {
 				 */
 				zc_load_translations_early();
 				_doing_it_wrong(
-					'wpdb::prepare',
+					'zcdb::prepare',
 					sprintf(
 						/* translators: 1: Number of placeholders, 2: Number of arguments passed. */
 						__( 'The query does not contain the correct number of placeholders (%1$d) for the number of arguments passed (%2$d).' ),
@@ -1737,7 +1737,7 @@ class wpdb {
 				if ( ! is_scalar( $value ) && ! is_null( $value ) ) {
 					zc_load_translations_early();
 					_doing_it_wrong(
-						'wpdb::prepare',
+						'zcdb::prepare',
 						sprintf(
 							/* translators: %s: Value type. */
 							__( 'Unsupported value type (%s).' ),
@@ -1762,25 +1762,25 @@ class wpdb {
 	/**
 	 * First half of escaping for `LIKE` special characters `%` and `_` before preparing for SQL.
 	 *
-	 * Use this only before wpdb::prepare() or esc_sql(). Reversing the order is very bad for security.
+	 * Use this only before zcdb::prepare() or esc_sql(). Reversing the order is very bad for security.
 	 *
 	 * Example Prepared Statement:
 	 *
 	 *     $wild = '%';
 	 *     $find = 'only 43% of planets';
-	 *     $like = $wild . $wpdb->esc_like( $find ) . $wild;
-	 *     $sql  = $wpdb->prepare( "SELECT * FROM $wpdb->posts WHERE post_content LIKE %s", $like );
+	 *     $like = $wild . $zcdb->esc_like( $find ) . $wild;
+	 *     $sql  = $zcdb->prepare( "SELECT * FROM $zcdb->posts WHERE post_content LIKE %s", $like );
 	 *
 	 * Example Escape Chain:
 	 *
-	 *     $sql  = esc_sql( $wpdb->esc_like( $input ) );
+	 *     $sql  = esc_sql( $zcdb->esc_like( $input ) );
 	 *
 	 * @since 4.0.0
 	 *
 	 * @param string $text The raw text to be escaped. The input typed by the user
 	 *                     should have no extra or deleted slashes.
 	 * @return string Text in the form of a LIKE phrase. The output is not SQL safe.
-	 *                Call wpdb::prepare() or wpdb::_real_escape() next.
+	 *                Call zcdb::prepare() or zcdb::_real_escape() next.
 	 */
 	public function esc_like( $text ) {
 		return addcslashes( $text, '_%\\' );
@@ -1849,7 +1849,7 @@ class wpdb {
 			$query = htmlspecialchars( $this->last_query, ENT_QUOTES );
 
 			printf(
-				'<div id="error"><p class="wpdberror"><strong>%s</strong> [%s]<br /><code>%s</code></p></div>',
+				'<div id="error"><p class="zcdberror"><strong>%s</strong> [%s]<br /><code>%s</code></p></div>',
 				__( 'ZelocoreCMS database error:' ),
 				$str,
 				$query
@@ -1861,11 +1861,11 @@ class wpdb {
 	 * Enables showing of database errors.
 	 *
 	 * This function should be used only to enable showing of errors.
-	 * wpdb::hide_errors() should be used instead for hiding errors.
+	 * zcdb::hide_errors() should be used instead for hiding errors.
 	 *
 	 * @since 0.71
 	 *
-	 * @see wpdb::hide_errors()
+	 * @see zcdb::hide_errors()
 	 *
 	 * @param bool $show Optional. Whether to show errors. Default true.
 	 * @return bool Whether showing of errors was previously active.
@@ -1883,7 +1883,7 @@ class wpdb {
 	 *
 	 * @since 0.71
 	 *
-	 * @see wpdb::show_errors()
+	 * @see zcdb::show_errors()
 	 *
 	 * @return bool Whether showing of errors was previously active.
 	 */
@@ -1900,7 +1900,7 @@ class wpdb {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @see wpdb::hide_errors()
+	 * @see zcdb::hide_errors()
 	 *
 	 * @param bool $suppress Optional. Whether to suppress errors. Default true.
 	 * @return bool Whether suppressing of errors was previously active.
@@ -2203,7 +2203,7 @@ class wpdb {
 	 *
 	 * @since 0.71
 	 *
-	 * @link https://developer.zelocorecms.org/reference/classes/wpdb/
+	 * @link https://developer.zelocorecms.org/reference/classes/zcdb/
 	 *
 	 * @param string $query Database query.
 	 * @return int|bool Boolean true for CREATE, ALTER, TRUNCATE and DROP queries. Number of rows
@@ -2338,7 +2338,7 @@ class wpdb {
 	 *
 	 * @since 3.9.0
 	 *
-	 * @see wpdb::query()
+	 * @see zcdb::query()
 	 *
 	 * @param string $query The query to run.
 	 */
@@ -2462,14 +2462,14 @@ class wpdb {
 	 *
 	 * Examples:
 	 *
-	 *     $wpdb->insert(
+	 *     $zcdb->insert(
 	 *         'table',
 	 *         array(
 	 *             'column1' => 'foo',
 	 *             'column2' => 'bar',
 	 *         )
 	 *     );
-	 *     $wpdb->insert(
+	 *     $zcdb->insert(
 	 *         'table',
 	 *         array(
 	 *             'column1' => 'foo',
@@ -2483,9 +2483,9 @@ class wpdb {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::$field_types
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::$field_types
+	 * @see zc_set_zcdb_vars()
 	 *
 	 * @param string          $table  Table name.
 	 * @param array           $data   Data to insert (in column => value pairs).
@@ -2496,7 +2496,7 @@ class wpdb {
 	 *                                If string, that format will be used for all of the values in `$data`.
 	 *                                A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                If omitted, all values in `$data` will be treated as strings unless otherwise
-	 *                                specified in wpdb::$field_types. Default null.
+	 *                                specified in zcdb::$field_types. Default null.
 	 * @return int|false The number of rows inserted, or false on error.
 	 */
 	public function insert( $table, $data, $format = null ) {
@@ -2511,7 +2511,7 @@ class wpdb {
 	 *
 	 * Examples:
 	 *
-	 *     $wpdb->replace(
+	 *     $zcdb->replace(
 	 *         'table',
 	 *         array(
 	 *             'ID'      => 123,
@@ -2519,7 +2519,7 @@ class wpdb {
 	 *             'column2' => 'bar',
 	 *         )
 	 *     );
-	 *     $wpdb->replace(
+	 *     $zcdb->replace(
 	 *         'table',
 	 *         array(
 	 *             'ID'      => 456,
@@ -2535,9 +2535,9 @@ class wpdb {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::$field_types
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::$field_types
+	 * @see zc_set_zcdb_vars()
 	 *
 	 * @param string          $table  Table name.
 	 * @param array           $data   Data to insert (in column => value pairs).
@@ -2549,7 +2549,7 @@ class wpdb {
 	 *                                If string, that format will be used for all of the values in `$data`.
 	 *                                A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                If omitted, all values in `$data` will be treated as strings unless otherwise
-	 *                                specified in wpdb::$field_types. Default null.
+	 *                                specified in zcdb::$field_types. Default null.
 	 * @return int|false The number of rows affected, or false on error.
 	 */
 	public function replace( $table, $data, $format = null ) {
@@ -2563,9 +2563,9 @@ class wpdb {
 	 *
 	 * @since 3.0.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::$field_types
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::$field_types
+	 * @see zc_set_zcdb_vars()
 	 *
 	 * @param string          $table  Table name.
 	 * @param array           $data   Data to insert (in column => value pairs).
@@ -2576,7 +2576,7 @@ class wpdb {
 	 *                                If string, that format will be used for all of the values in `$data`.
 	 *                                A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                If omitted, all values in `$data` will be treated as strings unless otherwise
-	 *                                specified in wpdb::$field_types. Default null.
+	 *                                specified in zcdb::$field_types. Default null.
 	 * @param string          $type   Optional. Type of operation. Either 'INSERT' or 'REPLACE'.
 	 *                                Default 'INSERT'.
 	 * @return int|false The number of rows affected, or false on error.
@@ -2619,7 +2619,7 @@ class wpdb {
 	 *
 	 * Examples:
 	 *
-	 *     $wpdb->update(
+	 *     $zcdb->update(
 	 *         'table',
 	 *         array(
 	 *             'column1' => 'foo',
@@ -2629,7 +2629,7 @@ class wpdb {
 	 *             'ID' => 1,
 	 *         )
 	 *     );
-	 *     $wpdb->update(
+	 *     $zcdb->update(
 	 *         'table',
 	 *         array(
 	 *             'column1' => 'foo',
@@ -2649,9 +2649,9 @@ class wpdb {
 	 *
 	 * @since 2.5.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::$field_types
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::$field_types
+	 * @see zc_set_zcdb_vars()
 	 *
 	 * @param string          $table        Table name.
 	 * @param array           $data         Data to update (in column => value pairs).
@@ -2667,12 +2667,12 @@ class wpdb {
 	 *                                      If string, that format will be used for all of the values in $data.
 	 *                                      A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                      If omitted, all values in $data will be treated as strings unless otherwise
-	 *                                      specified in wpdb::$field_types. Default null.
+	 *                                      specified in zcdb::$field_types. Default null.
 	 * @param string[]|string $where_format Optional. An array of formats to be mapped to each of the values in $where.
 	 *                                      If string, that format will be used for all of the items in $where.
 	 *                                      A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                      If omitted, all values in $where will be treated as strings unless otherwise
-	 *                                      specified in wpdb::$field_types. Default null.
+	 *                                      specified in zcdb::$field_types. Default null.
 	 * @return int|false The number of rows updated, or false on error.
 	 */
 	public function update( $table, $data, $where, $format = null, $where_format = null ) {
@@ -2725,13 +2725,13 @@ class wpdb {
 	 *
 	 * Examples:
 	 *
-	 *     $wpdb->delete(
+	 *     $zcdb->delete(
 	 *         'table',
 	 *         array(
 	 *             'ID' => 1,
 	 *         )
 	 *     );
-	 *     $wpdb->delete(
+	 *     $zcdb->delete(
 	 *         'table',
 	 *         array(
 	 *             'ID' => 1,
@@ -2743,9 +2743,9 @@ class wpdb {
 	 *
 	 * @since 3.4.0
 	 *
-	 * @see wpdb::prepare()
-	 * @see wpdb::$field_types
-	 * @see zc_set_wpdb_vars()
+	 * @see zcdb::prepare()
+	 * @see zcdb::$field_types
+	 * @see zc_set_zcdb_vars()
 	 *
 	 * @param string          $table        Table name.
 	 * @param array           $where        A named array of WHERE clauses (in column => value pairs).
@@ -2757,7 +2757,7 @@ class wpdb {
 	 *                                      If string, that format will be used for all of the items in $where.
 	 *                                      A format is one of '%d', '%f', '%s' (integer, float, string).
 	 *                                      If omitted, all values in $data will be treated as strings unless otherwise
-	 *                                      specified in wpdb::$field_types. Default null.
+	 *                                      specified in zcdb::$field_types. Default null.
 	 * @return int|false The number of rows deleted, or false on error.
 	 */
 	public function delete( $table, $where, $where_format = null ) {
@@ -2793,7 +2793,7 @@ class wpdb {
 	/**
 	 * Processes arrays of field/value pairs and field formats.
 	 *
-	 * This is a helper method for wpdb's CRUD methods, which take field/value pairs
+	 * This is a helper method for zcdb's CRUD methods, which take field/value pairs
 	 * for inserts, updates, and where clauses. This method first pairs each value
 	 * with a format. Then it determines the charset of that field, using that
 	 * to determine if any invalid text would be stripped. If text is stripped,
@@ -2857,7 +2857,7 @@ class wpdb {
 	}
 
 	/**
-	 * Prepares arrays of value/format pairs as passed to wpdb CRUD methods.
+	 * Prepares arrays of value/format pairs as passed to zcdb CRUD methods.
 	 *
 	 * @since 4.2.0
 	 *
@@ -2900,13 +2900,13 @@ class wpdb {
 	}
 
 	/**
-	 * Adds field charsets to field/value/format arrays generated by wpdb::process_field_formats().
+	 * Adds field charsets to field/value/format arrays generated by zcdb::process_field_formats().
 	 *
 	 * @since 4.2.0
 	 *
 	 * @param array  $data {
 	 *     Array of values and formats keyed by their field names,
-	 *     as it comes from the wpdb::process_field_formats() method.
+	 *     as it comes from the zcdb::process_field_formats() method.
 	 *
 	 *     @type array ...$0 {
 	 *         Value and format for this field.
@@ -2957,7 +2957,7 @@ class wpdb {
 	 *
 	 * @param array  $data {
 	 *     Array of values, formats, and charsets keyed by their field names,
-	 *     as it comes from the wpdb::process_field_charsets() method.
+	 *     as it comes from the zcdb::process_field_charsets() method.
 	 *
 	 *     @type array ...$0 {
 	 *         Value, format, and charset for this field.
@@ -3233,7 +3233,7 @@ class wpdb {
 		$table       = '`' . implode( '`.`', $table_parts ) . '`';
 		$results     = $this->get_results( "SHOW FULL COLUMNS FROM $table" );
 		if ( ! $results ) {
-			return new ZC_Error( 'wpdb_get_table_charset_failure', __( 'Could not retrieve table charset.' ) );
+			return new ZC_Error( 'zcdb_get_table_charset_failure', __( 'Could not retrieve table charset.' ) );
 		}
 
 		foreach ( $results as $column ) {
@@ -3681,7 +3681,7 @@ class wpdb {
 			$this->check_current_query = false;
 			$row                       = $this->get_row( 'SELECT ' . implode( ', ', $sql ), ARRAY_A );
 			if ( ! $row ) {
-				return new ZC_Error( 'wpdb_strip_invalid_text_failure', __( 'Could not strip invalid text.' ) );
+				return new ZC_Error( 'zcdb_strip_invalid_text_failure', __( 'Could not strip invalid text.' ) );
 			}
 
 			foreach ( array_keys( $data ) as $column ) {
@@ -3930,7 +3930,7 @@ class wpdb {
 	/**
 	 * Wraps errors in a nice header and footer and dies.
 	 *
-	 * Will not die if wpdb::$show_errors is false.
+	 * Will not die if zcdb::$show_errors is false.
 	 *
 	 * @since 1.5.0
 	 *
@@ -4013,15 +4013,15 @@ class wpdb {
 	 *
 	 * Called when ZelocoreCMS is generating the table scheme.
 	 *
-	 * Use `wpdb::has_cap( 'collation' )`.
+	 * Use `zcdb::has_cap( 'collation' )`.
 	 *
 	 * @since 2.5.0
-	 * @deprecated 3.5.0 Use wpdb::has_cap()
+	 * @deprecated 3.5.0 Use zcdb::has_cap()
 	 *
 	 * @return bool True if collation is supported, false if not.
 	 */
 	public function supports_collation() {
-		_deprecated_function( __FUNCTION__, '3.5.0', 'wpdb::has_cap( \'collation\' )' );
+		_deprecated_function( __FUNCTION__, '3.5.0', 'zcdb::has_cap( \'collation\' )' );
 		return $this->has_cap( 'collation' );
 	}
 
@@ -4046,13 +4046,13 @@ class wpdb {
 	}
 
 	/**
-	 * Determines whether the database or WPDB supports a particular feature.
+	 * Determines whether the database or ZCDB supports a particular feature.
 	 *
-	 * Capability sniffs for the database server and current version of WPDB.
+	 * Capability sniffs for the database server and current version of ZCDB.
 	 *
 	 * Database sniffs are based on the version of the database server in use.
 	 *
-	 * WPDB sniffs are added as new features are introduced to allow theme and plugin
+	 * ZCDB sniffs are added as new features are introduced to allow theme and plugin
 	 * developers to determine feature support. This is to account for drop-ins which may
 	 * introduce feature support at a different time to ZelocoreCMS.
 	 *
@@ -4062,7 +4062,7 @@ class wpdb {
 	 * @since 6.2.0 Added support for the 'identifier_placeholders' feature.
 	 * @since 6.6.0 The `utf8mb4` feature now always returns true.
 	 *
-	 * @see wpdb::db_version()
+	 * @see zcdb::db_version()
 	 *
 	 * @param string $db_cap The feature to check for. Accepts 'collation', 'group_concat',
 	 *                       'subqueries', 'set_charset', 'utf8mb4', 'utf8mb4_520',
@@ -4102,7 +4102,7 @@ class wpdb {
 				return version_compare( $db_version, '5.6', '>=' );
 			case 'identifier_placeholders': // @since 6.2.0
 				/*
-				 * As of ZelocoreCMS 6.2, wpdb::prepare() supports identifiers via '%i',
+				 * As of ZelocoreCMS 6.2, zcdb::prepare() supports identifiers via '%i',
 				 * e.g. table/field names.
 				 */
 				return true;
@@ -4112,7 +4112,7 @@ class wpdb {
 	}
 
 	/**
-	 * Retrieves a comma-separated list of the names of the functions that called wpdb.
+	 * Retrieves a comma-separated list of the names of the functions that called zcdb.
 	 *
 	 * @since 2.5.0
 	 *

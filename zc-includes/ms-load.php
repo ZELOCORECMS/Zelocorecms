@@ -455,19 +455,19 @@ function ms_load_current_site_and_network( $domain, $path, $subdomain = false ) 
 /**
  * Displays a failure message.
  *
- * Used when a blog's tables do not exist. Checks for a missing $wpdb->site table as well.
+ * Used when a blog's tables do not exist. Checks for a missing $zcdb->site table as well.
  *
  * @access private
  * @since 3.0.0
  * @since 4.4.0 The `$domain` and `$path` parameters were added.
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param string $domain The requested domain for the error to reference.
  * @param string $path   The requested path for the error to reference.
  */
 function ms_not_installed( $domain, $path ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_admin() ) {
 		dead_db();
@@ -480,19 +480,19 @@ function ms_not_installed( $domain, $path ) {
 	$msg   = '<h1>' . $title . '</h1>';
 	$msg  .= '<p>' . __( 'If your site does not display, please contact the owner of this network.' ) . '';
 	$msg  .= ' ' . __( 'If you are the owner of this network please check that your host&#8217;s database server is running properly and all tables are error free.' ) . '</p>';
-	$query = $wpdb->prepare( 'SHOW TABLES LIKE %s', $wpdb->esc_like( $wpdb->site ) );
-	if ( ! $wpdb->get_var( $query ) ) {
+	$query = $zcdb->prepare( 'SHOW TABLES LIKE %s', $zcdb->esc_like( $zcdb->site ) );
+	if ( ! $zcdb->get_var( $query ) ) {
 		$msg .= '<p>' . sprintf(
 			/* translators: %s: Table name. */
 			__( '<strong>Database tables are missing.</strong> This means that your host&#8217;s database server is not running, ZelocoreCMS was not installed properly, or someone deleted %s. You really should look at your database now.' ),
-			'<code>' . $wpdb->site . '</code>'
+			'<code>' . $zcdb->site . '</code>'
 		) . '</p>';
 	} else {
 		$msg .= '<p>' . sprintf(
 			/* translators: 1: Site URL, 2: Table name, 3: Database name. */
 			__( '<strong>Could not find site %1$s.</strong> Searched for table %2$s in database %3$s. Is that right?' ),
 			'<code>' . rtrim( $domain . $path, '/' ) . '</code>',
-			'<code>' . $wpdb->blogs . '</code>',
+			'<code>' . $zcdb->blogs . '</code>',
 			'<code>' . DB_NAME . '</code>'
 		) . '</p>';
 	}
@@ -503,7 +503,7 @@ function ms_not_installed( $domain, $path ) {
 		__( 'https://developer.zelocorecms.org/advanced-administration/debug/debug-network/' )
 	);
 	$msg .= ' ' . __( 'If you are still stuck with this message, then check that your database contains the following tables:' ) . '</p><ul>';
-	foreach ( $wpdb->tables( 'global' ) as $t => $table ) {
+	foreach ( $zcdb->tables( 'global' ) as $t => $table ) {
 		if ( 'sitecategories' === $t ) {
 			continue;
 		}

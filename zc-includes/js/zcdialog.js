@@ -1,12 +1,12 @@
 /**
- * @output zc-includes/js/wpdialog.js
+ * @output zc-includes/js/zcdialog.js
  */
 
 /*
  * Wrap the jQuery UI Dialog open function remove focus from tinyMCE.
  */
 ( function($) {
-	$.widget('zc.wpdialog', $.ui.dialog, {
+	$.widget('zc.zcdialog', $.ui.dialog, {
 		open: function() {
 			// Add beforeOpen event.
 			if ( this.isOpen() || false === this._trigger('beforeOpen') ) {
@@ -22,6 +22,6 @@
 		}
 	});
 
-	$.zc.wpdialog.prototype.options.closeOnEscape = false;
+	$.zc.zcdialog.prototype.options.closeOnEscape = false;
 
 })(jQuery);

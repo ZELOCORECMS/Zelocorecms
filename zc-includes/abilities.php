@@ -37,7 +37,7 @@ function zc_register_core_ability_categories(): void {
  *
  * @since 6.9.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  */
 function zc_register_core_abilities(): void {
 	$category_site = 'site';
@@ -227,13 +227,13 @@ function zc_register_core_abilities(): void {
 				'additionalProperties' => false,
 			),
 			'execute_callback'    => static function (): array {
-				global $wpdb;
+				global $zcdb;
 
 				$env          = zc_get_environment_type();
 				$php_version  = phpversion();
 				$db_server_info  = '';
-				if ( method_exists( $wpdb, 'db_server_info' ) ) {
-					$db_server_info = $wpdb->db_server_info() ?? '';
+				if ( method_exists( $zcdb, 'db_server_info' ) ) {
+					$db_server_info = $zcdb->db_server_info() ?? '';
 				}
 				$zc_version   = get_bloginfo( 'version' );
 

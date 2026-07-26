@@ -145,7 +145,7 @@ class ZC_User_Query {
 	 *              Deprecated the 'who' parameter.
 	 * @since 6.3.0 Added 'cache_results' parameter.
 	 *
-	 * @global wpdb     $wpdb     ZelocoreCMS database abstraction object.
+	 * @global zcdb     $zcdb     ZelocoreCMS database abstraction object.
 	 * @global ZC_Roles $zc_roles ZelocoreCMS role management object.
 	 *
 	 * @param string|array $query {
@@ -263,7 +263,7 @@ class ZC_User_Query {
 	 * }
 	 */
 	public function prepare_query( $query = array() ) {
-		global $wpdb, $zc_roles;
+		global $zcdb, $zc_roles;
 
 		if ( empty( $this->query_vars ) || ! empty( $query ) ) {
 			$this->query_limit = null;
@@ -314,21 +314,21 @@ class ZC_User_Query {
 			$this->query_fields = array();
 			foreach ( $qv['fields'] as $field ) {
 				$field                = 'id' === $field ? 'ID' : sanitize_key( $field );
-				$this->query_fields[] = "$wpdb->users.$field";
+				$this->query_fields[] = "$zcdb->users.$field";
 			}
 			$this->query_fields = implode( ',', $this->query_fields );
 		} elseif ( 'all_with_meta' === $qv['fields'] || 'all' === $qv['fields'] || ! in_array( $qv['fields'], $allowed_fields, true ) ) {
-			$this->query_fields = "$wpdb->users.ID";
+			$this->query_fields = "$zcdb->users.ID";
 		} else {
 			$field              = 'id' === strtolower( $qv['fields'] ) ? 'ID' : sanitize_key( $qv['fields'] );
-			$this->query_fields = "$wpdb->users.$field";
+			$this->query_fields = "$zcdb->users.$field";
 		}
 
 		if ( isset( $qv['count_total'] ) && $qv['count_total'] ) {
 			$this->query_fields = 'SQL_CALC_FOUND_ROWS ' . $this->query_fields;
 		}
 
-		$this->query_from  = "FROM $wpdb->users";
+		$this->query_from  = "FROM $zcdb->users";
 		$this->query_where = 'WHERE 1=1';
 
 		// Parse and sanitize 'include', for use by 'orderby' as well as 'include' below.
@@ -351,16 +351,16 @@ class ZC_User_Query {
 			}
 
 			foreach ( $post_types as &$post_type ) {
-				$post_type = $wpdb->prepare( '%s', $post_type );
+				$post_type = $zcdb->prepare( '%s', $post_type );
 			}
 
-			$posts_table        = $wpdb->get_blog_prefix( $blog_id ) . 'posts';
-			$this->query_where .= " AND $wpdb->users.ID IN ( SELECT DISTINCT $posts_table.post_author FROM $posts_table WHERE $posts_table.post_status = 'publish' AND $posts_table.post_type IN ( " . implode( ', ', $post_types ) . ' ) )';
+			$posts_table        = $zcdb->get_blog_prefix( $blog_id ) . 'posts';
+			$this->query_where .= " AND $zcdb->users.ID IN ( SELECT DISTINCT $posts_table.post_author FROM $posts_table WHERE $posts_table.post_status = 'publish' AND $posts_table.post_type IN ( " . implode( ', ', $post_types ) . ' ) )';
 		}
 
 		// nicename
 		if ( '' !== $qv['nicename'] ) {
-			$this->query_where .= $wpdb->prepare( ' AND user_nicename = %s', $qv['nicename'] );
+			$this->query_where .= $zcdb->prepare( ' AND user_nicename = %s', $qv['nicename'] );
 		}
 
 		if ( ! empty( $qv['nicename__in'] ) ) {
@@ -377,7 +377,7 @@ class ZC_User_Query {
 
 		// login
 		if ( '' !== $qv['login'] ) {
-			$this->query_where .= $wpdb->prepare( ' AND user_login = %s', $qv['login'] );
+			$this->query_where .= $zcdb->prepare( ' AND user_login = %s', $qv['login'] );
 		}
 
 		if ( ! empty( $qv['login__in'] ) ) {
@@ -409,7 +409,7 @@ class ZC_User_Query {
 			);
 
 			$who_query = array(
-				'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'user_level',
+				'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'user_level',
 				'value'   => 0,
 				'compare' => '!=',
 			);
@@ -521,7 +521,7 @@ class ZC_User_Query {
 				$clause = array( 'relation' => 'OR' );
 
 				$clause[] = array(
-					'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+					'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 					'value'   => '"' . $cap . '"',
 					'compare' => 'LIKE',
 				);
@@ -529,7 +529,7 @@ class ZC_User_Query {
 				if ( ! empty( $caps_with_roles[ $cap ] ) ) {
 					foreach ( $caps_with_roles[ $cap ] as $role ) {
 						$clause[] = array(
-							'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+							'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 							'value'   => '"' . $role . '"',
 							'compare' => 'LIKE',
 						);
@@ -561,7 +561,7 @@ class ZC_User_Query {
 			if ( ! empty( $roles ) ) {
 				foreach ( $roles as $role ) {
 					$roles_clauses[] = array(
-						'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+						'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 						'value'   => '"' . $role . '"',
 						'compare' => 'LIKE',
 					);
@@ -574,7 +574,7 @@ class ZC_User_Query {
 			if ( ! empty( $role__in ) ) {
 				foreach ( $role__in as $role ) {
 					$role__in_clauses[] = array(
-						'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+						'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 						'value'   => '"' . $role . '"',
 						'compare' => 'LIKE',
 					);
@@ -587,7 +587,7 @@ class ZC_User_Query {
 			if ( ! empty( $role__not_in ) ) {
 				foreach ( $role__not_in as $role ) {
 					$role__not_in_clauses[] = array(
-						'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+						'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 						'value'   => '"' . $role . '"',
 						'compare' => 'NOT LIKE',
 					);
@@ -599,7 +599,7 @@ class ZC_User_Query {
 			// If there are no specific roles named, make sure the user is a member of the site.
 			if ( empty( $role_queries ) ) {
 				$role_queries[] = array(
-					'key'     => $wpdb->get_blog_prefix( $blog_id ) . 'capabilities',
+					'key'     => $zcdb->get_blog_prefix( $blog_id ) . 'capabilities',
 					'compare' => 'EXISTS',
 				);
 			}
@@ -621,7 +621,7 @@ class ZC_User_Query {
 		}
 
 		if ( ! empty( $this->meta_query->queries ) ) {
-			$clauses            = $this->meta_query->get_sql( 'user', $wpdb->users, 'ID', $this );
+			$clauses            = $this->meta_query->get_sql( 'user', $zcdb->users, 'ID', $this );
 			$this->query_from  .= $clauses['join'];
 			$this->query_where .= $clauses['where'];
 
@@ -683,9 +683,9 @@ class ZC_User_Query {
 		// Limit.
 		if ( isset( $qv['number'] ) && $qv['number'] > 0 ) {
 			if ( $qv['offset'] ) {
-				$this->query_limit = $wpdb->prepare( 'LIMIT %d, %d', $qv['offset'], $qv['number'] );
+				$this->query_limit = $zcdb->prepare( 'LIMIT %d, %d', $qv['offset'], $qv['number'] );
 			} else {
-				$this->query_limit = $wpdb->prepare( 'LIMIT %d, %d', $qv['number'] * ( $qv['paged'] - 1 ), $qv['number'] );
+				$this->query_limit = $zcdb->prepare( 'LIMIT %d, %d', $qv['number'] * ( $qv['paged'] - 1 ), $qv['number'] );
 			}
 		}
 
@@ -746,10 +746,10 @@ class ZC_User_Query {
 		if ( ! empty( $include ) ) {
 			// Sanitized earlier.
 			$ids                = implode( ',', $include );
-			$this->query_where .= " AND $wpdb->users.ID IN ($ids)";
+			$this->query_where .= " AND $zcdb->users.ID IN ($ids)";
 		} elseif ( ! empty( $qv['exclude'] ) ) {
 			$ids                = implode( ',', zc_parse_id_list( $qv['exclude'] ) );
-			$this->query_where .= " AND $wpdb->users.ID NOT IN ($ids)";
+			$this->query_where .= " AND $zcdb->users.ID NOT IN ($ids)";
 		}
 
 		// Date queries are allowed for the user_registered field.
@@ -777,10 +777,10 @@ class ZC_User_Query {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 */
 	public function query() {
-		global $wpdb;
+		global $zcdb;
 
 		if ( ! did_action( 'plugins_loaded' ) ) {
 			_doing_it_wrong(
@@ -841,9 +841,9 @@ class ZC_User_Query {
 			} else {
 
 				if ( is_array( $qv['fields'] ) ) {
-					$this->results = $wpdb->get_results( $this->request );
+					$this->results = $zcdb->get_results( $this->request );
 				} else {
-					$this->results = $wpdb->get_col( $this->request );
+					$this->results = $zcdb->get_col( $this->request );
 				}
 
 				if ( isset( $qv['count_total'] ) && $qv['count_total'] ) {
@@ -853,14 +853,14 @@ class ZC_User_Query {
 					 * @since 3.2.0
 					 * @since 5.1.0 Added the `$query` parameter.
 					 *
-					 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+					 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 					 *
 					 * @param string        $sql   The SELECT FOUND_ROWS() query for the current ZC_User_Query.
 					 * @param ZC_User_Query $query The current ZC_User_Query instance.
 					 */
 					$found_users_query = apply_filters( 'found_users_query', 'SELECT FOUND_ROWS()', $this );
 
-					$this->total_users = (int) $wpdb->get_var( $found_users_query );
+					$this->total_users = (int) $zcdb->get_var( $found_users_query );
 				}
 
 				if ( $qv['cache_results'] ) {
@@ -930,7 +930,7 @@ class ZC_User_Query {
 	 *
 	 * @since 3.1.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string   $search  Search string.
 	 * @param string[] $columns Array of columns to search.
@@ -939,18 +939,18 @@ class ZC_User_Query {
 	 * @return string
 	 */
 	protected function get_search_sql( $search, $columns, $wild = false ) {
-		global $wpdb;
+		global $zcdb;
 
 		$searches      = array();
 		$leading_wild  = ( 'leading' === $wild || 'both' === $wild ) ? '%' : '';
 		$trailing_wild = ( 'trailing' === $wild || 'both' === $wild ) ? '%' : '';
-		$like          = $leading_wild . $wpdb->esc_like( $search ) . $trailing_wild;
+		$like          = $leading_wild . $zcdb->esc_like( $search ) . $trailing_wild;
 
 		foreach ( $columns as $column ) {
 			if ( 'ID' === $column ) {
-				$searches[] = $wpdb->prepare( "$column = %s", $search );
+				$searches[] = $zcdb->prepare( "$column = %s", $search );
 			} else {
-				$searches[] = $wpdb->prepare( "$column LIKE %s", $like );
+				$searches[] = $zcdb->prepare( "$column LIKE %s", $like );
 			}
 		}
 
@@ -984,13 +984,13 @@ class ZC_User_Query {
 	 *
 	 * @since 4.2.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param string $orderby Alias for the field to order by.
 	 * @return string Value to used in the ORDER clause, if `$orderby` is valid.
 	 */
 	protected function parse_orderby( $orderby ) {
-		global $wpdb;
+		global $zcdb;
 
 		$meta_query_clauses = $this->meta_query->get_clauses();
 
@@ -1006,21 +1006,21 @@ class ZC_User_Query {
 			$where             = get_posts_by_author_sql( 'post' );
 			$this->query_from .= " LEFT OUTER JOIN (
 				SELECT post_author, COUNT(*) as post_count
-				FROM $wpdb->posts
+				FROM $zcdb->posts
 				$where
 				GROUP BY post_author
-			) p ON ({$wpdb->users}.ID = p.post_author)";
+			) p ON ({$zcdb->users}.ID = p.post_author)";
 			$_orderby          = 'post_count';
 		} elseif ( 'ID' === $orderby || 'id' === $orderby ) {
 			$_orderby = 'ID';
 		} elseif ( 'meta_value' === $orderby || $this->get( 'meta_key' ) === $orderby ) {
-			$_orderby = "$wpdb->usermeta.meta_value";
+			$_orderby = "$zcdb->usermeta.meta_value";
 		} elseif ( 'meta_value_num' === $orderby ) {
-			$_orderby = "$wpdb->usermeta.meta_value+0";
+			$_orderby = "$zcdb->usermeta.meta_value+0";
 		} elseif ( 'include' === $orderby && ! empty( $this->query_vars['include'] ) ) {
 			$include     = zc_parse_id_list( $this->query_vars['include'] );
 			$include_sql = implode( ',', $include );
-			$_orderby    = "FIELD( $wpdb->users.ID, $include_sql )";
+			$_orderby    = "FIELD( $zcdb->users.ID, $include_sql )";
 		} elseif ( 'nicename__in' === $orderby ) {
 			$sanitized_nicename__in = array_map( 'esc_sql', $this->query_vars['nicename__in'] );
 			$nicename__in           = implode( "','", $sanitized_nicename__in );
@@ -1043,17 +1043,17 @@ class ZC_User_Query {
 	 * @since 6.3.0
 	 * @since 6.9.0 The `$args` parameter was deprecated and renamed to `$deprecated`.
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param array  $deprecated Unused.
 	 * @param string $sql        SQL statement.
 	 * @return string Cache key.
 	 */
 	protected function generate_cache_key( array $deprecated, $sql ) {
-		global $wpdb;
+		global $zcdb;
 
-		// Replace wpdb placeholder in the SQL statement used by the cache key.
-		$sql = $wpdb->remove_placeholder_escape( $sql );
+		// Replace zcdb placeholder in the SQL statement used by the cache key.
+		$sql = $zcdb->remove_placeholder_escape( $sql );
 
 		$key = md5( $sql );
 

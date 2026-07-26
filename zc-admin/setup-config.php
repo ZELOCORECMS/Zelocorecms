@@ -321,25 +321,25 @@ switch ( $step ) {
 		define( 'DB_HOST', $dbhost );
 		/**#@-*/
 
-		// Re-construct $wpdb with these new values.
-		unset( $wpdb );
+		// Re-construct $zcdb with these new values.
+		unset( $zcdb );
 		require_zc_db();
 
 		/*
-		* The wpdb constructor bails when ZC_SETUP_CONFIG is set, so we must
+		* The zcdb constructor bails when ZC_SETUP_CONFIG is set, so we must
 		* fire this manually. We'll fail here if the values are no good.
 		*/
-		$wpdb->db_connect();
+		$zcdb->db_connect();
 
-		if ( ! empty( $wpdb->error ) ) {
-			zc_die( $wpdb->error->get_error_message() . $tryagain_link );
+		if ( ! empty( $zcdb->error ) ) {
+			zc_die( $zcdb->error->get_error_message() . $tryagain_link );
 		}
 
-		$errors = $wpdb->suppress_errors();
-		$wpdb->query( "SELECT $prefix" );
-		$wpdb->suppress_errors( $errors );
+		$errors = $zcdb->suppress_errors();
+		$zcdb->query( "SELECT $prefix" );
+		$zcdb->suppress_errors( $errors );
 
-		if ( ! $wpdb->last_error ) {
+		if ( ! $zcdb->last_error ) {
 			// MySQL was able to parse the prefix as a value, which we don't want. Bail.
 			zc_die( __( '<strong>Error:</strong> "Table Prefix" is invalid.' ) );
 		}
@@ -397,7 +397,7 @@ switch ( $step ) {
 					$config_file[ $line_num ] = "define( '" . $constant . "'," . $padding . "'" . addcslashes( constant( $constant ), "\\'" ) . "' );\r\n";
 					break;
 				case 'DB_CHARSET':
-					if ( 'utf8mb4' === $wpdb->charset || ( ! $wpdb->charset ) ) {
+					if ( 'utf8mb4' === $zcdb->charset || ( ! $zcdb->charset ) ) {
 						$config_file[ $line_num ] = "define( '" . $constant . "'," . $padding . "'utf8mb4' );\r\n";
 					}
 					break;

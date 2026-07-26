@@ -104,7 +104,7 @@ final class ZC_Term {
 	 *
 	 * @since 4.4.0
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @param int    $term_id  Term ID.
 	 * @param string $taxonomy Optional. Limit matched terms to those matching `$taxonomy`. Only used for
@@ -114,7 +114,7 @@ final class ZC_Term {
 	 *                                False for other failures.
 	 */
 	public static function get_instance( $term_id, $taxonomy = null ) {
-		global $wpdb;
+		global $zcdb;
 
 		$term_id = (int) $term_id;
 		if ( ! $term_id ) {
@@ -129,7 +129,7 @@ final class ZC_Term {
 			$_term = false;
 
 			// Grab all matching terms, in case any are shared between taxonomies.
-			$terms = $wpdb->get_results( $wpdb->prepare( "SELECT t.*, tt.* FROM $wpdb->terms AS t INNER JOIN $wpdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE t.term_id = %d", $term_id ) );
+			$terms = $zcdb->get_results( $zcdb->prepare( "SELECT t.*, tt.* FROM $zcdb->terms AS t INNER JOIN $zcdb->term_taxonomy AS tt ON t.term_id = tt.term_id WHERE t.term_id = %d", $term_id ) );
 			if ( ! $terms ) {
 				return false;
 			}

@@ -102,12 +102,12 @@ abstract class ZC_Privacy_Requests_Table extends ZC_List_Table {
 	 *
 	 * @since 4.9.6
 	 *
-	 * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+	 * @global zcdb $zcdb ZelocoreCMS database abstraction object.
 	 *
 	 * @return object Number of posts for each status.
 	 */
 	protected function get_request_counts() {
-		global $wpdb;
+		global $zcdb;
 
 		$cache_key = $this->post_type . '-' . $this->request_type;
 		$counts    = zc_cache_get( $cache_key, 'counts' );
@@ -116,10 +116,10 @@ abstract class ZC_Privacy_Requests_Table extends ZC_List_Table {
 			return $counts;
 		}
 
-		$results = (array) $wpdb->get_results(
-			$wpdb->prepare(
+		$results = (array) $zcdb->get_results(
+			$zcdb->prepare(
 				"SELECT post_status, COUNT( * ) AS num_posts
-				FROM {$wpdb->posts}
+				FROM {$zcdb->posts}
 				WHERE post_type = %s
 				AND post_name = %s
 				GROUP BY post_status",

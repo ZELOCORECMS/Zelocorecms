@@ -342,7 +342,7 @@ tinymce.PluginManager.add( 'zelocorecms', function( editor ) {
 				table2.join('') +
 			'</table>';
 
-		if ( editor.plugins.wptextpattern && ( ! tinymce.Env.ie || tinymce.Env.ie > 8 ) ) {
+		if ( editor.plugins.zctextpattern && ( ! tinymce.Env.ie || tinymce.Env.ie > 8 ) ) {
 			// Text pattern section.
 			html = html +
 				'<h2>' + __( 'When starting a new paragraph with one of these formatting shortcuts followed by a space, the formatting will be applied automatically. Press Backspace or Escape to undo.' ) + '</h2>' +

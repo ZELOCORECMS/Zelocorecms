@@ -303,14 +303,14 @@ function get_user_to_edit( $user_id ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $user_id User ID.
  * @return object[] The user's draft posts, with 'ID' and 'post_title' keys.
  */
 function get_users_drafts( $user_id ) {
-	global $wpdb;
-	$query = $wpdb->prepare( "SELECT ID, post_title FROM $wpdb->posts WHERE post_type = 'post' AND post_status = 'draft' AND post_author = %d ORDER BY post_modified DESC", $user_id );
+	global $zcdb;
+	$query = $zcdb->prepare( "SELECT ID, post_title FROM $zcdb->posts WHERE post_type = 'post' AND post_status = 'draft' AND post_author = %d ORDER BY post_modified DESC", $user_id );
 
 	/**
 	 * Filters the SQL query string for the user's drafts query.
@@ -320,7 +320,7 @@ function get_users_drafts( $user_id ) {
 	 * @param string $query The user's drafts query string.
 	 */
 	$query = apply_filters( 'get_users_drafts', $query );
-	return $wpdb->get_results( $query );
+	return $zcdb->get_results( $query );
 }
 
 /**
@@ -336,14 +336,14 @@ function get_users_drafts( $user_id ) {
  *
  * @since 2.0.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param int $id       User ID.
  * @param int $reassign Optional. Reassign posts and links to new User ID.
  * @return bool True when finished.
  */
 function zc_delete_user( $id, $reassign = null ) {
-	global $wpdb;
+	global $zcdb;
 
 	if ( ! is_numeric( $id ) ) {
 		return false;
@@ -399,7 +399,7 @@ function zc_delete_user( $id, $reassign = null ) {
 		 */
 		$post_types_to_delete = apply_filters( 'post_types_to_delete_with_user', $post_types_to_delete, $id );
 		$post_types_to_delete = implode( "', '", $post_types_to_delete );
-		$post_ids             = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d AND post_type IN ('$post_types_to_delete')", $id ) );
+		$post_ids             = $zcdb->get_col( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_author = %d AND post_type IN ('$post_types_to_delete')", $id ) );
 		if ( $post_ids ) {
 			foreach ( $post_ids as $post_id ) {
 				zc_delete_post( $post_id );
@@ -407,7 +407,7 @@ function zc_delete_user( $id, $reassign = null ) {
 		}
 
 		// Clean links.
-		$link_ids = $wpdb->get_col( $wpdb->prepare( "SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id ) );
+		$link_ids = $zcdb->get_col( $zcdb->prepare( "SELECT link_id FROM $zcdb->links WHERE link_owner = %d", $id ) );
 
 		if ( $link_ids ) {
 			foreach ( $link_ids as $link_id ) {
@@ -415,15 +415,15 @@ function zc_delete_user( $id, $reassign = null ) {
 			}
 		}
 	} else {
-		$post_ids = $wpdb->get_col( $wpdb->prepare( "SELECT ID FROM $wpdb->posts WHERE post_author = %d", $id ) );
-		$wpdb->update( $wpdb->posts, array( 'post_author' => $reassign ), array( 'post_author' => $id ) );
+		$post_ids = $zcdb->get_col( $zcdb->prepare( "SELECT ID FROM $zcdb->posts WHERE post_author = %d", $id ) );
+		$zcdb->update( $zcdb->posts, array( 'post_author' => $reassign ), array( 'post_author' => $id ) );
 		if ( ! empty( $post_ids ) ) {
 			foreach ( $post_ids as $post_id ) {
 				clean_post_cache( $post_id );
 			}
 		}
-		$link_ids = $wpdb->get_col( $wpdb->prepare( "SELECT link_id FROM $wpdb->links WHERE link_owner = %d", $id ) );
-		$wpdb->update( $wpdb->links, array( 'link_owner' => $reassign ), array( 'link_owner' => $id ) );
+		$link_ids = $zcdb->get_col( $zcdb->prepare( "SELECT link_id FROM $zcdb->links WHERE link_owner = %d", $id ) );
+		$zcdb->update( $zcdb->links, array( 'link_owner' => $reassign ), array( 'link_owner' => $id ) );
 		if ( ! empty( $link_ids ) ) {
 			foreach ( $link_ids as $link_id ) {
 				clean_bookmark_cache( $link_id );
@@ -435,12 +435,12 @@ function zc_delete_user( $id, $reassign = null ) {
 	if ( is_multisite() ) {
 		remove_user_from_blog( $id, get_current_blog_id() );
 	} else {
-		$meta = $wpdb->get_col( $wpdb->prepare( "SELECT umeta_id FROM $wpdb->usermeta WHERE user_id = %d", $id ) );
+		$meta = $zcdb->get_col( $zcdb->prepare( "SELECT umeta_id FROM $zcdb->usermeta WHERE user_id = %d", $id ) );
 		foreach ( $meta as $mid ) {
 			delete_metadata_by_mid( 'user', $mid );
 		}
 
-		$wpdb->delete( $wpdb->users, array( 'ID' => $id ) );
+		$zcdb->delete( $zcdb->users, array( 'ID' => $id ) );
 	}
 
 	clean_user_cache( $user );

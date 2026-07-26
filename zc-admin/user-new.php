@@ -240,7 +240,7 @@ Please click the following link to confirm the invite:
 			);
 
 			if ( isset( $_POST['noconfirmation'] ) && current_user_can( 'manage_network_users' ) ) {
-				$key      = $wpdb->get_var( $wpdb->prepare( "SELECT activation_key FROM {$wpdb->signups} WHERE user_login = %s AND user_email = %s", $new_user_login, $new_user_email ) );
+				$key      = $zcdb->get_var( $zcdb->prepare( "SELECT activation_key FROM {$zcdb->signups} WHERE user_login = %s AND user_email = %s", $new_user_login, $new_user_email ) );
 				$new_user = zcmu_activate_signup( $key );
 				if ( is_zc_error( $new_user ) ) {
 					$redirect = add_query_arg( array( 'update' => 'addnoconfirmation' ), 'user-new.php' );

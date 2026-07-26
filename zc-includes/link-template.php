@@ -1814,7 +1814,7 @@ function get_next_post( $in_same_term = false, $excluded_terms = '', $taxonomy =
  *
  * @since 2.5.0
  *
- * @global wpdb $wpdb ZelocoreCMS database abstraction object.
+ * @global zcdb $zcdb ZelocoreCMS database abstraction object.
  *
  * @param bool         $in_same_term   Optional. Whether post should be in the same taxonomy term.
  *                                     Default false.
@@ -1827,7 +1827,7 @@ function get_next_post( $in_same_term = false, $excluded_terms = '', $taxonomy =
  *                             Empty string if no corresponding post exists.
  */
 function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previous = true, $taxonomy = 'category' ) {
-	global $wpdb;
+	global $zcdb;
 
 	$post = get_post();
 
@@ -1880,8 +1880,8 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 
 	if ( $in_same_term || ! empty( $excluded_terms ) ) {
 		if ( $in_same_term ) {
-			$join  .= " INNER JOIN $wpdb->term_relationships AS tr ON p.ID = tr.object_id INNER JOIN $wpdb->term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
-			$where .= $wpdb->prepare( 'AND tt.taxonomy = %s', $taxonomy );
+			$join  .= " INNER JOIN $zcdb->term_relationships AS tr ON p.ID = tr.object_id INNER JOIN $zcdb->term_taxonomy AS tt ON tr.term_taxonomy_id = tt.term_taxonomy_id";
+			$where .= $zcdb->prepare( 'AND tt.taxonomy = %s', $taxonomy );
 
 			if ( ! is_object_in_taxonomy( $post->post_type, $taxonomy ) ) {
 				return '';
@@ -1904,7 +1904,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 		}
 
 		if ( ! empty( $excluded_terms ) ) {
-			$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $wpdb->term_relationships tr LEFT JOIN $wpdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
+			$where .= " AND p.ID NOT IN ( SELECT tr.object_id FROM $zcdb->term_relationships tr LEFT JOIN $zcdb->term_taxonomy tt ON (tr.term_taxonomy_id = tt.term_taxonomy_id) WHERE tt.term_id IN (" . implode( ',', array_map( 'intval', $excluded_terms ) ) . ') )';
 		}
 	}
 
@@ -1928,9 +1928,9 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 		$where         .= " AND ( p.post_status = 'publish'";
 		foreach ( $private_states as $state ) {
 			if ( current_user_can( $read_private_cap ) ) {
-				$where .= $wpdb->prepare( ' OR p.post_status = %s', $state );
+				$where .= $zcdb->prepare( ' OR p.post_status = %s', $state );
 			} else {
-				$where .= $wpdb->prepare( ' OR (p.post_author = %d AND p.post_status = %s)', $user_id, $state );
+				$where .= $zcdb->prepare( ' OR (p.post_author = %d AND p.post_status = %s)', $user_id, $state );
 			}
 		}
 		$where .= ' )';
@@ -1964,7 +1964,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 	$join = apply_filters( "get_{$adjacent}_post_join", $join, $in_same_term, $excluded_terms, $taxonomy, $post );
 
 	// Prepare the where clause for the adjacent post query.
-	$where_prepared = $wpdb->prepare( "WHERE (p.post_date $comparison_operator %s OR (p.post_date = %s AND p.ID $comparison_operator %d)) AND p.post_type = %s $where", $current_post_date, $current_post_date, $post->ID, $post->post_type ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- $comparison_operator is a string literal, either '<' or '>'.
+	$where_prepared = $zcdb->prepare( "WHERE (p.post_date $comparison_operator %s OR (p.post_date = %s AND p.ID $comparison_operator %d)) AND p.post_type = %s $where", $current_post_date, $current_post_date, $post->ID, $post->post_type ); // phpcs:ignore ZelocoreCMS.DB.PreparedSQL.InterpolatedNotPrepared -- $comparison_operator is a string literal, either '<' or '>'.
 
 	/**
 	 * Filters the WHERE clause in the SQL for an adjacent post query.
@@ -2011,7 +2011,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 	 */
 	$sort = apply_filters( "get_{$adjacent}_post_sort", "ORDER BY p.post_date $order, p.ID $order LIMIT 1", $post, $order );
 
-	$query        = "SELECT p.ID FROM $wpdb->posts AS p $join $where $sort";
+	$query        = "SELECT p.ID FROM $zcdb->posts AS p $join $where $sort";
 	$key          = md5( $query );
 	$last_changed = (array) zc_cache_get_last_changed( 'posts' );
 	if ( $in_same_term || ! empty( $excluded_terms ) ) {
@@ -2027,7 +2027,7 @@ function get_adjacent_post( $in_same_term = false, $excluded_terms = '', $previo
 		return $result;
 	}
 
-	$result = $wpdb->get_var( $query );
+	$result = $zcdb->get_var( $query );
 	if ( null === $result ) {
 		$result = '';
 	}
