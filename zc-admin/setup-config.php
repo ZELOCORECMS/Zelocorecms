@@ -375,45 +375,56 @@ switch ( $step ) {
 			}
 		}
 
+		$salt_keys = array( 'AUTH_KEY', 'SECURE_AUTH_KEY', 'LOGGED_IN_KEY', 'NONCE_KEY', 'AUTH_SALT', 'SECURE_AUTH_SALT', 'LOGGED_IN_SALT', 'NONCE_SALT' );
+
+		// Write all values into .env so zc-config.php can read them via getenv().
+		$env_path    = ABSPATH . '.env';
+		$env_content = file_exists( $env_path ) ? file_get_contents( $env_path ) : '';
+
+		/**
+		 * Updates or appends a key=value line in the .env content string.
+		 *
+		 * @param string $content   Current .env file content.
+		 * @param string $key       Environment variable name.
+		 * @param string $val       Value to set.
+		 * @return string           Updated .env content.
+		 */
+		$update_env = function( $content, $key, $val ) {
+			$escaped = addcslashes( $val, '"\\' );
+			$line    = $key . '="' . $escaped . '"';
+			if ( preg_match( '/^' . preg_quote( $key, '/' ) . '\s*=/m', $content ) ) {
+				$content = preg_replace( '/^' . preg_quote( $key, '/' ) . '\s*=.*/m', $line, $content );
+			} else {
+				$content = rtrim( $content ) . "\n" . $line . "\n";
+			}
+			return $content;
+		};
+
+		// Write DB credentials.
+		$env_content = $update_env( $env_content, 'DB_DATABASE', $dbname );
+		$env_content = $update_env( $env_content, 'DB_USERNAME', $uname );
+		$env_content = $update_env( $env_content, 'DB_PASSWORD', $pwd );
+		$env_content = $update_env( $env_content, 'DB_HOST',     $dbhost );
+		$env_content = $update_env( $env_content, 'DB_TABLE_PREFIX', $prefix );
+
+		// Write generated auth keys and salts.
+		$key = 0;
+		foreach ( $salt_keys as $salt_key ) {
+			$env_content = $update_env( $env_content, $salt_key, $secret_keys[ $key++ ] );
+		}
+
+		file_put_contents( $env_path, $env_content );
+
+		// Update only the table prefix in the config file; DB and salt define() lines
+		// now read from .env via getenv() so they do not need to be rewritten.
 		$key = 0;
 		foreach ( $config_file as $line_num => $line ) {
 			if ( str_starts_with( $line, '$table_prefix =' ) ) {
 				$config_file[ $line_num ] = '$table_prefix = \'' . addcslashes( $prefix, "\\'" ) . "';\r\n";
-				continue;
-			}
-
-			if ( ! preg_match( '/^define\(\s*\'([A-Z_]+)\',([ ]+)/', $line, $match ) ) {
-				continue;
-			}
-
-			$constant = $match[1];
-			$padding  = $match[2];
-
-			switch ( $constant ) {
-				case 'DB_NAME':
-				case 'DB_USER':
-				case 'DB_PASSWORD':
-				case 'DB_HOST':
-					$config_file[ $line_num ] = "define( '" . $constant . "'," . $padding . "'" . addcslashes( constant( $constant ), "\\'" ) . "' );\r\n";
-					break;
-				case 'DB_CHARSET':
-					if ( 'utf8mb4' === $zcdb->charset || ( ! $zcdb->charset ) ) {
-						$config_file[ $line_num ] = "define( '" . $constant . "'," . $padding . "'utf8mb4' );\r\n";
-					}
-					break;
-				case 'AUTH_KEY':
-				case 'SECURE_AUTH_KEY':
-				case 'LOGGED_IN_KEY':
-				case 'NONCE_KEY':
-				case 'AUTH_SALT':
-				case 'SECURE_AUTH_SALT':
-				case 'LOGGED_IN_SALT':
-				case 'NONCE_SALT':
-					$config_file[ $line_num ] = "define( '" . $constant . "'," . $padding . "'" . $secret_keys[ $key++ ] . "' );\r\n";
-					break;
 			}
 		}
 		unset( $line );
+
 
 		if ( ! is_writable( ABSPATH ) ) :
 			setup_config_display_header();

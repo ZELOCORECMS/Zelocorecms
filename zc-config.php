@@ -18,15 +18,16 @@
  * @package ZelocoreCMS
  */
 
-// Load .env file if it exists and values are not already set
+// Load .env file if it exists and values are not already set in the environment
 if ( file_exists( __DIR__ . '/.env' ) ) {
     $lines = file( __DIR__ . '/.env', FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES );
     foreach ( $lines as $line ) {
-        if ( str_starts_with( trim( $line ), '#' ) ) {
+        $line = trim( $line );
+        if ( $line === '' || $line[0] === '#' ) {
             continue;
         }
-        if ( str_contains( $line, '=' ) ) {
-            [ $key, $value ] = explode( '=', $line, 2 );
+        if ( strpos( $line, '=' ) !== false ) {
+            list( $key, $value ) = explode( '=', $line, 2 );
             $key   = trim( $key );
             $value = trim( $value, " \t\n\r\0\x0B\"'" );
             if ( ! array_key_exists( $key, $_ENV ) && ! array_key_exists( $key, $_SERVER ) ) {
