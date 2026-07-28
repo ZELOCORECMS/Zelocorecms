@@ -253,7 +253,7 @@ function zc_version_check( $extra_stats = array(), $force_check = false ) {
 				__( 'An unexpected error occurred. Something may be wrong with ZelocoreCMS.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="%s">support forums</a>.' ),
 				__( 'https://zelocorecms.org/support/forums/' )
 			) . ' ' . __( '(ZelocoreCMS could not establish a secure connection to ZelocoreCMS.org. Please contact your server administrator.)' ),
-			headers_sent() || ZC_DEBUG ? E_USER_WARNING : E_USER_NOTICE
+			E_USER_NOTICE
 		);
 		$response = zc_remote_post( $http_url, $options );
 	}
@@ -479,7 +479,7 @@ function zc_update_plugins( $extra_stats = array() ) {
 				__( 'An unexpected error occurred. Something may be wrong with ZelocoreCMS.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="%s">support forums</a>.' ),
 				__( 'https://zelocorecms.org/support/forums/' )
 			) . ' ' . __( '(ZelocoreCMS could not establish a secure connection to ZelocoreCMS.org. Please contact your server administrator.)' ),
-			headers_sent() || ZC_DEBUG ? E_USER_WARNING : E_USER_NOTICE
+			E_USER_NOTICE
 		);
 		$raw_response = zc_remote_post( $http_url, $options );
 	}
@@ -765,7 +765,7 @@ function zc_update_themes( $extra_stats = array() ) {
 				__( 'An unexpected error occurred. Something may be wrong with ZelocoreCMS.org or this server&#8217;s configuration. If you continue to have problems, please try the <a href="%s">support forums</a>.' ),
 				__( 'https://zelocorecms.org/support/forums/' )
 			) . ' ' . __( '(ZelocoreCMS could not establish a secure connection to ZelocoreCMS.org. Please contact your server administrator.)' ),
-			headers_sent() || ZC_DEBUG ? E_USER_WARNING : E_USER_NOTICE
+			E_USER_NOTICE
 		);
 		$raw_response = zc_remote_post( $http_url, $options );
 	}
