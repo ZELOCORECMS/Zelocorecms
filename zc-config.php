@@ -40,16 +40,16 @@ if ( file_exists( __DIR__ . '/.env' ) ) {
 
 // ** Database settings - You can get this info from your web host ** //
 /** The name of the database for ZelocoreCMS */
-define( 'DB_NAME',     getenv( 'DB_DATABASE' ) ?: 'zelocorecms' );
+define( 'DB_NAME',     getenv( 'DB_DATABASE' ) );
 
 /** Database username */
-define( 'DB_USER',     getenv( 'DB_USERNAME' ) ?: 'zelocore' );
+define( 'DB_USER',     getenv( 'DB_USERNAME' ) );
 
 /** Database password */
-define( 'DB_PASSWORD', getenv( 'DB_PASSWORD' ) ?: 'Zelocore@12345' );
+define( 'DB_PASSWORD', getenv( 'DB_PASSWORD' ) );
 
 /** Database hostname */
-define( 'DB_HOST',     getenv( 'DB_HOST' )     ?: 'localhost' );
+define( 'DB_HOST',     getenv( 'DB_HOST' ) );
 
 /** Database charset to use in creating database tables. */
 define( 'DB_CHARSET',  'utf8mb4' );
@@ -68,14 +68,14 @@ define( 'DB_COLLATE',  '' );
  *
  * @since 2.6.0
  */
-define( 'AUTH_KEY',         getenv( 'AUTH_KEY' )         ?: 'Q|g2MJ:I1o$:m+w(K94-I^nM?iak>$=D$__}&o-Y0kSH:pO*[R|ZXOl)C_O|GA1}' );
-define( 'SECURE_AUTH_KEY',  getenv( 'SECURE_AUTH_KEY' )  ?: 'j[j]7r.JS3VwZ$!g]~ 7iY7EHJ!}T_fc,EyGL.5g@tc;30o%|u(zXd7.3hF5?GN)' );
-define( 'LOGGED_IN_KEY',    getenv( 'LOGGED_IN_KEY' )    ?: '+SdEP8ub(|;Qo(WCKm%my_/lhK7O4ZIe.F4$dn(39NY6wM;Wxgoe=0n6%,m/hiJN' );
-define( 'NONCE_KEY',        getenv( 'NONCE_KEY' )        ?: 'fYq^f6}%#6m,WH_)QuL#1Lh_1^IpXXR>TKN@^cbCo`|PoBsf&>/1Ca{YXYXa!;be' );
-define( 'AUTH_SALT',        getenv( 'AUTH_SALT' )        ?: '-97*|.IR0,aB_ [T6Br~>y!i4!#K.bcNGqP/{,60({wh@W/SyaEXn1NQ4l$q%p^6' );
-define( 'SECURE_AUTH_SALT', getenv( 'SECURE_AUTH_SALT' ) ?: ')6/kB@C`Cc4I&YbgZ~)i2>+v+mDEq8{!FXOd;R^}*;D6$+rWI+%VO++>nd7!1gpQ' );
-define( 'LOGGED_IN_SALT',   getenv( 'LOGGED_IN_SALT' )   ?: 'D(0JD-Q`9VbY}ag@zjIt1@5prZ%Z>Es.9n})AH?y0Z1X`2Iwsp+k>ZshBVm:0b/3' );
-define( 'NONCE_SALT',       getenv( 'NONCE_SALT' )       ?: 'V3jsqJOHJ&x?3DGUv(0~]6RsblFsLCp(&1D6i<U6{}NPFi0:<9(O3~-HAwe~p4Cb' );
+define( 'AUTH_KEY',         getenv( 'AUTH_KEY' ) );
+define( 'SECURE_AUTH_KEY',  getenv( 'SECURE_AUTH_KEY' ) );
+define( 'LOGGED_IN_KEY',    getenv( 'LOGGED_IN_KEY' ) );
+define( 'NONCE_KEY',        getenv( 'NONCE_KEY' ) );
+define( 'AUTH_SALT',        getenv( 'AUTH_SALT' ) );
+define( 'SECURE_AUTH_SALT', getenv( 'SECURE_AUTH_SALT' ) );
+define( 'LOGGED_IN_SALT',   getenv( 'LOGGED_IN_SALT' ) );
+define( 'NONCE_SALT',       getenv( 'NONCE_SALT' ) );
 
 /**#@-*/
 
@@ -105,12 +105,12 @@ $table_prefix = getenv( 'DB_TABLE_PREFIX' ) ?: 'zc_';
  *
  * @link https://developer.zelocorecms.org/advanced-administration/debug/debug-zelocorecms/
  */
-define( 'ZC_DEBUG', filter_var( getenv( 'APP_DEBUG' ) ?: false, FILTER_VALIDATE_BOOLEAN ) );
+define( 'ZC_DEBUG', filter_var( getenv( 'APP_DEBUG' ), FILTER_VALIDATE_BOOLEAN ) );
 
 /* Add any custom values between this line and the "stop editing" line. */
 
-define( 'APP_ENV', getenv( 'APP_ENV' ) ?: 'production' );
-define( 'APP_URL', getenv( 'APP_URL' ) ?: 'http://localhost' );
+define( 'APP_ENV', getenv( 'APP_ENV' ) );
+define( 'APP_URL', getenv( 'APP_URL' ) );
 
 /* That's all, stop editing! Happy publishing. */
 
