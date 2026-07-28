@@ -3,11 +3,9 @@
 # ----------------------------------------------------------------------------
 
 # 1. Environment & Secrets
-.env
-.env.*            # ignore all env variants
-.env.backup
-.env.production
-.env.testing
+.env.*               # ignore all .env variants by default
+!.env                # but track .env
+!.env.example        # and track .env.example
 /auth.json
 *.key
 *.pem
@@ -68,7 +66,7 @@ temp/
 /.claude
 /.cursor
 /.editorconfig
-/.env*
+
 /.factory
 /.gitattributes
 /.github
